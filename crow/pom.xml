@@ -6,7 +6,8 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.7</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+<!--        先看自设置，后本地仓库，再后远程仓库，查看父项目pom.xml的地址-->
     </parent>
     <groupId>xyz.nanian</groupId>
     <artifactId>crow</artifactId>
@@ -29,6 +30,8 @@
     <properties>
         <java.version>17</java.version>
     </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,6 +43,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 
     <build>
