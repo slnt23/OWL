@@ -13,7 +13,8 @@
 	<groupId>xyz.nanian</groupId>
 	<artifactId>OWL</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>OWL</name>
+    <packaging>pom</packaging>
+    <name>OWL</name>
 	<description>持续开发</description>
 
 
@@ -24,7 +25,12 @@
 	<developers>
 		<developer/>
 	</developers>
-	<scm>
+    <modules>
+        <module>common</module>
+        <module>domain</module>
+        <module>api</module>
+    </modules>
+    <scm>
 		<connection/>
 		<developerConnection/>
 		<tag/>
