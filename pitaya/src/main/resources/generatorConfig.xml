@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "https://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="DBTables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/pitaya"
+                        userId="root"
+                        password="123456qin"/>
+        <javaModelGenerator targetPackage="xyz.nanian.owl.pitaya.entity"
+                            targetProject="src/main/java"/>
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources"/>
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="xyz.nanian.owl.pitaya.mapper"
+                             targetProject="src/main/java"/>
+        <!-- 所需生成的表项 TODO 对于多数据库有重复表的问题依旧没有解决-->
+
+<!--        <table schema="pitaya" tableName="product_category" domainObjectName="ProductCategory"/>-->
+<!--        <table schema="pitaya" tableName="product" domainObjectName="Product"/>-->
+<!--        <table schema="pitaya" tableName="user" domainObjectName="User"/>-->
+<!--        <table schema="pitaya" tableName="role" domainObjectName="Role"/>-->
+<!--        <table schema="pitaya" tableName="user_role" domainObjectName="UserRole"/>-->
+<!--        <table schema="pitaya" tableName="orders" domainObjectName="Orders"/>-->
+<!--        <table schema="pitaya" tableName="order_detail" domainObjectName="OrderDetail"/>-->
+<!--        <table schema="pitaya" tableName="stats_daily" domainObjectName="StatsDaily"/>-->
+
+        <table catalog="pitaya"
+               tableName="product_category"
+               domainObjectName="ProductCategory"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table catalog="pitaya"
+               tableName="user"
+               domainObjectName="User"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table catalog="pitaya"
+               tableName="role"
+               domainObjectName="Role"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table catalog="pitaya"
+               tableName="user_role"
+               domainObjectName="UserRole"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table catalog="pitaya"
+               tableName="orders"
+               domainObjectName="Orders"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table catalog="pitaya"
+               tableName="order_detail"
+               domainObjectName="OrderDetail"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+
+        <table catalog="pitaya"
+               tableName="stats_daily"
+               domainObjectName="StatsDaily"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+
+
+
+    </context>
+</generatorConfiguration>

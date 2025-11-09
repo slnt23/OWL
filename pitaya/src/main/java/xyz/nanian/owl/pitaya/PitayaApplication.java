@@ -1,4 +1,4 @@
-package xyz.nanian.owl;
+package xyz.nanian.owl.pitaya;
 
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;

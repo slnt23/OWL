@@ -32,6 +32,7 @@
         <easyexcel.version>4.0.3</easyexcel.version>
         <mybatis.generator.version>1.4.1</mybatis.generator.version>
         <mybatis.plus.version>3.5.5</mybatis.plus.version>
+        <nacos.config.discovery.version>2025.0.0.0</nacos.config.discovery.version>
 	</properties>
 
 
@@ -54,6 +55,17 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+                <version>${nacos.config.discovery.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+                <version>${nacos.config.discovery.version}</version>
             </dependency>
 
 

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: pitaya
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${spring.cloud.nacos.server-addr}
+      config:
+        server-addr: ${spring.cloud.nacos.server-addr}
+        file-extension: yaml
