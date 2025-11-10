@@ -1,0 +1,11 @@
+
+
+server:
+  port: ${port}
+
+spring:
+  application:
+    name: ${project.name}
+
+  profiles:
+    active: dev
