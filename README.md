@@ -4,8 +4,9 @@
 
 ## 项目模块
 
-1. common
-2. crow（乌鸦）
+1. common：工具类
+2. pitaya：电商
+
 
 
 

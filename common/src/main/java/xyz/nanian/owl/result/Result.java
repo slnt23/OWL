@@ -1,8 +1,8 @@
 package xyz.nanian.owl.result;
 
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,19 +17,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(description = "统一返回包装类")
+@Tag(name = "统一返回包装类")
 public class Result<T> {
 
 //    状态码
-    @ApiModelProperty(value = "状态码",example = "10000")
+    @Schema(description = "状态码" ,example = "10000")
     private Integer code;
 
 //    返回提示信息
-    @ApiModelProperty(value = "提示信息",example = "发送信息成功")
+    @Schema(description = "提示信息",example = "发送信息成功")
     private String message;
 
 //    返回数据
-    @ApiModelProperty(value = "data",example = "数据")
+    @Schema(description = "data",example = "数据")
     private T data;
 
 
