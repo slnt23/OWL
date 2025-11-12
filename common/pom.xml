@@ -19,11 +19,7 @@
     </properties>
 
     <dependencies>
-<!--        lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+
 <!--        Swagger,前者较老，已经停止维护，后者较新，支持好-->
 <!--        <dependency>-->
 <!--            <groupId>io.springfox</groupId>-->
@@ -56,6 +52,12 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+<!--        lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
 
 
 
