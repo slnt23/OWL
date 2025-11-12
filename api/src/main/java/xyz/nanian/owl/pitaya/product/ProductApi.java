@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.controller;
+package xyz.nanian.owl.pitaya.product;
 
 
 import org.springframework.http.ResponseEntity;
@@ -15,36 +15,37 @@ import xyz.nanian.owl.result.Result;
 public interface ProductApi {
 
     /**
-     * 通过商品名查询，
+     * 通过商品名查询，模糊搜索
      * @param productName 商品名
      * @return 商品信息
      */
     Result<Object> productByName(String productName);
 
     /**
-     * 通过商品名删除此商品
-     * @param productName 商品名
+     * 商品列表分类查询
+     * @param sellerId 商家Id
+     * @return 商家所有商品信息
      */
-    void deleteProductByName(String productName);
+    Result<Object> queryProduct(String sellerId);
 
     /**
-     * 通过商品名更新此商品
+     * 通过商品名更新此商品信息
      * @param productName 商品名
      */
     void updateProductByName(String productName);
 
     /**
      * 新增商品
-     * @param productName 商品名 TODO 后续改改，要添加所有商品信息的，
+     * @param productName 商品名 TODO 后续改改，要添加所有商品信息的，用DTO
      */
     void addProductByName(String productName);
 
-    /**
-     * 下载商品图片
-     * @param productName 商品名
-     * @return 图片二进制
-     */
-    ResponseEntity<byte[]> getProductImage(String productName);
+//    /**
+//     * 下载商品图片
+//     * @param productName 商品名
+//     * @return 图片二进制
+//     */
+//    ResponseEntity<byte[]> getProductImage(String productName);
 
     /**
      * 上传商品图片,
@@ -53,11 +54,15 @@ public interface ProductApi {
      */
     void uploadProductImage(String productName, byte[] image);
 
-
     /**
      * 导出商品相关信息，以 Excel 格式导出
      * @param productByQuery 商品查询所需参数
      * @return 所返回的 Excel 数据
      */
     ResponseEntity<byte[]> exportProductInfo(ProductByQuery productByQuery);
-}
+
+    /**
+     * 通过商品名删除此商品
+     * @param productName 商品名
+     */
+    void deleteProductByName(String productName);}

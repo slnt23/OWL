@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.dto;
+package xyz.nanian.owl.user.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

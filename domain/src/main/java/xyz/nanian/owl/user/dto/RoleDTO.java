@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.dto;
+package xyz.nanian.owl.user.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
 /**
- * 角色DTO
+ * 角色DTO,对于新版架构可能没有太大的用处，但是可以作为扩展，
  *
  * @author slnt23
  * @since 2025/11/10

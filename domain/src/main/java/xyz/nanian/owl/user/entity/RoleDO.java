@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.entity;
+package xyz.nanian.owl.user.entity;
 
 
 import com.baomidou.mybatisplus.annotation.*;
@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 /**
  * 角色DO
+ * 目前：0=用户，1=商家，2=管理员 ;后续可以添加其他的角色：VIP等
  *
  * @author slnt23
  * @since 2025/11/12

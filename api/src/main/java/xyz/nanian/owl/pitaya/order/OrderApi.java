@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.controller;
+package xyz.nanian.owl.pitaya.order;
 
 
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
@@ -32,11 +32,21 @@ public interface OrderApi {
      */
     void deleteOrder(OrderDTO orderDTO);
 
-
     /**
      * 订单明细更改
      * @param orderDetailDTO 订单明细DTO
      */
     void updateOrderDetail(OrderDetailDTO orderDetailDTO);
 
+    /**
+     * 查看订单状态
+     * @param orderDTO 订单DTO
+     */
+    void queryOrderStatus(OrderDTO orderDTO);
+
+    /**
+     * 更新订单状态
+     * @param orderDTO 订单DTO
+     */
+    void updateOrderStatus(OrderDTO orderDTO);
 }

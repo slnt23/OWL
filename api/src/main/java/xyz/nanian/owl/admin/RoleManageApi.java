@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.controller;
+package xyz.nanian.owl.admin;
 
 
 /**
@@ -8,7 +8,7 @@ package xyz.nanian.owl.pitaya.controller;
  * @since 2025/11/12
  */
 
-public interface RoleApi {
+public interface RoleManageApi {
 
     /**
      * 新增用户角色，

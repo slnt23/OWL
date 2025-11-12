@@ -2,9 +2,8 @@ package xyz.nanian.owl.pitaya.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
-import xyz.nanian.owl.pitaya.entity.UserDO;
+import xyz.nanian.owl.user.entity.UserDO;
 
 /**
  * 用户数据Mapper
@@ -22,6 +21,6 @@ public interface UserMapper extends BaseMapper<UserDO> {
      * @param name 用户名
      * @return 用户的分页数据
      */
-    IPage<UserDO> selectUserByName(String name);
+//    IPage<UserDO> selectUserByName(String name);
 
 }
