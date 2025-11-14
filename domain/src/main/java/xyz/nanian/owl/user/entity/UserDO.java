@@ -86,5 +86,5 @@ public class UserDO {
      * 更新时间
      */
     @TableField("update_time")
-    private String updateTime;
+    private LocalDateTime updateTime;
 }

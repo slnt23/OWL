@@ -20,16 +20,16 @@ public class RoleDO {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @TableField(value = "role_name", exist = true)
+    @TableField(value = "role_name")
     private String roleName;
 
-    @TableField(value = "description", exist = true)
+    @TableField(value = "description")
     private String description;
 
-    @TableField(value = "enabled", exist = true)
+    @TableField(value = "enabled")
     private Boolean enabled = true;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT, exist = true)
+    @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 }
 

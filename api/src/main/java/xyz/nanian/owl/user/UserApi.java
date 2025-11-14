@@ -18,10 +18,10 @@ public interface UserApi {
      * 用户注册
      * @param userDTO 用户DTO
      */
-    void registerUser(UserDTO userDTO);
+    Result<String> registerUser(UserDTO userDTO);
 
     /**
-     * 用户登陆
+     * 用户登陆TODO 这个可以等了解网关，JWT等登陆 相关的模块再做，
      * @param username 用户名
      * @param password 用户密码
      */

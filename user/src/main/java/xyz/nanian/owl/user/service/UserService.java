@@ -1,0 +1,31 @@
+package xyz.nanian.owl.user.service;
+
+
+import xyz.nanian.owl.user.dto.UserDTO;
+import xyz.nanian.owl.user.dto.UserRegisterDTO;
+
+/**
+ * 用户相关的逻辑方法接口
+ *
+ * @author slnt23
+ * @since 2025/11/13
+ */
+
+public interface UserService {
+
+    /**
+     * 注册新用户
+     * @param userRegisterDTO 用户DTO基本信息
+     */
+    void saveUser(UserRegisterDTO userRegisterDTO);
+
+    /**
+     * 登陆验证
+     * @param phone 手机号
+     * @param password 输入的初始密码
+     * @return 密码是否正确的 bool
+     */
+    Boolean login(String phone, String password);
+
+
+}
