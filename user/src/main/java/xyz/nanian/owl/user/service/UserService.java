@@ -1,7 +1,7 @@
 package xyz.nanian.owl.user.service;
 
 
-import xyz.nanian.owl.user.dto.UserDTO;
+import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
 
 /**
@@ -27,5 +27,11 @@ public interface UserService {
      */
     Boolean login(String phone, String password);
 
+    /**
+     * 更新用户信息
+     * @param userInfoDTO 用户DTO
+     * @return 是否更改成功bool
+     */
+    Boolean updateUserInfo(UserInfoDTO userInfoDTO,String phone);
 
 }

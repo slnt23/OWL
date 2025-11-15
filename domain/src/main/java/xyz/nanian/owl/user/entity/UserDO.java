@@ -65,6 +65,12 @@ public class UserDO {
     private String nickname;
 
     /**
+     * 备注
+     */
+    @TableField("remark")
+    private String remark;
+
+    /**
      * 角色：0=用户，1=商家，2=管理员
      */
     @TableField("role")
