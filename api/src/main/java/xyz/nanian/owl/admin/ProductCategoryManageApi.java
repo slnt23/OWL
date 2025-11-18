@@ -12,9 +12,21 @@ import xyz.nanian.owl.pitaya.dto.ProductCategoryDTO;
 
 public interface ProductCategoryManageApi {
 
+    /**
+     * 新增商品分类管理
+     * @param productCategoryDTO
+     */
     void addProductCategory(ProductCategoryDTO productCategoryDTO);
 
+    /**
+     * 更新商品分类
+     * @param productCategoryDTO
+     */
     void updateProductCategory(ProductCategoryDTO productCategoryDTO);
 
+    /**
+     * 删除商品分类
+     * @param productCategoryDTO
+     */
     void deleteProductCategory(ProductCategoryDTO productCategoryDTO);
 }

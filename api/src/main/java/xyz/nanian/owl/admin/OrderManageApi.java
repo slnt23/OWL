@@ -12,6 +12,9 @@ import xyz.nanian.owl.pitaya.dto.OrderDTO;
 
 public interface OrderManageApi {
 
-
+    /**
+     *
+     * @param orderDTO
+     */
     void countOrders(OrderDTO orderDTO);
 }

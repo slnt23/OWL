@@ -2,7 +2,7 @@ package xyz.nanian.owl.admin;
 
 
 /**
- * 商品管理对外接口
+ * 商品管理对外接口 TODO 审核商品是？ 需要新技术实现？没有就推迟
  *
  * @author slnt23
  * @since 2025/11/13

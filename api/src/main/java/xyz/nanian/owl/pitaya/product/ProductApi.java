@@ -15,7 +15,7 @@ import xyz.nanian.owl.result.Result;
 public interface ProductApi {
 
     /**
-     * 通过商品名查询，模糊搜索
+     * 通过商品名查询，关键词模糊搜索
      * @param productName 商品名
      * @return 商品信息
      */
@@ -24,12 +24,18 @@ public interface ProductApi {
     /**
      * 商品列表分类查询
      * @param sellerId 商家Id
-     * @return 商家所有商品信息
+     * @return 分页包装的该商家的所有商品信息
      */
     Result<Object> queryProduct(String sellerId);
 
     /**
-     * 通过商品名更新此商品信息
+     * 返回商品分类，包括多级分类
+     * @return 分页包装的分类结构
+     */
+    Result<Object> queryCategory();
+
+    /**
+     * 通过商品名 更新此商品信息
      * @param productName 商品名
      */
     void updateProductByName(String productName);
@@ -41,14 +47,14 @@ public interface ProductApi {
     void addProductByName(String productName);
 
 //    /**
-//     * 下载商品图片
+//     * 下载商品图片,目前这个没用
 //     * @param productName 商品名
 //     * @return 图片二进制
 //     */
 //    ResponseEntity<byte[]> getProductImage(String productName);
 
     /**
-     * 上传商品图片,
+     * 上传商品图片,TODO，提到技术OSS或本地上传
      * @param productName 商品名
      * @param image 商品图片
      */
@@ -65,4 +71,11 @@ public interface ProductApi {
      * 通过商品名删除此商品
      * @param productName 商品名
      */
-    void deleteProductByName(String productName);}
+    void deleteProductByName(String productName);
+
+    /**
+     * 商品上下架
+     */
+    void updateProductStatus();
+
+}

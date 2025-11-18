@@ -15,13 +15,19 @@ public interface OrderApi {
 
 
     /**
-     * 购买商品后自动添加订单，
-     * @param orderDTO 订单DTO数据
+     * 购买商品后自动生成订单，
+     * @param orderDTO 订单DTO数据 TODO 后续实现类的时候根据Service 更改返回数据类型，以及 传递参数
      */
     void autoAddOrder(OrderDTO orderDTO);
 
     /**
-     * 订单信息更改以及级联
+     * 订单详情查询，级联查询订单详情
+     * @param orderDTO 订单DTO
+     */
+    void selectOrder(OrderDTO orderDTO);
+
+    /**
+     * 订单信息更改
      * @param orderDTO 订单DTO数据
      */
     void updateOrder(OrderDTO orderDTO);
@@ -49,4 +55,5 @@ public interface OrderApi {
      * @param orderDTO 订单DTO
      */
     void updateOrderStatus(OrderDTO orderDTO);
+
 }

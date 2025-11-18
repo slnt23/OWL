@@ -22,7 +22,8 @@ public interface UserApi {
     Result<String> registerUser(UserRegisterDTO user);
 
     /**
-     * 用户登陆 TODO 了解网关，JWT等登陆 相关的模块再添加新内容或者重构
+     * 用户登陆
+     * TODO 了解网关，JWT等登陆 相关的模块再添加新内容或者重构 ,JWT,Session等可以做登陆状态维持
      * @param username 用户名
      * @param password 用户密码
      */

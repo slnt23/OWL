@@ -41,6 +41,7 @@ public interface UserMapper extends BaseMapper<UserDO> {
 
     /**
      * 对以上的两个方法的汇总，数据就查询完整的DO，然后交给Service对数据进行处理，
+     * 通过手机号来查询用户所有信息
      * @param phone phone
      * @return UserDO
      */

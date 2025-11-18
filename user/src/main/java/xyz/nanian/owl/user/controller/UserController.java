@@ -1,10 +1,14 @@
 package xyz.nanian.owl.user.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.UserApi;
@@ -20,11 +24,14 @@ import xyz.nanian.owl.user.service.UserService;
  * @since 2025/11/13
  */
 
-
-@RestController("/user")
+@Slf4j
+@RestController
+@RequestMapping("/user")
+@Tag(name = "用户表",description = "有关用户的一系列controller")
 public class UserController implements UserApi {
 
-    private final static Logger log= LoggerFactory.getLogger(UserController.class);
+//    private final static Logger log= LoggerFactory.getLogger(UserController.class);
+//    添加注解@Slf4j后，相当于自动生成这一行，
 
     private final UserService userService;
 
@@ -36,7 +43,6 @@ public class UserController implements UserApi {
     UserController(UserService userService) {
 
         this.userService = userService;
-
     }
 
 
@@ -46,6 +52,7 @@ public class UserController implements UserApi {
      */
     @Override
     @GetMapping("/new-user")
+    @Operation(summary = "接口摘要：用户注册",description = "详细描述：注册")
     public Result<String> registerUser(UserRegisterDTO user) {
         log.info("新用户注册中");
 
@@ -61,6 +68,7 @@ public class UserController implements UserApi {
      */
     @Override
     @GetMapping("/single-user")
+    @Operation(summary = "用户登陆")
     public Result<String> loginUser(String username, String password) {
 
         if(userService.login(username, password)){
@@ -70,7 +78,14 @@ public class UserController implements UserApi {
         }
     }
 
+    /**
+     * 搜索用户通过用户名
+     * @param name 用户名
+     * @return 包含用户数据的分页格式，
+     */
     @Override
+    @GetMapping("/users")
+    @Operation(summary = "搜索用户")
     public Result<Object> searchUserByName(String name) {
         return null;
     }
@@ -83,6 +98,7 @@ public class UserController implements UserApi {
      */
     @Override
     @PostMapping("/single-user")
+    @Operation(summary = "用户信息更新")
     public Result<Object> updateUserByName(UserInfoDTO userInfoDTO,String rawPhone) {
         return null;
     }

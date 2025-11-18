@@ -12,7 +12,7 @@ public interface UserManageApi {
 
 
     /**
-     * 新增用户
+     * 新增用户 TODO 暂时可以推迟
      * @param name 用户名
      */
     void addUser(String name);
@@ -24,7 +24,7 @@ public interface UserManageApi {
     void deleteUserByName(String name);
 
     /**
-     * 更新用户状态
+     * 更新用户状态，封号
      * @param name 用户名
      */
     void updateUserStatus(String name);
