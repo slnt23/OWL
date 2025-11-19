@@ -1,4 +1,4 @@
-package xyz.nanian.owl;
+package xyz.nanian.owl.result;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
