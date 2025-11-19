@@ -34,4 +34,11 @@ public interface UserService {
      */
     Boolean updateUserInfo(UserInfoDTO userInfoDTO,String phone);
 
+    /**
+     * 更改用户密码
+     * @param phone 原手机号
+     * @param newPassword 新密码
+     * @return message
+     */
+    Boolean updateUserPassword(String phone,String newPassword);
 }

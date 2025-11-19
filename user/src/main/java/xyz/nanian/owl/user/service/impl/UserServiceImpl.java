@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
         UserDO userDO= userMapper.select(phone);
         String rawPassword = userDO.getPassword();
-        return passwordEncoder.matches(rawPassword, password);
+        return passwordEncoder.matches(password,rawPassword);//明文密码在前，
     }
 
     /**
@@ -96,6 +96,22 @@ public class UserServiceImpl implements UserService {
         UserDO newUserDO=INSTANCE.updateUserDO(userDO);
         newUserDO.setUserCode(userCode);
         return userMapper.update(newUserDO);
+    }
+
+    /**
+     * 更新用户密码
+     * @param phone 原手机号
+     * @param newPassword 新密码
+     * @return bool
+     */
+    @Override
+    public Boolean updateUserPassword(String phone, String newPassword) {
+
+        UserDO user=userMapper.select(phone);
+        String encryptedPassword = passwordEncoder.encode(newPassword);
+        user.setPassword(encryptedPassword);
+
+        return userMapper.update(user);
     }
 
 

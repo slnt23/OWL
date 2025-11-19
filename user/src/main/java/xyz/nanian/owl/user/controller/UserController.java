@@ -52,7 +52,7 @@ public class UserController implements UserApi {
      */
     @Override
     @GetMapping("/new-user")
-    @Operation(summary = "接口摘要：用户注册",description = "详细描述：注册")
+    @Operation(summary = "用户注册",description = "详细描述：注册")
     public Result<String> registerUser(UserRegisterDTO user) {
         log.info("新用户注册中");
 
@@ -100,18 +100,36 @@ public class UserController implements UserApi {
     @PostMapping("/single-user")
     @Operation(summary = "用户信息更新")
     public Result<Object> updateUserByName(UserInfoDTO userInfoDTO,String rawPhone) {
-        return null;
+
+        if(userService.updateUserInfo(userInfoDTO,rawPhone)){
+            return Result.success();
+        }else{
+            return Result.fail();
+        }
     }
 
     @Override
     @PostMapping("/avatar")
+    @Operation(summary = "更新用户头像")
     public Result<String> updateAvatarByCode(String Phone) {
         return null;
     }
 
+    /**
+     * 更新用户密码通过手机号，
+     * @param Phone phone
+     * @param newPassword newPassword
+     * @return message
+     */
     @Override
     @PostMapping("/password")
-    public Result<String> updatePasswordByCode(String Phone) {
-        return null;
+    @Operation(summary = "更新用户密码")
+    public Result<String> updatePasswordByCode(String Phone,String newPassword) {
+
+        if(userService.updateUserPassword(Phone,newPassword)){
+            return Result.success();
+        }else{
+            return Result.fail();
+        }
     }
 }

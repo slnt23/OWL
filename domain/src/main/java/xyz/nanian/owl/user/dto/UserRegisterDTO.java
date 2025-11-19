@@ -2,15 +2,17 @@ package xyz.nanian.owl.user.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * 注册用户使用的信息DTO
- * 可以注册用户/商家
+ * 可以注册用户/商家TODO 应该验证数据的格式，以及对数据进行校验，才可以使用数据，
  *
  * @author slnt23
  * @since 2025/11/13
  */
 
+@Data
 @Schema(name = "用户注册信息",description = "注册用户所需要的信息")
 public class UserRegisterDTO {
 

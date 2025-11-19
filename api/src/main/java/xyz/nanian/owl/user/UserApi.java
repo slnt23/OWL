@@ -45,17 +45,18 @@ public interface UserApi {
     Result<Object> updateUserByName(UserInfoDTO userInfoDTO, String rawPhone);
 
     /**
-     * 更新用户头像通过手机号，TODO 文件的
-     * @param Phone phone
+     * 更新用户头像通过手机号，TODO 文件的OSS 或者fastDFS,但是有的说都用OSS，或者fastDFS过时了，难说，
+     * @param phone phone
      * @return message
      */
-    Result<String> updateAvatarByCode(String Phone);
+    Result<String> updateAvatarByCode(String phone);
 
     /**
      * 更新用户密码通过手机号
-     * @param Phone phone
+     * @param phone phone
+     * @param newPassword newPassword
      * @return message
      */
-    Result<String> updatePasswordByCode(String Phone);
+    Result<String> updatePasswordByCode(String phone,String newPassword);
 
 }
