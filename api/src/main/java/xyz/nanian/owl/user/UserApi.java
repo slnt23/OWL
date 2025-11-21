@@ -39,10 +39,9 @@ public interface UserApi {
     /**
      * 更新用户信息
      * @param userInfoDTO 用户最新信息
-     * @param rawPhone 原手机号，或者正在使用的
      * @return message
      */
-    Result<Object> updateUserByName(UserInfoDTO userInfoDTO, String rawPhone);
+    Result<Object> updateUser(UserInfoDTO userInfoDTO);
 
     /**
      * 更新用户头像通过手机号，TODO 文件的OSS 或者fastDFS,但是有的说都用OSS，或者fastDFS过时了，难说，

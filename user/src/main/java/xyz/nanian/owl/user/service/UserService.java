@@ -32,7 +32,7 @@ public interface UserService {
      * @param userInfoDTO 用户DTO
      * @return 是否更改成功bool
      */
-    Boolean updateUserInfo(UserInfoDTO userInfoDTO,String phone);
+    Boolean updateUserInfo(UserInfoDTO userInfoDTO);
 
     /**
      * 更改用户密码

@@ -2,6 +2,7 @@ package xyz.nanian.owl.user.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * 用户自定义DTO
@@ -10,7 +11,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @since 2025/11/10
  */
 
-@Schema(name = "用户DTO")
+@Data
+@Schema(name = "用户InfoDTO")
 public class UserInfoDTO {
 
 //    @Schema(description= "账号编号",example = "UUid自动生成")
@@ -30,6 +32,9 @@ public class UserInfoDTO {
 
     @Schema(description= "备注",example = "备注")
     String remark;
+
+    @Schema(description = "原手机号",example = "119")
+    String rawPhone;
 
 //    @Schema(description= "是否启用",example = "1:启用  0：未启用")
 //    String enabled;

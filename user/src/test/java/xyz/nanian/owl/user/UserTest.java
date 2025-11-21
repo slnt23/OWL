@@ -2,12 +2,11 @@ package xyz.nanian.owl.user;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * 用户测试
+ * 用户测试,单机测试
  *
  * @author slnt23
  * @since 2025/11/19

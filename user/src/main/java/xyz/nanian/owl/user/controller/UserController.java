@@ -4,12 +4,8 @@ package xyz.nanian.owl.user.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.UserApi;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
@@ -51,9 +47,9 @@ public class UserController implements UserApi {
      * @param user 用户DTO
      */
     @Override
-    @GetMapping("/new-user")
+    @PostMapping("/new-user")
     @Operation(summary = "用户注册",description = "详细描述：注册")
-    public Result<String> registerUser(UserRegisterDTO user) {
+    public Result<String> registerUser(@RequestBody @Validated UserRegisterDTO user) {
         log.info("新用户注册中");
 
         userService.saveUser(user);
@@ -63,15 +59,15 @@ public class UserController implements UserApi {
 
     /**
      * 用户登陆验证
-     * @param username 用户名
+     * @param phone 用户手机号
      * @param password 用户密码
      */
     @Override
     @GetMapping("/single-user")
     @Operation(summary = "用户登陆")
-    public Result<String> loginUser(String username, String password) {
+    public Result<String> loginUser(@RequestParam String phone, @RequestParam String password) {
 
-        if(userService.login(username, password)){
+        if(userService.login(phone, password)){
             return  Result.success();
         }else{
             return Result.fail();
@@ -85,7 +81,7 @@ public class UserController implements UserApi {
      */
     @Override
     @GetMapping("/users")
-    @Operation(summary = "搜索用户")
+    @Operation(summary = "用户搜索")
     public Result<Object> searchUserByName(String name) {
         return null;
     }
@@ -93,15 +89,14 @@ public class UserController implements UserApi {
     /**
      * 更新用户信息
      * @param userInfoDTO 用户最新信息
-     * @param rawPhone 原手机号，或者正在使用的
      * @return message
      */
     @Override
-    @PostMapping("/single-user")
+    @PutMapping("/single-user")
     @Operation(summary = "用户信息更新")
-    public Result<Object> updateUserByName(UserInfoDTO userInfoDTO,String rawPhone) {
+    public Result<Object> updateUser(@RequestBody UserInfoDTO userInfoDTO) {
 
-        if(userService.updateUserInfo(userInfoDTO,rawPhone)){
+        if(userService.updateUserInfo(userInfoDTO)){
             return Result.success();
         }else{
             return Result.fail();
@@ -109,8 +104,8 @@ public class UserController implements UserApi {
     }
 
     @Override
-    @PostMapping("/avatar")
-    @Operation(summary = "更新用户头像")
+    @PutMapping("/avatar")
+    @Operation(summary = "用户头像更新")
     public Result<String> updateAvatarByCode(String Phone) {
         return null;
     }
@@ -122,8 +117,8 @@ public class UserController implements UserApi {
      * @return message
      */
     @Override
-    @PostMapping("/password")
-    @Operation(summary = "更新用户密码")
+    @PutMapping("/password")
+    @Operation(summary = "用户密码更新")
     public Result<String> updatePasswordByCode(String Phone,String newPassword) {
 
         if(userService.updateUserPassword(Phone,newPassword)){

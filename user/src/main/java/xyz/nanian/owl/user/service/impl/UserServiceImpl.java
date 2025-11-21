@@ -1,6 +1,7 @@
 package xyz.nanian.owl.user.service.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
@@ -20,6 +21,7 @@ import static xyz.nanian.owl.user.mapstruct.UserMap.INSTANCE;
  * @since 2025/11/13
  */
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -85,17 +87,29 @@ public class UserServiceImpl implements UserService {
      * @return 更新是否成功的bool
      */
     @Override
-    public Boolean updateUserInfo(UserInfoDTO userInfoDTO,String rawPhone) {
+    public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
 
 //        String userCode = userMapper.selectUserCodeByPhone(rawPhone);
 
-        UserDO user=userMapper.select(rawPhone);
-        String userCode =user.getUserCode();
+        UserDO user=userMapper.select(userInfoDTO.getRawPhone());
+//        log.info(user.toString());
 
-        UserDO userDO=INSTANCE.updateUserDO(userInfoDTO);
-        UserDO newUserDO=INSTANCE.updateUserDO(userDO);
-        newUserDO.setUserCode(userCode);
-        return userMapper.update(newUserDO);
+        user.setUserName(userInfoDTO.getUserName());
+        user.setNickName(userInfoDTO.getNickName());
+        user.setEmail(userInfoDTO.getEmail());
+        user.setPhone(userInfoDTO.getPhone());
+        user.setRemark(userInfoDTO.getRemark());
+
+//        String userCode =user.getUserCode();
+//        log.info("userCode:{}",userCode);
+
+//        下面没起作用，导致信息不全，
+//        UserDO newUserDO=INSTANCE.updateUserDO(user);
+//        UserDO userDO=INSTANCE.updateUserDO(userInfoDTO);
+//        log.info("newUserDO:{}",newUserDO.toString());
+
+//        newUserDO.setUserCode(userCode);
+        return userMapper.update(user);
     }
 
     /**

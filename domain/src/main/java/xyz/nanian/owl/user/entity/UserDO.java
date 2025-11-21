@@ -26,7 +26,7 @@ public class UserDO {
      * 用户名（唯一）
      */
     @TableField("username")
-    private String username;
+    private String userName;
 
     /**
      * 用户账号编号
@@ -62,7 +62,7 @@ public class UserDO {
      * 昵称
      */
     @TableField("nickname")
-    private String nickname;
+    private String nickName;
 
     /**
      * 备注
