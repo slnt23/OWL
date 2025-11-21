@@ -23,25 +23,25 @@ public class UserDO {
     private Long id;
 
     /**
-     * 用户名（唯一）
+     * 用户名（唯一），非空
      */
     @TableField("username")
     private String userName;
 
     /**
-     * 用户账号编号
+     * 用户账号编号,唯一，非空
      */
     @TableField("user_code")
     private String userCode;
 
     /**
-     * 密码（加密存储）
+     * 密码（加密存储）非空
      */
     @TableField("password")
     private String password;
 
     /**
-     * 手机号（唯一）
+     * 手机号（唯一），非空
      */
     @TableField("phone")
     private String phone;

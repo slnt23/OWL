@@ -6,33 +6,18 @@
     <update id="update">
         update user
             <set>
-                <if test="username != null">username = #{username}</if>
-                <if test="password != null">password = #{password}</if>
-                <if test="phone != null" >phone = #{phone}</if>
-                <if test="email != null ">email= #{email}</if>
-                <if test="avatar != null">avatar = #{avatar}</if>
-                <if test="nickname != null">nickname = #{nickname}</if>
-                <if test="updateTime != null" >update_time = #{updateTime}</if>
-                <if test="remark != null" >remark = #{remark}</if>
+                <if test="userName != null">username = #{userName},</if>
+                <if test="password != null">password = #{password},</if>
+                <if test="phone != null" >phone = #{phone},</if>
+                <if test="email != null ">email= #{email},</if>
+                <if test="avatar != null">avatar = #{avatar},</if>
+                <if test="nickName != null">nickname = #{nickName},</if>
+                <if test="updateTime != null" >update_time = #{updateTime},</if>
+                <if test="remark != null" >remark = #{remark},</if>
             </set>
         where user_code = #{userCode}
     </update>
 
-
-<!--    <select id="selectPasswordByPhone" resultType="java.lang.String">-->
-<!--        select password-->
-<!--        from user-->
-<!--        where phone = #{phone}-->
-<!--    </select>-->
-<!--    <select id="selectUserCodeByPhone" resultType="java.lang.String">-->
-<!--        select user_code-->
-<!--        from user-->
-<!--        <where>-->
-<!--            <if test="phone != null">-->
-<!--                and phone = #{phone}-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
     <select id="selectUserByName" resultType="xyz.nanian.owl.user.entity.UserDO"></select>
     <select id="select" resultType="xyz.nanian.owl.user.entity.UserDO">
         select id,username,user_code,password,phone,email,avatar,nickname,role,status,create_time,update_time,remark

@@ -24,21 +24,6 @@ public interface UserMapper extends BaseMapper<UserDO> {
      */
     IPage<UserDO> selectUserByName(String name);
 
-
-//    /**
-//     * 通过手机号找到对应账号的password哈希值
-//     * @param phone 账号手机号
-//     * @return password 哈希值
-//     */
-//    String selectPasswordByPhone(String phone);
-//
-//    /**
-//     * 通过手机号找到用户账号
-//     * @param phone phone
-//     * @return UUID账号
-//     */
-//    String selectUserCodeByPhone(String phone );
-
     /**
      * 对以上的两个方法的汇总，数据就查询完整的DO，然后交给Service对数据进行处理，
      * 通过手机号来查询用户所有信息

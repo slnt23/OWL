@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.service.UserService;
 
@@ -34,7 +35,18 @@ public class UserServiceTest {
         return user;
     }
 
-//    @Test
+    public UserInfoDTO createUserInfo(){
+        UserInfoDTO user=new UserInfoDTO();
+        user.setUserName("李白");
+        user.setNickName("小白");
+        user.setEmail("qq.com");
+        user.setPhone("12345");
+        user.setRemark("大诗人");
+        user.setRawPhone("120");
+        return user;
+    }
+
+    @Test
     public void testUserService() {
 
         log.info("测试注册，创建用户对象，");
@@ -53,7 +65,10 @@ public class UserServiceTest {
     }
 
     @Test
+    @DisplayName("测试更新用户信息，")
     public void testServiceUpdateInfo(){
-        UserRegisterDTO user=createUser();
+
+        UserInfoDTO user=createUserInfo();
+        log.info("测试更新用户信息{}",userService.updateUserInfo(user));
     }
 }

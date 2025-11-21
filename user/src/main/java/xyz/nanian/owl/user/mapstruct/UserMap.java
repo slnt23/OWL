@@ -25,16 +25,16 @@ public interface UserMap {
      * @param userRegisterDTO 用户注册DTO
      * @return 用户DO
      */
-    UserDO registerToUserDO(UserRegisterDTO userRegisterDTO);
+    UserDO registerDTOToUserDO(UserRegisterDTO userRegisterDTO);
 
-//    /**
-//     * 对于MapStruct不能将 ，例如DO复制到另一个有一些信息的DO，只能新创造一个DO，并复制数据，
-//     * 更改用户信息，
-//     * @param userInfoDTO 用户自定义信息
-//     * @return 用户信息
-//     */
-//    UserDO updateUserDO(UserInfoDTO userInfoDTO);
-//
+    /**
+     * 对于MapStruct不能将 ，例如DO复制到另一个有一些信息的DO，只能新创造一个DO，并复制数据，
+     * 更改用户信息，
+     * @param userInfoDTO 用户自定义信息
+     * @return 用户信息
+     */
+    UserDO UserInfoToUserDO(UserInfoDTO userInfoDTO);
+
 //    /**
 //     * 将新信息粘贴
 //     * @param userDO 最新用户信息

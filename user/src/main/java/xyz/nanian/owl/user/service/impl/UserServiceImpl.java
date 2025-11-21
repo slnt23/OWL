@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(UserRegisterDTO userRegisterDTO) {
 
-        UserDO userDO= INSTANCE.registerToUserDO(userRegisterDTO);
+        UserDO userDO= INSTANCE.registerDTOToUserDO(userRegisterDTO);
 
 //        设定账号
         String userCode = UUID.randomUUID().toString();
@@ -81,34 +81,18 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 更新用户信息，这里我的思路是，先根据已经有的邮箱或者手机号，查询到账号，
-     * 再根据账号更改信息，
+     * 2. 现在是根据手机号找到用户信息,
      * @param userInfoDTO 用户DTO
      * @return 更新是否成功的bool
      */
     @Override
     public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
 
-//        String userCode = userMapper.selectUserCodeByPhone(rawPhone);
+        UserDO userDO =userMapper.select(userInfoDTO.getRawPhone());
+        UserDO user = INSTANCE.UserInfoToUserDO(userInfoDTO);
 
-        UserDO user=userMapper.select(userInfoDTO.getRawPhone());
-//        log.info(user.toString());
+        user.setUserCode(userDO.getUserCode());
 
-        user.setUserName(userInfoDTO.getUserName());
-        user.setNickName(userInfoDTO.getNickName());
-        user.setEmail(userInfoDTO.getEmail());
-        user.setPhone(userInfoDTO.getPhone());
-        user.setRemark(userInfoDTO.getRemark());
-
-//        String userCode =user.getUserCode();
-//        log.info("userCode:{}",userCode);
-
-//        下面没起作用，导致信息不全，
-//        UserDO newUserDO=INSTANCE.updateUserDO(user);
-//        UserDO userDO=INSTANCE.updateUserDO(userInfoDTO);
-//        log.info("newUserDO:{}",newUserDO.toString());
-
-//        newUserDO.setUserCode(userCode);
         return userMapper.update(user);
     }
 

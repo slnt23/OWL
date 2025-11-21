@@ -15,9 +15,6 @@ import lombok.Data;
 @Schema(name = "用户InfoDTO")
 public class UserInfoDTO {
 
-//    @Schema(description= "账号编号",example = "UUid自动生成")
-//    String userCode;
-
     @Schema(description= "用户名",example = "秦明")
     String userName;
 

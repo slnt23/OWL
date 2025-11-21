@@ -31,7 +31,6 @@ public class UserController implements UserApi {
 
     private final UserService userService;
 
-
     /**
      * 构造器注入
      * @param userService 用户逻辑编辑
@@ -41,7 +40,6 @@ public class UserController implements UserApi {
         this.userService = userService;
     }
 
-
     /**
      * 注册用户
      * @param user 用户DTO
@@ -50,7 +48,6 @@ public class UserController implements UserApi {
     @PostMapping("/new-user")
     @Operation(summary = "用户注册",description = "详细描述：注册")
     public Result<String> registerUser(@RequestBody @Validated UserRegisterDTO user) {
-        log.info("新用户注册中");
 
         userService.saveUser(user);
 
