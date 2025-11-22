@@ -8,7 +8,6 @@ import xyz.nanian.owl.result.ResultStatus;
 
 /**
  * 全局异常处理器
- * TODO 这里通用的会导致springdoc的json识别不到，不不能用通用的，要用指定的，但是还是得找方法,只要这个类不注释，就会提示严重的版本不匹配问题
  *
  * @author slnt23
  * @since 2025/11/19

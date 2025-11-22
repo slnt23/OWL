@@ -30,7 +30,8 @@ public interface UserApi {
     Result<String> loginUser(String username, String password);
 
     /**
-     * 搜索用户通过用户名 TODO 这个暂时可以不做，这似乎是社交软件才用的，
+     * 搜索用户通过用户名
+     * TODO 这个暂时可以不做，这似乎是社交软件才用的，
      * @param name 用户名
      * @return 搜索用户相关信息
      */
@@ -44,7 +45,8 @@ public interface UserApi {
     Result<Object> updateUser(UserInfoDTO userInfoDTO);
 
     /**
-     * 更新用户头像通过手机号，TODO 文件的OSS 或者fastDFS,但是有的说都用OSS，或者fastDFS过时了，难说，
+     * 更新用户头像通过手机号，
+     * TODO 文件的OSS 或者fastDFS,但是有的说都用OSS，或者fastDFS过时了，难说，
      * @param phone phone
      * @return message
      */

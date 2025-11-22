@@ -21,10 +21,6 @@
     <dependencies>
         <dependency>
             <groupId>xyz.nanian</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>xyz.nanian</groupId>
             <artifactId>domain</artifactId>
         </dependency>
 

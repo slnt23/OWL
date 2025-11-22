@@ -30,7 +30,8 @@ import org.springframework.context.annotation.Configuration;
 )
 public class OpenApiConfig {
 
-//    @Bean //TODO 这个配置添加之后就扫描不到接口了，可能又是版本问题，
+//    TODO 这个配置添加之后就扫描不到接口了，可能又是版本问题，
+//    @Bean
 //    public GroupedOpenApi userApi() {
 //        return GroupedOpenApi.builder()
 //                .group("user")
