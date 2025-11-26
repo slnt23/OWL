@@ -16,7 +16,7 @@ public interface ProductCategoryManageApi {
      * 新增商品分类管理
      * @param productCategoryDTO
      */
-    void addProductCategory(ProductCategoryDTO productCategoryDTO);
+    Integer addProductCategory(ProductCategoryDTO productCategoryDTO);
 
     /**
      * 更新商品分类

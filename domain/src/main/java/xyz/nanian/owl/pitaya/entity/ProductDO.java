@@ -17,34 +17,39 @@ import java.time.LocalDateTime;
 @Data
 @TableName("product")
 public class ProductDO {
+    // 商品ID
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @TableField(value = "product_code", exist = true)
-    private String productCode;
-
-    @TableField(value = "product_name", exist = true)
-    private String productName;
-
-    @TableField(value = "category_id", exist = true)
+    @TableField(value = "category_id")
     private Long categoryId;
 
-    @TableField(value = "price", exist = true)
+    @TableField(value = "seller_id")
+    private Long sellerId;
+
+    @TableField(value = "name")
+    private String name;
+
+    @TableField(value = "description")
+    private String description;
+
+    @TableField(value = "price")
     private BigDecimal price;
 
-    @TableField(value = "stock", exist = true)
-    private Integer stock = 0;
+    @TableField(value = "stock")
+    private Integer stock;
 
-    @TableField(value = "status", exist = true)
-    private Boolean status = true;
+    @TableField(value = "status")
+    private Integer status = 0;
 
-    @TableField(value = "remark", exist = true)
-    private String remark;
+    @TableField(value = "cover_img")
+    private String coverImg;
 
-    @TableField(value = "create_time", fill = FieldFill.INSERT, exist = true)
+    @TableField(value = "create_time")
     private LocalDateTime createTime;
 
-    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE, exist = true)
+    @TableField(value = "update_time")
     private LocalDateTime updateTime;
 }
+
 

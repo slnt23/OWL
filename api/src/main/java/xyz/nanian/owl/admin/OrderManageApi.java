@@ -1,6 +1,7 @@
 package xyz.nanian.owl.admin;
 
 
+import xyz.nanian.owl.admin.query.OrderDateQuery;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
 
 /**
@@ -13,8 +14,8 @@ import xyz.nanian.owl.pitaya.dto.OrderDTO;
 public interface OrderManageApi {
 
     /**
-     *
-     * @param orderDTO
+     * 统计今日订单数，
+     * @param orderDateQuery 订单时间区域查询
      */
-    void countOrders(OrderDTO orderDTO);
+    Integer countOrders(OrderDateQuery orderDateQuery);
 }
