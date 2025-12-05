@@ -30,7 +30,7 @@ public class ProductController implements ProductApi{
      * @return 分页及json结果，
      */
     @Override
-    public Result<PageResult<ProductVO>> productByName(ProductQuery query) {
+    public Result<PageResult<ProductVO>> queryProductByName(ProductQuery query) {
 
 
         return null;
@@ -47,7 +47,7 @@ public class ProductController implements ProductApi{
     }
 
     @Override
-    public Integer updateProductByName(String productName) {
+    public Integer modifyProductByName(String productName) {
         return 0;
     }
 
@@ -57,7 +57,7 @@ public class ProductController implements ProductApi{
     }
 
     @Override
-    public Integer uploadProductImage(String productName, byte[] image) {
+    public Integer addProductImage(String productName, byte[] image) {
         return 0;
     }
 
@@ -72,7 +72,7 @@ public class ProductController implements ProductApi{
     }
 
     @Override
-    public Integer updateProductStatus() {
+    public Integer modifyProductStatus() {
         return 0;
     }
 }

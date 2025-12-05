@@ -17,6 +17,8 @@ import java.util.List;
 @Mapper
 public interface ProductMapper {
 
+
+
     /**
      * 分页查询商品
      * @return List<商品>

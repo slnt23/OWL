@@ -8,6 +8,6 @@
     <select id="listProduct" resultType="xyz.nanian.owl.pitaya.entity.ProductDO">
         select id,category_id,seller_id,name,description,price,stock,status,cover_img,create_time,update_time
         from product
-        where name like concat('%',#{ProductName},'%')
+        where name like concat('%',${ProductName},'%')
     </select>
 </mapper>

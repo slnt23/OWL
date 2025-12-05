@@ -22,10 +22,10 @@ public interface ProductApi {
      * @param query 商品名
      * @return 商品信息
      */
-    Result<PageResult<ProductVO>> productByName(ProductQuery query);
+    Result<PageResult<ProductVO>> queryProductByName(ProductQuery query);
 
     /**
-     * 商品详情，
+     * 搜索该商家的所有商品详情，
      * @param sellerId 商家Id
      * @return 分页包装的该商家的所有商品信息
      */
@@ -42,7 +42,7 @@ public interface ProductApi {
      * @param productName 商品名
      * @return 更改的结果数量
      */
-    Integer updateProductByName(String productName);
+    Integer modifyProductByName(String productName);
 
     /**
      * 新增商品
@@ -57,7 +57,7 @@ public interface ProductApi {
      * @param image 商品图片
      * @return 新增商品图片数量
      */
-    Integer uploadProductImage(String productName, byte[] image);
+    Integer addProductImage(String productName, byte[] image);
 
     /**
      * 导出商品相关信息，以 Excel 格式导出
@@ -77,6 +77,6 @@ public interface ProductApi {
      * 商品上下架
      * @return 返回更改条数
      */
-    Integer updateProductStatus();
+    Integer modifyProductStatus();
 
 }
