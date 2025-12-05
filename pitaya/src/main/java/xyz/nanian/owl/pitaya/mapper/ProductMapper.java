@@ -1,9 +1,9 @@
 package xyz.nanian.owl.pitaya.mapper;
 
 
-import org.mapstruct.Mapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.nanian.owl.pitaya.entity.ProductDO;
-import xyz.nanian.owl.pitaya.query.ProductQuery;
 
 import java.util.List;
 
@@ -18,10 +18,9 @@ import java.util.List;
 public interface ProductMapper {
 
 
-
     /**
      * 分页查询商品
      * @return List<商品>
      */
-    List<ProductDO> listProduct(String ProductName);
+    List<ProductDO> listProduct(@Param("productName") String productName);
 }

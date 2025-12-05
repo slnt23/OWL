@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 商品DO
+ * 商品DO，用于用户在总的搜索栏中搜索商品，
  *
  * @author slnt23
  * @since 2025/11/12
