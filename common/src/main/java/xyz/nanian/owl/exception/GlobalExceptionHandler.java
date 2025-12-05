@@ -1,4 +1,4 @@
-package xyz.nanian.owl.config.exception;
+package xyz.nanian.owl.exception;
 
 
 import org.springframework.web.bind.annotation.ExceptionHandler;

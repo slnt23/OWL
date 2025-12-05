@@ -25,7 +25,6 @@
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>pitaya</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
