@@ -20,6 +20,4 @@ public interface ProductService {
      * @return 分页商品信息，
      */
     Page<ProductVO> listProduct(ProductQuery query);
-
-
 }

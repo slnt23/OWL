@@ -57,16 +57,31 @@ public class Result<T> {
         return result;
     }
 
+    /**
+     * 静态构建方式
+     * @param data 获取的数据
+     * @param code 状态码
+     * @param message 提示信息
+     * @return 返会创建的VO对象
+     * @param <T> Result嵌套元素
+     */
+    public static <T> Result<T> create(T data,int code,String message){
+        Result<T> result =new Result<>();
+        result.setCode(code);
+        result.setMessage(message);
+        result.setData(data);
+        return result;
+    }
+
 
     /**
      * 成功、有返回数据
      * @param data 返回数据类型
-     * @param resultStatus 状态码
      * @return 返回包装好的Result类数据
      * @param <T> data数据类型
      */
-    public static <T> Result<T> success(T data ,ResultStatus resultStatus) {
-        return create(data,resultStatus);
+    public static <T> Result<T> success(T data) {
+        return create(data,ResultStatus.SUCCESS);
     }
 
 
@@ -82,12 +97,11 @@ public class Result<T> {
     /**
      * 失败、有返回数据
      * @param data 返回数据
-     * @param resultStatus 状态码
      * @return 有返回数据data
      * @param <T> data类型
      */
-    public static <T> Result<T> fail(T data ,ResultStatus resultStatus) {
-        return create(data,resultStatus);
+    public static <T> Result<T> fail(T data) {
+        return create(data,ResultStatus.FAIL);
     }
 
 

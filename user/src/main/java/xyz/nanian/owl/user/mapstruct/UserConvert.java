@@ -15,10 +15,10 @@ import xyz.nanian.owl.user.entity.UserDO;
  */
 
 @Mapper
-public interface UserMap {
+public interface UserConvert {
 
 //    实体类，
-    UserMap INSTANCE = Mappers.getMapper(UserMap.class);
+    UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
 
     /**
      * 由用户注册信息转变为用户DO

@@ -18,8 +18,7 @@ import xyz.nanian.owl.PageQuery;
 @Data
 public class ProductQuery extends PageQuery {
 
-    @Schema(description = "商品名",example = "火龙果")
+    @Schema(description = "商品名",example = "华为Pura 80")
     private String productName;
-
 
 }

@@ -1,11 +1,17 @@
 package xyz.nanian.owl.pitaya.controller;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.pitaya.product.ProductApi;
 import xyz.nanian.owl.pitaya.query.ProductQuery;
+import xyz.nanian.owl.pitaya.service.ProductService;
 import xyz.nanian.owl.pitaya.vo.CategoryVO;
 import xyz.nanian.owl.pitaya.vo.ProductVO;
 import xyz.nanian.owl.result.PageResult;
@@ -19,21 +25,35 @@ import xyz.nanian.owl.result.Result;
  * @since 2025/11/10
  */
 
-@Controller("/pitaya/product")
+@Slf4j
+@RestController
+@RequestMapping("/pitaya/product")
 @Tag(name = "商品管理接口",description = "有关商品的的接口")
 public class ProductController implements ProductApi{
 
+    private final ProductService productService;
+
+    ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     /**
      * 分页查询，商品，总的搜索，不区分商家，
+     * 本方法是查找信息的，但是这里使用PostMapping ,本意是为后续查找多条件预备，
+     * TODO 但是对于查询信息，真的最好是应用参数直接传送吗？
      * @param query 商品名信息
      * @return 分页及json结果，
      */
     @Override
-    public Result<PageResult<ProductVO>> queryProductByName(ProductQuery query) {
+    @PostMapping
+    @Operation(summary = "分页查询商品",description = "不区分商户")
+    public Result<PageResult<ProductVO>> queryProductByName(@RequestBody @Validated ProductQuery query) {
 
+        log.info("开始查询商品信息");
+        Page<ProductVO> page =productService.listProduct(query);
+        PageResult<ProductVO> pageResult = PageResult.create(page);
 
-        return null;
+        return Result.success(pageResult);
     }
 
     @Override

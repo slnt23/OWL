@@ -24,4 +24,9 @@
   - 订单
   - 购物车
 
+## 预期使用技术
+ - redis
+ - docker
+ - rocketmq
+
 

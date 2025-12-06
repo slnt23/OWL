@@ -2,6 +2,7 @@ package xyz.nanian.owl.pitaya.vo;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  * @since 2025/11/23
  */
 
+@Data
 @Schema(name = "商品VO",description = "用以返回前端的VO")
 public class ProductVO {
 

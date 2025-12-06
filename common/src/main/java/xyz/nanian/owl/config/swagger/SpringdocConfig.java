@@ -46,8 +46,6 @@ public class SpringdocConfig {
                 .group("用户中心-user") // 分组名称
                 .pathsToMatch("/user/**") // 匹配 user 模块的接口路径
                 .packagesToScan("xyz.nanian.owl.user.controller")
-                // 如果您希望扫描特定包下的 Controller，可以使用 packagesToScan
-                // .packagesToScan("xyz.nanian.owl.user.controller")
                 .build();
     }
 

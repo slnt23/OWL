@@ -12,7 +12,7 @@ import xyz.nanian.owl.user.service.UserService;
 
 import java.util.UUID;
 
-import static xyz.nanian.owl.user.mapstruct.UserMap.INSTANCE;
+import static xyz.nanian.owl.user.mapstruct.UserConvert.INSTANCE;
 
 /**
  * 用户相关的逻辑类实现
@@ -25,7 +25,7 @@ import static xyz.nanian.owl.user.mapstruct.UserMap.INSTANCE;
 @Service
 public class UserServiceImpl implements UserService {
 
-    final UserMapper userMapper ;
+    private final UserMapper userMapper ;
     private final PasswordEncoder passwordEncoder;
 
 
