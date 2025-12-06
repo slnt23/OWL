@@ -13,18 +13,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "商品类别")
 public class ProductCategoryDTO {
 
-    @Schema(description = "类别编码",example = "UUID 生成")
-    String categoryCode;
+    @Schema(description = "父分类ID",example = "0")
+    Integer parentId;
 
-    @Schema(description = "类别名",example = "水果类")
+    @Schema(description = "分类名称",example = "水果类")
     String categoryName;
+
+    @Schema(description = "分类层级",example = "第一层")
+    private Integer level;
+
+    @Schema(description = "排序字段",example = "无")
+    private Integer sort;
 
     @Schema(description = "描述",example = "类别描述")
     String description;
-
-    @Schema(description = "是否启用",example = "1:启用  0：未启用")
-    Integer enabled;
-
 
 
 }

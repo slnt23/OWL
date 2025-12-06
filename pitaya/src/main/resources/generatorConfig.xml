@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <context id="DBTables" targetRuntime="MyBatis3">
+    <context id="DBTables" targetRuntime="MyBatis3" >
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/pitaya"
                         userId="root"
@@ -16,7 +16,12 @@
         <javaClientGenerator type="XMLMAPPER"
                              targetPackage="xyz.nanian.owl.pitaya.mapper"
                              targetProject="src/main/java"/>
-        <!-- 所需生成的表项 TODO 对于多数据库有重复表的问题依旧没有解决-->
+
+<!--        <commentGenerator>-->
+<!--            <property name="suppressAllComments" value="true"/>-->
+<!--        </commentGenerator>-->
+
+        <!-- 所需生成的表项 -->
 
 <!--        <table schema="pitaya" tableName="product_category" domainObjectName="ProductCategory"/>-->
 <!--        <table schema="pitaya" tableName="product" domainObjectName="Product"/>-->
@@ -35,6 +40,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
             <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
         </table>
         <table catalog="pitaya"
@@ -45,6 +51,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
             <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
         </table>
         <table catalog="pitaya"
@@ -55,6 +62,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
             <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
         </table>
         <table catalog="pitaya"
@@ -65,6 +73,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
             <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
         </table>
         <table catalog="pitaya"
@@ -75,6 +84,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
             <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
         </table>
         <table catalog="pitaya"
@@ -85,6 +95,7 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
             <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
         </table>
 
@@ -96,6 +107,18 @@
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
+            <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
+        </table>
+        <table catalog="pitaya"
+               tableName="product"
+               domainObjectName="Product"
+               enableSelectByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableCountByExample="false"
+               selectByExampleQueryId="false">
+            <property name="suppressAllComments" value="true" />
             <generatedKey column="id" sqlStatement="MySQL" identity="true"/>
         </table>
 

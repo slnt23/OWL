@@ -21,8 +21,10 @@
     <dependencies>
         <dependency>
             <groupId>xyz.nanian</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>domain</artifactId>
         </dependency>
+
+
     </dependencies>
 
 </project>

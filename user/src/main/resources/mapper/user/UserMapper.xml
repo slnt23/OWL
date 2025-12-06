@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.nanian.owl.user.mapper.UserMapper">
+    <update id="update">
+        update user
+            <set>
+                <if test="userName != null">username = #{userName},</if>
+                <if test="password != null">password = #{password},</if>
+                <if test="phone != null" >phone = #{phone},</if>
+                <if test="email != null ">email= #{email},</if>
+                <if test="avatar != null">avatar = #{avatar},</if>
+                <if test="nickName != null">nickname = #{nickName},</if>
+                <if test="updateTime != null" >update_time = #{updateTime},</if>
+                <if test="remark != null" >remark = #{remark},</if>
+            </set>
+        where user_code = #{userCode}
+    </update>
+
+    <select id="selectUserByName" resultType="xyz.nanian.owl.user.entity.UserDO"></select>
+    <select id="select" resultType="xyz.nanian.owl.user.entity.UserDO">
+        select id,username,user_code,password,phone,email,avatar,nickname,role,status,create_time,update_time,remark
+        from user
+        where phone = #{phone}
+    </select>
+</mapper>

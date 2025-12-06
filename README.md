@@ -5,16 +5,27 @@
 ## 项目模块
 
 1. common：工具类
-2. pitaya：电商
-
-
-
+2. domain：领域模块
+3. api：对外接口模块
+4. pitaya：电商模块
+   - cart:购物车
+   - order:订单
+   - product:商品
+5. user：用户模块
+6. admin：管理员模块
+7.
 
 ## 设计目标
 
-1. 会当凌绝顶
+- 会当凌绝顶
 
 
 ## 邮箱
 
 Email: ir0211@outlook.com
+
+
+## 部署准备
+
+1. MySQL数据表建立，
+2. 
