@@ -24,7 +24,7 @@ public class SpringdocConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Nanian Owl - 统一接口文档")
+                        .title("NaNian Owl - 统一接口文档")
                         .description("本API文档集成了火龙果电商和用户中心等所有模块的接口。")
                         .version("开发版0.0.1")
                         .contact(new Contact()
@@ -44,8 +44,8 @@ public class SpringdocConfig {
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("用户中心-user") // 分组名称
-                .pathsToMatch("/api/user/**") // 匹配 user 模块的接口路径
-                .packagesToScan("xyz.nanian.owl.user/**")
+                .pathsToMatch("/user/**") // 匹配 user 模块的接口路径
+                .packagesToScan("xyz.nanian.owl.user.controller")
                 // 如果您希望扫描特定包下的 Controller，可以使用 packagesToScan
                 // .packagesToScan("xyz.nanian.owl.user.controller")
                 .build();
@@ -59,7 +59,8 @@ public class SpringdocConfig {
     public GroupedOpenApi tradeApi() {
         return GroupedOpenApi.builder()
                 .group("电商-trade")
-                .pathsToMatch("/api/trade/**") // 匹配电商模块的接口路径
+                .pathsToMatch("/pitaya/**")
+                .packagesToScan("xyz.nanian.owl.pitaya.controller")
                 .build();
     }
 }

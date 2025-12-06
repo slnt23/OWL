@@ -24,10 +24,3 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
       connection-init-sqls: SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
       filters: stat
-#springdoc:
-#  api-docs:
-#    enabled: true
-#    path: /docs
-#  swagger-ui:
-#    enabled: true
-#    path: /swagger
