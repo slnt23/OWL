@@ -29,6 +29,7 @@
         <module>user</module>
         <module>start</module>
         <module>admin</module>
+        <module>infrastructure</module>
     </modules>
 
 
@@ -43,6 +44,7 @@
         <knife4j.version>4.3.0</knife4j.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <druid.version>1.2.25</druid.version>
+        <rocketmq.version>2.2.3</rocketmq.version>
 	</properties>
 
 
@@ -125,6 +127,16 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-3-starter</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.apache.rocketmq</groupId>-->
+<!--                <artifactId>rocketmq-client-java</artifactId>-->
+<!--                <version>${rocketmq.version}</version>-->
+<!--            </dependency>-->
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.version}</version>
             </dependency>
 
 

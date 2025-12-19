@@ -21,7 +21,7 @@ public class RedisConfig {
 
     /**
      * 配置序列化
-     * @param redisConnectionFactory
+     * @param redisConnectionFactory 工厂
      * @return
      */
     @Bean

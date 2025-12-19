@@ -9,8 +9,10 @@ import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.service.UserService;
+import xyz.nanian.owl.utils.redis.RedisUtil;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static xyz.nanian.owl.user.mapstruct.UserConvert.INSTANCE;
 
@@ -27,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper ;
     private final PasswordEncoder passwordEncoder;
+    private RedisUtil redisUtil;
 
 
     /**
@@ -34,10 +37,11 @@ public class UserServiceImpl implements UserService {
      * @param userMapper 用户Mapper
      * @param passwordEncoder 密码编码器
      */
-    UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, RedisUtil redisUtil) {
 
         this.userMapper = userMapper ;
         this.passwordEncoder = passwordEncoder;
+        this.redisUtil = redisUtil;
     }
 
 
@@ -76,6 +80,13 @@ public class UserServiceImpl implements UserService {
 //        String rawPassword = userMapper.selectPasswordByPhone(phone);
 
         UserDO userDO= userMapper.select(phone);
+        redisUtil.set(
+                "user.info:" + userDO.getUserCode(),
+                userDO,
+                30,
+                TimeUnit.MINUTES
+        );
+
         String rawPassword = userDO.getPassword();
         return passwordEncoder.matches(password,rawPassword);//明文密码在前，
     }
