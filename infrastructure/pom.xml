@@ -31,7 +31,7 @@
             <artifactId>rocketmq-spring-boot-starter</artifactId>
         </dependency>
 
-        <!--        redis以及redis相关-->
+        <!--        redis以及redis相关,后续迁移，目前redis在common中-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

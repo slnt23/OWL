@@ -50,7 +50,7 @@ public class SpringdocConfig {
     }
 
     /**
-     * 3. 配置火龙果电商 API 分组 (示例)
+     * 3. 配置火龙果电商 API 分组
      * 您可以为其他模块创建额外的 GroupedOpenApi Bean。
      */
     @Bean

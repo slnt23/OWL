@@ -4,10 +4,9 @@ package xyz.nanian.owl.pitaya;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import xyz.nanian.owl.pitaya.entity.ProductDO;
-import xyz.nanian.owl.pitaya.mapper.ProductMapper;
+import xyz.nanian.owl.pitaya.consumer.entity.ProductDO;
+import xyz.nanian.owl.pitaya.consumer.mapper.ProductMapper;
 
 import java.util.List;
 

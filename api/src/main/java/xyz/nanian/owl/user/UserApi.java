@@ -38,7 +38,7 @@ public interface UserApi {
     Result<Object> searchUserByName(String name);
 
     /**
-     * 更新用户信息
+     * 更新用户信息（）
      * @param userInfoDTO 用户最新信息
      * @return message
      */
@@ -46,7 +46,7 @@ public interface UserApi {
 
     /**
      * 更新用户头像通过手机号，
-     * TODO 文件的OSS 或者fastDFS,但是有的说都用OSS，或者fastDFS过时了，难说，
+     * TODO 文件的OSS 或者fastDFS,但是有的说都用OSS，或者fastDFS过时了，难说，未实现
      * @param phone phone
      * @return message
      */

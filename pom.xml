@@ -45,6 +45,7 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <druid.version>1.2.25</druid.version>
         <rocketmq.version>2.2.3</rocketmq.version>
+        <spring.test>4.0.1</spring.test>
 	</properties>
 
 
@@ -79,7 +80,7 @@
             </dependency>
 
 
-<!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本-->
+<!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本，版本管理中心-->
             <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -137,6 +138,11 @@
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${rocketmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.test}</version>
             </dependency>
 
 

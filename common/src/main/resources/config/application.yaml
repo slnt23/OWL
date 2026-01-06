@@ -1,20 +1,3 @@
 spring:
   application:
     name: pitaya
-
-#  config:
-#    import:
-#      - optional:nacos:pitaya.yaml
-#      - optional:nacos:common.yaml
-#
-#  cloud:
-#    nacos:
-#      discovery:
-#        enabled: false
-#      #        server-addr: ${spring.cloud.nacos.server-addr}
-#      config:
-#        server-addr: ${spring.cloud.nacos.server-addr}
-#        file-extension: yaml
-#        namespace: public
-#        group: DEFAULT_GROUP
-#        refresh-enabled: true

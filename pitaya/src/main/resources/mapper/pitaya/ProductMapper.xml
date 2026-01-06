@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="xyz.nanian.owl.pitaya.mapper.ProductMapper">
+<mapper namespace="xyz.nanian.owl.pitaya.consumer.mapper.ProductMapper">
 
 
-    <select id="listProduct" resultType="xyz.nanian.owl.pitaya.entity.ProductDO">
+    <select id="listProduct" resultType="xyz.nanian.owl.pitaya.consumer.entity.ProductDO">
         select id,category_id,seller_id,name,description,price,stock,status,cover_img,create_time,update_time
         from product
         where name like concat('%',#{productName},'%')

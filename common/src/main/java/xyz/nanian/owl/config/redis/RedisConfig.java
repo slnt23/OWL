@@ -36,8 +36,10 @@ public class RedisConfig {
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer();
 
 //        配置序列化方式
+//        key
         redisTemplate.setKeySerializer(stringRedisSerializer);
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
+//        value
         redisTemplate.setValueSerializer(serializer);
         redisTemplate.setHashValueSerializer(serializer);
         redisTemplate.afterPropertiesSet();
@@ -46,9 +48,9 @@ public class RedisConfig {
     }
 
     /**
-     * 可选的，但推荐的只操作字符串
-     * @param redisConnectionFactory
-     * @return
+     * 可选的，但推荐的只操作字符串，推荐使用这个，
+     * @param redisConnectionFactory 连接工厂
+     * @return StringRedisTemplate
      */
     @Bean
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {

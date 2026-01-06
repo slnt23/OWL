@@ -1,10 +1,10 @@
 package xyz.nanian.owl.admin;
 
 
-import xyz.nanian.owl.pitaya.dto.ProductCategoryDTO;
+import xyz.nanian.owl.pitaya.consumer.dto.ProductCategoryDTO;
 
 /**
- * 商品分类管理接口
+ * 商品分类管理
  *
  * @author slnt23
  * @since 2025/11/13
