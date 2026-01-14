@@ -19,6 +19,11 @@
     </properties>
 
     <dependencies>
+<!--        log-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
 
 <!--        knife 4j -->
         <dependency>
@@ -100,15 +105,7 @@
 
 
 
-
     </dependencies>
-
-
-
-
-
-
-
 
 
 </project>

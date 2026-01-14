@@ -16,15 +16,16 @@
 ## 设计目标
 
 - 会当凌绝顶
+- 老实了
 
 
 ## 邮箱
 
-Email: ir0211@outlook.com
+Email: kitejoy@outlook.com
 
 
 ## 部署准备
 
 1. MySQL数据表建立，
 2. Redis服务器配置
-3. 
+3. 后续Nacos ,rocketMQ , Linux ,
