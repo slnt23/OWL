@@ -1,25 +1,24 @@
-package xyz.nanian.owl.pitaya.consumer.vo;
+package xyz.nanian.owl.pitaya.vo;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 商品InfoVO,对于商家查询，
+ * 商品VO,对于商家查询，
  *
  * @author slnt23
  * @since 2025/11/23
  */
 
 @Data
+@ToString
 @Schema(name = "商品VO",description = "用以返回前端的VO")
 public class ProductVO {
-
-//    @Schema(description = "商品编号",example = "UUID 生成随机码")
-//    String productCode;
 
     @Schema(description = "商品名",example = "火龙果")
     String productName;

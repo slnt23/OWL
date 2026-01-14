@@ -57,6 +57,7 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-3-starter</artifactId>
         </dependency>
+
 <!--        mapstruct-->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -67,12 +68,14 @@
             <artifactId>mapstruct-processor</artifactId>
             <scope>provided</scope>
         </dependency>
+
 <!--        拦截器相关servlet-->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+
 <!--        redis以及redis相关-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,7 +1,7 @@
 package xyz.nanian.owl.pitaya.consumer.cart;
 
 
-import xyz.nanian.owl.pitaya.consumer.dto.ProductDTO;
+import xyz.nanian.owl.pitaya.dto.ProductDTO;
 
 /**
  * 购物车模块Api

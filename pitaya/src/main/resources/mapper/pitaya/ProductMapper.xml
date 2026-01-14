@@ -5,9 +5,33 @@
 <mapper namespace="xyz.nanian.owl.pitaya.consumer.mapper.ProductMapper">
 
 
-    <select id="listProduct" resultType="xyz.nanian.owl.pitaya.consumer.entity.ProductDO">
+    <select id="listProduct" resultType="xyz.nanian.owl.pitaya.entity.ProductDO">
         select id,category_id,seller_id,name,description,price,stock,status,cover_img,create_time,update_time
         from product
         where name like concat('%',#{productName},'%')
     </select>
+    <select id="selectCategory" resultType="xyz.nanian.owl.pitaya.entity.CategoryDO">
+        select id,parent_id,name,level,sort,description,enabled,create_time,update_time
+        from category
+        where enabled = 1
+        order by level ,sort , id
+    </select>
+    <select id="selectProduct" resultType="xyz.nanian.owl.pitaya.entity.ProductDO">
+        select id,category_id, seller_id,name,description,price,stock,status,cover_img,create_time,update_time
+        from product
+        where id = #{productId}
+    </select>
+    <select id="selectCategoryByProductId" resultType="xyz.nanian.owl.pitaya.entity.CategoryDO">
+        select c.id,parent_id,c.name,level,sort,c.description,enabled,c.create_time,c.update_time
+        from category c
+        left join product p on c.id = p.category_id
+        where p.id = #{productId}
+    </select>
+    <select id="selectProductImage" resultType="xyz.nanian.owl.pitaya.entity.ProductImageDO">
+        select id,product_id,image_url,sort
+        from product_image
+        where product_id = #{productId}
+    </select>
+
+
 </mapper>

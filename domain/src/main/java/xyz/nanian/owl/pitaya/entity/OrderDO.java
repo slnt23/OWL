@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.consumer.entity;
+package xyz.nanian.owl.pitaya.entity;
 
 
 import com.baomidou.mybatisplus.annotation.*;

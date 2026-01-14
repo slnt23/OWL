@@ -1,8 +1,8 @@
 package xyz.nanian.owl.pitaya.consumer.order;
 
 
-import xyz.nanian.owl.pitaya.consumer.dto.OrderDTO;
-import xyz.nanian.owl.pitaya.consumer.dto.OrderDetailDTO;
+import xyz.nanian.owl.pitaya.dto.OrderDTO;
+import xyz.nanian.owl.pitaya.dto.OrderDetailDTO;
 
 /**
  * 订单模块对外接口 TODO 返回类型尚未确定

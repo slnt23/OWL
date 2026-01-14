@@ -1,4 +1,4 @@
-package xyz.nanian.owl.pitaya.consumer.query;
+package xyz.nanian.owl.pitaya.query;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,7 +1,7 @@
 package xyz.nanian.owl.pitaya.merchant.product;
 
 
-import xyz.nanian.owl.pitaya.consumer.dto.OrderDTO;
+import xyz.nanian.owl.pitaya.dto.OrderDTO;
 
 /**
  * 订单管理
