@@ -2,6 +2,8 @@ package xyz.nanian.owl.pitaya.merchant.order;
 
 
 import xyz.nanian.owl.pitaya.dto.ProductDTO;
+import xyz.nanian.owl.result.Result;
+import xyz.nanian.owl.result.ResultStatus;
 
 /**
  * 商品管理
@@ -14,27 +16,38 @@ public interface ProductApi {
 
     /**
      * 商品新增
-     * @param productDTO
+     *
+     * @param productDTO DTO
      */
-    void addProduct(ProductDTO productDTO);
+    Result<ResultStatus> addProduct(ProductDTO productDTO);
 
     /**
      * 修改商品
-     * @param productDTO
+     * @param productDTO DTO
      */
-    void updateProduct(ProductDTO productDTO);
+    Result<ResultStatus> updateProduct(ProductDTO productDTO);
 
     /**
      * 删除商品
-     * @param productDTO
+     * @param productId id
      */
-    void deleteProduct(ProductDTO productDTO);
+    Result<ResultStatus> deleteProduct(Integer productId);
 
     /**
-     * 上下架管理
-     * @param productDTO
+     * 上下架 ，通过商品ID
+     * @param productId productID
+     * @param productStatus status
+     * @return string
      */
-    void updateProductStatus(ProductDTO productDTO);
+    Result<ResultStatus> updateProductStatus(Integer productId, Integer productStatus);
 
+
+//    /**
+//     * 上传商品图片,TODO，提到技术OSS或本地上传
+//     * @param productName 商品名
+//     * @param image 商品图片
+//     * @return 新增商品图片数量
+//     */
+//    Integer addProductImage(String productName, byte[] image);
 
 }

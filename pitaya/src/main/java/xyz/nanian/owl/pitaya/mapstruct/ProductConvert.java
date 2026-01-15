@@ -1,8 +1,9 @@
-package xyz.nanian.owl.pitaya.consumer.mapstruct;
+package xyz.nanian.owl.pitaya.mapstruct;
 
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import xyz.nanian.owl.pitaya.dto.ProductDTO;
 import xyz.nanian.owl.pitaya.entity.CategoryDO;
 import xyz.nanian.owl.pitaya.entity.ProductDO;
 import xyz.nanian.owl.pitaya.entity.ProductImageDO;
@@ -39,4 +40,13 @@ public interface ProductConvert {
     ProductDetailVO.ProductImageVO detailToImageVO(ProductImageDO productImageDO);
 
     List<ProductDetailVO.ProductImageVO>  detailToImageVOList(List<ProductImageDO> productImageDOList);
+
+//    商家商品端
+    @Mapping(source = "productName" ,target = "name")
+    @Mapping(source = "coverImage",target = "coverImg")
+    ProductDO productToDO(ProductDTO productDTO);
+
+    ProductImageDO productImageToDO(ProductDTO.ProductImageDTO productImageDTO);
+
+    List<ProductImageDO> productImageDOList(List<ProductDTO.ProductImageDTO> productImageDTOList);
 }

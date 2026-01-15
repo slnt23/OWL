@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import xyz.nanian.owl.pitaya.entity.CategoryDO;
 import xyz.nanian.owl.pitaya.entity.ProductDO;
 import xyz.nanian.owl.pitaya.consumer.mapper.ProductMapper;
-import xyz.nanian.owl.pitaya.consumer.mapstruct.ProductConvert;
+import xyz.nanian.owl.pitaya.mapstruct.ProductConvert;
 import xyz.nanian.owl.pitaya.entity.ProductImageDO;
 import xyz.nanian.owl.pitaya.query.ProductQuery;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
@@ -66,6 +66,11 @@ public class ProductServiceImpl implements ProductService {
         return categoryVOList;
     }
 
+    /**
+     * 商品详情
+     * @param productId 商品ID
+     * @return productDetailVO
+     */
     @Override
     public ProductDetailVO getProductDetail(Integer productId) {
 

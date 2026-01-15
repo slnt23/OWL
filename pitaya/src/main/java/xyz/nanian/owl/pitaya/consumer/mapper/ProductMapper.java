@@ -32,9 +32,24 @@ public interface ProductMapper {
      */
     List<CategoryDO> selectCategory();
 
+    /**
+     * 商品分类，通过商品ID
+     * @param productId productID
+     * @return category
+     */
     CategoryDO selectCategoryByProductId(Integer productId);
 
+    /**
+     * 商品信息，通过商品ID查询
+     * @param productId productID
+     * @return productDO
+     */
     ProductDO selectProduct(Integer productId);
 
+    /**
+     * 商品照片List ,通过商品ID查询
+     * @param productId productID
+     * @return productImage<list
+     */
     List<ProductImageDO> selectProductImage(Integer productId);
 }

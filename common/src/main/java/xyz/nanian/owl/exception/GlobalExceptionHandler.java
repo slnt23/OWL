@@ -20,7 +20,8 @@ import xyz.nanian.owl.result.ResultStatus;
 import java.util.stream.Collectors;
 
 /**
- * 全局异常处理器
+ * 全局异常处理器，
+ * 日志打印的错误是提醒自己，不是返回前端的
  *
  * @author slnt23
  * @since 2025/11/19
@@ -48,7 +49,7 @@ public class GlobalExceptionHandler {
                 : "参数校验失败";
 
         log.warn("参数校验失败：{}",msg);
-        return Result.fail(msg,ResultStatus.PARAMS_INVALID);
+        return Result.fail(ResultStatus.PARAMS_INVALID);
     }
 
     /**
@@ -61,7 +62,7 @@ public class GlobalExceptionHandler {
     public Result<?> handleMethodNotSupportedHandler(HttpRequestMethodNotSupportedException e) {
 
         log.warn("请求不支持：{}",e.getMessage());
-        return Result.fail(e.getMethod(),ResultStatus.API_UN_IMPL);
+        return Result.fail(ResultStatus.API_UN_IMPL);
     }
 
     /**
@@ -87,8 +88,6 @@ public class GlobalExceptionHandler {
     public Result<?> exceptionHandler(Exception e) {
 
         log.error("未捕获异常",e);
-
-        String message = e.getClass().getSimpleName() + "---" + e.getMessage();
-        return Result.fail(message);
+        return Result.fail(ResultStatus.FAIL);
     }
 }

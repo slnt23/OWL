@@ -58,7 +58,7 @@ public class SpringdocConfig {
         return GroupedOpenApi.builder()
                 .group("电商-trade")
                 .pathsToMatch("/pitaya/**")
-                .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
+//                .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
                 .build();
     }
 }

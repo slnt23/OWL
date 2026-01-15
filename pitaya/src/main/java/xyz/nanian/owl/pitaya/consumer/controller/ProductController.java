@@ -59,10 +59,6 @@ public class ProductController implements ProductApi{
         return Result.success(pageResult);
     }
 
-//    @Override
-//    public Result<PageResult<ProductVO>> queryProduct(String sellerId) {
-//        return null;
-//    }
 
     /**
      * 商品分类
@@ -90,30 +86,39 @@ public class ProductController implements ProductApi{
     }
 
     @Override
-    public Result<Integer> modifyProductByName(String productName) {
+    public Result<ProductVO> queryProductByName(String productName) {
         return null;
     }
 
-    @Override
-    public Integer addProductByName(String productName) {
-        return 0;
-    }
-
-    @Override
-    public Integer addProductImage(String productName, byte[] image) {
-        return 0;
-    }
-
+//    @Override
+//    public Result<PageResult<ProductVO>> queryProduct(String sellerId) {
+//        return null;
+//    }
+//    @Override
+//    public Result<String> modifyProductByName(Integer productId) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Integer addProductByName(String productName) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public Integer addProductImage(String productName, byte[] image) {
+//        return 0;
+//    }
+//
 //    @Override
 //    public ResponseEntity<byte[]> exportProductInfo(ProductQuery productQuery) {
 //        return null;
 //    }
-
-    @Override
-    public Integer deleteProductByName(String productName) {
-        return 0;
-    }
-
+//
+//    @Override
+//    public Integer deleteProductByName(String productName) {
+//        return 0;
+//    }
+//
 //    @Override
 //    public Integer modifyProductStatus() {
 //        return 0;

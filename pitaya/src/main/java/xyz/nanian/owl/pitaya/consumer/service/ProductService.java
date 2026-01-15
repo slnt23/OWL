@@ -31,6 +31,10 @@ public interface ProductService {
      */
     List<CategoryVO> listCategory();
 
-
+    /**
+     * 商品详情
+     * @param productId productId
+     * @return detailVO
+     */
     ProductDetailVO getProductDetail(Integer productId);
 }
