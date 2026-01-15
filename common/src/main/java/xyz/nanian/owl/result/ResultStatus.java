@@ -11,6 +11,7 @@ import lombok.Getter;
 public enum ResultStatus {
 
     UNAUTHORIZED("暂未登录或TOKEN已经过期", 401),
+    NOT_FOUND("资源不存在",404),
     FORBIDDEN("没有相关权限", 403),
     SERVER_ERROR("服务器错误", 9994),
     PARAMS_INVALID("上传参数异常", 9995),
@@ -19,6 +20,7 @@ public enum ResultStatus {
     SERVER_BUSY("服务器繁忙", 9998),
     FAIL("操作失败", 9999),
     SUCCESS("操作成功");
+
 
 
     private final String message;

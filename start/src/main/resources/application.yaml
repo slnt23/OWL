@@ -37,3 +37,7 @@ spring:
           max-idle: 10
           min-idle: 5
           max-wait: 2000ms
+logging:
+  level:
+    com.baomidou.mybatisplus: warn
+    org.mybatis: warn

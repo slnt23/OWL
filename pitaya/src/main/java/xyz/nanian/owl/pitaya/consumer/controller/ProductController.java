@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.product.ProductApi;
 import xyz.nanian.owl.pitaya.query.ProductQuery;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
@@ -51,7 +52,7 @@ public class ProductController implements ProductApi{
     @Operation(summary = "商品列表",description = "不区分商户，分页查询")
     public Result<PageResult<ProductVO>> queryProductByName( @RequestBody @Validated ProductQuery query) {
 
-        log.info("开始查询商品信息");
+//        log.info("开始查询商品信息");
         Page<ProductVO> page =productService.listProduct(query);
         PageResult<ProductVO> pageResult = PageResult.create(page);
 
@@ -80,6 +81,7 @@ public class ProductController implements ProductApi{
     @Override
     @GetMapping("/detail")
     @Operation(summary= "商品详情",description = "单个商品的详细信息")
+    @BizLog(module = "商品详情",action = "查询商品详情")
     public Result<ProductDetailVO> queryProductDetail(@RequestParam Integer productId) {
 
         ProductDetailVO productDetailVO =productService.getProductDetail(productId);

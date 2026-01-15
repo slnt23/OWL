@@ -19,11 +19,13 @@
     </properties>
 
     <dependencies>
-<!--        log-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-logging</artifactId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+
+
 
 <!--        knife 4j -->
         <dependency>
