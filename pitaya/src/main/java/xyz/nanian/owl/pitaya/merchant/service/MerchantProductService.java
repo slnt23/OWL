@@ -12,8 +12,18 @@ import xyz.nanian.owl.pitaya.dto.ProductDTO;
 
 public interface MerchantProductService {
 
+    /**
+     * 新增商品
+     * @param productDTO DTO
+     * @return 0/1
+     */
     Boolean saveProduct(ProductDTO productDTO);
 
+    /**
+     * 更新商品
+     * @param productDTO DTO
+     * @return 0/1
+     */
     Boolean updateProduct(ProductDTO productDTO);
 
     Boolean removeProduct(Integer productId);

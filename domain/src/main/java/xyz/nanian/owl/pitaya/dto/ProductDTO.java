@@ -26,11 +26,15 @@ public class ProductDTO {
 //    @Schema(description = "商品编号",example = "UUID 生成随机码")
 //    String productCode;
 
-    @Schema(description = "分类ID")
+    @Schema(description = "商品ID",example = "1")
+    @NotEmpty
+    private Long id;
+
+    @Schema(description = "分类ID",example = "2")
     @NotNull(message = "商品分类不可为空")
     private Long categoryId;
 
-    @Schema(description = "商家ID")
+    @Schema(description = "商家ID",example = "2")
     private Long sellerId;
 
     @Schema(description = "商品名",example = "火龙果")
@@ -61,10 +65,10 @@ public class ProductDTO {
     @Schema(description = "商品详情图片")
     public static class ProductImageDTO{
 
-        @Schema(description = "商品ID")
+        @Schema(description = "商品ID",example = "1")
         private Long productId;
 
-        @Schema(description = "图片URL")
+        @Schema(description = "图片URL",example = "www.tupian.com")
         @NotNull
         private String imageUrl;
 

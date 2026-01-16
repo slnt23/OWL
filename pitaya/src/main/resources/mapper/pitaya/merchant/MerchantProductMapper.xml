@@ -39,4 +39,47 @@
             )
         </foreach>
     </insert>
+    <update id="updateProductDO" parameterType="xyz.nanian.owl.pitaya.entity.ProductDO">
+        update product
+            <set>
+                <if test="categoryId != null">
+                    category_id = #{categoryId},
+                </if>
+                <if test="sellerId != null">
+                    seller_id = #{sellerId},
+                </if>
+                <if test="name != null and name.trim() != ''">
+                    name = #{name},
+                </if>
+                <if test="description != null">
+                    description = #{description},
+                </if>
+                <if test="price != null">
+                    price = #{price},
+                </if>
+                <if test="stock != null">
+                    stock = #{stock},
+                </if>
+                <if test="status != null">
+                    status = #{status},
+                </if>
+                <if test="coverImg != null">
+                    cover_img = #{coverImg},
+                </if>
+                update_time = NOW()
+            </set>
+        where id = #{id}
+    </update>
+<!--    <update id="updateProductImageList">-->
+<!--        <if test = "images != null and images.size() >0">-->
+<!--            insert into product_image(product_id, image_url,sort)-->
+<!--            values-->
+<!--            <foreach collection="images" item ="img" separator=",">-->
+<!--                (#{productId},#{img.imageUrl},#{img.sort})-->
+<!--            </foreach>-->
+<!--        </if>-->
+<!--    </update>-->
+    <delete id="deleteProductDO">
+        delete from product_image where product_id= #{productId};
+    </delete>
 </mapper>

@@ -1,6 +1,7 @@
 package xyz.nanian.owl.pitaya.merchant.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -29,9 +30,14 @@ public class MerchantProductController implements ProductApi {
         this.merchantProductService = merchantProductService;
     }
 
+    /**
+     * 新增商品
+     * @param productDTO DTO
+     * @return
+     */
     @Override
-    @BizLog(module= "商家商品",action = "新增商品")
     @PostMapping("/products")
+    @Operation(summary = "新增商品")
     public Result<ResultStatus> addProduct(@RequestBody @Validated ProductDTO productDTO) {
 
         if(merchantProductService.saveProduct(productDTO)) {
@@ -41,20 +47,29 @@ public class MerchantProductController implements ProductApi {
         }
     }
 
+    /**
+     * 更新商品
+     * @param productDTO DTO
+     * @return
+     */
     @Override
-    @BizLog(module = "商家商品",action = "更新商品")
-    public Result<ResultStatus> updateProduct(ProductDTO productDTO) {
-        return null;
+    @PutMapping("/products/modify")
+    @Operation(summary = "更新商品")
+    public Result<ResultStatus> updateProduct(@RequestBody @Validated ProductDTO productDTO) {
+
+        if(merchantProductService.updateProduct(productDTO)) {
+            return Result.success(ResultStatus.UPDATED);
+        }else{
+            return Result.fail(ResultStatus.FAIL);
+        }
     }
 
     @Override
-    @BizLog(module = "商家商品",action = "删除商品")
     public Result<ResultStatus> deleteProduct(Integer productId) {
         return null;
     }
 
     @Override
-    @BizLog(module = "商家商品",action = "更新上下架状态")
     public Result<ResultStatus> updateProductStatus(Integer productId, Integer productStatus) {
         return null;
     }

@@ -19,9 +19,36 @@ import java.util.List;
 @Mapper
 public interface MerchantProductMapper {
 
+    /**
+     * 插入商品
+     * @param productDO
+     * @return
+     */
     Integer insertProductDO(ProductDO productDO);
 
+    /**
+     * 插入多张商品详情图片，
+     * @param productImageDOList
+     * @return
+     */
     Integer insertProductImageList(@Param("list") List<ProductImageDO> productImageDOList);
 
+    /**
+     * 更新商品
+     * @param productDO
+     * @return
+     */
+    Integer updateProductDO(ProductDO productDO);
 
+//    这里以一个删除+ 插入替代这个更新
+//    Integer updateProductImageList(
+//            @Param("productId") Long productId,
+//            @Param("images") List<ProductImageDO> productImageDOList);
+
+    /**
+     * 删除商品
+     * @param productId
+     * @return
+     */
+    Integer deleteProductDO(@Param("productId") Long productId);
 }
