@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.result.ResultStatus;
+import xyz.nanian.owl.constant.ResultStatus;
 
 import java.util.stream.Collectors;
 

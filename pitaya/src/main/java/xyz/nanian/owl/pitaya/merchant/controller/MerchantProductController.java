@@ -5,12 +5,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.dto.ProductDTO;
-import xyz.nanian.owl.pitaya.merchant.order.ProductApi;
+import xyz.nanian.owl.pitaya.merchant.product.ProductApi;
 import xyz.nanian.owl.pitaya.merchant.service.MerchantProductService;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.result.ResultStatus;
+import xyz.nanian.owl.constant.ResultStatus;
 
 /**
  * 商家商品管理接口
@@ -64,13 +63,38 @@ public class MerchantProductController implements ProductApi {
         }
     }
 
+    /**
+     * 删除商品
+     * @param productId id
+     * @return
+     */
     @Override
-    public Result<ResultStatus> deleteProduct(Integer productId) {
-        return null;
+    @Operation(summary = "删除商品",description = "通过商品ID删除商品")
+    @DeleteMapping("/products/{productId}")
+    public Result<ResultStatus> deleteProduct(@PathVariable Long productId) {
+
+        if(merchantProductService.removeProduct(productId)){
+            return Result.success(ResultStatus.DELETED);
+        }else {
+            return Result.fail(ResultStatus.FAIL);
+        }
     }
 
+    /**
+     * 更新上下架
+     * @param productId productID
+     * @param productStatus status
+     * @return
+     */
     @Override
-    public Result<ResultStatus> updateProductStatus(Integer productId, Integer productStatus) {
-        return null;
+    @Operation(summary = "上下架更新",description = "更新上下架状态")
+    @PutMapping("/products/{productId}/status")
+    public Result<ResultStatus> updateProductStatus(@PathVariable Long productId,@RequestParam Integer productStatus) {
+
+        if(merchantProductService.updateProductStatus(productId,productStatus)){
+            return Result.success(ResultStatus.UPDATED);
+        }else{
+            return Result.fail(ResultStatus.FAIL);
+        }
     }
 }

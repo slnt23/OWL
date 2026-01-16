@@ -46,9 +46,13 @@ public interface MerchantProductMapper {
 //            @Param("images") List<ProductImageDO> productImageDOList);
 
     /**
-     * 删除商品
+     * 删除商品详情图片
      * @param productId
      * @return
      */
+    Integer deleteProductImageDO(@Param("productId") Long productId);
+
     Integer deleteProductDO(@Param("productId") Long productId);
+
+    Integer updateProductStatus(@Param("productId") Long productId, @Param("status") Integer status);
 }

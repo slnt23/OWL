@@ -1,9 +1,9 @@
-package xyz.nanian.owl.pitaya.merchant.order;
+package xyz.nanian.owl.pitaya.merchant.product;
 
 
 import xyz.nanian.owl.pitaya.dto.ProductDTO;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.result.ResultStatus;
+import xyz.nanian.owl.constant.ResultStatus;
 
 /**
  * 商品管理
@@ -31,7 +31,7 @@ public interface ProductApi {
      * 删除商品
      * @param productId id
      */
-    Result<ResultStatus> deleteProduct(Integer productId);
+    Result<ResultStatus> deleteProduct(Long productId);
 
     /**
      * 上下架 ，通过商品ID
@@ -39,7 +39,7 @@ public interface ProductApi {
      * @param productStatus status
      * @return string
      */
-    Result<ResultStatus> updateProductStatus(Integer productId, Integer productStatus);
+    Result<ResultStatus> updateProductStatus(Long productId, Integer productStatus);
 
 
 //    /**

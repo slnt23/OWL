@@ -26,7 +26,18 @@ public interface MerchantProductService {
      */
     Boolean updateProduct(ProductDTO productDTO);
 
-    Boolean removeProduct(Integer productId);
+    /**
+     * 删除商品
+     * @param productId
+     * @return
+     */
+    Boolean removeProduct(Long productId);
 
-    Boolean updateProductStatus(Integer productId, String status);
+    /**
+     * 更新上下架
+     * @param productId
+     * @param status
+     * @return
+     */
+    Boolean updateProductStatus(Long productId, Integer status);
 }

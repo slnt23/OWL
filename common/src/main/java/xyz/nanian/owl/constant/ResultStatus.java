@@ -1,4 +1,4 @@
-package xyz.nanian.owl.result;
+package xyz.nanian.owl.constant;
 
 
 import lombok.Getter;

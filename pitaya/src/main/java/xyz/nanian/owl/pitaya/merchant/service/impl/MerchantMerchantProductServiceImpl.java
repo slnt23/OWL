@@ -1,6 +1,7 @@
 package xyz.nanian.owl.pitaya.merchant.service.impl;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.dto.ProductDTO;
@@ -19,6 +20,7 @@ import java.util.List;
  * @since 2026/1/15
  */
 
+@Slf4j
 @Service
 public class MerchantMerchantProductServiceImpl implements MerchantProductService {
 
@@ -63,26 +65,40 @@ public class MerchantMerchantProductServiceImpl implements MerchantProductServic
 
         Integer intProductNum = merchantProductMapper.updateProductDO(productDO);
         Long productId = productDO.getId();
-        Integer intDeleteProductImage = merchantProductMapper.deleteProductDO(productId);
+        Integer intDeleteProductImage = merchantProductMapper.deleteProductImageDO(productId);
         Integer intProductImageNum = merchantProductMapper.insertProductImageList(productImageDOList);
 
         return intProductNum > 0 || intProductImageNum > 0;
     }
 
+    /**
+     * 删除商品
+     * @param productId
+     * @return
+     */
     @Override
     @BizLog(module = "商品",action = "删除商品")
-    public Boolean removeProduct(Integer productId) {
+    public Boolean removeProduct(Long productId) {
 
+        Integer intProductImage = merchantProductMapper.deleteProductImageDO(productId);
+        Integer intProductNum = merchantProductMapper.deleteProductDO(productId);
 
-        return null;
+        log.info("删除影响行数（图，商品）：{}，{}",intProductImage,intProductNum);
+        return intProductNum >= 0 || intProductImage >= 0;
     }
 
+    /**
+     * 更新上下架状态
+     * @param productId
+     * @param status
+     * @return
+     */
     @Override
     @BizLog(module = "商品",action = "商品上下架更新状态")
-    public Boolean updateProductStatus(Integer productId, String status) {
+    public Boolean updateProductStatus(Long productId, Integer status) {
 
+        Integer intUpdateStatus=merchantProductMapper.updateProductStatus(productId,status);
 
-
-        return null;
+        return intUpdateStatus > 0;
     }
 }

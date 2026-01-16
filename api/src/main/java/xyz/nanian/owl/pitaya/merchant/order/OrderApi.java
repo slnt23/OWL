@@ -1,7 +1,9 @@
-package xyz.nanian.owl.pitaya.merchant.product;
+package xyz.nanian.owl.pitaya.merchant.order;
 
 
+import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
+import xyz.nanian.owl.result.Result;
 
 /**
  * 订单管理
@@ -13,7 +15,7 @@ import xyz.nanian.owl.pitaya.dto.OrderDTO;
 public interface OrderApi {
 
     /**
-     * 查看用户订单列表
+     * 订单列表，查询用户，TODO 使用分页返回
      * @param sellerId
      */
     void queryOrders(String sellerId);
@@ -22,5 +24,5 @@ public interface OrderApi {
      * 修改订单状态
      * @param orderDTO
      */
-    void updateOrderStatus(OrderDTO orderDTO);
+    Result<ResultStatus> updateOrderStatus(OrderDTO orderDTO);
 }
