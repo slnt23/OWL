@@ -3,11 +3,13 @@ package xyz.nanian.owl.pitaya.consumer.order;
 
 import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
-import xyz.nanian.owl.pitaya.dto.OrderDetailDTO;
+import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
 import xyz.nanian.owl.result.Result;
 
+import java.util.List;
+
 /**
- * 订单模块对外接口 TODO 返回类型尚未确定
+ * 订单模块对外接口
  *
  * @author slnt23
  * @since 2025/11/11
@@ -18,33 +20,45 @@ public interface OrderApi {
 
     /**
      * 生成订单，从购物车或者立即购买，
-     * TODO 后续实现类的时候根据Service 更改返回数据类型，以及形参
      * @param orderDTO 订单DTO数据
      */
-    Result<ResultStatus> autoAddOrder(OrderDTO orderDTO);
+    Result<ResultStatus> addOrder(OrderDTO orderDTO);
 
 //    /**
-//     * 模拟支付，因为暂时不可实现微信支付，暂时不做
+//     * 模拟支付，因为暂时不可实现微信支付，暂时不做,
+//     * 这个实现后就可以更新订单支付时间
 //     * @param orderDTO 订单DTO
 //     */
 //    void payOrder(OrderDTO orderDTO);
 
 //    订单状态流转，
-//    发货
-    Result<ResultStatus> shipOrder();
+    /**
+     * 确认收货
+     * @param orderId
+     * @return
+     */
+    Result<ResultStatus> confirmOrder(Long orderId);
 
-//    确认收货
-    Result<ResultStatus> confirmOrder();
+    /**
+     * 取消订单
+     * @param orderId
+     * @return
+     */
+    Result<ResultStatus> cancelOrder(Long orderId);
 
-//    取消订单
-    Result<ResultStatus> cancelOrder();
+    /**
+     * 订单详情查询
+     * @param orderId
+     * @return
+     */
+    Result<OrderDetailVO> queryOrderDetail(Long orderId);
 
-//    订单详情查询
-    void queryOrderDetail();
-
-//    订单列表，TODO 分页查询，
-    void queryOrderList();
-
+//    订单列表，通过用户ID ,查询当前用户所有的订单， TODO 分页查询，
+    /**
+     * 订单列表查询
+     * @param userId
+     */
+    void queryOrderList(Long userId);
 
 
 //    错误案例，都是自己瞎想的，很浅，实际使用有点行不通，

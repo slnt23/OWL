@@ -2,14 +2,16 @@ package xyz.nanian.owl.pitaya.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
- * 订单详情表
+ * 订单详情表,暂时不用，集中到 OrderDTO
  *
  * @author slnt23
  * @since 2025/11/10
  */
 
+@Data
 @Schema(name = "订单详情DTO")
 public class OrderDetailDTO {
 

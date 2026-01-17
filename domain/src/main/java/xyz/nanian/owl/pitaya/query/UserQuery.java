@@ -12,8 +12,8 @@ import lombok.Data;
  */
 
 @Data
-@Schema(name = "查询指定用户",description = "通过用户名查询")
-public class UserByQuery {
+@Schema(name = "查询用户",description = "通过用户名查询")
+public class UserQuery {
 
     @Schema(description = "用户名",example = "秦明")
     private String userName;

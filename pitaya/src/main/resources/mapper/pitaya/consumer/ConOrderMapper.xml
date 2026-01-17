@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.nanian.owl.pitaya.consumer.mapper.ConOrderMapper">
+
+
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order_mast (
+        <trim suffixOverrides=",">
+            <if test="orderNo != null">order_no,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="totalAmount != null">total_amount,</if>
+            <if test="payStatus != null">pay_status,</if>
+            <if test="orderStatus != null">order_status,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="deliveryTime != null">delivery_time,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="addressSnapshot != null">address_snapshot,</if>
+        </trim>
+        ) VALUES (
+        <trim suffixOverrides=",">
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="totalAmount != null">#{totalAmount},</if>
+            <if test="payStatus != null">#{payStatus},</if>
+            <if test="orderStatus != null">#{orderStatus},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="deliveryTime != null">#{deliveryTime},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="addressSnapshot != null">#{addressSnapshot},</if>
+        </trim>
+        )
+    </insert>
+
+    <insert id="insertOrderDetail" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO order_detail (
+        <trim suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="productImage != null">product_image,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="remark != null">remark,</if>
+            <if test="totalPrice != null">total_price,</if>
+        </trim>
+    ) VALUES (
+        <trim suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="productImage != null">#{productImage},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="totalPrice != null">#{totalPrice},</if>
+        </trim>
+    )
+    </insert>
+
+    <insert id="insertOrderDetailList">
+        INSERT INTO order_detail (
+        order_id,
+        product_id,
+        product_name,
+        product_image,
+        unit_price,
+        quantity,
+        remark,
+        total_price
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.orderId},
+            #{item.productId},
+            #{item.productName},
+            #{item.productImage},
+            #{item.unitPrice},
+            #{item.quantity},
+            #{item.remark},
+            #{item.totalPrice}
+            )
+        </foreach>
+    </insert>
+
+    <update id="updateOrder">
+        update order_mast
+            <set>
+                <if test="orderStatus != null">order_status =#{orderStatus}</if>
+            </set>
+        where id = #{orderId}
+    </update>
+    <select id="selectOrderDetail"
+            parameterType = "long"
+            resultType = "xyz.nanian.owl.pitaya.entity.OrderDetailDO">
+        select
+            id,
+            order_id,
+            product_id,
+            product_name,
+            product_image,
+            unit_price,
+            quantity,
+            remark,
+            total_price,
+            create_time
+        from order_detail
+        where order_id = #{orderId}
+        order by id
+    </select>
+    <select id="selectOrder" resultType="xyz.nanian.owl.pitaya.entity.OrderDO">
+        select
+            id,
+            order_no,
+            user_id,
+            total_amount,
+            order_status,
+            pay_time,
+            delivery_time,
+            finish_time,
+            address_snapshot,
+            create_time,
+            update_time
+        from order_mast
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="orderCode != null">
+                and order_no = #{orderNo}
+            </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="orderStatus != null">
+                and order_status = #{orderStatus}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAddress"
+            parameterType="xyz.nanian.owl.pitaya.query.AddressQuery"
+            resultType="xyz.nanian.owl.pitaya.entity.UserAddressDO">
+        select
+        id,
+        user_id,
+        receiver_name,
+        receiver_phone,
+        province,
+        city,
+        district,
+        detail,
+        is_default,
+        create_time
+        from user_address
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="addressId != null">
+                and id = #{addressId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

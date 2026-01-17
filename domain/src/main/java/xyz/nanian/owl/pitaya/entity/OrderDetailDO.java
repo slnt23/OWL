@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * 订单明细DO
@@ -13,31 +14,58 @@ import java.math.BigDecimal;
  * @since 2025/11/12
  */
 
-
 @Data
 @TableName("order_detail")
 public class OrderDetailDO {
+
+    /**
+     * 订单明细ID
+     */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @TableField(value = "detail_code", exist = true)
-    private String detailCode;
-
-    @TableField(value = "order_id", exist = true)
+    /**
+     * 订单ID
+     */
     private Long orderId;
 
-    @TableField(value = "product_id", exist = true)
+    /**
+     * 商品ID
+     */
     private Long productId;
 
-    @TableField(value = "quantity", exist = true)
-    private Integer quantity = 1;
+    /**
+     * 商品名称（下单时的快照）
+     */
+    private String productName;
 
-    @TableField(value = "unit_price", exist = true)
+    /**
+     * 商品图片（下单时的快照）
+     */
+    private String productImage;
+
+    /**
+     * 单价（下单时的价格）
+     */
     private BigDecimal unitPrice;
 
-    @TableField(value = "total_price", exist = true, insertStrategy = FieldStrategy.NEVER, updateStrategy = FieldStrategy.NEVER)
+    /**
+     * 购买数量
+     */
+    private Integer quantity;
+
+    /**
+     * 小计金额 = 单价 × 数量
+     */
     private BigDecimal totalPrice;
 
-    @TableField(value = "remark", exist = true)
+    /**
+     * 备注
+     */
     private String remark;
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 }

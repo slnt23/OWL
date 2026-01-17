@@ -45,20 +45,31 @@ public class SpringdocConfig {
         return GroupedOpenApi.builder()
                 .group("用户中心-user") // 分组名称
                 .pathsToMatch("/user/**") // 匹配 user 模块的接口路径
-                .packagesToScan("xyz.nanian.owl.user.controller")
+                .packagesToScan("xyz.nanian.owl.user.controller")//搜索特定的分路径
                 .build();
     }
 
     /**
      * 3. 配置火龙果电商 API 分组
-     * 您可以为其他模块创建额外的 GroupedOpenApi Bean。
+     * 您可以为其他模块创建额外的 GroupedOpenApi Bean
      */
     @Bean
     public GroupedOpenApi tradeApi() {
         return GroupedOpenApi.builder()
-                .group("电商-trade")
+                .group("电商中心-trade")
                 .pathsToMatch("/pitaya/**")
 //                .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
+                .build();
+    }
+
+    /**
+     * 4.管理员 api
+     */
+    @Bean
+    public GroupedOpenApi adminApi() {
+        return GroupedOpenApi.builder()
+                .group("管理员-admin")
+                .pathsToMatch("/admin/**")
                 .build();
     }
 }

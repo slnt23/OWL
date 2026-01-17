@@ -22,12 +22,12 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class MerchantMerchantProductServiceImpl implements MerchantProductService {
+public class MerchantProductServiceImpl implements MerchantProductService {
 
     MerchantProductMapper merchantProductMapper;
     ProductConvert productConvert ;
 
-    public MerchantMerchantProductServiceImpl(MerchantProductMapper merchantProductMapper, ProductConvert productConvert) {
+    public MerchantProductServiceImpl(MerchantProductMapper merchantProductMapper, ProductConvert productConvert) {
         this.productConvert = productConvert;
         this.merchantProductMapper = merchantProductMapper;
     }

@@ -15,33 +15,69 @@ import java.time.LocalDateTime;
  */
 
 @Data
-@TableName("orders")
+@TableName("order_mast")
 public class OrderDO {
+
+    /**
+     * 订单ID
+     */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @TableField(value = "order_code", exist = true)
-    private String orderCode;
+    /**
+     * 订单编号（唯一）
+     */
+    private String orderNo;
 
-    @TableField(value = "user_id", exist = true)
+    /**
+     * 用户ID
+     */
     private Long userId;
 
-    @TableField(value = "status", exist = true)
-    private String status = "待支付";
+    /**
+     * 订单总金额
+     */
+    private BigDecimal totalAmount;
 
-    @TableField(value = "total_amount", exist = true)
-    private BigDecimal totalAmount = BigDecimal.ZERO;
+    /**
+     * 支付状态：0=未支付，1=已支付
+     */
+    private Integer payStatus;
 
-    @TableField(value = "order_time", fill = FieldFill.INSERT, exist = true)
-    private LocalDateTime orderTime;
+    /**
+     * 订单状态：0=待支付，1=待发货，2=待收货，3=已完成，4=取消
+     */
+    private Integer orderStatus;
 
-    @TableField(value = "ship_time", exist = true)
-    private LocalDateTime shipTime;
+    /**
+     * 支付时间
+     */
+    private LocalDateTime payTime;
 
-    @TableField(value = "cancel_time", exist = true)
-    private LocalDateTime cancelTime;
+    /**
+     * 发货时间
+     */
+    private LocalDateTime deliveryTime;
 
-    @TableField(value = "finish_time", exist = true)
+    /**
+     * 完成时间
+     */
     private LocalDateTime finishTime;
-}
 
+    /**
+     * 收货地址快照（JSON格式）
+     */
+    private String addressSnapshot;
+
+    /**
+     * 下单时间
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
+}

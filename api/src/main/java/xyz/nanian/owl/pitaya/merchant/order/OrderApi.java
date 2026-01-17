@@ -22,7 +22,15 @@ public interface OrderApi {
 
     /**
      * 修改订单状态
-     * @param orderDTO
+     * @param orderId
+     * @param orderStatus
      */
-    Result<ResultStatus> updateOrderStatus(OrderDTO orderDTO);
+    Result<ResultStatus> updateOrderStatus(Long orderId,Integer orderStatus);
+
+//    /**
+//     * 发货
+//     * @param orderId
+//     * @return
+//     */
+//    Result<ResultStatus> shipOrder(Long orderId);
 }
