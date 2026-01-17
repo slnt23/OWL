@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.nanian.owl.pitaya.consumer.mapper.ConCartMapper">
+
+
+    <insert id="insertCartDO">
+        insert into cart_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cartId != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="checked != null">checked,</if>
+            <if test="createdTime != null">create_time,</if>
+            <if test="updatedTime !=null">update_time,</if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="cartId != null">#{cartId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="checked != null">#{checked},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedTime !=null">#{updatedTime},</if>
+        </trim>
+    </insert>
+    <update id="updateCartDO">
+        update cart_item
+            <set>
+<!--                <if test="cartId != null">id = #{cartId},</if>-->
+<!--                <if test="userId != null">user_id = #{userId},</if>-->
+<!--                <if test="productId != null">product_id = #{productId},</if>-->
+                <if test="quantity != null">quantity = #{quantity},</if>
+                <if test="checked != null">checked = #{checked},</if>
+                update_time = NOW(),
+<!--                <if test="createdTime != null">create_time = #{createdTime},</if>-->
+<!--                <if test="updateTime !=null">update_time = #{updatedTime},</if>-->
+            </set>
+        where user_id= #{userId} and product_id = #{productId}
+    </update>
+    <delete id="deleteCartDO">
+        delete from cart_item
+        where user_id= #{userId} and product_id = #{productId}
+    </delete>
+</mapper>

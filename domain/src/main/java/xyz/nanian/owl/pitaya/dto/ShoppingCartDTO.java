@@ -15,8 +15,8 @@ import lombok.Data;
 @Schema(name = "购物车DTO",description = "用于add,remove,update的购物车DTO")
 public class ShoppingCartDTO {
 
-    @Schema(description = "购物车id",example = "1")
-    Long cartId;
+//    @Schema(description = "购物车id",example = "1")
+//    Long cartId;
 
     @Schema(description = "用户ID",example = "1")
     Long userId;

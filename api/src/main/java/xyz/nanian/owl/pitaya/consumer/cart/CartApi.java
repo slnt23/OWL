@@ -25,9 +25,10 @@ public interface CartApi {
 
     /**
      * 删除购物车中商品
-     * @param shoppingCartDTO
+     * @param userId
+     * @param productId
      */
-    Result<ResultStatus> removeProduct(ShoppingCartDTO shoppingCartDTO);
+    Result<ResultStatus> removeProduct(Long userId,Long productId);
 
     /**
      * 修改购物车中的商品
