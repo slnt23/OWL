@@ -1,11 +1,14 @@
 package xyz.nanian.owl.pitaya.merchant.service.impl;
 
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerOrderMapper;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
+import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.result.PageResult;
 
 /**
  * 商家订单Service Impl
@@ -35,5 +38,26 @@ public class MerOrderServiceImpl implements MerOrderService {
 
         Integer intUpdate = merOrderMapper.updateOrder(orderId,orderStatus);
         return intUpdate>0;
+    }
+
+    /**
+     * 查询指定用户订单列表
+     * @param pageNum
+     * @param pageSize
+     * @param searchedUserId
+     * @return
+     */
+    @Override
+    @BizLog(module = "订单",action = "查询指定用户订单列表")
+    public PageResult<OrderListVO> listOrders(Integer pageNum,Integer pageSize,Long searchedUserId) {
+
+        if(pageSize > 50){
+            pageSize = 50;
+        }
+
+        Page<OrderListVO> page = new Page<>(pageNum,pageSize);
+
+        IPage<OrderListVO> result = merOrderMapper.pageOrderList(page,searchedUserId);
+        return PageResult.create(result);
     }
 }

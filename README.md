@@ -3,25 +3,26 @@
 - 宗旨：以开创多功能，发散性思维的Java，spring boot项目
 - 采用spring boot3
 
+
+
 ## 项目模块
 
 1. common：工具类
 2. domain：领域模块
 3. api：对外接口模块
-4. pitaya：电商模块
-5. user：用户模块
-6. admin：管理员模块
-7.
+4. 其余：见名指意
 
 ## 设计目标
 
 - 会当凌绝顶
-- 老实了
+- 老实了，年轻人，
+
 
 
 ## 邮箱
 
 Email: kitejoy@outlook.com
+
 
 
 ## 部署准备

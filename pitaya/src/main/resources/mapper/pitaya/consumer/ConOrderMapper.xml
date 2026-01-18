@@ -164,5 +164,18 @@
             </if>
         </where>
     </select>
+    <select id="pageOrderList" resultType="xyz.nanian.owl.pitaya.vo.OrderListVO">
+        select
+            om.id as orderId,
+            om.order_no,
+            om.order_status,
+            om.total_amount,
+            od.quantity as itemCount,
+            od.create_time
+        from order_mast om
+        join order_detail od on om.id = od.order_id
+        where user_id = #{userId}
+        order by od.create_time desc
+    </select>
 
 </mapper>

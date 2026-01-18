@@ -44,4 +44,18 @@
         delete from cart_item
         where user_id= #{userId} and product_id = #{productId}
     </delete>
+    <select id="pageCartVO" resultType="xyz.nanian.owl.pitaya.vo.ShoppingCartVO">
+        SELECT
+            ci.id            AS cartId,
+            ci.product_id    AS productId,
+            ci.quantity      AS quantity,
+            ci.checked       AS checked,
+            p.name           AS productName,
+            p.price          AS price,
+            p.cover_img      AS coverImage
+        FROM cart_item ci
+                 JOIN product p ON ci.product_id = p.id
+        WHERE ci.user_id = #{userId}
+        ORDER BY ci.create_time DESC
+    </select>
 </mapper>

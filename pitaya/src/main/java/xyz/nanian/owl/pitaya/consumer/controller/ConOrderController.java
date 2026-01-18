@@ -8,7 +8,10 @@ import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.pitaya.consumer.order.OrderApi;
 import xyz.nanian.owl.pitaya.consumer.service.ConOrderService;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
+import xyz.nanian.owl.pitaya.query.OrderQuery;
 import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
+import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
 
 import java.util.List;
@@ -21,7 +24,7 @@ import java.util.List;
  */
 
 @RestController
-@Tag(name = "消费者订单管理接口",description = "order")
+@Tag(name = "消费者订单管理",description = "order")
 @RequestMapping("/pitaya/order/consumer")
 public class ConOrderController implements OrderApi {
 
@@ -88,7 +91,7 @@ public class ConOrderController implements OrderApi {
      * @return
      */
     @Override
-    @Operation(summary = "订单详情查询",description = "order detail")
+    @Operation(summary = "订单详情",description = "order detail")
     @GetMapping("/{orderId}")
     public Result<OrderDetailVO> queryOrderDetail(@PathVariable Long orderId) {
 
@@ -96,10 +99,17 @@ public class ConOrderController implements OrderApi {
         return Result.success(od);
     }
 
-
+    /**
+     * 查询订单列表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @Override
-    @Operation(summary = "订单列表查询", description = "order list")
-    public void queryOrderList(Long userId) {
+    @Operation(summary = "订单列表", description = "order list")
+    @GetMapping("/orders")
+    public Result<PageResult<OrderListVO>> queryOrderList(Integer pageNum,Integer pageSize) {
 
+        return Result.success(conOrderService.listOrders(pageNum,pageSize));
     }
 }

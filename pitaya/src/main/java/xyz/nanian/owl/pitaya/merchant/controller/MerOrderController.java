@@ -3,16 +3,18 @@ package xyz.nanian.owl.pitaya.merchant.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerOrderMapper;
 import xyz.nanian.owl.pitaya.merchant.order.OrderApi;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
+import xyz.nanian.owl.pitaya.query.OrderQuery;
+import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
+
+import java.util.List;
 
 /**
  * 商家订单Controller
@@ -32,9 +34,19 @@ public class MerOrderController implements OrderApi {
         this.merOrderService = merOrderService;
     }
 
+    /**
+     * 订单列表 ，查询所选用户的，
+     * @param pageNum
+     * @param pageSize
+     * @param userId
+     * @return
+     */
     @Override
-    public void queryOrders(String sellerId) {
+    @GetMapping("/orders")
+    @Operation(summary = "订单列表",description = "商家搜查指定用户的订单列表")
+    public Result<PageResult<OrderListVO>> queryOrders(Integer pageNum,Integer pageSize,Long userId) {
 
+        return Result.success(merOrderService.listOrders(pageNum,pageSize,userId));
     }
 
     /**

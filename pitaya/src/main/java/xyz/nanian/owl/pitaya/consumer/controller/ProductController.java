@@ -30,7 +30,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/pitaya/product/consumer")
-@Tag(name = "消费者商品管理接口",description = "有关商品的的接口")
+@Tag(name = "消费者商品管理",description = "有关商品的的接口")
 public class ProductController implements ProductApi{
 
     private final ProductService productService;

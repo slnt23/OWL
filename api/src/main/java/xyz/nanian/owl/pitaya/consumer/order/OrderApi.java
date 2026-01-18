@@ -3,7 +3,10 @@ package xyz.nanian.owl.pitaya.consumer.order;
 
 import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
+import xyz.nanian.owl.pitaya.query.OrderQuery;
 import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
+import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
 
 import java.util.List;
@@ -56,10 +59,11 @@ public interface OrderApi {
 //    订单列表，通过用户ID ,查询当前用户所有的订单， TODO 分页查询，
     /**
      * 订单列表查询
-     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
      */
-    void queryOrderList(Long userId);
-
+    Result<PageResult<OrderListVO>> queryOrderList(Integer pageNum,Integer pageSize);
 
 //    错误案例，都是自己瞎想的，很浅，实际使用有点行不通，
 //    /**

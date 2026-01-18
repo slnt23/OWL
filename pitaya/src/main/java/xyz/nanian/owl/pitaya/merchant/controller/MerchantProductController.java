@@ -20,7 +20,7 @@ import xyz.nanian.owl.constant.ResultStatus;
 
 @RestController
 @RequestMapping("/pitaya/product/merchant")
-@Tag(name = "商家商品管理接口",description = "商家商品")
+@Tag(name = "商家商品管理",description = "商家商品")
 public class MerchantProductController implements ProductApi {
 
     MerchantProductService merchantProductService;

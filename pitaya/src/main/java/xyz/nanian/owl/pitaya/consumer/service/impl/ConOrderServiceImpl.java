@@ -1,6 +1,8 @@
 package xyz.nanian.owl.pitaya.consumer.service.impl;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConOrderMapper;
@@ -15,6 +17,8 @@ import xyz.nanian.owl.pitaya.query.OrderQuery;
 import xyz.nanian.owl.pitaya.vo.AddressVO;
 import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.vo.OrderItemVO;
+import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.result.PageResult;
 
 import java.util.List;
 import java.util.UUID;
@@ -128,4 +132,31 @@ public class ConOrderServiceImpl implements ConOrderService {
 
         return orderDetailVO;
     }
+
+    /**
+     * 查询订单列表
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @Override
+    @BizLog(module = "订单",action = "用户订单列表")
+    public PageResult<OrderListVO> listOrders(Integer pageNum,Integer pageSize) {
+
+//        这里后期改为从后端获取用户的ID,目前自定义
+//        Long userId = orderQuery.getUserId();
+        Long userId = 1L;
+
+        if(pageSize> 50){
+            pageSize = 50;
+        }
+
+        Page<OrderListVO> page = new  Page<>(pageNum,pageSize);
+
+        IPage<OrderListVO> result = conOrderMapper.pageOrderList(page,userId);
+
+        return PageResult.create(result);
+    }
+
+
 }

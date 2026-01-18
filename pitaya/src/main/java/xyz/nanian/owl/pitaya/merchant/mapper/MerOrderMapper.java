@@ -1,7 +1,11 @@
 package xyz.nanian.owl.pitaya.merchant.mapper;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import xyz.nanian.owl.pitaya.vo.OrderListVO;
 
 /**
  * 商家订单Mapper
@@ -20,5 +24,14 @@ public interface MerOrderMapper {
      * @return
      */
     Integer updateOrder(Long orderId, Integer orderStatus);
+
+    /**
+     * 查询用户订单列表
+     * @param page
+     * @param userId
+     * @return
+     */
+    IPage<OrderListVO> pageOrderList(Page<?> page,
+                                     @Param("userId") Long userId);
 
 }

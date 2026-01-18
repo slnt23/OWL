@@ -1,12 +1,16 @@
 package xyz.nanian.owl.pitaya.consumer.mapper;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.nanian.owl.pitaya.entity.OrderDO;
 import xyz.nanian.owl.pitaya.entity.OrderDetailDO;
 import xyz.nanian.owl.pitaya.entity.UserAddressDO;
 import xyz.nanian.owl.pitaya.query.AddressQuery;
 import xyz.nanian.owl.pitaya.query.OrderQuery;
+import xyz.nanian.owl.pitaya.vo.OrderListVO;
 
 import java.util.List;
 
@@ -69,5 +73,14 @@ public interface ConOrderMapper {
      * @return
      */
     UserAddressDO selectAddress(AddressQuery addressQuery);
+
+    /**
+     * 查询订单列表
+     * @param page
+     * @param userId
+     * @return
+     */
+    IPage<OrderListVO> pageOrderList(Page<?> page,
+                                     @Param("userId") Long userId);
 
 }
