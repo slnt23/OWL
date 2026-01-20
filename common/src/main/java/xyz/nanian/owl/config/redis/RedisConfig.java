@@ -1,6 +1,8 @@
 package xyz.nanian.owl.config.redis;
 
 
+import io.lettuce.core.ReadFrom;
+import org.springframework.boot.autoconfigure.data.redis.LettuceClientConfigurationBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -48,12 +50,23 @@ public class RedisConfig {
     }
 
     /**
-     * 可选的，但推荐的只操作字符串，推荐使用这个，
+     * 配置序列化
+     * 可选的，但推荐的只操作字符串，推荐使用这个，感觉这个和哈希都好
      * @param redisConnectionFactory 连接工厂
      * @return StringRedisTemplate
      */
     @Bean
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
          return new StringRedisTemplate(redisConnectionFactory);
+    }
+
+    /**
+     * 配置Redis 的读写分离，目前是优先从子节点 读取，主节点 写入
+     * @return
+     */
+    @Bean
+    public LettuceClientConfigurationBuilderCustomizer configurationBuilderCustomizer() {
+        return clientConfigurationBuilder ->
+                clientConfigurationBuilder.readFrom(ReadFrom.REPLICA_PREFERRED);
     }
 }

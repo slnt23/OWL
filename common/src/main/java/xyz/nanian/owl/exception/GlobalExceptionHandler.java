@@ -32,6 +32,17 @@ import java.util.stream.Collectors;
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler {
 
+
+    /**
+     * 业务异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = BizException.class)
+    public Result<?> handleBizException(BizException e) {
+        return Result.fail(ResultStatus.BIZ_ERROR);
+    }
+
     /**
      * 参数校验异常
      * @param e @Valid @Validated校验

@@ -33,7 +33,7 @@ public class UserRegisterDTO {
     @Schema(description = "邮件地址",example = "@qq.com")
     String email;
 
-    @Schema(description = "角色：只有用户与商家,1:用户，2：商家",example = "1")
+    @Schema(description = "角色：只有用户与商家,1:消费者用户，2：商家",example = "1")
     Integer role;
 
 }

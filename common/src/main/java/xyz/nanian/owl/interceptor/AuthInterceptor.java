@@ -8,7 +8,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * 全局拦截器 TODO 全局拦截器的设置，用于登陆验证，请求日志，链路追踪,后续设置登陆相关补充
+ * 全局拦截器,
+ * 这里在配置中注册拦截器
  *
  * @author slnt23
  * @since 2025/12/10
@@ -26,28 +27,25 @@ public class AuthInterceptor implements HandlerInterceptor {
      * @throws Exception 异常
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 在 Controller 方法执行之前执行
-//        String token = request.getHeader("Authorization");
-//        if (token == null || !token.startsWith("Bearer ")) {
-//            response.setStatus(401);
-//            response.setContentType("application/json;charset=UTF-8");
-//            response.getWriter().write(
-//                    JSONObject.toJSONString(Result.create("未登录或登录已过期", ResultStatus.UNAUTHORIZED))
-//            );
-//            return false; // 拦截请求，不继续向下执行
-//        }
-        // 验证通过，继续执行 Controller
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Object handler) throws Exception {
+
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Object handler,
+                           ModelAndView modelAndView) throws Exception {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request,
+                                HttpServletResponse response,
+                                Object handler, Exception ex) throws Exception {
 
     }
 }

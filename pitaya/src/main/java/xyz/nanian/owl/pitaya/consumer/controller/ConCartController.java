@@ -3,17 +3,15 @@ package xyz.nanian.owl.pitaya.consumer.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.pitaya.consumer.cart.CartApi;
 import xyz.nanian.owl.pitaya.consumer.service.ConCartService;
 import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
-import xyz.nanian.owl.pitaya.query.ShoppingCartQuery;
 import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
 import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
-
-import java.util.List;
 
 /**
  * 消费者购物车Controller
@@ -25,13 +23,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/pitaya/cart/consumer")
 @Tag(name = "消费者购物车管理",description = "购物车相关")
+@RequiredArgsConstructor
 public class ConCartController implements CartApi {
 
-    private ConCartService conCartService;
+    private final ConCartService conCartService;
 
-    public ConCartController(ConCartService conCartService) {
-        this.conCartService = conCartService;
-    }
+//    使用lombok 的@RequiredArgsConstructor 会自动对final 字段创建构造函数
+//    public ConCartController(ConCartService conCartService) {
+//        this.conCartService = conCartService;
+//    }
 
     /**
      * 添加购物车中商品
@@ -40,7 +40,7 @@ public class ConCartController implements CartApi {
      */
     @Override
     @PostMapping("/product")
-    @Operation(summary = "购物车商品",description = "传DTO,添加商品")
+    @Operation(summary = "新增购物车商品",description = "传DTO,添加商品")
     public Result<ResultStatus> addProduct(@RequestBody ShoppingCartDTO shoppingCartDTO) {
 
         if(conCartService.saveProduct(shoppingCartDTO)){
@@ -58,7 +58,7 @@ public class ConCartController implements CartApi {
      */
     @Override
     @DeleteMapping("/product")
-    @Operation(summary = "购物车商品",description = "通过用户ID，商品ID")
+    @Operation(summary = "删除购物车商品",description = "通过用户ID，商品ID")
     public Result<ResultStatus> removeProduct(
             @RequestParam("userId") Long userId, @RequestParam("productId") Long productId) {
 
@@ -76,7 +76,7 @@ public class ConCartController implements CartApi {
      */
     @Override
     @PutMapping("/product")
-    @Operation(summary = "购物车商品",description = "通过DTO")
+    @Operation(summary = "更新购物车商品",description = "通过DTO")
     public Result<ResultStatus> updateProduct(@RequestBody ShoppingCartDTO shoppingCartDTO) {
 
         if(conCartService.updateProduct(shoppingCartDTO)){

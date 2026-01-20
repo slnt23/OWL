@@ -6,11 +6,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.UserApi;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.service.UserService;
+import xyz.nanian.owl.utils.jwt.JwtUtil;
 
 /**
  * 用户相关的控制器方法,
@@ -23,7 +25,7 @@ import xyz.nanian.owl.user.service.UserService;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Tag(name = "用户表",description = "有关用户的一系列controller")
+@Tag(name = "用户个人管理",description = "有关用户的一系列controller")
 public class UserController implements UserApi {
 
 //    private final static Logger log= LoggerFactory.getLogger(UserController.class);
@@ -55,7 +57,7 @@ public class UserController implements UserApi {
     }
 
     /**
-     * 用户登陆验证
+     * 用户登陆
      * @param phone 用户手机号
      * @param password 用户密码
      */
@@ -64,11 +66,15 @@ public class UserController implements UserApi {
     @Operation(summary = "用户登陆")
     public Result<String> loginUser(@RequestParam String phone, @RequestParam String password) {
 
-        if(userService.login(phone, password)){
-            return  Result.success();
-        }else{
+        UserInfoDTO user = userService.login(phone,password);
+
+        if(user==null){
             return Result.fail();
         }
+
+        String token = JwtUtil.generateToken(user.getUserId(),user.getUserName());
+
+        return Result.success(token);
     }
 
     /**

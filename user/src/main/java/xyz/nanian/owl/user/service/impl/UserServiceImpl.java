@@ -4,17 +4,17 @@ package xyz.nanian.owl.user.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
+import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
-import xyz.nanian.owl.utils.redis.RedisUtil;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.user.mapstruct.UserConvert.INSTANCE;
+//import static xyz.nanian.owl.user.mapstruct.UserConvert.INSTANCE;
 
 /**
  * 用户相关的逻辑类实现
@@ -29,21 +29,19 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper ;
     private final PasswordEncoder passwordEncoder;
-    private RedisUtil redisUtil;
-
+    private final UserConvert userConvert;
 
     /**
      * 构造器注入
      * @param userMapper 用户Mapper
      * @param passwordEncoder 密码编码器
      */
-    UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, RedisUtil redisUtil) {
+    UserServiceImpl(UserMapper userMapper, PasswordEncoder passwordEncoder, UserConvert userConvert) {
 
         this.userMapper = userMapper ;
         this.passwordEncoder = passwordEncoder;
-        this.redisUtil = redisUtil;
+        this.userConvert = userConvert;
     }
-
 
 
     /**
@@ -51,9 +49,10 @@ public class UserServiceImpl implements UserService {
      * @param userRegisterDTO 用户DTO基本信息
      */
     @Override
+    @BizLog(module = "用户",action = "注册用户")
     public void saveUser(UserRegisterDTO userRegisterDTO) {
 
-        UserDO userDO= INSTANCE.registerDTOToUserDO(userRegisterDTO);
+        UserDO userDO= userConvert.registerDTOToUserDO(userRegisterDTO);
 
 //        设定账号
         String userCode = UUID.randomUUID().toString();
@@ -75,32 +74,32 @@ public class UserServiceImpl implements UserService {
      * @return 密码是否正确的 bool
      */
     @Override
-    public Boolean login(String phone, String password) {
-
-//        String rawPassword = userMapper.selectPasswordByPhone(phone);
+    @BizLog(module = "用户",action = "用户登陆")
+    public UserInfoDTO login(String phone, String password) {
 
         UserDO userDO= userMapper.select(phone);
-        redisUtil.set(
-                "user.info:" + userDO.getUserCode(),
-                userDO,
-                30,
-                TimeUnit.MINUTES
-        );
 
         String rawPassword = userDO.getPassword();
-        return passwordEncoder.matches(password,rawPassword);//明文密码在前，
+        if(passwordEncoder.matches(password,rawPassword)){
+            return userConvert.userDOToUserInfoDTO(userDO);
+        }else {
+            return null;
+        }
     }
 
     /**
-     * 2. 现在是根据手机号找到用户信息,
+     * 更新用户信息
+     * 现在是根据手机号找到用户信息,
+     *
      * @param userInfoDTO 用户DTO
      * @return 更新是否成功的bool
      */
     @Override
+    @BizLog(module = "用户",action = "更新用户信息")
     public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
 
         UserDO userDO =userMapper.select(userInfoDTO.getRawPhone());
-        UserDO user = INSTANCE.UserInfoToUserDO(userInfoDTO);
+        UserDO user = userConvert.UserInfoToUserDO(userInfoDTO);
 
         user.setUserCode(userDO.getUserCode());
 
@@ -114,6 +113,7 @@ public class UserServiceImpl implements UserService {
      * @return bool
      */
     @Override
+    @BizLog(module = "用户",action = "更新用户密码")
     public Boolean updateUserPassword(String phone, String newPassword) {
 
         UserDO user=userMapper.select(phone);

@@ -25,7 +25,7 @@ public interface UserService {
      * @param password 输入的初始密码
      * @return 密码是否正确的 bool
      */
-    Boolean login(String phone, String password);
+    UserInfoDTO login(String phone, String password);
 
     /**
      * 更新用户信息

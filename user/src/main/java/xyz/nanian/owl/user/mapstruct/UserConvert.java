@@ -2,6 +2,7 @@ package xyz.nanian.owl.user.mapstruct;
 
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
@@ -14,11 +15,11 @@ import xyz.nanian.owl.user.entity.UserDO;
  * @since 2025/11/13
  */
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserConvert {
 
 //    实体类，
-    UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
+//    UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
 
     /**
      * 由用户注册信息转变为用户DO
@@ -41,4 +42,7 @@ public interface UserConvert {
 //     * @return 用户信息DO
 //     */
 //    UserDO updateUserDO(UserDO userDO);
+
+    @Mapping(source = "id",target = "userId")
+    UserInfoDTO userDOToUserInfoDTO(UserDO userDO);
 }

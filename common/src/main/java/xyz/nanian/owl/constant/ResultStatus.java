@@ -2,6 +2,7 @@ package xyz.nanian.owl.constant;
 
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 /**
  * 返回状态码以及信息
@@ -44,7 +45,8 @@ public enum ResultStatus {
     CONTENT_TYPE_ERR("ContentType错误", 9996),
     API_UN_IMPL("功能尚未实现", 9997),
     SERVER_BUSY("服务器繁忙", 9998),
-    FAIL("操作失败", 9999);
+    FAIL("操作失败", 9999),
+    BIZ_ERROR("业务异常",9995);
 
 
 
