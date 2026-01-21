@@ -117,12 +117,12 @@ public class Result<T> {
 
     /**
      * 失败，自定义返回状态码
-     * @param data 返回数据
+     *
      * @param resultStatus 状态码
      * @return 结果
      * @param <T> 自定义类型
      */
-    public static <T> Result<T> fail(T data ,ResultStatus resultStatus){
+    public static <T> Result<T> fail(ResultStatus resultStatus){
         return create(null,resultStatus);
     }
 

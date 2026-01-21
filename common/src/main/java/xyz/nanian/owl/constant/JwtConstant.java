@@ -15,7 +15,7 @@ public class JwtConstant {
      * 实际项目必须放配置文件 / 环境变量
      */
     public static final String SECRET =
-            "nanian-owl-jwt-secret-key-32bytes";
+            "nanian-owl-jwt-secret-key-32bytes-test";
 
     /**
      * token 有效期：30 天（毫秒）

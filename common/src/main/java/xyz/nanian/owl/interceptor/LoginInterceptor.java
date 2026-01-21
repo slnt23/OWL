@@ -36,6 +36,8 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
+
+
         log.info("LoginInteger 拦截请求：{}",request.getRequestURI());
         log.info("Request: method={}, uri={}, headers={}, params={}",
                 request.getMethod(),
@@ -47,6 +49,9 @@ public class LoginInterceptor implements HandlerInterceptor {
                         )),
                 request.getParameterMap()
         );
+
+
+
 
         String token = request.getHeader("Authorization");
         if (token == null || !token.startsWith("Bearer ")) {

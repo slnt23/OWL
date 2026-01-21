@@ -35,18 +35,7 @@ public class SpringdocConfig {
                                 .email("ir0211@outlook.com")
                         )
                 )
-//                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
-//                .components(new Components()
-//                        .addSecuritySchemes("bearerAuth",
-//                                new SecurityScheme()
-//                                        .type(SecurityScheme.Type.HTTP)
-//                                        .scheme("bearer")
-//                                        .bearerFormat("JWT")
-//                                        .name("Authorization")
-//                                        .in(SecurityScheme.In.HEADER)
-//                                        .description("请输入 Bearer {token}")
-//                        )
-//                );
+//                目前来说下面的配置没有生效，问题未知
                 .components(new Components()
                         .addSecuritySchemes("jwtAuth",
                                 new SecurityScheme()

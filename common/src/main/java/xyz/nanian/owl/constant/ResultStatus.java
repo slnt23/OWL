@@ -49,8 +49,6 @@ public enum ResultStatus {
     BIZ_ERROR("业务异常",9995);
 
 
-
-
     private final String message;
     private final Integer code;
 
