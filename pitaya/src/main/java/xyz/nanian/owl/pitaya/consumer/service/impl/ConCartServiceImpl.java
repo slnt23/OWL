@@ -4,6 +4,10 @@ package xyz.nanian.owl.pitaya.consumer.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConCartMapper;
@@ -15,8 +19,13 @@ import xyz.nanian.owl.pitaya.query.ShoppingCartQuery;
 import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
 import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
+import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static xyz.nanian.owl.constant.RedisConstant.CART_KEY;
+import static xyz.nanian.owl.constant.RedisConstant.CART_TIME_OUT;
 
 /**
  * 消费者购物车Service实现
@@ -28,12 +37,16 @@ import java.util.List;
 @Service
 public class ConCartServiceImpl implements ConCartService {
 
-    private ConCartMapper conCartMapper;
-    private ShoppingCartConvert shoppingCartConvert;
+    private final ConCartMapper conCartMapper;
+    private final ShoppingCartConvert shoppingCartConvert;
+    private final RedisTemplate<String,Object> redisTemplate;
 
-    public ConCartServiceImpl(ConCartMapper conCartMapper, ShoppingCartConvert shoppingCartConvert) {
+    public ConCartServiceImpl(ConCartMapper conCartMapper,
+                              ShoppingCartConvert shoppingCartConvert,
+                              RedisTemplate<String,Object> redisTemplate) {
         this.shoppingCartConvert = shoppingCartConvert;
         this.conCartMapper = conCartMapper;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -92,23 +105,40 @@ public class ConCartServiceImpl implements ConCartService {
 //        AI的建议真的善变，业务的标准还是实际就业才行，
 //        这里的建议是 单表：DO；多表+ 聚合：用VO，DTO可以，
 
-//        这里后期得换成从后端获取用户Id,怎么能前端传递呢？目前自定义，
-//        Long userId = shoppingCartQuery.getUserId();
-
-        Long userId = 4L;
+        Long userId = UserContext.getUserId();
 
         if(pageSize > 50){
             pageSize = 50;
         }
 
+        String key = CART_KEY + userId;
+
+//        先查Redis
+        PageResult<ShoppingCartVO> cache =
+                (PageResult<ShoppingCartVO>) redisTemplate.opsForValue().get(key);
+
+        if(cache != null){
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+
+            PageResult<ShoppingCartVO> result =
+                    mapper.convertValue(cache, new TypeReference<PageResult<ShoppingCartVO>>() {});
+
+            return result;
+        }
+//        redis没有，在数据库中，
         Page<ShoppingCartVO> pageParam = new Page<>(pageNum,pageSize);
+        IPage<ShoppingCartVO> result = conCartMapper.pageCartVO(pageParam,userId);
+
+        PageResult<ShoppingCartVO> pageResult = PageResult.create(result);
+
+//        写入Redis
+
+        redisTemplate.opsForValue().set(key,pageResult,CART_TIME_OUT, TimeUnit.MINUTES);
 
 //        这里使用的是mybatis的wrapper 用法，前提：1.是要有数据库表对应的实体类DO/Entity，
 //        失败，wrapper 是用再单表查询中的，
-
 //        对于这种多表查询，就得用手写，
-        IPage<ShoppingCartVO> result = conCartMapper.pageCartVO(pageParam,userId);
-
-        return PageResult.create(result);
+        return pageResult;
     }
 }

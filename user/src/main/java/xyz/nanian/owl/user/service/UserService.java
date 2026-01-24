@@ -17,7 +17,7 @@ public interface UserService {
      * 注册新用户
      * @param userRegisterDTO 用户DTO基本信息
      */
-    void saveUser(UserRegisterDTO userRegisterDTO);
+    Boolean saveUser(UserRegisterDTO userRegisterDTO);
 
     /**
      * 登陆验证
@@ -25,7 +25,7 @@ public interface UserService {
      * @param password 输入的初始密码
      * @return 密码是否正确的 bool
      */
-    UserInfoDTO login(String phone, String password);
+    String login(String phone, String password);
 
     /**
      * 更新用户信息

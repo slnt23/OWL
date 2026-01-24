@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import xyz.nanian.owl.utils.jwt.UserContext;
 
 /**
  * 业务日志
@@ -25,7 +26,7 @@ public class BizLogAspect {
 
 //        执行前
         long startTime = System.currentTimeMillis();
-        String userId = UserContext.getUserId();
+        Long userId = UserContext.getUserId();
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String method = signature.getDeclaringType()

@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -13,8 +14,10 @@ import xyz.nanian.owl.exception.BizException;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
-import java.util.Collections;
-import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
+
+import static xyz.nanian.owl.constant.RedisConstant.LOGIN_KEY;
+import static xyz.nanian.owl.constant.RedisConstant.LOGIN_TIME_OUT;
 
 /**
  * 登陆认证
@@ -27,6 +30,12 @@ import java.util.stream.Collectors;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
+    private static RedisTemplate redisTemplate;
+
+    public LoginInterceptor(RedisTemplate redisTemplate) {
+        LoginInterceptor.redisTemplate = redisTemplate;
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
@@ -35,23 +44,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(!(handler instanceof HandlerMethod)){
             return true;
         }
-
-
-
-        log.info("LoginInteger 拦截请求：{}",request.getRequestURI());
-        log.info("Request: method={}, uri={}, headers={}, params={}",
-                request.getMethod(),
-                request.getRequestURI(),
-                Collections.list(request.getHeaderNames()).stream()
-                        .collect(Collectors.toMap(
-                                h -> h,
-                                h -> request.getHeader(h)
-                        )),
-                request.getParameterMap()
-        );
-
-
-
 
         String token = request.getHeader("Authorization");
         if (token == null || !token.startsWith("Bearer ")) {
@@ -62,8 +54,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         Claims claims = JwtUtil.parseToken(token);
         Long userId = claims.get("userId", Long.class);
+        String userPhone = claims.get("userPhone", String.class);
 
         UserContext.setUserId(userId);
+
+        String key = LOGIN_KEY + userPhone;
+        Boolean exists = redisTemplate.hasKey(key);
+        if(Boolean.TRUE.equals(exists)){
+            redisTemplate.expire(key,LOGIN_TIME_OUT, TimeUnit.MINUTES);
+        }
+
         return true;
     }
 

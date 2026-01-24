@@ -1,6 +1,7 @@
 package xyz.nanian.owl.user;
 
 
+import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
@@ -19,7 +20,7 @@ public interface UserApi {
      * 用户注册
      * @param user 用户DTO
      */
-    Result<String> registerUser(UserRegisterDTO user);
+    Result<ResultStatus> registerUser(UserRegisterDTO user);
 
     /**
      * 用户登陆
@@ -35,14 +36,14 @@ public interface UserApi {
      * @param name 用户名
      * @return 搜索用户相关信息
      */
-    Result<Object> searchUserByName(String name);
+    Result<ResultStatus> searchUserByName(String name);
 
     /**
      * 更新用户信息（）
      * @param userInfoDTO 用户最新信息
      * @return message
      */
-    Result<Object> updateUser(UserInfoDTO userInfoDTO);
+    Result<ResultStatus> updateUser(UserInfoDTO userInfoDTO);
 
     /**
      * 更新用户头像通过手机号，
@@ -50,7 +51,7 @@ public interface UserApi {
      * @param phone phone
      * @return message
      */
-    Result<String> updateAvatarByCode(String phone);
+    Result<ResultStatus> updateAvatarByCode(String phone);
 
     /**
      * 更新用户密码通过手机号
@@ -58,6 +59,6 @@ public interface UserApi {
      * @param newPassword newPassword
      * @return message
      */
-    Result<String> updatePasswordByCode(String phone,String newPassword);
+    Result<ResultStatus> updatePasswordByCode(String phone,String newPassword);
 
 }

@@ -22,10 +22,12 @@ public interface ProductApi {
 
     /**
      * 商品列表，通过商品名查询，可模糊搜索，分页查询，
-     * @param query 商品名
+     * @param productName 商品名
      * @return 商品信息
      */
-    Result<PageResult<ProductVO>> queryProductByName(ProductQuery query);
+    Result<PageResult<ProductVO>> queryProduct(String productName,
+                                               Integer pageNum,
+                                               Integer pageSize);
 
     /**
      * 查询商品分类，类似拼多多首页多级分类，
@@ -39,12 +41,12 @@ public interface ProductApi {
      */
     Result<ProductDetailVO> queryProductDetail(Integer productId);
 
-    /**
-     * 商品搜索, 搜索指定商品，但是名字相似注定返回多个，所以list<> 但已实现，可搁置
-     * @param productName 商品名
-     * @return 商品VO
-     */
-    Result<ProductVO>  queryProductByName(String productName);
+//    /**
+//     * 商品搜索, 搜索指定商品，但是名字相似注定返回多个，所以list<> 但已实现，可搁置
+//     * @param productName 商品名
+//     * @return 商品VO
+//     */
+//    Result<ProductVO>  queryProductByName(String productName);
 //    /**
 //     * 更新商品，通过商品名
 //     * @param productId 商品id

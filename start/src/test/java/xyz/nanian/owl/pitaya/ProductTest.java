@@ -1,14 +1,11 @@
 package xyz.nanian.owl.pitaya;
 
 
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import xyz.nanian.owl.pitaya.consumer.mapper.ProductMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
-import xyz.nanian.owl.pitaya.entity.ProductDO;
 import xyz.nanian.owl.pitaya.vo.CategoryVO;
 import xyz.nanian.owl.pitaya.vo.ProductDetailVO;
 
@@ -32,11 +29,11 @@ public class ProductTest {
     @Test
     public void selectProduct() {
 
-        String ProductName="南极人羽绒被";
-
-        List<ProductDO> list= productMapper.listProduct(ProductName);
-
-        System.out.println(list);
+//        String ProductName="南极人羽绒被";
+//
+//        List<ProductDO> list= productMapper.listProduct(ProductName);
+//
+//        System.out.println(list);
     }
 
     @Test

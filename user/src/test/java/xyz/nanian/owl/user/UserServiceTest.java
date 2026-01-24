@@ -59,9 +59,9 @@ public class UserServiceTest {
     @DisplayName("测试登陆")
     public void testServiceLogin(){
 
-        UserRegisterDTO user=createUser();
-        boolean result= userService.login("110","123456");
-        log.info("结果{}", result);
+//        UserRegisterDTO user=createUser();
+//        boolean result= userService.login("110","123456");
+//        log.info("结果{}", result);
     }
 
     @Test

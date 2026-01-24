@@ -6,6 +6,7 @@ import xyz.nanian.owl.pitaya.query.ProductQuery;
 import xyz.nanian.owl.pitaya.vo.CategoryVO;
 import xyz.nanian.owl.pitaya.vo.ProductDetailVO;
 import xyz.nanian.owl.pitaya.vo.ProductVO;
+import xyz.nanian.owl.result.PageResult;
 
 import java.util.List;
 
@@ -19,11 +20,11 @@ import java.util.List;
 public interface ProductService {
 
     /**
-     * 通过商品名查询商品
-     * @param query 商品名，
-     * @return 分页商品信息，
+     * 查询商品,通过商品名，且使用分页，
+     * @param productName 商品名，
+     * @return 商品信息，
      */
-    Page<ProductVO> listProduct(ProductQuery query);
+    PageResult<ProductVO> listProduct(String productName,Integer pageNum,Integer pageSize);
 
     /**
      * 商品分类

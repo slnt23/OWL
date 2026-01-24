@@ -36,7 +36,8 @@ public class ProductVO {
     Integer status;
 
 //    @Schema(description = "封面图 ")
-//    String coverImage; TODO 数据库设置的是使用图片的URL，这里暂时不做，
+//    String coverImage;
+//    TODO 数据库设置的是使用图片的URL，这里暂时不做，
 
     @Schema(description = "创建时间",example = "2025-11-10 12-10-10")
     LocalDateTime createTime;

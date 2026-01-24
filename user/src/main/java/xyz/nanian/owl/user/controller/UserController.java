@@ -7,12 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.UserApi;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.service.UserService;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
+import xyz.nanian.owl.utils.regex.RegexUtil;
 
 /**
  * 用户相关的控制器方法,
@@ -33,12 +35,7 @@ public class UserController implements UserApi {
 
     private final UserService userService;
 
-    /**
-     * 构造器注入
-     * @param userService 用户逻辑编辑
-     */
     UserController(UserService userService) {
-
         this.userService = userService;
     }
 
@@ -47,13 +44,19 @@ public class UserController implements UserApi {
      * @param user 用户DTO
      */
     @Override
-    @PostMapping("/new-user")
+    @PostMapping("/register")
     @Operation(summary = "用户注册",description = "详细描述：注册")
-    public Result<String> registerUser(@RequestBody @Validated UserRegisterDTO user) {
+    public Result<ResultStatus> registerUser(@RequestBody @Validated UserRegisterDTO user) {
 
-        userService.saveUser(user);
+        if(!RegexUtil.isPhone(user.getPhone())){
+            return Result.fail(ResultStatus.PARAMS_INVALID);
+        }
 
-        return Result.success();
+        if(userService.saveUser(user)){
+            return Result.success(ResultStatus.SUCCESS);
+        }else {
+            return Result.fail(ResultStatus.FAIL);
+        }
     }
 
     /**
@@ -62,19 +65,20 @@ public class UserController implements UserApi {
      * @param password 用户密码
      */
     @Override
-    @GetMapping("/single-user")
+    @GetMapping("/login")
     @Operation(summary = "用户登陆")
     public Result<String> loginUser(@RequestParam String phone, @RequestParam String password) {
 
-        UserInfoDTO user = userService.login(phone,password);
-
-        if(user==null){
+        if(!RegexUtil.isPhone(phone)){
             return Result.fail();
         }
 
-        String token = JwtUtil.generateToken(user.getUserId(),user.getUserName());
-
-        return Result.success(token);
+        String result = userService.login(phone,password);
+        if(result == null){
+            return Result.fail();
+        }else {
+            return Result.success(result);
+        }
     }
 
     /**
@@ -85,7 +89,7 @@ public class UserController implements UserApi {
     @Override
     @GetMapping("/users")
     @Operation(summary = "用户搜索")
-    public Result<Object> searchUserByName(String name) {
+    public Result<ResultStatus> searchUserByName(String name) {
         return null;
     }
 
@@ -95,9 +99,9 @@ public class UserController implements UserApi {
      * @return message
      */
     @Override
-    @PutMapping("/single-user")
+    @PutMapping("/userInfo")
     @Operation(summary = "用户信息更新")
-    public Result<Object> updateUser(@RequestBody UserInfoDTO userInfoDTO) {
+    public Result<ResultStatus> updateUser(@RequestBody UserInfoDTO userInfoDTO) {
 
         if(userService.updateUserInfo(userInfoDTO)){
             return Result.success();
@@ -109,7 +113,7 @@ public class UserController implements UserApi {
     @Override
     @PutMapping("/avatar")
     @Operation(summary = "用户头像更新")
-    public Result<String> updateAvatarByCode(String Phone) {
+    public Result<ResultStatus> updateAvatarByCode(String Phone) {
         return null;
     }
 
@@ -122,7 +126,7 @@ public class UserController implements UserApi {
     @Override
     @PutMapping("/password")
     @Operation(summary = "用户密码更新")
-    public Result<String> updatePasswordByCode(String Phone,String newPassword) {
+    public Result<ResultStatus> updatePasswordByCode(String Phone,String newPassword) {
 
         if(userService.updateUserPassword(Phone,newPassword)){
             return Result.success();

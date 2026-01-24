@@ -1,6 +1,12 @@
 package xyz.nanian.owl.config.redis;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import io.lettuce.core.ReadFrom;
 import org.springframework.boot.autoconfigure.data.redis.LettuceClientConfigurationBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +15,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -28,14 +35,32 @@ public class RedisConfig {
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
 //        key 与 hashKey 使用String
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
-//        这里序列化与反序列化redis中的value值 使用Json代替jdk   TODO 这个类中的版本只是初版，后续还要改进
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer();
+        ObjectMapper om = new ObjectMapper();
+        om.registerModule(new JavaTimeModule());
+        om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+//        这里序列化与反序列化redis中的value值 使用Json代替jdk
+        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(om);
+
+//        以下方法已经废弃
+//        value使用json
+//        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer =
+//                new Jackson2JsonRedisSerializer<>(Object.class);
+//
+//        ObjectMapper om = new ObjectMapper();
+//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        om.activateDefaultTyping(
+//                LaissezFaireSubTypeValidator.instance,
+//                ObjectMapper.DefaultTyping.NON_FINAL
+//        );
+//        jackson2JsonRedisSerializer.setObjectMapper(mapper);
+
 
 //        配置序列化方式
 //        key

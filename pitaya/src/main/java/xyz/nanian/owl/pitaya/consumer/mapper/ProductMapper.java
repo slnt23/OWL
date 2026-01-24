@@ -1,11 +1,14 @@
 package xyz.nanian.owl.pitaya.consumer.mapper;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.nanian.owl.pitaya.entity.CategoryDO;
 import xyz.nanian.owl.pitaya.entity.ProductDO;
 import xyz.nanian.owl.pitaya.entity.ProductImageDO;
+import xyz.nanian.owl.pitaya.vo.ProductVO;
 
 import java.util.List;
 
@@ -21,10 +24,11 @@ public interface ProductMapper {
 
 
     /**
-     * 分页查询商品
+     * 查询商品,分页
      * @return List<商品>
      */
-    List<ProductDO> listProduct(@Param("productName") String productName);
+    IPage<ProductVO> pageProduct(Page<?> page,
+                                 @Param("productName") String productName);
 
     /**
      * 商品分类

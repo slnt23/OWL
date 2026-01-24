@@ -3,6 +3,10 @@ package xyz.nanian.owl.pitaya.consumer.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConOrderMapper;
@@ -19,9 +23,14 @@ import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.vo.OrderItemVO;
 import xyz.nanian.owl.pitaya.vo.OrderListVO;
 import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
+import static xyz.nanian.owl.constant.RedisConstant.ORDER_KEY;
+import static xyz.nanian.owl.constant.RedisConstant.ORDER_TIME_OUT;
 
 /**
  * 消费者订单ServiceImpl
@@ -33,12 +42,16 @@ import java.util.UUID;
 @Service
 public class ConOrderServiceImpl implements ConOrderService {
 
-    private ConOrderMapper conOrderMapper;
-    private OrderConvert orderConvert;
+    private final ConOrderMapper conOrderMapper;
+    private final OrderConvert orderConvert;
+    private final RedisTemplate<String ,Object> redisTemplate;
 
-    public ConOrderServiceImpl(ConOrderMapper conOrderMapper, OrderConvert orderConvert) {
+    public ConOrderServiceImpl(ConOrderMapper conOrderMapper,
+                               OrderConvert orderConvert,
+                               RedisTemplate redisTemplate) {
         this.conOrderMapper = conOrderMapper;
         this.orderConvert = orderConvert;
+        this.redisTemplate = redisTemplate;
     }
 
     /**
@@ -63,9 +76,10 @@ public class ConOrderServiceImpl implements ConOrderService {
 //        这里的数据类型没有考虑号，结果这里快照用地址id替代，
         orderDO.setAddressSnapshot(userAddressDO.getId()+"");
 
-
+        Long userId = UserContext.getUserId();
         String orderCode = UUID.randomUUID().toString();
         orderDO.setOrderNo(orderCode);
+        orderDO.setUserId(userId);
         OrderQuery orderQuery = new OrderQuery();
         orderQuery.setOrderCode(orderCode);
 
@@ -74,8 +88,6 @@ public class ConOrderServiceImpl implements ConOrderService {
 //        插入后再通过Code 查询订单的id,
         OrderDO order = conOrderMapper.selectOrder(orderQuery);
         Long orderId = order.getId();
-
-//        TODO 通过token等获取userId，然后添加，
 
         for(OrderDetailDO detail : orderDetailDO) {
             detail.setOrderId(orderId);
@@ -143,19 +155,36 @@ public class ConOrderServiceImpl implements ConOrderService {
     @BizLog(module = "订单",action = "用户订单列表")
     public PageResult<OrderListVO> listOrders(Integer pageNum,Integer pageSize) {
 
-//        这里后期改为从后端获取用户的ID,目前自定义
-//        Long userId = orderQuery.getUserId();
-        Long userId = 1L;
-
+        Long userId = UserContext.getUserId();
         if(pageSize> 50){
             pageSize = 50;
         }
 
-        Page<OrderListVO> page = new  Page<>(pageNum,pageSize);
+        String key = ORDER_KEY + userId;
+//        先查Redis，
+        PageResult<OrderListVO> cache =
+                (PageResult<OrderListVO>) redisTemplate.opsForValue().get(key);
 
+        if(cache!=null){
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
+
+            PageResult<OrderListVO> result =
+                    mapper.convertValue(cache,new TypeReference<PageResult<OrderListVO>>() {});
+
+            return result;
+        }
+
+//        Redis没有，查Mysql，
+        Page<OrderListVO> page = new  Page<>(pageNum,pageSize);
         IPage<OrderListVO> result = conOrderMapper.pageOrderList(page,userId);
 
-        return PageResult.create(result);
+        PageResult<OrderListVO> pageResult= PageResult.create(result);
+
+//        写入Redis
+        redisTemplate.opsForValue().set(key,pageResult,ORDER_TIME_OUT, TimeUnit.MINUTES);
+
+        return pageResult;
     }
 
 
