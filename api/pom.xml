@@ -23,6 +23,10 @@
             <groupId>xyz.nanian</groupId>
             <artifactId>domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>infrastructure</artifactId>
+        </dependency>
 
 <!--        web-->
         <dependency>

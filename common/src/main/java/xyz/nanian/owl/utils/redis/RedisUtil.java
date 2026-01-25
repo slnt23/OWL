@@ -16,25 +16,25 @@ import java.util.concurrent.TimeUnit;
  * @since 2025/12/10
  */
 
-@Component
-public class RedisUtil {
-
-    @Resource
-    private RedisTemplate<String, Object> redisTemplate;
-
-    public void set(String key, Object value, long timeout, TimeUnit unit){
-        redisTemplate.opsForValue().set(key, value, timeout, unit);
-    }
-
-    public Object get(String key){
-        return redisTemplate.opsForValue().get(key);
-    }
-
-    public Boolean delete(String key){
-        return redisTemplate.delete(key);
-    }
-
-    public Boolean hasKey(String key){
-        return redisTemplate.hasKey(key);
-    }
-}
+//@Component
+//public class RedisUtil {
+//
+//    @Resource
+//    private RedisTemplate<String, Object> redisTemplate;
+//
+//    public void set(String key, Object value, long timeout, TimeUnit unit){
+//        redisTemplate.opsForValue().set(key, value, timeout, unit);
+//    }
+//
+//    public Object get(String key){
+//        return redisTemplate.opsForValue().get(key);
+//    }
+//
+//    public Boolean delete(String key){
+//        return redisTemplate.delete(key);
+//    }
+//
+//    public Boolean hasKey(String key){
+//        return redisTemplate.hasKey(key);
+//    }
+//}

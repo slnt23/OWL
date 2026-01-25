@@ -14,7 +14,10 @@ spring:
           - 192.168.229.128:27002
           - 192.168.229.128:27003
 
-
+#  rocketmq:
+#    name-server: 127.0.0.1:9876
+#    producer:
+#      group: order-producer-group
 
 
 

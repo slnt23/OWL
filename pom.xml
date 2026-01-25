@@ -79,6 +79,11 @@
                 <artifactId>pitaya</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>infrastructure</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
 
 
 <!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本，版本管理中心-->
