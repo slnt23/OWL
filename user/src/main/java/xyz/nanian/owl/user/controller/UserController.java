@@ -7,13 +7,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.constant.ResultStatus;
-import xyz.nanian.owl.logging.BizLog;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.UserApi;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.service.UserService;
-import xyz.nanian.owl.utils.jwt.JwtUtil;
 import xyz.nanian.owl.utils.regex.RegexUtil;
 
 /**

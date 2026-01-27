@@ -1,9 +1,12 @@
 spring:
+
+# mysql
   datasource:
     url: jdbc:mysql://localhost:3306/pitaya?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: 123456qin
 
+# redis
   data:
     redis:
       password: 01star
@@ -14,10 +17,16 @@ spring:
           - 192.168.229.128:27002
           - 192.168.229.128:27003
 
-#  rocketmq:
-#    name-server: 127.0.0.1:9876
-#    producer:
-#      group: order-producer-group
+# rabbitmq
+  rabbitmq:
+    host: 192.168.229.128
+    port: 5672
+    username: admin
+    password: 123456qin
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: auto
 
 
 

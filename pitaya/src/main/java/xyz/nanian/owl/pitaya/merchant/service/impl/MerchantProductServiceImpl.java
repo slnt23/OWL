@@ -3,7 +3,7 @@ package xyz.nanian.owl.pitaya.merchant.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.logging.BizLog;
+import logging.BizLog;
 import xyz.nanian.owl.pitaya.dto.ProductDTO;
 import xyz.nanian.owl.pitaya.entity.ProductDO;
 import xyz.nanian.owl.pitaya.entity.ProductImageDO;

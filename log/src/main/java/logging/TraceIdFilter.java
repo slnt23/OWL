@@ -1,4 +1,4 @@
-package xyz.nanian.owl.logging;
+package logging;
 
 
 import jakarta.servlet.FilterChain;

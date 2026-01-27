@@ -6,9 +6,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.logging.BizLog;
+import logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConOrderMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConOrderService;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
@@ -29,6 +30,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import static xyz.nanian.owl.constant.RabbitMQConstant.ORDER_QUEUE;
+import static xyz.nanian.owl.constant.RabbitMQConstant.ORDER_ROUTING_KEY;
 import static xyz.nanian.owl.constant.RedisConstant.ORDER_KEY;
 import static xyz.nanian.owl.constant.RedisConstant.ORDER_TIME_OUT;
 
@@ -45,13 +48,16 @@ public class ConOrderServiceImpl implements ConOrderService {
     private final ConOrderMapper conOrderMapper;
     private final OrderConvert orderConvert;
     private final RedisTemplate<String ,Object> redisTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     public ConOrderServiceImpl(ConOrderMapper conOrderMapper,
                                OrderConvert orderConvert,
-                               RedisTemplate redisTemplate) {
+                               RedisTemplate redisTemplate,
+                               RabbitTemplate rabbitTemplate) {
         this.conOrderMapper = conOrderMapper;
         this.orderConvert = orderConvert;
         this.redisTemplate = redisTemplate;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     /**
@@ -95,7 +101,18 @@ public class ConOrderServiceImpl implements ConOrderService {
 
         Integer int2 = conOrderMapper.insertOrderDetailList(orderDetailDO);
 
+//        发送订单创建消息，
+        sendOrderCreate(orderId);
+
         return int1>0 || int2>0;
+    }
+
+
+    public void sendOrderCreate(Long orderId) {
+        rabbitTemplate.convertAndSend(
+                ORDER_QUEUE,
+                ORDER_ROUTING_KEY,
+                orderId);
     }
 
     /**

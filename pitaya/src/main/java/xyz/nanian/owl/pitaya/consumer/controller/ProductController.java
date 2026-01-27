@@ -1,15 +1,12 @@
 package xyz.nanian.owl.pitaya.consumer.controller;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.logging.BizLog;
+import logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.product.ProductApi;
-import xyz.nanian.owl.pitaya.query.ProductQuery;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
 import xyz.nanian.owl.pitaya.vo.CategoryVO;
 import xyz.nanian.owl.pitaya.vo.ProductDetailVO;

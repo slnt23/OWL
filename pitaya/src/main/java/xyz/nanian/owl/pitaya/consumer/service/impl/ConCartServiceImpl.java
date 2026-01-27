@@ -1,7 +1,6 @@
 package xyz.nanian.owl.pitaya.consumer.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -9,19 +8,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.logging.BizLog;
+import logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConCartMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConCartService;
 import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
 import xyz.nanian.owl.pitaya.entity.ShoppingCartDO;
 import xyz.nanian.owl.pitaya.mapstruct.ShoppingCartConvert;
-import xyz.nanian.owl.pitaya.query.ShoppingCartQuery;
 import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
 import xyz.nanian.owl.result.PageResult;
-import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static xyz.nanian.owl.constant.RedisConstant.CART_KEY;
@@ -99,6 +95,7 @@ public class ConCartServiceImpl implements ConCartService {
      * @return
      */
     @Override
+    @BizLog(module = "购物车",action = "查询购物车列表")
     public PageResult<ShoppingCartVO> listCart(Integer pageNum, Integer pageSize) {
 
 //        这里 查询购物车的信息，但是商品表只有商品的id，没有，商品名，单价，封面图，这样也就是要按照id多次查询，这？
