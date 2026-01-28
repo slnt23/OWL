@@ -1,7 +1,7 @@
-package mapper;
+package xyz.nanian.owl.log.mapper;
 
 
-import DO.BizLogDO;
+import xyz.nanian.owl.log.DO.BizLogDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

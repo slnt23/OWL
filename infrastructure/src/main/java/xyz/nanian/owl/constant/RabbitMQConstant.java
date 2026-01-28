@@ -10,8 +10,8 @@ package xyz.nanian.owl.constant;
 
 public class RabbitMQConstant {
 
-    public static final String FANOUT_EXCHANGE = "fanout";
-    public static final String FANOUT_QUEUE = "fanout.queue";
+    public static final String FANOUT_EXCHANGE = "fanout_exchange";
+    public static final String FANOUT_QUEUE = "fanout_queue";
 
 
     public static final String ORDER_QUEUE = "order_queue";
@@ -21,5 +21,6 @@ public class RabbitMQConstant {
 
     public static final String BIZ_LOG_QUEUE = "biz_log_queue";
     public static final String BIZ_LOG_EXCHANGE = "biz_log_exchange";
+    public static final String BIZ_LOG_ROUTING_KEY = "biz_log_routing_key";
 
 }

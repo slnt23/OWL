@@ -1,4 +1,4 @@
-package logging;
+package xyz.nanian.owl.log.logging;
 
 
 import jakarta.servlet.FilterChain;
@@ -35,6 +35,7 @@ public class TraceIdFilter extends OncePerRequestFilter {
         }
 
         MDC.put(TRACE_ID,traceId);
+
         try {
             filterChain.doFilter(request, response);
         } finally {

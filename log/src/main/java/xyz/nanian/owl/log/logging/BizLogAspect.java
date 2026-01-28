@@ -1,7 +1,7 @@
-package logging;
+package xyz.nanian.owl.log.logging;
 
 
-import DTO.BizLogMessage;
+import xyz.nanian.owl.log.DTO.BizLogMessageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,8 +13,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
-import static xyz.nanian.owl.constant.RabbitMQConstant.BIZ_LOG_EXCHANGE;
-import static xyz.nanian.owl.constant.RabbitMQConstant.BIZ_LOG_QUEUE;
+import static xyz.nanian.owl.constant.RabbitMQConstant.*;
 
 /**
  * 业务日志
@@ -39,7 +38,8 @@ public class BizLogAspect {
         Long userId = UserContext.getUserId();
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-        String method = signature.getDeclaringType()
+        String method = signature
+                .getDeclaringType()
                 .getSimpleName() + "." + signature.getName();
 
         try{
@@ -47,7 +47,7 @@ public class BizLogAspect {
             Object result = joinPoint.proceed();
 
             // 构造成功日志消息
-            BizLogMessage msg = new BizLogMessage();
+            BizLogMessageDTO msg = new BizLogMessageDTO();
             msg.setModule(bizLog.module());
             msg.setAction(bizLog.action());
             msg.setUserId(userId);
@@ -57,10 +57,12 @@ public class BizLogAspect {
             msg.setTraceId(MDC.get("TraceId"));
             msg.setErrorMsg(null);
 
+            System.out.println(msg);
+
             // 发送 MQ（异步日志）
             rabbitTemplate.convertAndSend(
                     BIZ_LOG_EXCHANGE,
-                    BIZ_LOG_QUEUE,
+                    BIZ_LOG_ROUTING_KEY,
                     msg
             );
 //            执行后
@@ -76,7 +78,7 @@ public class BizLogAspect {
             return result;
         } catch(Exception e ){
             // 构造失败日志消息
-            BizLogMessage msg = new BizLogMessage();
+            BizLogMessageDTO msg = new BizLogMessageDTO();
             msg.setModule(bizLog.module());
             msg.setAction(bizLog.action());
             msg.setUserId(userId);
@@ -86,10 +88,12 @@ public class BizLogAspect {
             msg.setTraceId(MDC.get("TraceId"));
             msg.setErrorMsg(e.getMessage());
 
+            System.out.println(msg);
+
             // 发送失败日志到 MQ
             rabbitTemplate.convertAndSend(
                     BIZ_LOG_EXCHANGE,
-                    BIZ_LOG_QUEUE,
+                    BIZ_LOG_ROUTING_KEY,
                     msg
             );
 

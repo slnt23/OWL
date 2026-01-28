@@ -17,38 +17,9 @@ import static xyz.nanian.owl.constant.RabbitMQConstant.*;
  */
 
 @Configuration
-public class RabbitMQConfig {
+public class BizMQConfig {
 
-    @Bean
-    public Queue fanoutQueue() {
-        return new Queue(FANOUT_QUEUE);
-    }
-
-    @Bean
-    public FanoutExchange fanoutExchange() {
-        return new FanoutExchange(FANOUT_EXCHANGE);
-    }
-
-//    订单监听
-    @Bean
-    public Queue orderQueue() {
-        return new Queue(ORDER_QUEUE,true);
-    }
-
-    @Bean
-    public DirectExchange orderExchange() {
-        return new DirectExchange(ORDER_EXCHANGE);
-    }
-
-    @Bean
-    public Binding orderBinding() {
-        return BindingBuilder
-                .bind(orderQueue())
-                .to(orderExchange())
-                .with(ORDER_ROUTING_KEY);
-    }
-
-//    业务日志广播，TODO 目前先测试，实验好了在创建架构，
+//    业务日志广播，
     @Bean
     public Queue bizQueue() {
         return new Queue(BIZ_LOG_QUEUE,true);
@@ -63,7 +34,8 @@ public class RabbitMQConfig {
     public Binding bizBinding() {
         return BindingBuilder
                 .bind(bizQueue())
-                .to(fanoutExchange());
+                .to(bizExchange())
+                .with(BIZ_LOG_ROUTING_KEY);
     }
 
     @Bean

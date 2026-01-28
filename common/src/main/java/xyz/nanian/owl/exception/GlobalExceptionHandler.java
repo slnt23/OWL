@@ -98,7 +98,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result<?> exceptionHandler(Exception e) {
 
-        log.error("未捕获异常",e);
+        log.error("发生错误，但未捕获异常",e);
         return Result.fail(ResultStatus.FAIL);
     }
 }

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import logging.BizLog;
+import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConCartMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConCartService;
 import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
@@ -111,8 +111,9 @@ public class ConCartServiceImpl implements ConCartService {
         String key = CART_KEY + userId;
 
 //        先查Redis
-        PageResult<ShoppingCartVO> cache =
-                (PageResult<ShoppingCartVO>) redisTemplate.opsForValue().get(key);
+//        PageResult<ShoppingCartVO> cache =
+//                (PageResult<ShoppingCartVO>) redisTemplate.opsForValue().get(key);
+        Object cache = redisTemplate.opsForValue().get(key);
 
         if(cache != null){
             ObjectMapper mapper = new ObjectMapper();

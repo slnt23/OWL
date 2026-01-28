@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import logging.BizLog;
+import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
 import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.entity.UserDO;

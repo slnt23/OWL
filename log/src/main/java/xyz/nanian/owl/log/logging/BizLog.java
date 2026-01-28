@@ -1,4 +1,4 @@
-package logging;
+package xyz.nanian.owl.log.logging;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

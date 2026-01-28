@@ -1,18 +1,17 @@
-package service.Impl;
+package xyz.nanian.owl.log.service.Impl;
 
 
-import DO.BizLogDO;
-import DTO.BizLogMessage;
+import xyz.nanian.owl.log.DO.BizLogDO;
+import xyz.nanian.owl.log.DTO.BizLogMessageDTO;
 import lombok.RequiredArgsConstructor;
-import mapper.BizLogMapper;
-import org.springframework.amqp.core.ExchangeTypes;
+import xyz.nanian.owl.log.mapper.BizLogMapper;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import service.handleBizLogService;
+import xyz.nanian.owl.log.service.handleBizLogService;
 
 import static xyz.nanian.owl.constant.RabbitMQConstant.*;
 
@@ -36,15 +35,15 @@ public class handleBizLogServiceImpl implements handleBizLogService {
     @Override
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(name = BIZ_LOG_QUEUE),
-            exchange = @Exchange(name = BIZ_LOG_EXCHANGE,type = ExchangeTypes.FANOUT)
+            exchange = @Exchange(name = BIZ_LOG_EXCHANGE),
+            key = BIZ_LOG_ROUTING_KEY
     ))
-    public void addBizLog(BizLogMessage message) {
+    public void addBizLog(BizLogMessageDTO message) {
 
         BizLogDO bizLogDO = new BizLogDO();
         BeanUtils.copyProperties(message,bizLogDO);
 
         bizLogMapper.insert(bizLogDO);
-
 
     }
 }

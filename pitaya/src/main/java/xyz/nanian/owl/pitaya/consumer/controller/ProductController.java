@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import logging.BizLog;
+import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.product.ProductApi;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
 import xyz.nanian.owl.pitaya.vo.CategoryVO;

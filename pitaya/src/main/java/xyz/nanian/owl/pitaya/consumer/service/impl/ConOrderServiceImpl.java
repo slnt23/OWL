@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import logging.BizLog;
+import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConOrderMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConOrderService;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;

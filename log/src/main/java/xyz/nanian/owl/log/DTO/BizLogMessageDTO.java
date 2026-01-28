@@ -1,7 +1,8 @@
-package DTO;
+package xyz.nanian.owl.log.DTO;
 
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.io.Serializable;
 
@@ -13,7 +14,8 @@ import java.io.Serializable;
  */
 
 @Data
-public class BizLogMessage implements Serializable {
+@ToString
+public class BizLogMessageDTO implements Serializable {
 
     private String module;
     private String action;
