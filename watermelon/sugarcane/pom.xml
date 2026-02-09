@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>sugarcane</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -21,7 +22,8 @@
     <dependencies>
         <dependency>
             <groupId>xyz.nanian</groupId>
-            <artifactId>watermelon</artifactId>
+            <artifactId>api</artifactId>
         </dependency>
     </dependencies>
+
 </project>

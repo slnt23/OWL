@@ -13,10 +13,6 @@
     <packaging>pom</packaging>
 
     <dependencies>
-        <dependency>
-            <groupId>xyz.nanian</groupId>
-            <artifactId>api</artifactId>
-        </dependency>
     </dependencies>
 
     <properties>

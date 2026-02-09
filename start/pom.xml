@@ -26,6 +26,15 @@
             <groupId>xyz.nanian</groupId>
             <artifactId>pitaya</artifactId>
         </dependency>
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>sugarcane</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>crow</artifactId>
+        </dependency>
+
 
 <!--        test-->
         <dependency>
@@ -33,13 +42,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-
-
 
 
     </dependencies>

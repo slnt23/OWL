@@ -5,3 +5,4 @@
 
 - sugarcane  ：价多多，价格管理模块，
 - crow  ：乌鸦，AI模块
+- pitaya ：火龙果，电商模块
