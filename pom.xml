@@ -24,13 +24,15 @@
         <module>common</module>
         <module>domain</module>
         <module>api</module>
-        <module>crow</module>
         <module>pitaya</module>
         <module>user</module>
         <module>start</module>
         <module>admin</module>
         <module>infrastructure</module>
         <module>log</module>
+        <module>watermelon</module>
+        <module>watermelon/sugarcane</module>
+        <module>watermelon/crow</module>
     </modules>
 
 
@@ -88,6 +90,11 @@
             <dependency>
                 <groupId>xyz.nanian</groupId>
                 <artifactId>log</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>watermelon</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 

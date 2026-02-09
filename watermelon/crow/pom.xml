@@ -6,7 +6,7 @@
         <groupId>xyz.nanian</groupId>
         <artifactId>OWL</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+        <relativePath>../../pom.xml</relativePath> <!-- lookup parent from repository -->
 <!--        先看自设置，后本地仓库，再后远程仓库，查看父项目pom.xml的地址-->
     </parent>
 
@@ -19,11 +19,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-
     <dependencies>
-
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>watermelon</artifactId>
+        </dependency>
 
     </dependencies>
+
+
 
     <build>
         <plugins>

@@ -27,40 +27,6 @@
             <groupId>xyz.nanian</groupId>
             <artifactId>api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-
-        <!--&lt;!&ndash;        mysql&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.mysql</groupId>-->
-<!--            <artifactId>mysql-connector-j</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-<!--&lt;!&ndash;        druid&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>druid-spring-boot-3-starter</artifactId>-->
-<!--        </dependency>-->
-<!--&lt;!&ndash;        mapstruct&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.mapstruct</groupId>-->
-<!--            <artifactId>mapstruct</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.mapstruct</groupId>-->
-<!--            <artifactId>mapstruct-processor</artifactId>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-
 
     </dependencies>
 
@@ -114,7 +80,5 @@
 
         </plugins>
     </build>
-
-
 
 </project>
