@@ -2,7 +2,7 @@ package xyz.nanian.owl.constant;
 
 
 
-public record LoggingConstant() {
+public record LogConstant() {
 
     
 }

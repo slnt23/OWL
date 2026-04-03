@@ -18,16 +18,14 @@
     </properties>
 
     <dependencies>
+
+<!--        自建模块-->
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>xyz.nanian</groupId>
-            <artifactId>infrastructure</artifactId>
-        </dependency>
 
-
+<!--        test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -39,8 +37,7 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
-
-        <!--        拦截器相关servlet-->
+<!--        拦截器相关servlet-->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>

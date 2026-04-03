@@ -1,10 +1,8 @@
 package xyz.nanian.owl.pitaya.mapstruct;
 
 
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
 import xyz.nanian.owl.pitaya.entity.OrderDO;
 import xyz.nanian.owl.pitaya.entity.OrderDetailDO;

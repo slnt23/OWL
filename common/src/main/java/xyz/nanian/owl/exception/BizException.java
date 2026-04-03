@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 /**
- * 自定义的业务异常 Buiness Exception
+ * 自定义的 业务异常 Buiness Exception
  *
  * @author slnt23
  * @since 2026/1/20
