@@ -2,6 +2,7 @@ package xyz.nanian.owl.user.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NonNull;
@@ -27,13 +28,15 @@ public class UserRegisterDTO {
     @Schema(description = "密码",example = "123456")
     String password;
 
+    @NotNull
     @Schema(description = "手机号",example = "110")
     String phone;
 
+    @Email
     @Schema(description = "邮件地址",example = "@qq.com")
     String email;
 
-    @Schema(description = "角色：只有用户与商家,1:用户，2：商家",example = "1")
+    @Schema(description = "角色：只有用户与商家,1:消费者用户，2：商家",example = "1")
     Integer role;
 
 }

@@ -1,9 +1,13 @@
 package xyz.nanian.owl.pitaya.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 订单DTO
@@ -12,27 +16,32 @@ import java.time.LocalDateTime;
  * @since 2025/11/10
  */
 
+@Data
 @Schema(name = "订单DTO")
 public class OrderDTO {
 
-    @Schema(description = "订单编号",example = "UUID")
-    String orderCode;
+    @Schema(description = "下单来源", example = "CART")
+    private String source; // CART / BUY_NOW
 
-    @Schema(description = "订单状态", example = "1",
-            allowableValues = {"1", "2", "3", "4"})
-    private String status;
+    @Schema(description = "订单备注")
+    private String remark;
 
-    @Schema(description = "下单时间", example = "2025-11-23T12:12:12")
-    private LocalDateTime orderTime;
+    @Schema(description = "收货地址ID")
+    private Long addressId;
 
-    @Schema(description = "发货时间", example = "2025-11-24T09:30:00")
-    private LocalDateTime shipTime;
+    @Schema(description = "商品列表")
+    private List<OrderItemCreateDTO> items;
 
-    @Schema(description = "取消时间", example = "2025-11-23T15:45:00")
-    private LocalDateTime cancelTime;
 
-    @Schema(description = "完成时间", example = "2025-11-25T18:00:00")
-    private LocalDateTime finishTime;
+    @Data
+    @Schema(name = "订单商品DTO")
+    public static class OrderItemCreateDTO {
 
+        @Schema(description = "商品ID", example = "1")
+        private Long productId;
+
+        @Schema(description = "购买数量", example = "2")
+        private Integer quantity;
+    }
 
 }

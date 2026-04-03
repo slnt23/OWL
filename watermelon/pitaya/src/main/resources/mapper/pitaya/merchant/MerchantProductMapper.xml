@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.nanian.owl.pitaya.merchant.mapper.MerchantProductMapper">
+
+
+    <insert id="insertProductDO">
+        INSERT INTO product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="categoryId != null">category_id,</if>
+        <if test="sellerId != null">seller_id,</if>
+        <if test="name != null">name,</if>
+        <if test="description != null">description,</if>
+        <if test="price != null">price,</if>
+        <if test="stock != null">stock,</if>
+        <if test="status != null">status,</if>
+        <if test="coverImg != null">cover_img,</if>
+    </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+        <if test="categoryId != null">#{categoryId},</if>
+        <if test="sellerId != null">#{sellerId},</if>
+        <if test="name != null">#{name},</if>
+        <if test="description != null">#{description},</if>
+        <if test="price != null">#{price},</if>
+        <if test="stock != null">#{stock},</if>
+        <if test="status != null">#{status},</if>
+        <if test="coverImg != null">#{coverImg},</if>
+    </trim>
+    </insert>
+    <insert id="insertProductImageList">
+        INSERT INTO product_image (product_id, image_url, sort)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.productId},
+            #{item.imageUrl},
+            #{item.sort}
+            )
+        </foreach>
+    </insert>
+    <update id="updateProductDO" parameterType="xyz.nanian.owl.pitaya.entity.ProductDO">
+        update product
+            <set>
+                <if test="categoryId != null">
+                    category_id = #{categoryId},
+                </if>
+                <if test="sellerId != null">
+                    seller_id = #{sellerId},
+                </if>
+                <if test="name != null and name.trim() != ''">
+                    name = #{name},
+                </if>
+                <if test="description != null">
+                    description = #{description},
+                </if>
+                <if test="price != null">
+                    price = #{price},
+                </if>
+                <if test="stock != null">
+                    stock = #{stock},
+                </if>
+                <if test="status != null">
+                    status = #{status},
+                </if>
+                <if test="coverImg != null">
+                    cover_img = #{coverImg},
+                </if>
+                update_time = NOW()
+            </set>
+        where id = #{id}
+    </update>
+<!--    第一种写法，-->
+    <update id="updateProductStatus">
+        update product
+            <set>
+                status = case
+                when #{status}= '0' then 0 else 1
+                end
+            </set>
+        where id = #{productId}
+    </update>
+
+<!--    <update id = "updateProductStatus2">-->
+<!--        update product-->
+<!--            <set>-->
+<!--                status = if(#{status} = '0',0,1)-->
+<!--            </set>-->
+<!--        where id = #{productId}-->
+<!--    </update>-->
+<!--    这种是严格遵守0/1 的-->
+<!--    <update id="updateProductStatus3">-->
+<!--        update product-->
+<!--            <set>-->
+<!--                status =-->
+<!--                <choose>-->
+<!--                    <when test="status == 0">0</when>-->
+<!--                    <when test="status == 1">1</when>-->
+<!--                    <otherwise>status</otherwise>-->
+<!--                </choose>-->
+<!--            </set>-->
+<!--        where id = #{productId}-->
+<!--    </update>-->
+
+
+
+
+    <!--    <update id="updateProductImageList">-->
+<!--        <if test = "images != null and images.size() >0">-->
+<!--            insert into product_image(product_id, image_url,sort)-->
+<!--            values-->
+<!--            <foreach collection="images" item ="img" separator=",">-->
+<!--                (#{productId},#{img.imageUrl},#{img.sort})-->
+<!--            </foreach>-->
+<!--        </if>-->
+<!--    </update>-->
+    <delete id="deleteProductImageDO">
+        delete from product_image
+        where product_id= #{productId};
+    </delete>
+    <delete id="deleteProductDO">
+        delete from product
+        where id = #{productId}
+    </delete>
+</mapper>

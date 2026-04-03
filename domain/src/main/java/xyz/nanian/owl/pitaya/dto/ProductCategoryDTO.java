@@ -2,6 +2,7 @@ package xyz.nanian.owl.pitaya.dto;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 
 /**
  * 商品类别DTO
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @since 2025/11/10
  */
 
+@Data
 @Schema(name = "商品类别")
 public class ProductCategoryDTO {
 

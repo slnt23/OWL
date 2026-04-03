@@ -2,7 +2,7 @@ package xyz.nanian.owl.admin;
 
 
 /**
- * 用户管理接口
+ * 用户管理
  *
  * @author slnt23
  * @since 2025/11/13

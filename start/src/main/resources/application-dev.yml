@@ -1,17 +1,35 @@
-#port: 10900
-#
-#project:
-#  name: pitaya
-#
-#
-#server:
-#  port: 8080
-#
-#spring:
-#  application:
-#    name: pitaya
-#  datasource:  # 数据源配置
-#    url: jdbc:mysql://localhost:3306/pitaya  #数据库名暂时为test
-#    username: root
-#    password: 123456qin
-#
+spring:
+
+# mysql
+  datasource:
+    url: jdbc:mysql://localhost:3306/pitaya?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456qin
+
+# redis
+  data:
+    redis:
+      password: 01star
+      sentinel:
+        master: mymaster
+        nodes:
+          - 192.168.229.128:27001
+          - 192.168.229.128:27002
+          - 192.168.229.128:27003
+
+# rabbitmq
+  rabbitmq:
+    host: 192.168.229.128
+    port: 5672
+    username: admin
+    password: 123456qin
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: auto
+
+
+
+# 本项目启动端口
+server:
+  port: 8080

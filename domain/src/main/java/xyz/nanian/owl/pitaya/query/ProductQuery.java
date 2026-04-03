@@ -14,7 +14,7 @@ import xyz.nanian.owl.PageQuery;
  */
 
 @EqualsAndHashCode(callSuper = true)
-@Schema(name= "查询指定商品",description = "通过商品名查询")
+@Schema(name= "商品查询",description = "通过商品名查询")
 @Data
 public class ProductQuery extends PageQuery {
 

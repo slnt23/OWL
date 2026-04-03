@@ -1,8 +1,11 @@
 package xyz.nanian.owl.config.swagger;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +20,11 @@ import org.springframework.context.annotation.Configuration;
 public class SpringdocConfig {
 
     /**
-     * 1. 配置全局信息
+     * 配置全局信息
      * 使用 OpenAPI Bean 定义全局的文档标题、描述、版本和联系人信息。
      */
     @Bean
-    public OpenAPI customOpenAPI() {
+    public OpenAPI openAllAPI() {
         return new OpenAPI()
                 .info(new Info()
                         .title("NaNian Owl - 统一接口文档")
@@ -31,12 +34,24 @@ public class SpringdocConfig {
                                 .name("sln23")
                                 .email("ir0211@outlook.com")
                         )
-                );
+                )
+//                目前来说下面的配置没有生效，问题未知
+                .components(new Components()
+                        .addSecuritySchemes("jwtAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")
+                                        .in(SecurityScheme.In.HEADER)
+                                        .name("Authorization")
+                        )
+                )
+                .addSecurityItem(new SecurityRequirement().addList("jwtAuth"));
     }
 
 
     /**
-     * 2. 配置用户中心 API 分组
+     * 配置用户中心 API 分组
      * 启用 GroupedOpenApi 来创建不同的分组。
      * 确保您的用户中心接口路径匹配这里的 `/api/user/**` 或其他实际路径。
      */
@@ -45,20 +60,33 @@ public class SpringdocConfig {
         return GroupedOpenApi.builder()
                 .group("用户中心-user") // 分组名称
                 .pathsToMatch("/user/**") // 匹配 user 模块的接口路径
-                .packagesToScan("xyz.nanian.owl.user.controller")
+                .packagesToScan("xyz.nanian.owl.user.controller")//搜索特定的分路径
                 .build();
     }
 
     /**
-     * 3. 配置火龙果电商 API 分组 (示例)
-     * 您可以为其他模块创建额外的 GroupedOpenApi Bean。
+     * 配置火龙果电商 API 分组
+     * 您可以为其他模块创建额外的 GroupedOpenApi Bean
      */
     @Bean
     public GroupedOpenApi tradeApi() {
         return GroupedOpenApi.builder()
-                .group("电商-trade")
+                .group("电商中心-trade")
                 .pathsToMatch("/pitaya/**")
-                .packagesToScan("xyz.nanian.owl.pitaya.controller")
+//                .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
                 .build();
     }
+
+    /**
+     * 管理员 api
+     */
+    @Bean
+    public GroupedOpenApi adminApi() {
+        return GroupedOpenApi.builder()
+                .group("管理员-admin")
+                .pathsToMatch("/admin/**")
+                .build();
+    }
+
+
 }

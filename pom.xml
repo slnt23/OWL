@@ -24,11 +24,17 @@
         <module>common</module>
         <module>domain</module>
         <module>api</module>
-        <module>crow</module>
-        <module>pitaya</module>
-        <module>user</module>
         <module>start</module>
-        <module>admin</module>
+        <module>watermelon</module>
+        <module>watermelon/administration</module>
+        <module>watermelon/user</module>
+        <module>watermelon/sugarcane</module>
+        <module>watermelon/crow</module>
+        <module>watermelon/pitaya</module>
+
+
+<!--        <module>infrastructure</module>-->
+        <module>log</module>
     </modules>
 
 
@@ -36,13 +42,17 @@
         <project.version>0.0.1-SNAPSHOT</project.version>
 		<java.version>17</java.version>
         <easyexcel.version>4.0.3</easyexcel.version>
-        <mybatis.generator.version>1.4.1</mybatis.generator.version>
         <mybatis.plus.version>3.5.5</mybatis.plus.version>
         <nacos.config.discovery.version>2025.0.0.0</nacos.config.discovery.version>
         <swagger.version>2.8.14</swagger.version>
-        <knife4j.version>4.3.0</knife4j.version>
+        <knife4j.version>4.5.0</knife4j.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <druid.version>1.2.25</druid.version>
+        <rocketmq.version>2.2.3</rocketmq.version>
+        <spring.test>4.0.1</spring.test>
+        <jwt.version>0.11.5</jwt.version>
+        <mybatis.generator.version>3.5.6</mybatis.generator.version>
+        <velocity.engine.version>2.3</velocity.engine.version>
 	</properties>
 
 
@@ -50,6 +60,7 @@
     <dependencyManagement>
         <dependencies>
 <!--            依赖模块-->
+<!--            自建模块-->
             <dependency>
                 <groupId>xyz.nanian</groupId>
                 <artifactId>common</artifactId>
@@ -75,19 +86,41 @@
                 <artifactId>pitaya</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
-
-
-<!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本-->
-            <!-- https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>${easyexcel.version}</version>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>infrastructure</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-core</artifactId>
-                <version>${mybatis.generator.version}</version>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>log</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>watermelon</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>sugarcane</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>crow</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+
+<!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本，版本管理中心-->
+<!--            https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+
+<!--            spring 家族-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.test}</version>
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -95,22 +128,23 @@
                 <version>${mybatis.plus.version}</version>
             </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
-<!--                <version>${nacos.config.discovery.version}</version>-->
-<!--            </dependency>-->
-<!--            <dependency>-->
-<!--                <groupId>com.alibaba.cloud</groupId>-->
-<!--                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-<!--                <version>${nacos.config.discovery.version}</version>-->
-<!--            </dependency>-->
 
+<!--            中间件-->
+<!--            rocketMQ-->
+            <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>${rocketmq.version}</version>
+            </dependency>
+
+<!--            日志-->
+<!--            knife4j-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
+<!--            MapStruct-->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
@@ -121,6 +155,17 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
+
+
+
+<!--            DataBase-->
+<!--            MP -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.generator.version}</version>
+            </dependency>
+<!--            druid ，用于Redis-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-3-starter</artifactId>
@@ -128,8 +173,62 @@
             </dependency>
 
 
+<!--            其他的-->
+<!--            jwt-->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+
+<!--            Java 模板引擎，-->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>${velocity.engine.version}</version>
+            </dependency>
+<!--            easyexcel -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
 
 
+
+
+
+
+            <!--            <dependency>-->
+            <!--                <groupId>org.apache.rocketmq</groupId>-->
+            <!--                <artifactId>rocketmq-client-java</artifactId>-->
+            <!--                <version>${rocketmq.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>org.mybatis.generator</groupId>-->
+            <!--                <artifactId>mybatis-generator-core</artifactId>-->
+            <!--                <version>${mybatis.generator.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba.cloud</groupId>-->
+            <!--                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
+            <!--                <version>${nacos.config.discovery.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.alibaba.cloud</groupId>-->
+            <!--                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+            <!--                <version>${nacos.config.discovery.version}</version>-->
+            <!--            </dependency>-->
 
         </dependencies>
     </dependencyManagement>
