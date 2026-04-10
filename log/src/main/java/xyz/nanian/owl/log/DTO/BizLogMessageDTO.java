@@ -19,7 +19,7 @@ public class BizLogMessageDTO implements Serializable {
 
     private String module;
     private String action;
-    private Long userId;
+    private String userCode;
     private String method;
     private Boolean success;
     private Long cost;

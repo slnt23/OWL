@@ -46,7 +46,6 @@ public class LoginController implements LoginApi {
     public Result<ResultStatus> registerUser(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
 
 //        校验验证码，然后，生成用户，
-
         if(loginService.saveUser(user)){
             return Result.success();
         }else{
@@ -54,32 +53,19 @@ public class LoginController implements LoginApi {
         }
     }
 
-//    /**
-//     * 验证邮箱验证码
-//     *
-//     * @param email
-//     * @return
-//     */
-//    @Override
-//    @GetMapping("/verify-email")
-//    @Operation(summary = "校验邮箱验证码",description = "验证邮箱验证码")
-//    public Result<ResultStatus> verifyEmail(String email) {
-//        return null;
-//    }
-
     /**
      * 发送邮箱验证邮件
      * 这里从重发改为发送，实现复用，
      *
-     * @param mail
+     * @param codeDTO
      * @return
      */
     @Override
-    @PostMapping("/resend-verification")
+    @PostMapping("/send-verification")
     @Operation(summary = "验证码发送",description = "用于发送验证邮件")
-    public Result<ResultStatus> sendVerificationCode(SendCodeDTO mail) {
+    public Result<ResultStatus> sendVerificationCode(@RequestBody @Validated SendCodeDTO codeDTO) {
 
-        if(loginService.sendVerificationCode(mail)){
+        if(loginService.sendVerificationCode(codeDTO)){
             return Result.success();
         }else {
             return Result.fail();
@@ -93,9 +79,11 @@ public class LoginController implements LoginApi {
      * @return
      */
     @Override
+    @GetMapping("/login-email")
+    @Operation(summary = "登陆-验证码",description = "通过验证码登陆")
     public Result<String> loginVerifyEmail(EmailLoginOrRegisterDTO user) {
 
-        return null;
+        return Result.success(loginService.login(user));
     }
 
     /**
@@ -104,8 +92,11 @@ public class LoginController implements LoginApi {
      * @return
      */
     @Override
-    public Result<ResultStatus> loginVerifyPassword(PasswordLoginDTO user) {
-        return null;
+    @GetMapping("/login-password")
+    @Operation(summary = "登陆-密码",description = "通过密码登陆")
+    public Result<String> loginVerifyPassword(PasswordLoginDTO user) {
+
+        return Result.success(loginService.login(user));
     }
 
 }

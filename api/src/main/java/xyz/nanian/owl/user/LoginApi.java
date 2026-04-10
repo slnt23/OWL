@@ -50,5 +50,5 @@ public interface LoginApi {
      * @param user
      * @return
      */
-    Result<ResultStatus> loginVerifyPassword(PasswordLoginDTO user);
+    Result<String> loginVerifyPassword(PasswordLoginDTO user);
 }

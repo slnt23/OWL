@@ -3,9 +3,13 @@ package xyz.nanian.owl.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import xyz.nanian.owl.constant.ExceptionConstant;
+import xyz.nanian.owl.exception.BizException;
+import xyz.nanian.owl.exception.LoginException;
 import xyz.nanian.owl.mail.Mail;
 import xyz.nanian.owl.user.dto.EmailLoginOrRegisterDTO;
 import xyz.nanian.owl.user.dto.PasswordLoginDTO;
@@ -16,6 +20,7 @@ import xyz.nanian.owl.user.service.LoginService;
 
 import xyz.nanian.owl.user.constant.UserConstant;
 import xyz.nanian.owl.user.constant.LoginConstant;
+import xyz.nanian.owl.utils.jwt.JwtUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -30,6 +35,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2026/4/9
  */
 
+@Slf4j
 @Service
 public class LoginServiceImpl implements LoginService {
 
@@ -39,9 +45,11 @@ public class LoginServiceImpl implements LoginService {
     StringRedisTemplate stringRedisTemplate;
     PasswordEncoder passwordEncoder;
 
-    public LoginServiceImpl(UserMapper userMapper,
+    public LoginServiceImpl(Mail mail,
+                            UserMapper userMapper,
                             StringRedisTemplate stringRedisTemplate,
                             PasswordEncoder passwordEncoder) {
+        this.mail = mail;
         this.userMapper = userMapper;
         this.stringRedisTemplate = stringRedisTemplate;
         this.passwordEncoder = passwordEncoder;
@@ -55,7 +63,13 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public Boolean sendVerificationCode(SendCodeDTO sendCodeDTO) {
 
-        String emailAddress = sendCodeDTO.getEmail();
+        String emailAddress =
+                sendCodeDTO.getEmail();
+//                "1693676136@qq.com";
+
+        if (Objects.isNull(emailAddress)) {
+            return false;
+        }
 
         // 1. 检查邮箱是否已注册（可选）
 
@@ -63,7 +77,7 @@ public class LoginServiceImpl implements LoginService {
         String verificationCode = generateVerificationCode();
 
         // 3. 构建邮件内容
-        String subject = "验证码 - 您的验证码";
+        String subject = "验证码 - 欢迎加入 OWL 兴趣探索";
         String body = String.format("""
                     您的验证码是：%s
                     
@@ -118,8 +132,13 @@ public class LoginServiceImpl implements LoginService {
         return true;
     }
 
+    /**
+     * 用户登陆，邮箱验证码
+     * @param emailLoginOrRegisterDTO 手机号
+     * @return
+     */
     @Override
-    public Boolean login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
+    public String login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
 
 //        1.根据获取的邮箱地址，以及邮箱KEY 获取redis中的code，
         String key = LoginConstant.VERIFICATION_CODE_PREFIX + emailLoginOrRegisterDTO.getEmail();
@@ -129,30 +148,57 @@ public class LoginServiceImpl implements LoginService {
                 .get(key);
 
 //        2. 比对code，然后如果正确，登陆30天
-        return Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode());
+        if(!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())){
+            throw new LoginException(ExceptionConstant.CODE_INVALID);
+        }
 
+        return getToken(emailLoginOrRegisterDTO.getEmail());
     }
 
+    /**
+     * 用户登陆，密码
+     * @param passwordLoginDTO
+     * @return
+     */
     @Override
-    public Boolean login(PasswordLoginDTO passwordLoginDTO) {
+    public String login(PasswordLoginDTO passwordLoginDTO) {
 
 //        1. 数据库中获取密码，比对经过加密后的密码，
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(UserDO::getEmail, passwordLoginDTO.getPassword());
+        wrapper.eq(UserDO::getEmail, passwordLoginDTO.getEmail());
 
         UserDO userDO = userMapper.selectOne(wrapper);
+
 //        2. 比对，
-        if (Objects.isNull(userDO)) {
-            return false;
-        }else{
-            if(passwordEncoder.matches(passwordLoginDTO.getPassword(),userDO.getPassword())) {
-
-
-                return true;
-            }else{
-                return false;
-            }
+//        判断用户
+        if(Objects.isNull(userDO)){
+            throw new LoginException(ExceptionConstant.USER_NOT_EXIST);
         }
+
+//        判断密码
+        if(!passwordEncoder.matches(passwordLoginDTO.getPassword(),userDO.getPassword())){
+            throw new LoginException(ExceptionConstant.PASSWORD_ERROR);
+        }
+
+//        返回token
+        return getToken(passwordLoginDTO.getEmail());
+    }
+
+    /**
+     * 获取token，
+     * @return
+     */
+    private String getToken(String email){
+
+        LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserDO::getEmail, email);
+
+        UserDO userDO = userMapper.selectOne(wrapper);
+
+        String userCode= userDO.getUserCode();
+        Long userId = userDO.getId();
+
+        return JwtUtil.generateToken(userId,userCode,email);
     }
 
     /**

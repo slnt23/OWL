@@ -1,7 +1,9 @@
 package xyz.nanian.owl.pitaya.consumer.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import xyz.nanian.owl.pitaya.entity.ShoppingCartDO;
 import xyz.nanian.owl.pitaya.mapstruct.ShoppingCartConvert;
 import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
 import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.user.entity.UserDO;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.concurrent.TimeUnit;
@@ -124,6 +127,7 @@ public class ConCartServiceImpl implements ConCartService {
 
             return result;
         }
+
 //        redis没有，在数据库中，
         Page<ShoppingCartVO> pageParam = new Page<>(pageNum,pageSize);
         IPage<ShoppingCartVO> result = conCartMapper.pageCartVO(pageParam,userId);

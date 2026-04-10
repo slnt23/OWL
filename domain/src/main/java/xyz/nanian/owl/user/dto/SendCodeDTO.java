@@ -19,20 +19,18 @@ import lombok.Data;
 @Schema(name = "邮箱DTO",description = "注册用户所需要的信息")
 public class SendCodeDTO {
 
-    @Email
     @NotNull
-    @Schema(description = "邮件地址",example = "1314@qq.com")
-    String email;
+    @Email
+    @Schema(description = "邮件地址",example = "1693676136@qq.com")
+    public String email;
 
 //    用户名可以随机生成，后续用户自己改
 //    @NotNull
 //    @Schema(description = "用户名",example = "秦明")
 //    String userName;
-
 //    @NotNull
 //    @Schema(description = "密码",example = "123456")
 //    String password;
-
 //    @NotNull
 //    @Schema(description = "手机号",example = "110")
 //    String phone;

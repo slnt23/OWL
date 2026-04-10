@@ -10,9 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import xyz.nanian.owl.constant.ExceptionConstant;
 import xyz.nanian.owl.exception.BizException;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
 import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.utils.jwt.UserInfo;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +22,7 @@ import static xyz.nanian.owl.constant.RedisConstant.LOGIN_KEY;
 import static xyz.nanian.owl.constant.RedisConstant.LOGIN_TIME_OUT;
 
 /**
- * 登陆认证
+ * 登陆认证，拦截器
  *
  * @author slnt23
  * @since 2026/1/20
@@ -47,18 +49,21 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         String token = request.getHeader("Authorization");
         if (token == null || !token.startsWith("Bearer ")) {
-            throw new BizException(HttpStatus.UNAUTHORIZED,"登录异常");
+            throw new BizException(HttpStatus.UNAUTHORIZED, ExceptionConstant.OPERATION_FAIL);
         }
 
         token = token.substring(7);
 
         Claims claims = JwtUtil.parseToken(token);
-        Long userId = claims.get("userId", Long.class);
-        String userPhone = claims.get("userPhone", String.class);
+        String userCode = claims.get("userCode", String.class);
+        String userEmail = claims.get("userEmail", String.class);
 
-        UserContext.setUserId(userId);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUserCode(userCode);
 
-        String key = LOGIN_KEY + userPhone;
+        UserContext.setUserInfo(userInfo);
+
+        String key = LOGIN_KEY + userEmail;
         Boolean exists = redisTemplate.hasKey(key);
         if(Boolean.TRUE.equals(exists)){
             redisTemplate.expire(key,LOGIN_TIME_OUT, TimeUnit.MINUTES);

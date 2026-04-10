@@ -1,11 +1,10 @@
 package xyz.nanian.owl.mail;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 import xyz.nanian.owl.constant.MailConstant;
 
@@ -20,12 +19,13 @@ import xyz.nanian.owl.constant.MailConstant;
 public class Mail {
 
 //    @Autowired
+    @Resource
     public JavaMailSender mailSender;
 
 //    构造注入
-    public Mail(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+//    public Mail(JavaMailSender mailSender) {
+//        this.mailSender = mailSender;
+//    }
 
     /**
      * 验证码发送,

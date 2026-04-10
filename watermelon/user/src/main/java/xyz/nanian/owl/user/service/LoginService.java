@@ -32,13 +32,13 @@ public interface LoginService {
      * @param emailLoginOrRegisterDTO 手机号
      * @return 密码是否正确的 bool
      */
-    Boolean login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO);
+    String login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO);
 
     /**
      * 登陆验证 ，密码
      * @param passwordLoginDTO
      * @return
      */
-    Boolean login(PasswordLoginDTO passwordLoginDTO);
+    String login(PasswordLoginDTO passwordLoginDTO);
 
 }

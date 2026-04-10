@@ -18,7 +18,6 @@ public interface UserService {
 //     * @param sendCodeDTO 用户DTO基本信息
 //     */
 //    Boolean saveUser(SendCodeDTO sendCodeDTO);
-
 //    /**
 //     * 登陆验证
 //     * @param phone 手机号

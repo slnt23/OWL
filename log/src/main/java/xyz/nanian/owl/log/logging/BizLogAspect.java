@@ -35,7 +35,7 @@ public class BizLogAspect {
 
 //        执行前
         long startTime = System.currentTimeMillis();
-        Long userId = UserContext.getUserId();
+        String userCode = UserContext.getUserCode();
 
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         String method = signature
@@ -50,7 +50,7 @@ public class BizLogAspect {
             BizLogMessageDTO msg = new BizLogMessageDTO();
             msg.setModule(bizLog.module());
             msg.setAction(bizLog.action());
-            msg.setUserId(userId);
+            msg.setUserCode(userCode);
             msg.setMethod(method);
             msg.setSuccess(true);
             msg.setCost(System.currentTimeMillis() - startTime);
@@ -65,15 +65,6 @@ public class BizLogAspect {
                     BIZ_LOG_ROUTING_KEY,
                     msg
             );
-//            执行后
-//            log.info(
-//                    "业务成功 module={}，action={}，userId={}，method={}，cost={}ms",
-//                    bizLog.module(),
-//                    bizLog.action(),
-//                    userId,
-//                    method,
-//                    System.currentTimeMillis() - startTime
-//            );
 
             return result;
         } catch(Exception e ){
@@ -81,7 +72,7 @@ public class BizLogAspect {
             BizLogMessageDTO msg = new BizLogMessageDTO();
             msg.setModule(bizLog.module());
             msg.setAction(bizLog.action());
-            msg.setUserId(userId);
+            msg.setUserCode(userCode);
             msg.setMethod(method);
             msg.setSuccess(false);
             msg.setCost(System.currentTimeMillis() - startTime);
@@ -96,17 +87,6 @@ public class BizLogAspect {
                     BIZ_LOG_ROUTING_KEY,
                     msg
             );
-
-            // 原异常继续抛出，不吞业务异常
-//             log.error(
-//                                "业务失败 module={}，action={}，userId={}，method={}，cost={}ms",
-//                                bizLog.module(),
-//                                bizLog.action(),
-//                                userId,
-//                                method,
-//                                System.currentTimeMillis() - startTime,
-//                                e
-//                        );
             throw e;
         }
     }
