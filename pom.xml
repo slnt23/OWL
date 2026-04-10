@@ -53,6 +53,7 @@
         <jwt.version>0.11.5</jwt.version>
         <mybatis.generator.version>3.5.6</mybatis.generator.version>
         <velocity.engine.version>2.3</velocity.engine.version>
+        <mail.version>3.3.13</mail.version>
 	</properties>
 
 
@@ -127,6 +128,11 @@
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-starter-mail</artifactId>-->
+<!--                <version>${mail.version}</version>-->
+<!--            </dependency>-->
 
 
 <!--            中间件-->

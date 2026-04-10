@@ -1,0 +1,35 @@
+package xyz.nanian.owl.user.dto;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
+
+/**
+ * 密码登陆DTO
+ *
+ * @author slnt23
+ * @since 2026/4/10
+ */
+
+@Data
+@Schema(name = "密码登陆DTO")
+public class PasswordLoginDTO {
+
+    /**
+     * 邮件地址
+     */
+    @Email
+    @NotNull
+    @Schema(description = "邮件地址",example = "1314@qq.com")
+    String email;
+
+    /**
+     * 密码
+     */
+    @NotNull
+    @Schema(description = "密码",example = "123456")
+    String Password;
+}

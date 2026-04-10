@@ -11,7 +11,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Swagger信息配置 (统一配置到 common 模块)
+ * Swagger信息配置 (统一配置到 common 模块),
+ * 尽量使用指定包下，
+ * 也可以使用指定路径下
  *
  * @author slnt23
  * @since 2025/11/21
@@ -53,13 +55,13 @@ public class SpringdocConfig {
     /**
      * 配置用户中心 API 分组
      * 启用 GroupedOpenApi 来创建不同的分组。
-     * 确保您的用户中心接口路径匹配这里的 `/api/user/**` 或其他实际路径。
+     * 确保您的用户中心接口路径匹配这里的 `/user/**` 或其他实际路径。
      */
     @Bean
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("用户中心-user") // 分组名称
-                .pathsToMatch("/user/**") // 匹配 user 模块的接口路径
+//                .pathsToMatch("/user/**")// 匹配 user 模块的接口路径
                 .packagesToScan("xyz.nanian.owl.user.controller")//搜索特定的分路径
                 .build();
     }
@@ -72,8 +74,8 @@ public class SpringdocConfig {
     public GroupedOpenApi tradeApi() {
         return GroupedOpenApi.builder()
                 .group("电商中心-trade")
-                .pathsToMatch("/pitaya/**")
-//                .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
+//                .pathsToMatch("/pitaya/**")
+                .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
                 .build();
     }
 

@@ -4,7 +4,6 @@ package xyz.nanian.owl.user;
 import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.dto.UserRegisterDTO;
 
 /**
  * 用户模块对外接口
@@ -16,19 +15,18 @@ import xyz.nanian.owl.user.dto.UserRegisterDTO;
 public interface UserApi {
 
 
-    /**
-     * 用户注册
-     * @param user 用户DTO
-     */
-    Result<ResultStatus> registerUser(UserRegisterDTO user);
-
-    /**
-     * 用户登陆
-     * TODO 了解网关，JWT等登陆 相关的模块再添加新内容或者重构 ,JWT,Session等可以做登陆状态维持
-     * @param username 用户名
-     * @param password 用户密码
-     */
-    Result<String> loginUser(String username, String password);
+//    /**
+//     * 用户注册
+//     * @param user 用户DTO
+//     */
+//    Result<ResultStatus> registerUser(UserRegisterDTO user);
+//
+//    /**
+//     * 用户登陆
+//     * @param username 用户名
+//     * @param password 用户密码
+//     */
+//    Result<String> loginUser(String username, String password);
 
     /**
      * 搜索用户通过用户名

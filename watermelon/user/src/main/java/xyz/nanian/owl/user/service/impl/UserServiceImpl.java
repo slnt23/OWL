@@ -7,8 +7,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.user.dto.SendCodeDTO;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
@@ -44,7 +44,8 @@ public class UserServiceImpl implements UserService {
     UserServiceImpl(UserMapper userMapper,
                     PasswordEncoder passwordEncoder,
                     UserConvert userConvert,
-                    StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object> redisTemplate) {
+                    StringRedisTemplate stringRedisTemplate,
+                    RedisTemplate<String, Object> redisTemplate) {
 
         this.userMapper = userMapper ;
         this.passwordEncoder = passwordEncoder;
@@ -54,60 +55,59 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    /**
-     * 用户注册
-     * @param userRegisterDTO 用户DTO基本信息
-     */
-    @Override
-    @BizLog(module = "用户",action = "注册用户")
-    public Boolean saveUser(UserRegisterDTO userRegisterDTO) {
-
-        UserDO userDO= userConvert.registerDTOToUserDO(userRegisterDTO);
-
+//    /**
+//     * 用户注册
+//     * @param sendCodeDTO 用户DTO基本信息
+//     */
+//    @Override
+//    @BizLog(module = "用户",action = "注册用户")
+//    public Boolean saveUser(SendCodeDTO sendCodeDTO) {
+//
+//        UserDO userDO= userConvert.registerDTOToUserDO(sendCodeDTO);
+//
 //        设定账号
-        String userCode = UUID.randomUUID().toString();
-        userDO.setUserCode(userCode);
-
+//        String userCode = UUID.randomUUID().toString();
+//        userDO.setUserCode(userCode);
+//
 //        加密密码
-        String password = userDO.getPassword();
-        String encoded= passwordEncoder.encode(password);
-        userDO.setPassword(encoded);
-
-        userMapper.insert(userDO);
-
-        return true;
-    }
-
-    /**
-     * 用户登陆
-     * @param phone 手机号
-     * @param password 输入的密码
-     * @return 密码是否正确的 bool
-     */
-    @Override
-    @BizLog(module = "用户",action = "用户登陆")
-    public String login(String phone, String password) {
-
+//        String password = userDO.getPassword();
+//        String encoded= passwordEncoder.encode(password);
+//        userDO.setPassword(encoded);
+//
+//        userMapper.insert(userDO);
+//
+//        return true;
+//    }
+//    /**
+//     * 用户登陆
+//     * @param phone 手机号
+//     * @param password 输入的密码
+//     * @return 密码是否正确的 bool
+//     */
+//    @Override
+//    @BizLog(module = "用户",action = "用户登陆")
+//    public String login(String phone, String password) {
+//
 //         从redis查用户
-        String key = LOGIN_KEY + phone;
-        UserDO userDO= (UserDO) redisTemplate.opsForValue().get(key);
-
+//        String key = LOGIN_KEY + phone;
+//        UserDO userDO= (UserDO) redisTemplate.opsForValue().get(key);
+//
 //        Redis没有，从数据库查并写缓存，
-        if (userDO==null) {
-            userDO = userMapper.select(phone);
-            if (userDO==null) {
-                return null;
-            }
-            redisTemplate.opsForValue().set(key,userDO,LOGIN_TIME_OUT,TimeUnit.DAYS);
-        }
-
+//        if (userDO==null) {
+//            userDO = userMapper.select(phone);
+//            if (userDO==null) {
+//                return null;
+//            }
+//            redisTemplate.opsForValue().set(key,userDO,LOGIN_TIME_OUT,TimeUnit.DAYS);
+//        }
+//
 //        校验
-        if(passwordEncoder.matches(password,userDO.getPassword())) {
+//        if(passwordEncoder.matches(password,userDO.getPassword())) {
 //            JWT由userId，userPhone
-            return JwtUtil.generateToken(userDO.getId(),userDO.getPhone());
-        }
-        return null;
-    }
+//            return JwtUtil.generateToken(userDO.getId(),userDO.getPhone());
+//        }
+//        return null;
+//    }
 
     /**
      * 更新用户信息

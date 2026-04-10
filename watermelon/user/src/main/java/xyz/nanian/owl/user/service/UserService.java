@@ -2,7 +2,7 @@ package xyz.nanian.owl.user.service;
 
 
 import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.dto.UserRegisterDTO;
+import xyz.nanian.owl.user.dto.SendCodeDTO;
 
 /**
  * 用户相关的逻辑方法接口
@@ -13,19 +13,19 @@ import xyz.nanian.owl.user.dto.UserRegisterDTO;
 
 public interface UserService {
 
-    /**
-     * 注册新用户
-     * @param userRegisterDTO 用户DTO基本信息
-     */
-    Boolean saveUser(UserRegisterDTO userRegisterDTO);
+//    /**
+//     * 保存用户信息
+//     * @param sendCodeDTO 用户DTO基本信息
+//     */
+//    Boolean saveUser(SendCodeDTO sendCodeDTO);
 
-    /**
-     * 登陆验证
-     * @param phone 手机号
-     * @param password 输入的初始密码
-     * @return 密码是否正确的 bool
-     */
-    String login(String phone, String password);
+//    /**
+//     * 登陆验证
+//     * @param phone 手机号
+//     * @param password 输入的初始密码
+//     * @return 密码是否正确的 bool
+//     */
+//    String login(String phone, String password);
 
     /**
      * 更新用户信息

@@ -3,9 +3,8 @@ package xyz.nanian.owl.user.mapstruct;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import xyz.nanian.owl.user.dto.SendCodeDTO;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.entity.UserDO;
 
 /**
@@ -23,10 +22,10 @@ public interface UserConvert {
 
     /**
      * 由用户注册信息转变为用户DO
-     * @param userRegisterDTO 用户注册DTO
+     * @param sendCodeDTO 用户注册DTO
      * @return 用户DO
      */
-    UserDO registerDTOToUserDO(UserRegisterDTO userRegisterDTO);
+    UserDO registerDTOToUserDO(SendCodeDTO sendCodeDTO);
 
     /**
      * 对于MapStruct不能将 ，例如DO复制到另一个有一些信息的DO，只能新创造一个DO，并复制数据，

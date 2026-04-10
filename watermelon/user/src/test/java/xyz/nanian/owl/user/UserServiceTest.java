@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import xyz.nanian.owl.user.dto.SendCodeDTO;
 import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.dto.UserRegisterDTO;
 import xyz.nanian.owl.user.service.UserService;
 
 /**
@@ -25,8 +25,8 @@ public class UserServiceTest {
     UserService userService;
 
 
-    public UserRegisterDTO createUser(){
-        UserRegisterDTO user=new UserRegisterDTO();
+    public SendCodeDTO createUser(){
+        SendCodeDTO user=new SendCodeDTO();
         user.setUserName("明敏");
         user.setPassword("123456");
         user.setPhone("110");
@@ -50,7 +50,7 @@ public class UserServiceTest {
     public void testUserService() {
 
         log.info("测试注册，创建用户对象，");
-        UserRegisterDTO user=createUser();
+        SendCodeDTO user=createUser();
         log.info("创建用户");
         userService.saveUser(user);
     }

@@ -24,11 +24,11 @@
 
 ## 官方邮箱
 
-Email: kitejoy@outlook.com
+Email: relax271828@petalmail.com
 
 
 
-## 如何部署
+## 部署组件
 
 #### 工具版本
 

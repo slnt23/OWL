@@ -19,14 +19,11 @@
     </properties>
 
     <dependencies>
+<!--        自建模块-->
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>domain</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>xyz.nanian</groupId>-->
-<!--            <artifactId>infrastructure</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>log</artifactId>
@@ -37,22 +34,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+<!--        用来数据校验-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-
-<!--        mapstruct-->
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <scope>provided</scope>
-        </dependency>
 
 
 
