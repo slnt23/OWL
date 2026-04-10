@@ -23,7 +23,7 @@ public class EmailLoginOrRegisterDTO {
      */
     @Email
     @NotNull
-    @Schema(description = "邮件地址",example = "1314@qq.com")
+    @Schema(description = "邮件地址",example = "1693676136@qq.com")
     String email;
 
     /**
@@ -32,5 +32,5 @@ public class EmailLoginOrRegisterDTO {
     @NotNull
     @Pattern(regexp = "\\d{6}$",message = "验证码必须6位数字")
     @Schema(description = "验证码",example = "123456")
-    String Code;
+    String code;
 }

@@ -23,7 +23,7 @@ public class PasswordLoginDTO {
      */
     @Email
     @NotNull
-    @Schema(description = "邮件地址",example = "1314@qq.com")
+    @Schema(description = "邮件地址",example = "1693676136@qq.com")
     String email;
 
     /**
@@ -31,5 +31,5 @@ public class PasswordLoginDTO {
      */
     @NotNull
     @Schema(description = "密码",example = "123456")
-    String Password;
+    String password;
 }

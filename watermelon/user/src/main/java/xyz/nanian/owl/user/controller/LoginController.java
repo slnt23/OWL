@@ -79,9 +79,9 @@ public class LoginController implements LoginApi {
      * @return
      */
     @Override
-    @GetMapping("/login-email")
+    @PostMapping("/login-email")
     @Operation(summary = "登陆-验证码",description = "通过验证码登陆")
-    public Result<String> loginVerifyEmail(EmailLoginOrRegisterDTO user) {
+    public Result<String> loginVerifyEmail(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
 
         return Result.success(loginService.login(user));
     }
@@ -92,9 +92,9 @@ public class LoginController implements LoginApi {
      * @return
      */
     @Override
-    @GetMapping("/login-password")
+    @PostMapping("/login-password")
     @Operation(summary = "登陆-密码",description = "通过密码登陆")
-    public Result<String> loginVerifyPassword(PasswordLoginDTO user) {
+    public Result<String> loginVerifyPassword(@RequestBody @Validated PasswordLoginDTO user) {
 
         return Result.success(loginService.login(user));
     }

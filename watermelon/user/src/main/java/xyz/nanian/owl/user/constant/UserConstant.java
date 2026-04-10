@@ -43,6 +43,6 @@ public class UserConstant {
      * 若按你数据库定义「0=正常，1=封禁」，建议将默认值改为0，避免新用户直接封禁）
      * 邮箱验证通过后，账号默认正常可用，无需手动激活
      */
-    public static final Integer DEFAULT_STATUS = 1;
+    public static final Integer DEFAULT_STATUS = 0;
 
 }
