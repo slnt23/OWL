@@ -8,9 +8,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.constant.ExceptionConstant;
-import xyz.nanian.owl.exception.BizException;
 import xyz.nanian.owl.exception.LoginException;
 import xyz.nanian.owl.mail.Mail;
+import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.dto.EmailLoginOrRegisterDTO;
 import xyz.nanian.owl.user.dto.PasswordLoginDTO;
 import xyz.nanian.owl.user.dto.SendCodeDTO;
@@ -18,9 +18,10 @@ import xyz.nanian.owl.user.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.service.LoginService;
 
-import xyz.nanian.owl.user.constant.UserConstant;
-import xyz.nanian.owl.user.constant.LoginConstant;
+import xyz.nanian.owl.constant.UserConstant;
+import xyz.nanian.owl.constant.LoginConstant;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
+import xyz.nanian.owl.utils.redis.CodeCacheUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -44,15 +45,18 @@ public class LoginServiceImpl implements LoginService {
     UserMapper userMapper;
     StringRedisTemplate stringRedisTemplate;
     PasswordEncoder passwordEncoder;
+    CodeCacheUtil codeCacheUtil;
 
     public LoginServiceImpl(Mail mail,
                             UserMapper userMapper,
                             StringRedisTemplate stringRedisTemplate,
-                            PasswordEncoder passwordEncoder) {
+                            PasswordEncoder passwordEncoder,
+                            CodeCacheUtil codeCacheUtil) {
         this.mail = mail;
         this.userMapper = userMapper;
         this.stringRedisTemplate = stringRedisTemplate;
         this.passwordEncoder = passwordEncoder;
+        this.codeCacheUtil = codeCacheUtil;
     }
 
     /**
@@ -61,14 +65,18 @@ public class LoginServiceImpl implements LoginService {
      * @return
      */
     @Override
-    public Boolean sendVerificationCode(SendCodeDTO sendCodeDTO) {
+    public Result<String> sendVerificationCode(SendCodeDTO sendCodeDTO) {
 
-        String emailAddress =
-                sendCodeDTO.getEmail();
+        String emailAddress = sendCodeDTO.getEmail();
 //                "1693676136@qq.com";
 
+        //        这里加一步，5分钟内不可重复发，
+        if(codeCacheUtil.isLocked(emailAddress)){
+            return Result.fail(LoginConstant.CODE_TIME_IN_5_MIN);
+        }
+
         if (Objects.isNull(emailAddress)) {
-            return false;
+            return Result.fail();
         }
 
         // 1. 检查邮箱是否已注册（可选）
@@ -96,7 +104,7 @@ public class LoginServiceImpl implements LoginService {
 
         // 6. 记录日志（可选）后续添加，
 
-        return true;
+        return Result.success();
     }
 
     /**

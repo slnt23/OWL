@@ -63,13 +63,9 @@ public class LoginController implements LoginApi {
     @Override
     @PostMapping("/send-verification")
     @Operation(summary = "验证码发送",description = "用于发送验证邮件")
-    public Result<ResultStatus> sendVerificationCode(@RequestBody @Validated SendCodeDTO codeDTO) {
+    public Result<String> sendVerificationCode(@RequestBody @Validated SendCodeDTO codeDTO) {
 
-        if(loginService.sendVerificationCode(codeDTO)){
-            return Result.success();
-        }else {
-            return Result.fail();
-        }
+        return loginService.sendVerificationCode(codeDTO);
     }
 
 

@@ -1,6 +1,7 @@
 package xyz.nanian.owl.user.service;
 
 
+import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.dto.EmailLoginOrRegisterDTO;
 import xyz.nanian.owl.user.dto.PasswordLoginDTO;
 import xyz.nanian.owl.user.dto.SendCodeDTO;
@@ -19,7 +20,7 @@ public interface LoginService {
      * @param sendCodeDTO
      * @return
      */
-    Boolean sendVerificationCode(SendCodeDTO sendCodeDTO);
+    Result<String> sendVerificationCode(SendCodeDTO sendCodeDTO);
 
     /**
      * 注册新用户

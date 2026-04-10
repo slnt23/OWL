@@ -1,4 +1,4 @@
-package xyz.nanian.owl.user.constant;
+package xyz.nanian.owl.constant;
 
 
 /**
@@ -16,4 +16,8 @@ public class LoginConstant {
 
     // 验证码过期时间（分钟）
     public static final long CODE_EXPIRE_MINUTES = 5;
+
+    public static final String CODE_TIME_IN_5_MIN = "5分钟内已发送验证码，请稍后再试";
+
+    public static final String NONE_USER="用户不存在";
 }

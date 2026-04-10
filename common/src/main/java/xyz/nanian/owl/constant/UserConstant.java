@@ -1,4 +1,4 @@
-package xyz.nanian.owl.user.constant;
+package xyz.nanian.owl.constant;
 
 
 /**

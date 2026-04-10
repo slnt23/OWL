@@ -34,7 +34,7 @@ public interface LoginApi {
      * @param user
      * @return
      */
-    Result<ResultStatus> sendVerificationCode(SendCodeDTO user);
+    Result<String> sendVerificationCode(SendCodeDTO user);
 
 
     /**
