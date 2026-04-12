@@ -1,8 +1,7 @@
 package xyz.nanian.owl.user.service;
 
 
-import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.dto.SendCodeDTO;
+import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 
 /**
  * 用户相关的逻辑方法接口

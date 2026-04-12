@@ -20,10 +20,11 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 
-        String projectPath = System.getProperty("user.dir");
+//        String projectPath = System.getProperty("user.dir");
+        String projectPath = "D:/IT/IDEA/Dev/OWL/watermelon/sugarcane";
 
         FastAutoGenerator.create(
-                        "jdbc:mysql://localhost:3306/owl?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8",
+                        "jdbc:mysql://localhost:3306/pitaya?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8",
                         "root",
                         "123456qin"
                 )

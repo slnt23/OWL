@@ -4,15 +4,13 @@ package xyz.nanian.owl.user.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.constant.ResultStatus;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.user.LoginApi;
-import xyz.nanian.owl.user.dto.EmailLoginOrRegisterDTO;
-import xyz.nanian.owl.user.dto.PasswordLoginDTO;
-import xyz.nanian.owl.user.dto.SendCodeDTO;
+import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
+import xyz.nanian.owl.user.domain.dto.PasswordLoginDTO;
+import xyz.nanian.owl.user.domain.dto.SendCodeDTO;
 import xyz.nanian.owl.user.service.LoginService;
 
 /**
@@ -27,7 +25,7 @@ import xyz.nanian.owl.user.service.LoginService;
 @RestController
 @RequestMapping("/auth")
 @Tag(name = "登陆管理",description = "有关登陆，注册的")
-public class LoginController implements LoginApi {
+public class LoginController {
 
     LoginService loginService;
 
@@ -40,7 +38,6 @@ public class LoginController implements LoginApi {
      * @param user 用户DTO
      * @return
      */
-    @Override
     @PostMapping("/register")
     @Operation(summary = "提交注册申请",description = "用户注册")
     public Result<ResultStatus> registerUser(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
@@ -60,7 +57,6 @@ public class LoginController implements LoginApi {
      * @param codeDTO
      * @return
      */
-    @Override
     @PostMapping("/send-verification")
     @Operation(summary = "验证码发送",description = "用于发送验证邮件")
     public Result<String> sendVerificationCode(@RequestBody @Validated SendCodeDTO codeDTO) {
@@ -74,7 +70,6 @@ public class LoginController implements LoginApi {
      * @param user
      * @return
      */
-    @Override
     @PostMapping("/login-email")
     @Operation(summary = "登陆-验证码",description = "通过验证码登陆")
     public Result<String> loginVerifyEmail(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
@@ -87,7 +82,6 @@ public class LoginController implements LoginApi {
      * @param user
      * @return
      */
-    @Override
     @PostMapping("/login-password")
     @Operation(summary = "登陆-密码",description = "通过密码登陆")
     public Result<String> loginVerifyPassword(@RequestBody @Validated PasswordLoginDTO user) {

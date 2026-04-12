@@ -2,9 +2,9 @@ package xyz.nanian.owl.user.service;
 
 
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.user.dto.EmailLoginOrRegisterDTO;
-import xyz.nanian.owl.user.dto.PasswordLoginDTO;
-import xyz.nanian.owl.user.dto.SendCodeDTO;
+import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
+import xyz.nanian.owl.user.domain.dto.PasswordLoginDTO;
+import xyz.nanian.owl.user.domain.dto.SendCodeDTO;
 
 /**
  * 登陆注册相关接口

@@ -3,7 +3,7 @@ package xyz.nanian.owl.crow.service.impl;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.crow.dto.ChatRequestDTO;
+import xyz.nanian.owl.crow.domain.dto.ChatRequestDTO;
 import xyz.nanian.owl.crow.service.AiChatService;
 
 /**

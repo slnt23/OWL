@@ -7,19 +7,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.log.logging.BizLog;
-import xyz.nanian.owl.user.dto.SendCodeDTO;
-import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.entity.UserDO;
+import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
-import xyz.nanian.owl.utils.jwt.JwtUtil;
-
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-import static xyz.nanian.owl.constant.RedisConstant.LOGIN_KEY;
-import static xyz.nanian.owl.constant.RedisConstant.LOGIN_TIME_OUT;
 
 //import static xyz.nanian.owl.user.mapstruct.UserConvert.INSTANCE;
 

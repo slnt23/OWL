@@ -20,23 +20,25 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 
-        String projectPath = System.getProperty("user.dir");
+//        String projectPath = System.getProperty("user.dir");
+        String projectPath = "D:/IT/IDEA/Dev/OWL/watermelon/sugarcane";
 
         FastAutoGenerator.create(
-                        "jdbc:mysql://localhost:3306/owl?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8",
+                        "jdbc:mysql://localhost:3306/pitaya?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8",
                         "root",
                         "123456qin"
                 )
                 .globalConfig(builder -> {
                     builder
                             .author("slnt23")
-                            .outputDir(projectPath + "/src/main/java/sugarcane")
-                            .disableOpenDir();
+                            .enableSwagger()
+                            .outputDir(projectPath + "/src/main/java")
+                            .disableOpenDir()
+                            .commentDate("yyyy-MM-dd HH:mm:ss");
                 })
 
                 .packageConfig(builder -> {
-                    builder
-                            .parent("xyz.nanian.owl")
+                    builder.parent("xyz.nanian.owl.sugarcane")
                             .entity("entity")
                             .mapper("mapper")
                             .service("service")
@@ -51,25 +53,26 @@ public class CodeGenerator {
 
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("sys_user", "sys_role", "sys_menu")
-                            .addTablePrefix("sys_")
+                            .addInclude("price_category", "price_item", "price_source","price_record","geo_location")
+                            .addTablePrefix("price_")
 
                             .entityBuilder()
-                            .enableLombok()
-                            .enableTableFieldAnnotation()
+                                .enableLombok()
+                                .enableTableFieldAnnotation()
+                                .formatFileName("%sDO")
 
                             .mapperBuilder()
-                            .enableMapperAnnotation()
-                            .enableBaseResultMap()
-                            .enableBaseColumnList()
+                                .enableMapperAnnotation()
+                                .enableBaseResultMap()
+                                .enableBaseColumnList()
 
                             .serviceBuilder()
-                            .formatServiceFileName("%sService")
-                            .formatServiceImplFileName("%sServiceImpl")
+                                .formatServiceFileName("%sService")
+                                .formatServiceImplFileName("%sServiceImpl")
 
                             .controllerBuilder()
-                            .enableRestStyle()
-                            .enableHyphenStyle();
+                                .enableRestStyle()
+                                .enableHyphenStyle();
                 })
 
                 .templateEngine(new VelocityTemplateEngine())

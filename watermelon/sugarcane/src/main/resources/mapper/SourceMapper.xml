@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.sugarcane.mapper.SourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.entity.SourceDO">
+        <id column="id" property="id" />
+        <result column="source_name" property="sourceName" />
+        <result column="source_type" property="sourceType" />
+        <result column="source_url" property="sourceUrl" />
+        <result column="reliability_level" property="reliabilityLevel" />
+        <result column="remark" property="remark" />
+        <result column="status" property="status" />
+        <result column="created_at" property="createdAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, source_name, source_type, source_url, reliability_level, remark, status, created_at
+    </sql>
+
+</mapper>

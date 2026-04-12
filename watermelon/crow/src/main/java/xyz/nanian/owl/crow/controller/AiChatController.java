@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import xyz.nanian.owl.crow.dto.ChatRequestDTO;
+import xyz.nanian.owl.crow.domain.dto.ChatRequestDTO;
 import xyz.nanian.owl.crow.service.AiChatService;
 
 /**

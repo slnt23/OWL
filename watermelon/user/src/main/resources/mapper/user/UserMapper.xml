@@ -18,10 +18,10 @@
         where user_code = #{userCode}
     </update>
 
-    <select id="selectUserByName" resultType="xyz.nanian.owl.user.entity.UserDO">
+    <select id="selectUserByName" resultType="xyz.nanian.owl.user.domain.entity.UserDO">
 
     </select>
-    <select id="select" resultType="xyz.nanian.owl.user.entity.UserDO">
+    <select id="select" resultType="xyz.nanian.owl.user.domain.entity.UserDO">
         select id,username,user_code,password,phone,email,avatar,nickname,role,status,create_time,update_time,remark
         from user
         where phone = #{phone}

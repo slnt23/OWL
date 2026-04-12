@@ -2,15 +2,14 @@ package xyz.nanian.owl.crow.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.crow.dto.CreateConversationDTO;
-import xyz.nanian.owl.crow.entity.ConversationDO;
+import xyz.nanian.owl.crow.domain.dto.CreateConversationDTO;
+import xyz.nanian.owl.crow.domain.entity.ConversationDO;
 import xyz.nanian.owl.crow.mapper.ConversationMapper;
 import xyz.nanian.owl.crow.mapper.MessageMapper;
 import xyz.nanian.owl.crow.service.ConversationService;
-import xyz.nanian.owl.crow.vo.ConversationVO;
-import xyz.nanian.owl.crow.vo.MessageVO;
+import xyz.nanian.owl.crow.domain.vo.ConversationVO;
+import xyz.nanian.owl.crow.domain.vo.MessageVO;
 
 import java.util.List;
 import java.util.UUID;

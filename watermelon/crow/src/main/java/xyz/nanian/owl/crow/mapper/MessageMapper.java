@@ -4,8 +4,8 @@ package xyz.nanian.owl.crow.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.nanian.owl.crow.entity.MessageDO;
-import xyz.nanian.owl.crow.vo.MessageVO;
+import xyz.nanian.owl.crow.domain.entity.MessageDO;
+import xyz.nanian.owl.crow.domain.vo.MessageVO;
 
 import java.util.List;
 

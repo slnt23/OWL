@@ -1,7 +1,7 @@
 package xyz.nanian.owl.crow.service;
 
 
-import xyz.nanian.owl.crow.dto.ChatRequestDTO;
+import xyz.nanian.owl.crow.domain.dto.ChatRequestDTO;
 
 /**
  * AI

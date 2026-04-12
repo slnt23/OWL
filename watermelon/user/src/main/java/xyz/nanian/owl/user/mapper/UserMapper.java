@@ -4,7 +4,7 @@ package xyz.nanian.owl.user.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
-import xyz.nanian.owl.user.entity.UserDO;
+import xyz.nanian.owl.user.domain.entity.UserDO;
 
 /**
  * 用户数据Mapper

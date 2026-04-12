@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.sugarcane.mapper.RecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.entity.RecordDO">
+        <id column="id" property="id" />
+        <result column="item_id" property="itemId" />
+        <result column="location_id" property="locationId" />
+        <result column="price" property="price" />
+        <result column="currency" property="currency" />
+        <result column="price_unit" property="priceUnit" />
+        <result column="source_id" property="sourceId" />
+        <result column="effective_time" property="effectiveTime" />
+        <result column="expire_time" property="expireTime" />
+        <result column="record_time" property="recordTime" />
+        <result column="confidence" property="confidence" />
+        <result column="created_at" property="createdAt" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, item_id, location_id, price, currency, price_unit, source_id, effective_time, expire_time, record_time, confidence, created_at
+    </sql>
+
+</mapper>

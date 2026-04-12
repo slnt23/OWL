@@ -3,9 +3,9 @@ package xyz.nanian.owl.user.mapstruct;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import xyz.nanian.owl.user.dto.SendCodeDTO;
-import xyz.nanian.owl.user.dto.UserInfoDTO;
-import xyz.nanian.owl.user.entity.UserDO;
+import xyz.nanian.owl.user.domain.dto.SendCodeDTO;
+import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+import xyz.nanian.owl.user.domain.entity.UserDO;
 
 /**
  * 用户信息的Map

@@ -6,8 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import xyz.nanian.owl.user.dto.SendCodeDTO;
-import xyz.nanian.owl.user.dto.UserInfoDTO;
+import xyz.nanian.owl.user.domain.dto.SendCodeDTO;
+import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.service.UserService;
 
 /**

@@ -11,10 +11,10 @@ import xyz.nanian.owl.constant.ExceptionConstant;
 import xyz.nanian.owl.exception.LoginException;
 import xyz.nanian.owl.mail.Mail;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.user.dto.EmailLoginOrRegisterDTO;
-import xyz.nanian.owl.user.dto.PasswordLoginDTO;
-import xyz.nanian.owl.user.dto.SendCodeDTO;
-import xyz.nanian.owl.user.entity.UserDO;
+import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
+import xyz.nanian.owl.user.domain.dto.PasswordLoginDTO;
+import xyz.nanian.owl.user.domain.dto.SendCodeDTO;
+import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.service.LoginService;
 

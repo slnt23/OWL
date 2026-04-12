@@ -2,7 +2,7 @@ package xyz.nanian.owl.user.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import xyz.nanian.owl.user.entity.UserDO;
+import xyz.nanian.owl.user.domain.entity.UserDO;
 
 /**
  * Login ,Register
