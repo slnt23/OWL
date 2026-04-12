@@ -1,4 +1,4 @@
-package xyz.nanian.owl.sugarcane;
+package xyz.nanian.crow;
 
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
@@ -30,14 +30,13 @@ public class CodeGenerator {
                 .globalConfig(builder -> {
                     builder
                             .author("slnt23")
-                            .enableSwagger()
-                            .outputDir(projectPath + "/src/main/java")
-                            .disableOpenDir()
-                            .commentDate("yyyy-MM-dd HH:mm:ss");
+                            .outputDir(projectPath + "/src/main/java/sugarcane")
+                            .disableOpenDir();
                 })
 
                 .packageConfig(builder -> {
-                    builder.parent("xyz.nanian.owl.sugarcane")
+                    builder
+                            .parent("xyz.nanian.owl")
                             .entity("entity")
                             .mapper("mapper")
                             .service("service")
@@ -52,26 +51,25 @@ public class CodeGenerator {
 
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("price_category", "price_item", "price_source","price_record","geo_location")
-                            .addTablePrefix("price_")
+                            .addInclude("sys_user", "sys_role", "sys_menu")
+                            .addTablePrefix("sys_")
 
                             .entityBuilder()
-                                .enableLombok()
-                                .enableTableFieldAnnotation()
-                                .formatFileName("%sDO")
+                            .enableLombok()
+                            .enableTableFieldAnnotation()
 
                             .mapperBuilder()
-                                .enableMapperAnnotation()
-                                .enableBaseResultMap()
-                                .enableBaseColumnList()
+                            .enableMapperAnnotation()
+                            .enableBaseResultMap()
+                            .enableBaseColumnList()
 
                             .serviceBuilder()
-                                .formatServiceFileName("%sService")
-                                .formatServiceImplFileName("%sServiceImpl")
+                            .formatServiceFileName("%sService")
+                            .formatServiceImplFileName("%sServiceImpl")
 
                             .controllerBuilder()
-                                .enableRestStyle()
-                                .enableHyphenStyle();
+                            .enableRestStyle()
+                            .enableHyphenStyle();
                 })
 
                 .templateEngine(new VelocityTemplateEngine())

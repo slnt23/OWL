@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import xyz.nanian.owl.constant.LoginConstant;
 
 /**
- * 检验验证码是否过期
+ * 检验邮箱验证码是否过期
  *
  * @author slnt23
  * @since 2026/4/11

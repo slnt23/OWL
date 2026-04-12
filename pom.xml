@@ -49,11 +49,12 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <druid.version>1.2.25</druid.version>
         <rocketmq.version>2.2.3</rocketmq.version>
-        <spring.test>4.0.1</spring.test>
+<!--        <spring.test>4.0.1</spring.test>-->
         <jwt.version>0.11.5</jwt.version>
         <mybatis.generator.version>3.5.6</mybatis.generator.version>
         <velocity.engine.version>2.3</velocity.engine.version>
-        <mail.version>3.3.13</mail.version>
+        <spring.ai.model.version>1.1.4</spring.ai.model.version>
+<!--        <mail.version>3.3.13</mail.version>-->
 	</properties>
 
 
@@ -119,21 +120,16 @@
 
 <!--            spring 家族-->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${spring.test}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-starter-mail</artifactId>-->
-<!--                <version>${mail.version}</version>-->
-<!--            </dependency>-->
-
+<!--            ai-->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-starter-model-openai</artifactId>
+                <version>${spring.ai.model.version}</version>
+            </dependency>
 
 <!--            中间件-->
 <!--            rocketMQ-->
@@ -142,9 +138,18 @@
             <artifactId>rocketmq-spring-boot-starter</artifactId>
             <version>${rocketmq.version}</version>
             </dependency>
+<!--            nacos -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${nacos.config.discovery.version}</version>   <!-- 或最新兼容版本，如 2025.0.0.0 -->
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
 
 <!--            日志-->
-<!--            knife4j-->
+<!--            knife 4j-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
@@ -225,16 +230,7 @@
             <!--                <artifactId>mybatis-generator-core</artifactId>-->
             <!--                <version>${mybatis.generator.version}</version>-->
             <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>com.alibaba.cloud</groupId>-->
-            <!--                <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>-->
-            <!--                <version>${nacos.config.discovery.version}</version>-->
-            <!--            </dependency>-->
-            <!--            <dependency>-->
-            <!--                <groupId>com.alibaba.cloud</groupId>-->
-            <!--                <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
-            <!--                <version>${nacos.config.discovery.version}</version>-->
-            <!--            </dependency>-->
+
 
         </dependencies>
     </dependencyManagement>

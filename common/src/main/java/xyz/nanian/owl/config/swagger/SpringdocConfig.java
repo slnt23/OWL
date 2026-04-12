@@ -71,9 +71,9 @@ public class SpringdocConfig {
      * 您可以为其他模块创建额外的 GroupedOpenApi Bean
      */
     @Bean
-    public GroupedOpenApi tradeApi() {
+    public GroupedOpenApi pitayaApi() {
         return GroupedOpenApi.builder()
-                .group("电商中心-trade")
+                .group("电商中心-pitaya")
 //                .pathsToMatch("/pitaya/**")
                 .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
                 .build();
@@ -85,10 +85,34 @@ public class SpringdocConfig {
     @Bean
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
-                .group("管理员-admin")
+                .group("管理员中心-admin")
                 .pathsToMatch("/admin/**")
                 .build();
     }
 
+    /**
+     * 有关sugarcane 价多多模块
+     *
+     */
+    @Bean
+    public GroupedOpenApi sugarcaneApi() {
+        return GroupedOpenApi.builder()
+                .group("价格管理中心-sugarcane")
+//                .pathsToMatch("/pitaya/**")
+                .packagesToScan("xyz.nanian.owl.sugarcane.controller")
+                .build();
+    }
+    /**
+     * 有关crow ai模块
+     *
+     */
+    @Bean
+    public GroupedOpenApi crowApi() {
+        return GroupedOpenApi.builder()
+                .group("AI助手中心-crow")
+//                .pathsToMatch("/pitaya/**")
+                .packagesToScan("xyz.nanian.owl.crow.controller")
+                .build();
+    }
 
 }

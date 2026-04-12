@@ -1,11 +1,28 @@
 spring:
-  application:
-    name: OWL
-
-  cloud:
-    nacos:
-      config:
-        server-addr: 127.0.0.1:8848
-        namespace: dev-namespace-id
-        group: DEFAULT_GROUP
-        file-extension: yaml
+  #    nacos
+#  application:
+#    name: your-application-name   # 必须，与 Nacos 中的 dataId 对应（如 your-application-name.yaml）
+#
+#  cloud:
+#    nacos:
+#      # 公共配置（config 和 discovery 可共用）
+#      server-addr: 192.168.131.128:8848   # Nacos Server 地址，支持集群逗号分隔
+#      username: nacos               # Nacos 认证用户名（默认 nacos）
+#      password: nacos               # Nacos 认证密码（默认 nacos）
+#      namespace:                    # 命名空间 ID，public 环境留空或填写对应 ID
+#
+#      # 配置中心（Config）专属配置
+#      config:
+#        group: DEFAULT_GROUP        # 配置分组，默认 DEFAULT_GROUP
+#        file-extension: yaml        # 配置文件格式，支持 yaml/properties
+#        refresh-enabled: true       # 启用动态刷新（默认 true）
+#        # shared-configs:           # 共享配置（可选，多配置文件场景）
+#        #   - data-id: common.yaml
+#        #     group: DEFAULT_GROUP
+#        #     refresh: true
+#
+#      # 服务发现（Discovery）专属配置（如果需要服务注册）
+#      discovery:
+#        group: DEFAULT_GROUP
+#        # instance-enabled: true    # 实例是否可用
+#        # ip:                       # 指定注册 IP（可选）

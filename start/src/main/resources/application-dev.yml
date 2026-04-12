@@ -38,9 +38,20 @@ spring:
             enable: true
             required: true
     protocol: smtp
-
+#    ai
+  ai:
+    openai:
+      base-url: https://api.deepseek.com
+      api-key: ${DEEPSEEK_API_KEY}
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 0.7
+          max-tokens: 1500
 
 
 # 本项目启动端口
 server:
   port: 8080
+  tomcat:
+    connection-timeout: 10s
