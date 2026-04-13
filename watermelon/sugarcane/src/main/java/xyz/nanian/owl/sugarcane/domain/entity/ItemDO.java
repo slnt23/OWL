@@ -1,4 +1,4 @@
-package xyz.nanian.owl.sugarcane.entity;
+package xyz.nanian.owl.sugarcane.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;

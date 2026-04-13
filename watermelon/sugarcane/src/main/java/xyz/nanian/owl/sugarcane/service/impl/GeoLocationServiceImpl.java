@@ -1,6 +1,6 @@
 package xyz.nanian.owl.sugarcane.service.impl;
 
-import xyz.nanian.owl.sugarcane.entity.GeoLocationDO;
+import xyz.nanian.owl.sugarcane.domain.entity.GeoLocationDO;
 import xyz.nanian.owl.sugarcane.mapper.GeoLocationMapper;
 import xyz.nanian.owl.sugarcane.service.GeoLocationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

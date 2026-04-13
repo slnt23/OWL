@@ -3,7 +3,7 @@
 <mapper namespace="xyz.nanian.owl.sugarcane.mapper.SourceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.entity.SourceDO">
+    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.domain.entity.SourceDO">
         <id column="id" property="id" />
         <result column="source_name" property="sourceName" />
         <result column="source_type" property="sourceType" />

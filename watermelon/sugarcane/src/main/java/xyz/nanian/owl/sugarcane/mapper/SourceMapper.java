@@ -1,6 +1,6 @@
 package xyz.nanian.owl.sugarcane.mapper;
 
-import xyz.nanian.owl.sugarcane.entity.SourceDO;
+import xyz.nanian.owl.sugarcane.domain.entity.SourceDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

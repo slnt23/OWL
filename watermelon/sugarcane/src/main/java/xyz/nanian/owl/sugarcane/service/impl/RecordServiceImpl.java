@@ -1,6 +1,6 @@
 package xyz.nanian.owl.sugarcane.service.impl;
 
-import xyz.nanian.owl.sugarcane.entity.RecordDO;
+import xyz.nanian.owl.sugarcane.domain.entity.RecordDO;
 import xyz.nanian.owl.sugarcane.mapper.RecordMapper;
 import xyz.nanian.owl.sugarcane.service.RecordService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

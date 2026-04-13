@@ -1,7 +1,7 @@
-package xyz.nanian.owl.admin;
+package xyz.nanian.owl.admin.controller;
 
 
-import xyz.nanian.owl.admin.query.OrderDateQuery;
+import xyz.nanian.owl.admin.domain.query.OrderDateQuery;
 
 /**
  * 订单管理

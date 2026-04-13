@@ -1,6 +1,6 @@
 package xyz.nanian.owl.sugarcane.service;
 
-import xyz.nanian.owl.sugarcane.entity.ItemDO;
+import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

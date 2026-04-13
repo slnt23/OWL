@@ -1,4 +1,4 @@
-package xyz.nanian.owl.admin;
+package xyz.nanian.owl.admin.controller;
 
 
 /**

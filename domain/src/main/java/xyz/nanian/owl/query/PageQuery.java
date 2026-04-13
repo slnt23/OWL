@@ -1,4 +1,4 @@
-package xyz.nanian.owl;
+package xyz.nanian.owl.query;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

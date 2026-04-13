@@ -3,7 +3,7 @@
 <mapper namespace="xyz.nanian.owl.sugarcane.mapper.GeoLocationMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.entity.GeoLocationDO">
+    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.domain.entity.GeoLocationDO">
         <id column="id" property="id" />
         <result column="location_name" property="locationName" />
         <result column="location_type" property="locationType" />

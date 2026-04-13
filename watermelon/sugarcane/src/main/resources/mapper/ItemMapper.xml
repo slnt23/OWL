@@ -3,7 +3,7 @@
 <mapper namespace="xyz.nanian.owl.sugarcane.mapper.ItemMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.entity.ItemDO">
+    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.domain.entity.ItemDO">
         <id column="id" property="id" />
         <result column="item_code" property="itemCode" />
         <result column="item_name" property="itemName" />
