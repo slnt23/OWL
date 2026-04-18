@@ -1,4 +1,4 @@
-package xyz.nanian.owl.log.DO;
+package xyz.nanian.owl.log.domain.entity;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;

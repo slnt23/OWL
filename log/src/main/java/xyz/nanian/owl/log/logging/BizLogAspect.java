@@ -1,7 +1,7 @@
 package xyz.nanian.owl.log.logging;
 
 
-import xyz.nanian.owl.log.DTO.BizLogMessageDTO;
+import xyz.nanian.owl.log.domain.dto.BizLogMessageDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

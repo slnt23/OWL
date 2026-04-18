@@ -1,4 +1,4 @@
-package xyz.nanian.owl.log.DTO;
+package xyz.nanian.owl.log.domain.dto;
 
 
 import lombok.Data;

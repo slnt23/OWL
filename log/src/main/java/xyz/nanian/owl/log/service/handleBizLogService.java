@@ -1,7 +1,7 @@
 package xyz.nanian.owl.log.service;
 
 
-import xyz.nanian.owl.log.DTO.BizLogMessageDTO;
+import xyz.nanian.owl.log.domain.dto.BizLogMessageDTO;
 
 /**
  * 处理业务日志，

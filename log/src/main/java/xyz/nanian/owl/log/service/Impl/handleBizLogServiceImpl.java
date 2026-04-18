@@ -1,8 +1,8 @@
 package xyz.nanian.owl.log.service.Impl;
 
 
-import xyz.nanian.owl.log.DO.BizLogDO;
-import xyz.nanian.owl.log.DTO.BizLogMessageDTO;
+import xyz.nanian.owl.log.domain.entity.BizLogDO;
+import xyz.nanian.owl.log.domain.dto.BizLogMessageDTO;
 import lombok.RequiredArgsConstructor;
 import xyz.nanian.owl.log.mapper.BizLogMapper;
 import org.springframework.amqp.rabbit.annotation.Exchange;
