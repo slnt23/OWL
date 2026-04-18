@@ -73,6 +73,7 @@ public class UserController {
 
     /**
      * 更新用户密码通过手机号，或者邮箱，
+     * 这里应该通过登录状态获取UserCode，然后直接更改密码，-- 后续改为邮箱验证码，
      * TODO 这里暂时没添加邮箱，手机号是自己填写的，所有不安全，-- 后续改为邮箱验证码，
      *
      * @param Phone phone

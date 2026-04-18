@@ -16,15 +16,27 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Schema(name = "返回历史消息DTO")
+@Schema(name = "返回历史消息VO")
 public class MessageVO {
 
+    /**
+     * 消息id
+     */
     private Long id;
 
+    /**
+     * 消息角色，user/assistant/system
+     */
     private String role;
 
+    /**
+     * 消息内容
+     */
     private String content;
 
+    /**
+     * 消息创建时间
+     */
     private LocalDateTime createdAt;
 }
 

@@ -4,7 +4,36 @@
 
 <mapper namespace="xyz.nanian.owl.crow.mapper.MessageMapper">
 
-    <select id="selectByConversationId" resultType="xyz.nanian.owl.crow.domain.vo.MessageVO">
+<!--    <select id="selectByConversationId" resultType="xyz.nanian.owl.crow.domain.vo.MessageVO">-->
+<!--        SELECT-->
+<!--            id,-->
+<!--            role,-->
+<!--            content,-->
+<!--            created_at as createdAt-->
+<!--        FROM message-->
+<!--        WHERE conversation_id = #{conversationId}-->
+<!--          AND deleted = 0-->
+<!--        ORDER BY created_at ASC-->
+<!--    </select>-->
+    <!-- 先定义 resultMap -->
+    <resultMap id="MessageVOResultMap"
+               type="xyz.nanian.owl.crow.domain.vo.MessageVO">
+        <id property="id" column="id"/>
+        <result property="role" column="role"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <!-- 然后使用 resultMap -->
+    <select id="selectByConversationId" resultMap="MessageVOResultMap">
+        SELECT
+            id,
+            role,
+            content,
+            created_at AS createdAt
+        FROM message
+        WHERE conversation_id = #{conversationId}
+        ORDER BY created_at ASC
     </select>
 
     <select id="selectRecentMessages" resultType="xyz.nanian.owl.crow.domain.entity.MessageDO">

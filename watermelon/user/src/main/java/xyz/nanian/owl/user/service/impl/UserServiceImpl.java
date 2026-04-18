@@ -1,6 +1,7 @@
 package xyz.nanian.owl.user.service.impl;
 
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -24,6 +25,7 @@ import xyz.nanian.owl.user.service.UserService;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper ;
@@ -33,18 +35,18 @@ public class UserServiceImpl implements UserService {
     private final RedisTemplate<String, Object> redisTemplate;
 
 
-    UserServiceImpl(UserMapper userMapper,
-                    PasswordEncoder passwordEncoder,
-                    UserConvert userConvert,
-                    StringRedisTemplate stringRedisTemplate,
-                    RedisTemplate<String, Object> redisTemplate) {
-
-        this.userMapper = userMapper ;
-        this.passwordEncoder = passwordEncoder;
-        this.userConvert = userConvert;
-        this.stringRedisTemplate = stringRedisTemplate;
-        this.redisTemplate = redisTemplate;
-    }
+//    UserServiceImpl(UserMapper userMapper,
+//                    PasswordEncoder passwordEncoder,
+//                    UserConvert userConvert,
+//                    StringRedisTemplate stringRedisTemplate,
+//                    RedisTemplate<String, Object> redisTemplate) {
+//
+//        this.userMapper = userMapper ;
+//        this.passwordEncoder = passwordEncoder;
+//        this.userConvert = userConvert;
+//        this.stringRedisTemplate = stringRedisTemplate;
+//        this.redisTemplate = redisTemplate;
+//    }
 
 
 //    /**

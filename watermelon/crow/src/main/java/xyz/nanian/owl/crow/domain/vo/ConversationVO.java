@@ -16,15 +16,27 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@Schema(name = "返回会话列表")
+@Schema(name = "返回会话列表VO")
 public class ConversationVO {
 
+    /**
+     * 会话id
+     */
     private String id;
 
+    /**
+     * 会话title
+     */
     private String title;
 
+    /**
+     * 创建时间
+     */
     private LocalDateTime createdAt;
 
+    /**
+     * 更新时间
+     */
     private LocalDateTime updatedAt;
 }
 

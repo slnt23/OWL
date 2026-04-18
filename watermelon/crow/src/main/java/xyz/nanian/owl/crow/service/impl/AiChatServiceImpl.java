@@ -20,8 +20,6 @@ import xyz.nanian.owl.crow.constant.AIConstant;
 
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * ai
  *
@@ -70,18 +68,6 @@ public class AiChatServiceImpl implements AiChatService {
                 .map(this::convertMessageDO)
                 .toList();
 
-//        List<Message> messages = history.stream()
-//                .map(do -> {
-//            try {
-//                return convertMessageDO(do);   // 保持原有方法不变
-//            } catch (IllegalAccessException e) {
-//                // 根据业务决定处理方式
-//                throw new RuntimeException("Failed to convert MessageDO to Message", e);
-//                // 或者：throw new IllegalStateException(e);
-//            }
-//        })
-//    .toList();
-
 //        4. 调用模型
         ChatResponse resp = chatClient.prompt()
                 .messages(messages)
@@ -128,16 +114,7 @@ public class AiChatServiceImpl implements AiChatService {
      * 消息转换
      * @param messageDO
      * @return
-     * @throws IllegalAccessException ,这里不兼容，改了
      */
-//    private Message convertMessageDO(MessageDO messageDO) throws Exception {
-//        return switch (messageDO.getRole()){
-//            case AIConstant.ROLE_USER -> new UserMessage(messageDO.getContent());
-//            case AIConstant.ROLE_ASSISTANT -> new AssistantMessage(messageDO.getContent());
-//            case AIConstant.ROLE_SYSTEM -> new SystemMessage(messageDO.getContent());
-//            default -> throw new Exception(AIConstant.ROLE_ILLEGAL + messageDO.getRole());
-//        };
-//    }
     private Message convertMessageDO(MessageDO messageDO) {
         return switch (messageDO.getRole()) {
             case AIConstant.ROLE_USER -> new UserMessage(messageDO.getContent());

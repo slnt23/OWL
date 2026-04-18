@@ -3,6 +3,7 @@ package xyz.nanian.owl.user.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,26 +39,27 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-//    这里这个类的注册问题尚未解决，
+//    这里这个类的注册问题尚未解决，//已解决，是注入方式的问题，
     Mail mail;
     UserMapper userMapper;
     StringRedisTemplate stringRedisTemplate;
     PasswordEncoder passwordEncoder;
     CodeCacheUtil codeCacheUtil;
 
-    public LoginServiceImpl(Mail mail,
-                            UserMapper userMapper,
-                            StringRedisTemplate stringRedisTemplate,
-                            PasswordEncoder passwordEncoder,
-                            CodeCacheUtil codeCacheUtil) {
-        this.mail = mail;
-        this.userMapper = userMapper;
-        this.stringRedisTemplate = stringRedisTemplate;
-        this.passwordEncoder = passwordEncoder;
-        this.codeCacheUtil = codeCacheUtil;
-    }
+//    public LoginServiceImpl(Mail mail,
+//                            UserMapper userMapper,
+//                            StringRedisTemplate stringRedisTemplate,
+//                            PasswordEncoder passwordEncoder,
+//                            CodeCacheUtil codeCacheUtil) {
+//        this.mail = mail;
+//        this.userMapper = userMapper;
+//        this.stringRedisTemplate = stringRedisTemplate;
+//        this.passwordEncoder = passwordEncoder;
+//        this.codeCacheUtil = codeCacheUtil;
+//    }
 
     /**
      * 发送验证码
@@ -191,6 +193,7 @@ public class LoginServiceImpl implements LoginService {
 //        返回token
         return getToken(passwordLoginDTO.getEmail());
     }
+
 
     /**
      * 获取token，
