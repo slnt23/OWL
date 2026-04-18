@@ -33,59 +33,6 @@ public class UserController {
         this.userService = userService;
     }
 
-//    /**
-//     * 注册用户
-//     * @param user 用户DTO
-//     */
-//    @Override
-//    @PostMapping("/register")
-//    @Operation(summary = "用户注册",description = "详细描述：注册")
-//    public Result<ResultStatus> registerUser(@RequestBody @Validated UserRegisterDTO user) {
-//
-//        if(!RegexUtil.isPhone(user.getPhone())){
-//            return Result.fail(ResultStatus.PARAMS_INVALID);
-//        }
-//
-//        if(userService.saveUser(user)){
-//            return Result.success(ResultStatus.SUCCESS);
-//        }else {
-//            return Result.fail(ResultStatus.FAIL);
-//        }
-//    }
-//
-//    /**
-//     * 用户登陆
-//     * @param phone 用户手机号
-//     * @param password 用户密码
-//     */
-//    @Override
-//    @GetMapping("/login")
-//    @Operation(summary = "用户登陆")
-//    public Result<String> loginUser(@RequestParam String phone, @RequestParam String password) {
-//
-//        if(!RegexUtil.isPhone(phone)){
-//            return Result.fail();
-//        }
-//
-//        String result = userService.login(phone,password);
-//        if(result == null){
-//            return Result.fail();
-//        }else {
-//            return Result.success(result);
-//        }
-//    }
-
-    /**
-     * 搜索用户通过用户名
-     * @param name 用户名
-     * @return 包含用户数据的分页格式，
-     */
-    @GetMapping("/users")
-    @Operation(summary = "用户搜索")
-    public Result<ResultStatus> searchUserByName(String name) {
-        return null;
-    }
-
     /**
      * 更新用户信息
      * @param userInfoDTO 用户最新信息
@@ -102,6 +49,22 @@ public class UserController {
         }
     }
 
+    /**
+     * 搜索用户通过用户名
+     * @param name 用户名
+     * @return 包含用户数据的分页格式，
+     */
+    @GetMapping("/users")
+    @Operation(summary = "用户搜索")
+    public Result<ResultStatus> searchUserByName(String name) {
+        return null;
+    }
+
+    /**
+     *
+     * @param Phone
+     * @return
+     */
     @PutMapping("/avatar")
     @Operation(summary = "用户头像更新")
     public Result<ResultStatus> updateAvatarByCode(String Phone) {
@@ -109,7 +72,9 @@ public class UserController {
     }
 
     /**
-     * 更新用户密码通过手机号，或者邮箱，TODO 这里暂时没添加邮箱，手机号是自己填写的，所有不安全，
+     * 更新用户密码通过手机号，或者邮箱，
+     * TODO 这里暂时没添加邮箱，手机号是自己填写的，所有不安全，-- 后续改为邮箱验证码，
+     *
      * @param Phone phone
      * @param newPassword newPassword
      * @return message

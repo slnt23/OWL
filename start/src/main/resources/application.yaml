@@ -1,41 +1,64 @@
+#spring:
+#  application:
+#    name: OWL
+#  profiles:
+#    active: dev   # 默认开发环境
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    druid:
+#      name: DruidDataSource
+#      initial-size: 1
+#      min-idle: 1
+#      max-active: 20
+#      async-init: true
+#      max-wait: 6000
+#      time-between-eviction-runs-millis: 60000
+#      min-evictable-idle-time-millis: 300000
+#      max-evictable-idle-time-millis: 900000
+#      validation-query: SELECT 1
+#      test-while-idle: true
+#      test-on-borrow: false
+#      test-on-return: false
+#      pool-prepared-statements: true
+#      max-pool-prepared-statement-per-connection-size: 20
+#      connection-init-sqls: SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+#      filters: stat
+#  data:
+#    redis:
+#      database: 0  # 数据库索引
+#      timeout: 2000ms
+#      lettuce:
+#        pool:
+#          max-active: 20
+#          max-idle: 10
+#          min-idle: 5
+#          max-wait: 2000ms
+#
+#logging:
+#  level:
+#    com.baomidou.mybatisplus: warn
+#    org.mybatis: warn
+
 spring:
   application:
     name: OWL
   profiles:
-    active: dev   # 默认开发环境
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      name: DruidDataSource
-      initial-size: 1
-      min-idle: 1
-      max-active: 20
-      async-init: true
-      max-wait: 6000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      max-evictable-idle-time-millis: 900000
-      validation-query: SELECT 1
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      pool-prepared-statements: true
-      max-pool-prepared-statement-per-connection-size: 20
-      connection-init-sqls: SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-      filters: stat
-  data:
-    redis:
-      database: 0  # 数据库索引
-      timeout: 2000ms
-      lettuce:
-        pool:
-          max-active: 20
-          max-idle: 10
-          min-idle: 5
-          max-wait: 2000ms
+    active: dev          # 默认开发环境，可通过启动参数切换
 
-logging:
-  level:
-    com.baomidou.mybatisplus: warn
-    org.mybatis: warn
+  config:
+    import:
+      - optional:nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:database.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:cache.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:message.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:email.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:ai.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:sensitive.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+
+  cloud:
+    nacos:
+      server-addr: 192.168.131.128:8848
+      username: nacos
+      password: nacos
+      namespace: OWL

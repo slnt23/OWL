@@ -1,7 +1,7 @@
-spring:
-  #    nacos
+#spring:
+##      nacos
 #  application:
-#    name: your-application-name   # 必须，与 Nacos 中的 dataId 对应（如 your-application-name.yaml）
+#    name: OWL       # 必须，与 Nacos 中的 dataId 对应（如 your-application-name.yaml）
 #
 #  cloud:
 #    nacos:

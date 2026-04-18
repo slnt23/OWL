@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.nanian.owl.crow.mapper.MessageMapper">
+
+    <select id="selectByConversationId" resultType="xyz.nanian.owl.crow.domain.vo.MessageVO">
+    </select>
+
+    <select id="selectRecentMessages" resultType="xyz.nanian.owl.crow.domain.entity.MessageDO">
+        SELECT
+            id,
+            conversation_id AS conversationId,
+            role,
+            content,
+            prompt_tokens AS promptTokens,
+            completion_tokens AS completionTokens,
+            total_token_count AS totalTokenCount,
+            model,
+            finish_reason AS finishReason,
+            created_at AS createdAt
+        FROM message
+        WHERE conversation_id = #{conversationId}
+        ORDER BY created_at DESC
+        LIMIT #{limit}
+    </select>
+</mapper>

@@ -31,4 +31,10 @@ public class PasswordLoginDTO {
     @NotNull
     @Schema(description = "密码",example = "123456")
     String password;
+
+    /**
+     * 角色
+     */
+    @Schema(description = "角色",example = "0=用户，1=商家，10086=管理员")
+    private Integer role;
 }

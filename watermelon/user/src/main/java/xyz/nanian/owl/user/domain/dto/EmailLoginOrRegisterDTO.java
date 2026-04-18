@@ -33,4 +33,10 @@ public class EmailLoginOrRegisterDTO {
     @Pattern(regexp = "\\d{6}$",message = "验证码必须6位数字")
     @Schema(description = "验证码",example = "123456")
     String code;
+
+    /**
+     * 角色
+     */
+    @Schema(description = "角色",example = "0=用户，1=商家，10086=管理员")
+    private Integer role;
 }

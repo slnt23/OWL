@@ -1,57 +1,72 @@
-spring:
-# mysql
-  datasource:
-    url: jdbc:mysql://localhost:3306/pitaya?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: root
-    password: 123456qin
-# redis
-  data:
-    redis:
-      password: 01star
-      sentinel:
-        master: mymaster
-        nodes:
-          - 192.168.131.128:27001
-          - 192.168.131.128:27002
-          - 192.168.131.128:27003
-# rabbitmq
-  rabbitmq:
-    host: 192.168.131.128
-    port: 5672
-    username: admin
-    password: 123456qin
-    virtual-host: /
-    listener:
-      simple:
-        acknowledge-mode: auto
-# 邮箱服务
-  mail:
-    host: smtp.qq.com
-    port: 587
-    username: 3436134614@qq.com
-    password: ${OWL_MAIL_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-            required: true
-    protocol: smtp
-#    ai
-  ai:
-    openai:
-      base-url: https://api.deepseek.com
-      api-key: ${DEEPSEEK_API_KEY}
-      chat:
-        options:
-          model: deepseek-chat
-          temperature: 0.7
-          max-tokens: 1500
-
-
-# 本项目启动端口
-server:
-  port: 8080
-  tomcat:
-    connection-timeout: 10s
+#spring:
+## mysql
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/pitaya?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#    username: root
+#    password: 123456qin
+## redis
+#  data:
+#    redis:
+#      password: 01star
+#      sentinel:
+#        master: mymaster
+#        nodes:
+#          - 192.168.131.128:27001
+#          - 192.168.131.128:27002
+#          - 192.168.131.128:27003
+## rabbitmq
+#  rabbitmq:
+#    host: 192.168.131.128
+#    port: 5672
+#    username: admin
+#    password: 123456qin
+#    virtual-host: /
+#    listener:
+#      simple:
+#        acknowledge-mode: auto
+## 邮箱服务
+#  mail:
+#    host: smtp.qq.com
+#    port: 587
+#    username: 3436134614@qq.com
+#    password: ${OWL_MAIL_PASSWORD}
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#            required: true
+#    protocol: smtp
+##    ai
+#  ai:
+#    openai:
+#      base-url: https://api.deepseek.com
+#      api-key: ${OWL_DEEPSEEK_API_KEY}
+#      chat:
+#        options:
+#          model: deepseek-chat
+#          temperature: 0.7
+#          top-p: 0.9
+#          max-tokens: 1500
+#      request:
+#        timeout: 30s
+#        connect-timeout: 5s
+#      retry:
+#        max-attempts: 3
+#        backoff: 500ms
+#      context:
+#        max-history-messages: 20
+#        max-context-tokens: 4000
+#
+#logging:
+#  level:
+#    org.springframework.ai: INFO
+#
+#
+#
+## 本项目启动端口
+#server:
+#  port: 8080
+#  tomcat:
+#    connection-timeout: 10s

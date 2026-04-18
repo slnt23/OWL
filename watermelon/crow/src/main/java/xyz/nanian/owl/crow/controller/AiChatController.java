@@ -1,6 +1,8 @@
 package xyz.nanian.owl.crow.controller;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +22,13 @@ import xyz.nanian.owl.crow.service.AiChatService;
 @RestController
 @RequestMapping("/ai")
 @RequiredArgsConstructor
+@Tag(name = "AI聊天管理",description = "chat")
 public class AiChatController {
 
     private final AiChatService aiChatService;
 
+
+    @Operation(summary = "用户聊天")
     @PostMapping("/chat")
     public String chat(@RequestBody @Valid ChatRequestDTO dto) {
         return aiChatService.chat(dto);

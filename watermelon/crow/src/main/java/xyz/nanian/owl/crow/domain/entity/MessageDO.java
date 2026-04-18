@@ -37,9 +37,19 @@ public class MessageDO {
     private String content;
 
     /**
-     * 该消息token数
+     * 该轮消息输入token数
      */
-    private Integer tokenCount;
+    private Integer promptTokens;
+
+    /**
+     * 该轮消息输出token数
+     */
+    private Integer completionTokens;
+
+    /**
+     * 该消息总token数
+     */
+    private Integer totalTokenCount;
 
     /**
      * 使用的模型名称

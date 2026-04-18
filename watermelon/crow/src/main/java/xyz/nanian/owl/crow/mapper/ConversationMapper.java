@@ -3,6 +3,7 @@ package xyz.nanian.owl.crow.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import xyz.nanian.owl.crow.domain.entity.ConversationDO;
 import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 
@@ -19,5 +20,8 @@ import java.util.List;
 public interface ConversationMapper extends BaseMapper<ConversationDO> {
 
     List<ConversationVO> selectByUserId(String userId);
+
+    int addTotalTokens(@Param("conversationId") String conversationId,
+                       @Param("addTokens") Integer addTokens);
 }
 

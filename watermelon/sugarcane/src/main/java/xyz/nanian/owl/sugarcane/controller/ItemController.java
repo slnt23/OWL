@@ -28,7 +28,7 @@ public class ItemController {
      * @return
      */
 
-    @GetMapping("/item")
+    @GetMapping("/price")
     @Operation(summary = "查询物品价格",description = "所查物品名")
     public Result<ItemVO> getItem(ItemDTO dto) {
         return null;

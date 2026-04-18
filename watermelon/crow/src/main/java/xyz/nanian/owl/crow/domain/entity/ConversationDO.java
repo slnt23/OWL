@@ -1,5 +1,7 @@
 package xyz.nanian.owl.crow.domain.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -18,11 +20,13 @@ public class ConversationDO {
     /**
      * 会话ID（UUID，主键）
      */
+    @NotBlank
     private String id;
 
     /**
      * 用户ID（支持多用户）
      */
+    @NotBlank
     private String userId;
 
     /**
@@ -33,11 +37,13 @@ public class ConversationDO {
     /**
      * 累计token消耗
      */
+    @NotNull
     private Integer totalTokens;
 
     /**
      * 是否删除（软删除：0=正常，1=已删除）
      */
+    @NotNull
     private Integer deleted;
 
     /**

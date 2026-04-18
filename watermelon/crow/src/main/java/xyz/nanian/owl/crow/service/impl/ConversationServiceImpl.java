@@ -2,6 +2,7 @@ package xyz.nanian.owl.crow.service.impl;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.crow.domain.dto.CreateConversationDTO;
 import xyz.nanian.owl.crow.domain.entity.ConversationDO;
@@ -10,6 +11,7 @@ import xyz.nanian.owl.crow.mapper.MessageMapper;
 import xyz.nanian.owl.crow.service.ConversationService;
 import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 import xyz.nanian.owl.crow.domain.vo.MessageVO;
+import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,24 +25,35 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ConversationServiceImpl implements ConversationService {
 
     private final ConversationMapper conversationMapper;
     private final MessageMapper messageMapper;
 
+    /**
+     * 创建会话ID，
+     * @param dto
+     * @return
+     */
     @Override
     public String createConversation(CreateConversationDTO dto) {
 
-        String id = UUID.randomUUID().toString();
+        String conversationId = UUID.randomUUID().toString();
+
+        log.info("conversationId:{}",conversationId);
 
         ConversationDO conversation = new ConversationDO();
-        conversation.setId(id);
-//        conversation.setUserId(SecurityUtil.getCurrentUserId());
+        conversation.setId(conversationId);
         conversation.setTitle(dto != null ? dto.getTitle() : "新对话");
+//        获取用户账号，
+        conversation.setUserId(UserContext.getUserCode());
+
+        log.info("conversationId:{}",conversation);
 
         conversationMapper.insert(conversation);
 
-        return id;
+        return conversationId;
     }
 
     @Override

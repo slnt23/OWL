@@ -3,6 +3,7 @@ package xyz.nanian.owl.crow.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
@@ -15,10 +16,23 @@ import lombok.Data;
 @Data
 @Schema(name = "发送消息DTO")
 public class ChatRequestDTO {
+    
+//      这个应该从登录状态获取，
+//    /**
+//     * 用户账号，
+//     */
+//    @NotBlank
+//    String UserCode;
 
+    /**
+     * 会话ID
+     */
     @NotBlank
     private String conversationId;
 
+    /**
+     * 消息对话
+     */
     @NotBlank
     private String message;
 }
