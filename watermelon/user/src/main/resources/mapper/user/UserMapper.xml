@@ -26,4 +26,10 @@
         from user
         where phone = #{phone}
     </select>
+
+<!--    <update id="updateUserAvatar">-->
+<!--        update user-->
+<!--        set avatar = #{avatar}-->
+<!--        where user_code = #{userCode}-->
+<!--    </update>-->
 </mapper>

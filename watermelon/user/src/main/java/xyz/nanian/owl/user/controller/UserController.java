@@ -5,10 +5,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.infrastructure.minio.service.impl.MinioFileServiceImpl;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.service.UserService;
+import xyz.nanian.owl.utils.jwt.UserContext;
 
 /**
  * 用户相关的控制器方法,
@@ -28,9 +31,11 @@ public class UserController {
 //    添加注解@Slf4j后，相当于自动生成这一行，
 
     private final UserService userService;
+    private final MinioFileServiceImpl minioFileServiceImpl;
 
-    UserController(UserService userService) {
+    UserController(UserService userService, MinioFileServiceImpl minioFileServiceImpl) {
         this.userService = userService;
+        this.minioFileServiceImpl = minioFileServiceImpl;
     }
 
     /**
@@ -83,14 +88,24 @@ public class UserController {
 
     /**
      *更新用户头像
-     * @param Phone
+     * @param file
      * @return
      */
     @PutMapping("/avatar")
     @Operation(summary = "用户头像更新")
-    public Result<ResultStatus> updateAvatarByCode(String Phone) {
-        return null;
-    }
+    public Result<String> updateAvatarByCode(@RequestParam("file") MultipartFile file) {
 
+        String userCode = UserContext.getUserCode();
+
+//        检查用户是否登录
+        if(userCode == null){
+            return Result.fail(ResultStatus.UNAUTHORIZED);
+        }
+
+//        String avatarUrl = minioFileServiceImpl.upload(file, MinioConstant.BUCKET_AVATARS);
+        String avatarUrl = userService.updateUserAvatar(file,userCode);
+
+        return Result.success(avatarUrl);
+    }
 
 }

@@ -1,6 +1,7 @@
 package xyz.nanian.owl.user.service;
 
 
+import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 
 /**
@@ -39,4 +40,6 @@ public interface UserService {
      * @return message
      */
     Boolean updateUserPassword(String phone,String newPassword);
+
+    String updateUserAvatar(MultipartFile file, String userCode);
 }
