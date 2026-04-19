@@ -50,28 +50,6 @@ public class UserController {
     }
 
     /**
-     * 搜索用户通过用户名
-     * @param name 用户名
-     * @return 包含用户数据的分页格式，
-     */
-    @GetMapping("/users")
-    @Operation(summary = "用户搜索")
-    public Result<ResultStatus> searchUserByName(String name) {
-        return null;
-    }
-
-    /**
-     *
-     * @param Phone
-     * @return
-     */
-    @PutMapping("/avatar")
-    @Operation(summary = "用户头像更新")
-    public Result<ResultStatus> updateAvatarByCode(String Phone) {
-        return null;
-    }
-
-    /**
      * 更新用户密码通过手机号，或者邮箱，
      * 这里应该通过登录状态获取UserCode，然后直接更改密码，-- 后续改为邮箱验证码，
      * TODO 这里暂时没添加邮箱，手机号是自己填写的，所有不安全，-- 后续改为邮箱验证码，
@@ -90,4 +68,29 @@ public class UserController {
             return Result.fail();
         }
     }
+
+    /**
+     * 搜索用户通过用户名/或者用户UserCode
+     *
+     * @param name 用户名
+     * @return 包含用户数据的分页格式，
+     */
+    @GetMapping("/users")
+    @Operation(summary = "用户搜索")
+    public Result<ResultStatus> searchUserByName(String name) {
+        return null;
+    }
+
+    /**
+     *更新用户头像
+     * @param Phone
+     * @return
+     */
+    @PutMapping("/avatar")
+    @Operation(summary = "用户头像更新")
+    public Result<ResultStatus> updateAvatarByCode(String Phone) {
+        return null;
+    }
+
+
 }

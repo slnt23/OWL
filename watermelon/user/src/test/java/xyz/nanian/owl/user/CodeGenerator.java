@@ -1,4 +1,4 @@
-package xyz.nanian.owl.sugarcane;
+package xyz.nanian.owl.user;
 
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
@@ -22,7 +22,7 @@ public class CodeGenerator {
     public static void main(String[] args) {
 
 //        String projectPath = System.getProperty("user.dir");
-        String projectPath = "D:/IT/IDEA/Dev/OWL/watermelon/sugarcane";
+        String projectPath = "D:/IT/IDEA/Dev/OWL/watermelon/user";
 
         FastAutoGenerator.create(
                         "jdbc:mysql://localhost:3306/pitaya?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=UTF-8",
@@ -39,7 +39,7 @@ public class CodeGenerator {
                 })
 
                 .packageConfig(builder -> {
-                    builder.parent("xyz.nanian.owl.sugarcane")
+                    builder.parent("xyz.nanian.owl.user")
                             .entity("entity")
                             .mapper("mapper")
                             .service("service")
@@ -54,8 +54,8 @@ public class CodeGenerator {
 
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("price_category", "price_item", "price_source","price_record","geo_location")
-                            .addTablePrefix("price_")
+                            .addInclude("role", "user_address", "user_role")
+//                            .addTablePrefix("price_")
 
                             .entityBuilder()
                                 .enableLombok()
