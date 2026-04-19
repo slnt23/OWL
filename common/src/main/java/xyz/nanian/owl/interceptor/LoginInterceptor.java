@@ -18,8 +18,8 @@ import xyz.nanian.owl.utils.jwt.UserInfo;
 
 import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.constant.RedisConstant.LOGIN_KEY;
-import static xyz.nanian.owl.constant.RedisConstant.LOGIN_TIME_OUT;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.LOGIN_KEY;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.LOGIN_TIME_OUT;
 
 /**
  * 登陆认证，拦截器

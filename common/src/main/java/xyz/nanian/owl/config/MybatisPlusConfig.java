@@ -1,4 +1,4 @@
-package xyz.nanian.owl.config.mybatis;
+package xyz.nanian.owl.config;
 
 
 import com.baomidou.mybatisplus.annotation.DbType;

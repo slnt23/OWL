@@ -9,8 +9,6 @@
   - `constant` 包：枚举、错误码（如 ErrorCodeEnum）。
   - `exception` 包：全局异常类（如 BusinessException）。
   - `config` 包：Swagger 配置、Redis 配置、线程池配置。
-  - `dto` 包：通用 VO/DTO（如 PageResult、Response<T>）。
-
 
 - 依赖关系：不依赖任何业务模块，被 `api/domain` 等依赖。
 - 为什么需要？
@@ -21,3 +19,6 @@
 
 - slf4j：springboot 项目自动包含，日志的外显接口
 - logback: springboot 项目自动包含，打印日志的实体类
+
+- 对于infrastructure层的工具类，建议放在common模块中，供整个项目使用。比如：
+  后续可以拆开成微服务，后续可以拆开成微服务，目前集中到这里

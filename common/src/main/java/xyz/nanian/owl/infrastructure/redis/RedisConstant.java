@@ -1,4 +1,4 @@
-package xyz.nanian.owl.constant;
+package xyz.nanian.owl.infrastructure.redis;
 
 
 /**

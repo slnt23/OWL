@@ -1,4 +1,4 @@
-package xyz.nanian.owl.config.redis;
+package xyz.nanian.owl.infrastructure.redis;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -13,7 +13,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
-import static xyz.nanian.owl.constant.RabbitMQConstant.*;
+import static xyz.nanian.owl.infrastructure.rabbitmq.RabbitMQConstant.*;
 
 /**
  * 业务日志

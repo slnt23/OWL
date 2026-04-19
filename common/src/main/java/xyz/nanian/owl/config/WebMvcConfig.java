@@ -1,4 +1,4 @@
-package xyz.nanian.owl.config.interceptor;
+package xyz.nanian.owl.config;
 
 
 import jakarta.annotation.Resource;

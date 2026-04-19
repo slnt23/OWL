@@ -30,10 +30,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.constant.RabbitMQConstant.ORDER_QUEUE;
-import static xyz.nanian.owl.constant.RabbitMQConstant.ORDER_ROUTING_KEY;
-import static xyz.nanian.owl.constant.RedisConstant.ORDER_KEY;
-import static xyz.nanian.owl.constant.RedisConstant.ORDER_TIME_OUT;
+import static xyz.nanian.owl.infrastructure.rabbitmq.RabbitMQConstant.ORDER_QUEUE;
+import static xyz.nanian.owl.infrastructure.rabbitmq.RabbitMQConstant.ORDER_ROUTING_KEY;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.ORDER_KEY;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.ORDER_TIME_OUT;
 
 /**
  * 消费者订单ServiceImpl

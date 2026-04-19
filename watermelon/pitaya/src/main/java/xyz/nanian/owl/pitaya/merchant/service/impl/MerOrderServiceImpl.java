@@ -17,8 +17,8 @@ import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.constant.RedisConstant.MERCHANT_ORDER_KEY;
-import static xyz.nanian.owl.constant.RedisConstant.MERCHANT_ORDER_TIME_OUT;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.MERCHANT_ORDER_KEY;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.MERCHANT_ORDER_TIME_OUT;
 
 /**
  * 商家订单Service Impl

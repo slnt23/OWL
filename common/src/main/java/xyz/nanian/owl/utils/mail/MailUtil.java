@@ -1,4 +1,4 @@
-package xyz.nanian.owl.mail;
+package xyz.nanian.owl.utils.mail;
 
 
 import jakarta.annotation.Resource;
@@ -16,7 +16,7 @@ import xyz.nanian.owl.constant.MailConstant;
  */
 
 @Component
-public class Mail {
+public class MailUtil {
 
 //    @Autowired
     @Resource

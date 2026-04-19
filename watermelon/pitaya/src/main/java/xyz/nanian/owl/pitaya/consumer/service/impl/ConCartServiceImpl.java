@@ -20,8 +20,8 @@ import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.constant.RedisConstant.CART_KEY;
-import static xyz.nanian.owl.constant.RedisConstant.CART_TIME_OUT;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.CART_KEY;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.CART_TIME_OUT;
 
 /**
  * 消费者购物车Service实现

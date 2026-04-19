@@ -1,4 +1,4 @@
-package xyz.nanian.owl.config.rabbitmq;
+package xyz.nanian.owl.infrastructure.rabbitmq;
 
 
 /**

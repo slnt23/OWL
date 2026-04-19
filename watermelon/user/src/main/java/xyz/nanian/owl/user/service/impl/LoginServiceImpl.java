@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.constant.ExceptionConstant;
 import xyz.nanian.owl.exception.LoginException;
-import xyz.nanian.owl.mail.Mail;
+import xyz.nanian.owl.utils.mail.MailUtil;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordLoginDTO;
@@ -43,7 +43,7 @@ import java.util.concurrent.TimeUnit;
 public class LoginServiceImpl implements LoginService {
 
 //    这里这个类的注册问题尚未解决，//已解决，是注入方式的问题，
-    Mail mail;
+    MailUtil mailUtil;
     UserMapper userMapper;
     StringRedisTemplate stringRedisTemplate;
     PasswordEncoder passwordEncoder;
@@ -96,7 +96,7 @@ public class LoginServiceImpl implements LoginService {
                     如果这不是您本人的操作，请忽略此邮件。
                     """, verificationCode,LoginConstant.CODE_EXPIRE_MINUTES);
         // 4. 发送邮件
-        mail.sendMail(emailAddress, subject, body);
+        mailUtil.sendMail(emailAddress, subject, body);
 
         // 5. 保存验证码到Redis
         String redisKey = LoginConstant.VERIFICATION_CODE_PREFIX + emailAddress;

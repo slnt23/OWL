@@ -1,4 +1,4 @@
-package xyz.nanian.owl.log.service.Impl;
+package xyz.nanian.owl.log.service.impl;
 
 
 import xyz.nanian.owl.log.domain.entity.BizLogDO;
@@ -13,7 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.log.service.handleBizLogService;
 
-import static xyz.nanian.owl.constant.RabbitMQConstant.*;
+import static xyz.nanian.owl.infrastructure.rabbitmq.RabbitMQConstant.*;
 
 /**
  * 业务日志记录处理

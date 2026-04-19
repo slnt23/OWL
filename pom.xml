@@ -53,6 +53,7 @@
         <mybatis.generator.version>3.5.14</mybatis.generator.version>
         <velocity.engine.version>2.3</velocity.engine.version>
         <spring.ai.model.version>1.1.4</spring.ai.model.version>
+        <minio.version>8.5.10</minio.version>
 	</properties>
 
 
@@ -143,6 +144,11 @@
                 <version>${nacos.config.discovery.version}</version>   <!-- 或最新兼容版本，如 2025.0.0.0 -->
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
 
 

@@ -23,7 +23,7 @@ import xyz.nanian.owl.result.PageResult;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.constant.RedisConstant.*;
+import static xyz.nanian.owl.infrastructure.redis.RedisConstant.*;
 
 /**
  * 商品Service
