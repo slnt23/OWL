@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import javax.sql.DataSource;
 
 /**
  * mybatis-plus 配置拦截器
@@ -28,4 +31,28 @@ public class MybatisPlusConfig {
 
         return interceptor;
     }
+
+    /**
+     * 配置 SqlSessionFactory，并设置下划线转驼峰映射
+     */
+//    @Bean
+//    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource,
+//                                                                     MybatisPlusInterceptor mybatisPlusInterceptor) {
+//        MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
+//        factoryBean.setDataSource(dataSource);
+//
+//        // 设置插件（分页 + 乐观锁）
+//        factoryBean.setPlugins(mybatisPlusInterceptor);
+//
+//        // ==================== 关键：配置映射规则 ====================
+//        Configuration configuration = new Configuration();
+//        configuration.setMapUnderscoreToCamelCase(true);   // 下划线转驼峰（推荐开启）
+//        // 可选其他常用设置
+//        // configuration.setLogImpl(StdOutImpl.class);     // 打印 SQL 日志（开发环境）
+//        // configuration.setJdbcTypeForNull(JdbcType.NULL);
+//
+//        factoryBean.setConfiguration(configuration);
+//
+//        return factoryBean;
+//    }
 }

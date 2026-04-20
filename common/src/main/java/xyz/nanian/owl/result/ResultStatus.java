@@ -1,8 +1,7 @@
-package xyz.nanian.owl.constant;
+package xyz.nanian.owl.result;
 
 
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 /**
  * 返回状态码以及信息

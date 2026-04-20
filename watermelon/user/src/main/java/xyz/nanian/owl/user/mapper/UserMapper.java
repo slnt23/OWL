@@ -39,8 +39,6 @@ public interface UserMapper extends BaseMapper<UserDO> {
      * @param userDO 用户账号
      * @return bool
      */
-    Boolean update(UserDO userDO);
+    int update(UserDO userDO);
 
-
-//    Integer updateUserAvatar(String avatarUrl, String userCode);
 }

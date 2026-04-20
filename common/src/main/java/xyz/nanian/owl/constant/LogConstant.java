@@ -1,8 +1,8 @@
-package xyz.nanian.owl.constant;
-
-
-
-public record LogConstant() {
-
-    
-}
+//package xyz.nanian.owl.constant;
+//
+//
+//
+//public record LogConstant() {
+//
+//
+//}

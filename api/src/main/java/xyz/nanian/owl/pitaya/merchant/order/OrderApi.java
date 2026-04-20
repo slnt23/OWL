@@ -1,13 +1,10 @@
 package xyz.nanian.owl.pitaya.merchant.order;
 
 
-import xyz.nanian.owl.constant.ResultStatus;
-import xyz.nanian.owl.pitaya.query.OrderQuery;
+import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.pitaya.vo.OrderListVO;
 import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
-
-import java.util.List;
 
 /**
  * 订单管理

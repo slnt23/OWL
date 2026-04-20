@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import xyz.nanian.owl.constant.ResultStatus;
 
 /**
  * 统一返回包装类
@@ -96,6 +95,26 @@ public class Result<T> {
     }
 
     /**
+     * 失败、无返回数据
+     * @return 无返回data
+     * @param <T> null
+     */
+    public static <T> Result<T> fail(){
+        return create(null,ResultStatus.FAIL);
+    }
+
+    /**
+     * 失败，支持参数，
+     * @param code
+     * @param message
+     * @return
+     */
+    public static Result<?> fail(Integer code,String message){
+        return create(null,code,message);
+    }
+
+
+    /**
      * 失败、有返回数据
      * @param data 返回数据
      * @return 有返回数据data
@@ -103,16 +122,6 @@ public class Result<T> {
      */
     public static <T> Result<T> fail(T data) {
         return create(data,ResultStatus.FAIL);
-    }
-
-
-    /**
-     * 失败、无返回数据
-     * @return 无返回data
-     * @param <T> null
-     */
-    public static <T> Result<T> fail(){
-        return create(null,ResultStatus.FAIL);
     }
 
     /**

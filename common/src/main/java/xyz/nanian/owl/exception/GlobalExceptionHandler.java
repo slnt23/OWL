@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.result.ResultStatus;
 
 import java.util.stream.Collectors;
 
@@ -34,13 +34,15 @@ public class GlobalExceptionHandler {
 
 
     /**
-     * 业务异常
+     * 自定义业务异常1
      * @param e
      * @return
      */
     @ExceptionHandler(value = BizException.class)
-    public Result<?> handleBizException(BizException e) {
-        return Result.fail(ResultStatus.BIZ_ERROR);
+    public Result<?> handleBiz(BizException e) {
+//        打印错误日志
+        log.warn("业务异常{}",e.getMessage(), e);
+        return Result.fail(e.getCode(),e.getMessage());
     }
 
     /**
@@ -49,7 +51,7 @@ public class GlobalExceptionHandler {
      * @return 自定义
      */
     @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
-    public Result<?> handleValidExceptionHandler(Exception e) {
+    public Result<?> handleValid(Exception e) {
         String msg = e instanceof MethodArgumentNotValidException
                 ? ((MethodArgumentNotValidException) e)
                     .getBindingResult()
@@ -59,7 +61,7 @@ public class GlobalExceptionHandler {
                     .collect(Collectors.joining("；"))
                 : "参数校验失败";
 
-        log.warn("参数校验失败：{}",msg);
+        log.warn("参数校验失败：{}",msg,e);
         return Result.fail(ResultStatus.PARAMS_INVALID);
     }
 
@@ -70,9 +72,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public Result<?> handleMethodNotSupportedHandler(HttpRequestMethodNotSupportedException e) {
+    public Result<?> handleMethodNotSupported(HttpRequestMethodNotSupportedException e) {
 
-        log.warn("请求不支持：{}",e.getMessage());
+        log.warn("请求不支持：{}",e.getMessage(),e);
         return Result.fail(ResultStatus.API_UN_IMPL);
     }
 
@@ -83,9 +85,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler({NoHandlerFoundException.class, NoResourceFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Result<?> handleNoHandlerFoundException(Exception e) {
+    public Result<?> handleNoHandlerFound(Exception e) {
 
-        log.warn("资源不存在：{}",e.getMessage());
+        log.warn("资源不存在：{}",e.getMessage(),e);
         return Result.fail(ResultStatus.NOT_FOUND);
     }
 
@@ -98,7 +100,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result<?> exceptionHandler(Exception e) {
 
-        log.error("发生错误，但未捕获异常",e);
+        log.error("发生错误，但未捕获具体异常{}",e.getMessage(),e);
         return Result.fail(ResultStatus.FAIL);
     }
 }

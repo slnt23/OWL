@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.pitaya.consumer.cart.CartApi;
 import xyz.nanian.owl.pitaya.consumer.service.ConCartService;
 import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;

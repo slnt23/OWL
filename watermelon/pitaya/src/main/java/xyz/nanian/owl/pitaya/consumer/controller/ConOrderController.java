@@ -4,7 +4,7 @@ package xyz.nanian.owl.pitaya.consumer.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.pitaya.consumer.order.OrderApi;
 import xyz.nanian.owl.pitaya.consumer.service.ConOrderService;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;

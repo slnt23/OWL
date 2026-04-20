@@ -2,13 +2,10 @@ package xyz.nanian.owl.pitaya.consumer.cart;
 
 
 import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
-import xyz.nanian.owl.pitaya.query.ShoppingCartQuery;
 import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
 import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.constant.ResultStatus;
-
-import java.util.List;
+import xyz.nanian.owl.result.ResultStatus;
 
 /**
  * 购物车模块Api

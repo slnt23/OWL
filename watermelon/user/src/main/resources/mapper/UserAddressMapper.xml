@@ -2,23 +2,4 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.nanian.owl.user.mapper.UserAddressMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="xyz.nanian.owl.user.domain.entity.UserAddressDO">
-        <id column="id" property="id" />
-        <result column="user_id" property="userId" />
-        <result column="receiver_name" property="receiverName" />
-        <result column="receiver_phone" property="receiverPhone" />
-        <result column="province" property="province" />
-        <result column="city" property="city" />
-        <result column="district" property="district" />
-        <result column="detail" property="detail" />
-        <result column="is_default" property="isDefault" />
-        <result column="create_time" property="createTime" />
-    </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id, user_id, receiver_name, receiver_phone, province, city, district, detail, is_default, create_time
-    </sql>
-
 </mapper>

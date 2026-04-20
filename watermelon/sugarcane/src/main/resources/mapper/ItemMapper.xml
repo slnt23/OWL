@@ -2,24 +2,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.nanian.owl.sugarcane.mapper.ItemMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="xyz.nanian.owl.sugarcane.domain.entity.ItemDO">
-        <id column="id" property="id" />
-        <result column="item_code" property="itemCode" />
-        <result column="item_name" property="itemName" />
-        <result column="category_id" property="categoryId" />
-        <result column="unit" property="unit" />
-        <result column="specification" property="specification" />
-        <result column="description" property="description" />
-        <result column="ref_product_id" property="refProductId" />
-        <result column="status" property="status" />
-        <result column="created_at" property="createdAt" />
-        <result column="updated_at" property="updatedAt" />
-    </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id, item_code, item_name, category_id, unit, specification, description, ref_product_id, status, created_at, updated_at
-    </sql>
 
 </mapper>

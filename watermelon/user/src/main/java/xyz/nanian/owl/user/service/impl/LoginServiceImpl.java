@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.constant.ExceptionConstant;
+import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.exception.LoginException;
 import xyz.nanian.owl.utils.mail.MailUtil;
 import xyz.nanian.owl.result.Result;
@@ -48,18 +48,6 @@ public class LoginServiceImpl implements LoginService {
     StringRedisTemplate stringRedisTemplate;
     PasswordEncoder passwordEncoder;
     CodeCacheUtil codeCacheUtil;
-
-//    public LoginServiceImpl(Mail mail,
-//                            UserMapper userMapper,
-//                            StringRedisTemplate stringRedisTemplate,
-//                            PasswordEncoder passwordEncoder,
-//                            CodeCacheUtil codeCacheUtil) {
-//        this.mail = mail;
-//        this.userMapper = userMapper;
-//        this.stringRedisTemplate = stringRedisTemplate;
-//        this.passwordEncoder = passwordEncoder;
-//        this.codeCacheUtil = codeCacheUtil;
-//    }
 
     /**
      * 发送验证码
@@ -159,7 +147,7 @@ public class LoginServiceImpl implements LoginService {
 
 //        2. 比对code，然后如果正确，登陆30天
         if(!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())){
-            throw new LoginException(ExceptionConstant.CODE_INVALID);
+            throw new LoginException(ResultStatus.FAIL);
         }
 
         return getToken(emailLoginOrRegisterDTO.getEmail());
@@ -182,12 +170,14 @@ public class LoginServiceImpl implements LoginService {
 //        2. 比对，
 //        判断用户
         if(Objects.isNull(userDO)){
-            throw new LoginException(ExceptionConstant.USER_NOT_EXIST);
+//            throw new LoginException(ExceptionConstant.USER_NOT_EXIST);
+            throw new LoginException(ResultStatus.NOT_FOUND);
         }
 
 //        判断密码
         if(!passwordEncoder.matches(passwordLoginDTO.getPassword(),userDO.getPassword())){
-            throw new LoginException(ExceptionConstant.PASSWORD_ERROR);
+            throw new LoginException(ResultStatus.FAIL);
+//            throw new LoginException(ExceptionConstant.PASSWORD_ERROR);
         }
 
 //        返回token

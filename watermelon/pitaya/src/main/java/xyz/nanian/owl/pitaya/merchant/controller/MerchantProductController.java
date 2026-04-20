@@ -9,7 +9,7 @@ import xyz.nanian.owl.pitaya.dto.ProductDTO;
 import xyz.nanian.owl.pitaya.merchant.product.ProductApi;
 import xyz.nanian.owl.pitaya.merchant.service.MerchantProductService;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.result.ResultStatus;
 
 /**
  * 商家商品管理接口

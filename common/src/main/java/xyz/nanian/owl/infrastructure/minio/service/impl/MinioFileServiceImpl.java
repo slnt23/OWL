@@ -32,9 +32,6 @@ public class MinioFileServiceImpl implements FileStorageService {
     private MinioClient minioClient;
     private MinioProperties minioProperties;
 
-//    @Value("${storage.minio.endpoint}")
-//    private String endpoint;
-
     /**
      * 项目启动时自动创建所有在配置文件中声明的 Bucket
      */

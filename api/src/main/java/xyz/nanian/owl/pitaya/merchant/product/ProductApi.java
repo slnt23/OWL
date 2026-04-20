@@ -3,7 +3,7 @@ package xyz.nanian.owl.pitaya.merchant.product;
 
 import xyz.nanian.owl.pitaya.dto.ProductDTO;
 import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.result.ResultStatus;
 
 /**
  * 商品管理

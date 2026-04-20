@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.infrastructure.minio.constant.MinioConstant;
-import xyz.nanian.owl.infrastructure.minio.service.impl.MinioFileServiceImpl;
+import xyz.nanian.owl.infrastructure.minio.service.FileStorageService;
 import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
@@ -18,7 +18,6 @@ import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
 
-//import static xyz.nanian.owl.user.mapstruct.UserConvert.INSTANCE;
 
 /**
  * 用户相关的逻辑类实现
@@ -37,8 +36,7 @@ public class UserServiceImpl implements UserService {
     private final UserConvert userConvert;
     private final StringRedisTemplate stringRedisTemplate;
     private final RedisTemplate<String, Object> redisTemplate;
-    private final MinioFileServiceImpl minioFileServiceImpl;
-
+    private final FileStorageService fileStorageService;
     /**
      * 更新用户信息
      * 现在是根据手机号找到用户信息, TODO 这里改为使用UserCode来更新用户信息, 因为手机号可能会变更, 但是UserCode是唯一且不变的
@@ -55,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
         user.setUserCode(userDO.getUserCode());
 
-        return userMapper.update(user);
+        return userMapper.update(user) > 0;
     }
 
     /**
@@ -72,7 +70,7 @@ public class UserServiceImpl implements UserService {
         String encryptedPassword = passwordEncoder.encode(newPassword);
         user.setPassword(encryptedPassword);
 
-        return userMapper.update(user);
+        return userMapper.update(user)>0;
     }
 
     /**
@@ -85,15 +83,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public String updateUserAvatar(MultipartFile file, String userCode) {
 
-        String avatarUrl = minioFileServiceImpl.upload(file, MinioConstant.BUCKET_AVATARS);
+        String avatarUrl = fileStorageService.upload(file, MinioConstant.BUCKET_AVATARS);
 
         UserDO userDO = new UserDO();
         userDO.setUserCode(userCode);
         userDO.setAvatar(avatarUrl);
 
-        boolean success = userMapper.update(userDO);
+        int success = userMapper.update(userDO);
 
-        if (success) {
+        if (success> 0) {
             return avatarUrl;
         }else {
             throw new Exception("更新用户头像失败");

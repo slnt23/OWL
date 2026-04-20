@@ -4,7 +4,7 @@ package xyz.nanian.owl.pitaya.merchant.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.pitaya.merchant.order.OrderApi;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
 import xyz.nanian.owl.pitaya.vo.OrderListVO;

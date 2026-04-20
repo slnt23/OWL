@@ -64,7 +64,7 @@ public class CodeGenerator {
 
                             .mapperBuilder()
                                 .mapperAnnotation(Mapper.class)
-                                .enableBaseResultMap()
+//                                .enableBaseResultMap()  //这个是生成XML时的ResultMap，开启后会在XML中生成一个ResultMap标签，包含所有字段的映射关系，方便后续使用，但是我在yml中配置了，就不用了
                                 .enableBaseColumnList()
 
                             .serviceBuilder()

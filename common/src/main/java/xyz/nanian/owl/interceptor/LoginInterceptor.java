@@ -6,11 +6,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import xyz.nanian.owl.constant.ExceptionConstant;
+import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.exception.BizException;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
 import xyz.nanian.owl.utils.jwt.UserContext;
@@ -48,8 +47,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         String token = request.getHeader("Authorization");
+
         if (token == null || !token.startsWith("Bearer ")) {
-            throw new BizException(HttpStatus.UNAUTHORIZED, ExceptionConstant.OPERATION_FAIL);
+            throw new BizException(ResultStatus.TOKEN_EXPIRED);
         }
 
         token = token.substring(7);

@@ -62,10 +62,6 @@ public class CodeGenerator {
                                 .enableLombok()
                                 .enableTableFieldAnnotation()
                                 .formatFileName("%sDO")
-//                                .classAnnotations(new ClassAnnotationAttributes(
-//                                    "@Schema(title = \"${table.comment!}\", description = \"${table.comment!}\")",
-//                                    "io.swagger.v3.oas.annotations.media.Schema"
-//                                ));
 
                             .mapperBuilder()
                                 .mapperAnnotation(org.apache.ibatis.annotations.Mapper.class)  // ← 这里是重点修改

@@ -4,6 +4,7 @@ package xyz.nanian.crow;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Collections;
 
@@ -38,7 +39,7 @@ public class CodeGenerator {
                 })
 
                 .packageConfig(builder -> {
-                    builder.parent("xyz.nanian.owl.sugarcane")
+                    builder.parent("xyz.nanian.owl.crow")
                             .entity("entity")
                             .mapper("mapper")
                             .service("service")
@@ -53,26 +54,26 @@ public class CodeGenerator {
 
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("price_category", "price_item", "price_source","price_record","geo_location")
+                            .addInclude("price_category", "price_item", "price_source", "price_record", "geo_location")
                             .addTablePrefix("price_")
 
                             .entityBuilder()
-                                .enableLombok()
-                                .enableTableFieldAnnotation()
-                                .formatFileName("%sDO")
+                            .enableLombok()
+                            .enableTableFieldAnnotation()
+                            .formatFileName("%sDO")
 
                             .mapperBuilder()
-                                .enableMapperAnnotation()
-                                .enableBaseResultMap()
-                                .enableBaseColumnList()
+                            .mapperAnnotation(Mapper.class)
+//                                .enableBaseResultMap()  //这个是生成XML时的ResultMap，开启后会在XML中生成一个ResultMap标签，包含所有字段的映射关系，方便后续使用，但是我在yml中配置了，就不用了
+                            .enableBaseColumnList()
 
                             .serviceBuilder()
-                                .formatServiceFileName("%sService")
-                                .formatServiceImplFileName("%sServiceImpl")
+                            .formatServiceFileName("%sService")
+                            .formatServiceImplFileName("%sServiceImpl")
 
                             .controllerBuilder()
-                                .enableRestStyle()
-                                .enableHyphenStyle();
+                            .enableRestStyle()
+                            .enableHyphenStyle();
                 })
 
                 .templateEngine(new VelocityTemplateEngine())

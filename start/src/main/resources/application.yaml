@@ -62,3 +62,9 @@ spring:
       username: nacos
       password: nacos
       namespace: OWL
+# 后续添加数据库配置，目前先放在本地配置文件中，后续可以迁移到 Nacos 中
+  mybatis-plus:
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+      map-underscore-to-camel-case: true
+      cache-enabled: false

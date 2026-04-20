@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.constant.ResultStatus;
+import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordLoginDTO;
