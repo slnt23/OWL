@@ -153,7 +153,16 @@ public class LoginServiceImpl implements LoginService {
 //        删除验证码，放置成为短期密码，无限使用，
         stringRedisTemplate.delete(key);
 
-        return getToken(emailLoginOrRegisterDTO.getEmail());
+//        检查用户账号是否封禁，
+        LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserDO::getEmail, emailLoginOrRegisterDTO.getEmail());
+
+        UserDO userDO = userMapper.selectOne(wrapper);
+        if(userDO.getStatus() == 0){
+            return getToken(emailLoginOrRegisterDTO.getEmail());
+        }else {
+            throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
+        }
     }
 
     /**

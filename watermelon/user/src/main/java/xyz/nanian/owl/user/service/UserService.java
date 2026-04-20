@@ -13,18 +13,6 @@ import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 
 public interface UserService {
 
-//    /**
-//     * 保存用户信息
-//     * @param sendCodeDTO 用户DTO基本信息
-//     */
-//    Boolean saveUser(SendCodeDTO sendCodeDTO);
-//    /**
-//     * 登陆验证
-//     * @param phone 手机号
-//     * @param password 输入的初始密码
-//     * @return 密码是否正确的 bool
-//     */
-//    String login(String phone, String password);
 
     /**
      * 更新用户信息
@@ -35,11 +23,10 @@ public interface UserService {
 
     /**
      * 更改用户密码
-     * @param phone 原手机号
      * @param newPassword 新密码
      * @return message
      */
-    Boolean updateUserPassword(String phone,String newPassword);
+    Boolean updateUserPassword(String newPassword);
 
     String updateUserAvatar(MultipartFile file, String userCode);
 }

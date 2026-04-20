@@ -31,11 +31,9 @@ public class UserController {
 //    添加注解@Slf4j后，相当于自动生成这一行，
 
     private final UserService userService;
-    private final MinioFileServiceImpl minioFileServiceImpl;
 
-    UserController(UserService userService, MinioFileServiceImpl minioFileServiceImpl) {
+    UserController(UserService userService) {
         this.userService = userService;
-        this.minioFileServiceImpl = minioFileServiceImpl;
     }
 
     /**
@@ -56,18 +54,16 @@ public class UserController {
 
     /**
      * 更新用户密码通过手机号，或者邮箱，
-     * 这里应该通过登录状态获取UserCode，然后直接更改密码，-- 后续改为邮箱验证码，
-     * TODO 这里暂时没添加邮箱，手机号是自己填写的，所有不安全，-- 后续改为邮箱验证码，
+     * 这里应该通过登录状态获取UserCode，然后直接更改密码，-- 已经改为邮箱验证码，
      *
-     * @param Phone phone
-     * @param newPassword newPassword
+     * @param password newPassword
      * @return message
      */
-    @PutMapping("/password")
+    @PutMapping("/password/{password}")
     @Operation(summary = "用户密码更新")
-    public Result<ResultStatus> updatePasswordByCode(String Phone,String newPassword) {
+    public Result<ResultStatus> updatePasswordByCode(@PathVariable String password) {
 
-        if(userService.updateUserPassword(Phone,newPassword)){
+        if(userService.updateUserPassword(password)){
             return Result.success();
         }else{
             return Result.fail();

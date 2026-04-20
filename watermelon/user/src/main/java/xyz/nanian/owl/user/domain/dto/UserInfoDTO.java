@@ -15,8 +15,8 @@ import lombok.Data;
 @Schema(name = "用户InfoDTO")
 public class UserInfoDTO {
 
-    @Schema(description = "用户ID",example = "1")
-    Long userId;
+//    @Schema(description = "用户ID",example = "1")
+//    Long userId;
 
     @Schema(description= "用户名",example = "秦明")
     String userName;
@@ -24,6 +24,7 @@ public class UserInfoDTO {
     @Schema(description = "昵称",example = "小明")
     String nickName;
 
+//    这个不确定改不改
     @Schema(description= "邮箱",example = "qq.com")
     String email;
 

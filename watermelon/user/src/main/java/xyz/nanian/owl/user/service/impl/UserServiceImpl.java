@@ -1,11 +1,10 @@
 package xyz.nanian.owl.user.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +16,7 @@ import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
+import xyz.nanian.owl.utils.jwt.UserContext;
 
 
 /**
@@ -34,12 +34,11 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper ;
     private final PasswordEncoder passwordEncoder;
     private final UserConvert userConvert;
-//    private final StringRedisTemplate stringRedisTemplate;
-//    private final RedisTemplate<String, Object> redisTemplate;
     private final FileStorageService fileStorageService;
+
+
     /**
      * 更新用户信息
-     * 现在是根据手机号找到用户信息, TODO 这里改为使用UserCode来更新用户信息, 因为手机号可能会变更, 但是UserCode是唯一且不变的
      *
      * @param userInfoDTO 用户DTO
      * @return 更新是否成功的bool
@@ -48,29 +47,43 @@ public class UserServiceImpl implements UserService {
     @BizLog(module = "用户",action = "更新用户信息")
     public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
 
-        UserDO userDO =userMapper.select(userInfoDTO.getRawPhone());
-        UserDO user = userConvert.UserInfoToUserDO(userInfoDTO);
+//        1. 获取用户信息，
+        String userCode = UserContext.getUserCode();
 
-        user.setUserCode(userDO.getUserCode());
+//        这里还是有商讨，万一传过来的是空的，岂不是覆盖原有的值，
+        UserDO user = userConvert.UserInfoToUserDO(userInfoDTO);
+        user.setUserCode(userCode);
+
+//        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
+//        wrapper.eq(UserDO::getUserCode, userCode);
+//
+//        int result = userMapper.update(user, wrapper);
+//        用下面的，上面的是单独的，下面的是总的，
 
         return userMapper.update(user) > 0;
     }
 
     /**
      * 更新用户密码
-     * @param phone 原手机号
      * @param newPassword 新密码
      * @return bool
      */
     @Override
     @BizLog(module = "用户",action = "更新用户密码")
-    public Boolean updateUserPassword(String phone, String newPassword) {
+    public Boolean updateUserPassword(String newPassword) {
 
-        UserDO user=userMapper.select(phone);
+        String userCode = UserContext.getUserCode();
+
         String encryptedPassword = passwordEncoder.encode(newPassword);
+        UserDO user = new UserDO();
         user.setPassword(encryptedPassword);
 
-        return userMapper.update(user)>0;
+        LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<UserDO>();
+        wrapper.eq(UserDO::getUserCode,userCode);
+
+        int result = userMapper.update(user,wrapper);
+
+        return result == 1;
     }
 
     /**

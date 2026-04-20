@@ -30,7 +30,7 @@ public interface UserMapper extends BaseMapper<UserDO> {
      * @param phone phone
      * @return UserDO
      */
-    UserDO select(String phone);
+//    UserDO select(String phone);
 
     /**
      * 用户信息更新，通过userCode

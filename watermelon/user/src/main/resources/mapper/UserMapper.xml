@@ -21,11 +21,11 @@
     <select id="selectUserByName" resultType="xyz.nanian.owl.user.domain.entity.UserDO">
 
     </select>
-    <select id="select" resultType="xyz.nanian.owl.user.domain.entity.UserDO">
-        select id,username,user_code,password,phone,email,avatar,nickname,role,status,create_time,update_time,remark
-        from user
-        where phone = #{phone}
-    </select>
+<!--    <select id="select" resultType="xyz.nanian.owl.user.domain.entity.UserDO">-->
+<!--        select id,username,user_code,password,phone,email,avatar,nickname,role,status,create_time,update_time,remark-->
+<!--        from user-->
+<!--        where phone = #{phone}-->
+<!--    </select>-->
 
 <!--    <update id="updateUserAvatar">-->
 <!--        update user-->
