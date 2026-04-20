@@ -1,17 +1,17 @@
-package xyz.nanian.owl.infrastructure.redis;
+package xyz.nanian.owl.pitaya.constant;
 
 
 /**
- * Redis中有关的常量
+ * 购物模块，Redis中有关的常量
  *
  * @author slnt23
  * @since 2026/1/22
  */
 
-public class RedisConstant {
+public class ShopConstant {
 
-    public static final Integer LOGIN_TIME_OUT = 30;
-    public static final String LOGIN_KEY = "LOGIN_KEY";
+//    public static final Integer LOGIN_TIME_OUT = 30;
+//    public static final String LOGIN_KEY = "LOGIN_KEY";
 
     public static final String CART_KEY = "CART_KEY";
     public static final Integer CART_TIME_OUT = 30;

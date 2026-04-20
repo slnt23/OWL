@@ -14,17 +14,17 @@ import lombok.Data;
 public class UserInfo {
 
     /**
-     * 用户账号编码 UUID
-     */
-    public String userCode;
-
-    /**
      * 用户id，自增
      */
     public Long userId;
 
     /**
-     * email
+     * 用户账号编码 UUID
+     */
+    public String userCode;
+
+    /**
+     * 用户email
      */
     public String email;
 

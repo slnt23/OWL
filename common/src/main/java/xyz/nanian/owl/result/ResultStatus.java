@@ -38,7 +38,8 @@ public enum ResultStatus {
 
     // 特殊状态
     TOKEN_EXPIRED("登录已过期，请重新登录", 401001),
-    ACCOUNT_DISABLED("账号已被禁用", 401002),
+    TOKEN_INVALID("token无效", 401002),
+    ACCOUNT_DISABLED("账号已被禁用", 401003),
 
     // 原有保留项（未出现在新列表中的）
     CONTENT_TYPE_ERR("ContentType错误", 9996),

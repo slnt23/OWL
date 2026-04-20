@@ -32,8 +32,8 @@ import java.util.concurrent.TimeUnit;
 
 import static xyz.nanian.owl.infrastructure.rabbitmq.RabbitMQConstant.ORDER_QUEUE;
 import static xyz.nanian.owl.infrastructure.rabbitmq.RabbitMQConstant.ORDER_ROUTING_KEY;
-import static xyz.nanian.owl.infrastructure.redis.RedisConstant.ORDER_KEY;
-import static xyz.nanian.owl.infrastructure.redis.RedisConstant.ORDER_TIME_OUT;
+import static xyz.nanian.owl.pitaya.constant.ShopConstant.ORDER_KEY;
+import static xyz.nanian.owl.pitaya.constant.ShopConstant.ORDER_TIME_OUT;
 
 /**
  * 消费者订单ServiceImpl

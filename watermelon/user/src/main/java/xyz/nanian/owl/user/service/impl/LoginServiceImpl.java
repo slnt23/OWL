@@ -131,7 +131,8 @@ public class LoginServiceImpl implements LoginService {
     }
 
     /**
-     * 用户登陆，邮箱验证码
+     * 用户登陆，邮箱验证码，
+     * TODO 后期可以设置为验证码登陆，注册二合一，
      * @param emailLoginOrRegisterDTO 手机号
      * @return
      */
@@ -149,6 +150,8 @@ public class LoginServiceImpl implements LoginService {
         if(!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())){
             throw new LoginException(ResultStatus.FAIL);
         }
+//        删除验证码，放置成为短期密码，无限使用，
+        stringRedisTemplate.delete(key);
 
         return getToken(emailLoginOrRegisterDTO.getEmail());
     }
@@ -186,7 +189,7 @@ public class LoginServiceImpl implements LoginService {
 
 
     /**
-     * 获取token，
+     * 获取token，并在token中注入用户信息，
      * @return
      */
     private String getToken(String email){

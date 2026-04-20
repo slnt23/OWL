@@ -5,20 +5,15 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import xyz.nanian.owl.exception.LoginException;
 import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.exception.BizException;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
 import xyz.nanian.owl.utils.jwt.UserContext;
 import xyz.nanian.owl.utils.jwt.UserInfo;
-
-import java.util.concurrent.TimeUnit;
-
-import static xyz.nanian.owl.infrastructure.redis.RedisConstant.LOGIN_KEY;
-import static xyz.nanian.owl.infrastructure.redis.RedisConstant.LOGIN_TIME_OUT;
 
 /**
  * 登陆认证，拦截器
@@ -29,18 +24,18 @@ import static xyz.nanian.owl.infrastructure.redis.RedisConstant.LOGIN_TIME_OUT;
 
 @Slf4j
 @Component
+//@RequiredArgsConstructor
 public class LoginInterceptor implements HandlerInterceptor {
 
-    private static RedisTemplate redisTemplate;
-
-    public LoginInterceptor(RedisTemplate redisTemplate) {
-        LoginInterceptor.redisTemplate = redisTemplate;
-    }
+//    private static RedisTemplate<String,Object> redisTemplate;
+//    public LoginInterceptor(RedisTemplate redisTemplate) {
+//        LoginInterceptor.redisTemplate = redisTemplate;
+//    }
 
     @Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
-                             Object handler) throws Exception {
+                             Object handler) {
 
         if(!(handler instanceof HandlerMethod)){
             return true;
@@ -49,25 +44,39 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader("Authorization");
 
         if (token == null || !token.startsWith("Bearer ")) {
-            throw new BizException(ResultStatus.TOKEN_EXPIRED);
+            throw new LoginException(ResultStatus.TOKEN_EXPIRED);
         }
 
         token = token.substring(7);
 
-        Claims claims = JwtUtil.parseToken(token);
-        String userCode = claims.get("userCode", String.class);
-        String userEmail = claims.get("userEmail", String.class);
+        try {
+//            解析token
+            Claims claims = JwtUtil.parseToken(token);
 
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserCode(userCode);
+            Long userId = claims.get("userId", Long.class);
+            String userCode = claims.get("userCode", String.class);
+            String userEmail = claims.get("userEmail", String.class);
+//            用户登录上下文注入信息，
+            UserInfo userInfo = new UserInfo();
+            userInfo.setUserCode(userCode);
+            userInfo.setUserId(userId);
+            userInfo.setEmail(userEmail);
 
-        UserContext.setUserInfo(userInfo);
+            UserContext.setUserInfo(userInfo);
 
-        String key = LOGIN_KEY + userEmail;
-        Boolean exists = redisTemplate.hasKey(key);
-        if(Boolean.TRUE.equals(exists)){
-            redisTemplate.expire(key,LOGIN_TIME_OUT, TimeUnit.MINUTES);
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            throw new LoginException(ResultStatus.TOKEN_EXPIRED);
+        } catch (io.jsonwebtoken.JwtException e) {
+            throw new LoginException(ResultStatus.TOKEN_INVALID);
         }
+
+//        这里是伪无状态了，因为就算是redis中没有key，依旧可以解析成功，后续改为双token时再用这个，
+//        并且还要在登陆代码中写将key，注入redis,
+//        String key = LOGIN_KEY + userEmail;
+//        Boolean exists = redisTemplate.hasKey(key);
+//        if(exists){
+//            redisTemplate.expire(key,LOGIN_TIME_OUT, TimeUnit.MINUTES);
+//        }
 
         return true;
     }
@@ -75,7 +84,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request,
                                 HttpServletResponse response,
-                                Object handler, Exception ex) throws Exception {
+                                Object handler, Exception ex) {
 
         UserContext.clear();
     }
