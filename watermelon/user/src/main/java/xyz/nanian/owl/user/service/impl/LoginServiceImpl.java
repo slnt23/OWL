@@ -43,11 +43,11 @@ import java.util.concurrent.TimeUnit;
 public class LoginServiceImpl implements LoginService {
 
 //    这里这个类的注册问题尚未解决，//已解决，是注入方式的问题，
-    MailUtil mailUtil;
-    UserMapper userMapper;
-    StringRedisTemplate stringRedisTemplate;
-    PasswordEncoder passwordEncoder;
-    CodeCacheUtil codeCacheUtil;
+    final MailUtil mailUtil;
+    final UserMapper userMapper;
+    final StringRedisTemplate stringRedisTemplate;
+    final PasswordEncoder passwordEncoder;
+    final CodeCacheUtil codeCacheUtil;
 
     /**
      * 发送验证码

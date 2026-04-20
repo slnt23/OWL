@@ -29,8 +29,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MinioFileServiceImpl implements FileStorageService {
 
-    private MinioClient minioClient;
-    private MinioProperties minioProperties;
+    private final MinioClient minioClient;
+    private final MinioProperties minioProperties;
 
     /**
      * 项目启动时自动创建所有在配置文件中声明的 Bucket

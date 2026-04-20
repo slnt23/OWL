@@ -17,9 +17,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ConversationConvert {
 
-//    List<ConversationDO> conversationDOListToConversationVOList(List<ConversationDO> conversationDOList) ;
-//    ConversationDO conversationVOToConversationDO(ConversationDO conversationDO);
-
     List<ConversationVO> conversationDOListToConversationVOList(List<ConversationDO> conversationDOS);
     ConversationVO conversationDOToConversationVO(ConversationDO conversationDO);
 

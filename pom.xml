@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.13</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.13</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
 
-	<groupId>xyz.nanian</groupId>
-	<artifactId>OWL</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+    <groupId>xyz.nanian</groupId>
+    <artifactId>OWL</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
 
     <name>OWL</name>
-	<description>持续开发</description>
+    <description>持续开发</description>
 
 
     <modules>
@@ -33,14 +33,14 @@
         <module>watermelon/pitaya</module>
 
 
-<!--        <module>infrastructure</module>-->
+        <!--        <module>infrastructure</module>-->
         <module>log</module>
     </modules>
 
 
-	<properties>
+    <properties>
         <project.version>0.0.1-SNAPSHOT</project.version>
-		<java.version>17</java.version>
+        <java.version>17</java.version>
         <easyexcel.version>4.0.3</easyexcel.version>
         <mybatis.plus.version>3.5.5</mybatis.plus.version>
         <nacos.config.discovery.version>2023.0.3.4</nacos.config.discovery.version>
@@ -54,14 +54,13 @@
         <velocity.engine.version>2.3</velocity.engine.version>
         <spring.ai.model.version>1.1.4</spring.ai.model.version>
         <minio.version>8.5.10</minio.version>
-	</properties>
-
+    </properties>
 
 
     <dependencyManagement>
         <dependencies>
-<!--            依赖模块-->
-<!--            自建模块-->
+            <!--            依赖模块-->
+            <!--            自建模块-->
             <dependency>
                 <groupId>xyz.nanian</groupId>
                 <artifactId>common</artifactId>
@@ -114,30 +113,30 @@
             </dependency>
 
 
-<!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本，版本管理中心-->
-<!--            https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
+            <!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本，版本管理中心-->
+            <!--            https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
 
-<!--            spring 家族-->
+            <!--            spring 家族-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
-<!--            ai-->
+            <!--            ai-->
             <dependency>
                 <groupId>org.springframework.ai</groupId>
                 <artifactId>spring-ai-starter-model-openai</artifactId>
                 <version>${spring.ai.model.version}</version>
             </dependency>
 
-<!--            中间件-->
-<!--            rocketMQ-->
+            <!--            中间件-->
+            <!--            rocketMQ-->
             <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-spring-boot-starter</artifactId>
-            <version>${rocketmq.version}</version>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq.version}</version>
             </dependency>
-<!--            nacos -->
+            <!--            nacos -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
@@ -152,14 +151,14 @@
             </dependency>
 
 
-<!--            日志-->
-<!--            knife 4j-->
+            <!--            日志-->
+            <!--            knife 4j-->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
-<!--            MapStruct-->
+            <!--            MapStruct-->
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
@@ -172,15 +171,14 @@
             </dependency>
 
 
-
-<!--            DataBase-->
-<!--            MP -->
+            <!--            DataBase-->
+            <!--            MP -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis.generator.version}</version>
             </dependency>
-<!--            druid ，用于Redis-->
+            <!--            druid ，用于Redis-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-3-starter</artifactId>
@@ -188,8 +186,8 @@
             </dependency>
 
 
-<!--            其他的-->
-<!--            jwt-->
+            <!--            其他的-->
+            <!--            jwt-->
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-api</artifactId>
@@ -206,22 +204,18 @@
                 <version>${jwt.version}</version>
             </dependency>
 
-<!--            Java 模板引擎，-->
+            <!--            Java 模板引擎，-->
             <dependency>
                 <groupId>org.apache.velocity</groupId>
                 <artifactId>velocity-engine-core</artifactId>
                 <version>${velocity.engine.version}</version>
             </dependency>
-<!--            easyexcel -->
+            <!--            easyexcel -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
             </dependency>
-
-
-
-
 
 
             <!--            <dependency>-->
@@ -240,34 +234,59 @@
     </dependencyManagement>
 
 
+    <build>
+        <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <annotationProcessorPaths>-->
+<!--                        <path>-->
+<!--                            <groupId>org.projectlombok</groupId>-->
+<!--                            <artifactId>lombok</artifactId>-->
+<!--                        </path>-->
+<!--                    </annotationProcessorPaths>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+<!--                <version>3.11.0</version>-->
+                <configuration>
+                    <source>17</source>
+                    <target>17</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+<!--                            <version>1.18.30</version>-->
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+<!--                            <version>1.6.3</version>-->
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
 
 </project>

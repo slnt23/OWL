@@ -35,13 +35,6 @@ public interface UserConvert {
      */
     UserDO UserInfoToUserDO(UserInfoDTO userInfoDTO);
 
-//    /**
-//     * 将新信息粘贴
-//     * @param userDO 最新用户信息
-//     * @return 用户信息DO
-//     */
-//    UserDO updateUserDO(UserDO userDO);
-
     @Mapping(source = "id",target = "userId")
     UserInfoDTO userDOToUserInfoDTO(UserDO userDO);
 }

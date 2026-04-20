@@ -7,8 +7,18 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.models.GroupedOpenApi;
+import org.springframework.ai.model.ApiKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.media.StringSchema;
+import io.swagger.v3.oas.models.parameters.Parameter;
+import org.springdoc.core.customizers.OperationCustomizer;
+import org.springframework.web.method.HandlerMethod;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Swagger信息配置 (统一配置到 common 模块),
@@ -20,6 +30,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SpringdocConfig {
+
+    final String securitySchemeName = "jwtAuth";   // 方案名称，可自定义
 
     /**
      * 配置全局信息
@@ -37,20 +49,61 @@ public class SpringdocConfig {
                                 .email("ir0211@outlook.com")
                         )
                 )
-//                目前来说下面的配置没有生效，问题未知
+//                目前来说下面的配置没有生效，问题未知,不，是生效了,但是是全局的，
                 .components(new Components()
-                        .addSecuritySchemes("jwtAuth",
+                        .addSecuritySchemes(securitySchemeName,
                                 new SecurityScheme()
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
                                         .in(SecurityScheme.In.HEADER)
                                         .name("Authorization")
+                                        .description("请输入 Bearer Token,格式：(Bearer开头)Bearer xxx")
                         )
                 )
-                .addSecurityItem(new SecurityRequirement().addList("jwtAuth"));
+                .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));
     }
 
+//    /**
+//     * 全局为每个接口添加请求头部输入框（关键配置）
+//     * 这会让所有接口的“请求头部”标签下出现可输入框
+//     */
+//    @Bean
+//    public OperationCustomizer customGlobalHeaders() {
+//        return (Operation operation, HandlerMethod handlerMethod) -> {
+//
+//            // 添加 Authorization 请求头部输入框
+//            Parameter authorizationHeader = new Parameter()
+//                    .in("header")                                      // 指定为 Header
+//                    .name("Authorization")                             // Header 名称
+//                    .description("请输入 Bearer Token（格式：Bearer xxxxx）")
+//                    .required(false)                                   // 是否必填，可改为 true
+//                    .schema(new StringSchema());                       // 输入类型为字符串
+//
+//            operation.addParametersItem(authorizationHeader);
+//
+//            // 如果还需要添加其他 Header，可以继续添加，例如：
+//            // Parameter traceIdHeader = new Parameter()
+//            //         .in("header")
+//            //         .name("X-Trace-Id")
+//            //         .description("链路追踪ID")
+//            //         .required(false)
+//            //         .schema(new StringSchema());
+//            // operation.addParametersItem(traceIdHeader);
+//
+//            return operation;
+//        };
+//    }
+
+//    /**
+//     * 构建权限协议列表
+//     * @return 认证协议列表
+//     */
+//    @Bean
+//    private static List<SecurityScheme> securitySchemes() {
+//        return Collections.singletonList(
+//                new ApiKey("Authorization", "Authorization", "header"));
+//    }
 
     /**
      * 配置用户中心 API 分组

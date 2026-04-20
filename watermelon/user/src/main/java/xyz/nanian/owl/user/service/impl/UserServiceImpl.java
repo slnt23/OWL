@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper ;
     private final PasswordEncoder passwordEncoder;
     private final UserConvert userConvert;
-    private final StringRedisTemplate stringRedisTemplate;
-    private final RedisTemplate<String, Object> redisTemplate;
+//    private final StringRedisTemplate stringRedisTemplate;
+//    private final RedisTemplate<String, Object> redisTemplate;
     private final FileStorageService fileStorageService;
     /**
      * 更新用户信息

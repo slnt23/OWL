@@ -41,7 +41,11 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
+//        log.info("request为：{}", request.getHeader());
+//          TODO 这里token为null,
         String token = request.getHeader("Authorization");
+
+//        log.info("token代码为:{}", token);
 
         if (token == null || !token.startsWith("Bearer ")) {
             throw new LoginException(ResultStatus.TOKEN_EXPIRED);

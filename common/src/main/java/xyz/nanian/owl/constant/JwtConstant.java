@@ -17,8 +17,8 @@ public class JwtConstant {
     public static final String JWT_SECRET = "nanian-owl-jwt-secret-key-32bytes-test";
 
     /**
-     * token 有效期：1 天（毫秒）,后续可以改久点（30天）
+     * token 后期设置有效期：1 天（毫秒）,目前改久点（30天）
      * 注意：这里只是“时长”，不是具体时间点
      */
-    public static final long JWT_EXPIRE_TIME = 1000L * 60 * 60 * 24;
+    public static final long JWT_EXPIRE_TIME = 1000L * 60 * 60 * 24 * 30;
 }
