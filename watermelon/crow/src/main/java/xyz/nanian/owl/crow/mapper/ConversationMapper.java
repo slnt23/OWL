@@ -21,7 +21,7 @@ public interface ConversationMapper extends BaseMapper<ConversationDO> {
 
     List<ConversationVO> selectByUserId(String userId);
 
-    int addTotalTokens(@Param("conversationId") String conversationId,
-                       @Param("addTokens") Integer addTokens);
+    int updateTotalTokens(@Param("conversationId") String conversationId,
+                          @Param("addTokens") Integer addTokens);
 }
 

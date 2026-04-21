@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.result.ResultStatus;
-import xyz.nanian.owl.infrastructure.minio.service.impl.MinioFileServiceImpl;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.service.UserService;
@@ -61,7 +60,7 @@ public class UserController {
      */
     @PutMapping("/password/{password}")
     @Operation(summary = "用户密码更新")
-    public Result<ResultStatus> updatePasswordByCode(@PathVariable String password) {
+    public Result<ResultStatus> updatePassword(@PathVariable String password) {
 
         if(userService.updateUserPassword(password)){
             return Result.success();
@@ -78,7 +77,7 @@ public class UserController {
      */
     @GetMapping("/users")
     @Operation(summary = "用户搜索")
-    public Result<ResultStatus> searchUserByName(String name) {
+    public Result<ResultStatus> searchUser(String name) {
         return null;
     }
 
@@ -89,7 +88,7 @@ public class UserController {
      */
     @PutMapping("/avatar")
     @Operation(summary = "用户头像更新")
-    public Result<String> updateAvatarByCode(@RequestParam("file") MultipartFile file) {
+    public Result<String> updateAvatar(@RequestParam("file") MultipartFile file) {
 
         String userCode = UserContext.getUserCode();
 

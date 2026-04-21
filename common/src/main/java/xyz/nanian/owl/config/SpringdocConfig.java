@@ -31,7 +31,7 @@ import java.util.List;
 @Configuration
 public class SpringdocConfig {
 
-    final String securitySchemeName = "jwtAuth";   // 方案名称，可自定义
+    final String securitySchemeName = "JwtAuth";   // 方案名称，可自定义
 
     /**
      * 配置全局信息
@@ -41,12 +41,12 @@ public class SpringdocConfig {
     public OpenAPI openAllAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("NaNian Owl - 统一接口文档")
-                        .description("本API文档集成了火龙果电商和用户中心等所有模块的接口。")
+                        .title("OWL - 统一接口文档")
+                        .description("本API文档集成用户中心等所有模块的接口。")
                         .version("开发版0.0.1")
                         .contact(new Contact()
                                 .name("sln23")
-                                .email("ir0211@outlook.com")
+                                .email("relax271828@petalmail.com")
                         )
                 )
 //                目前来说下面的配置没有生效，问题未知,不，是生效了,但是是全局的，
@@ -94,7 +94,6 @@ public class SpringdocConfig {
 //            return operation;
 //        };
 //    }
-
 //    /**
 //     * 构建权限协议列表
 //     * @return 认证协议列表

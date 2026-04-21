@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2026-04-13 23:53:18
  */
 @RestController
-@RequestMapping("/admin-log-do")
+@RequestMapping("/admin/log-do")
 public class AdminLogController {
 
 }

@@ -18,6 +18,7 @@ import xyz.nanian.owl.crow.service.AiChatService;
 
 import xyz.nanian.owl.crow.constant.AIConstant;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -55,6 +56,8 @@ public class AiChatServiceImpl implements AiChatService {
         messageUser.setContent(dto.getMessage());
         messageUser.setConversationId(dto.getConversationId());
         messageUser.setRole(AIConstant.ROLE_USER);
+        messageUser.setCreatedAt(LocalDateTime.now());
+//        messageUser.set
 
 //        1.保存用户消息
         messageMapper.insert(messageUser);
@@ -91,6 +94,7 @@ public class AiChatServiceImpl implements AiChatService {
         messageAI.setContent(reply);
         messageAI.setConversationId(dto.getConversationId());
         messageAI.setRole(AIConstant.ROLE_ASSISTANT);
+        messageAI.setCreatedAt(LocalDateTime.now());
         if (usage != null) {
             messageAI.setPromptTokens(usage.getPromptTokens());
         }
@@ -102,8 +106,10 @@ public class AiChatServiceImpl implements AiChatService {
         }
         messageMapper.insert(messageAI);
 
-//        7. 更新本轮对话累计token消耗总数，
-        conversationMapper.addTotalTokens(dto.getConversationId(),usage.getTotalTokens());
+//        7. 更新本轮对话累计token消耗总数，以及当前这段会话的最后对话的时间，
+        if (usage != null) {
+            conversationMapper.updateTotalTokens(dto.getConversationId(),usage.getTotalTokens());
+        }
 
 //        8. 回复前端
         return reply;

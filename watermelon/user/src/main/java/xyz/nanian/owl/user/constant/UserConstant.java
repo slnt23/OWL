@@ -1,4 +1,4 @@
-package xyz.nanian.owl.constant;
+package xyz.nanian.owl.user.constant;
 
 
 /**
@@ -26,7 +26,7 @@ public class UserConstant {
     /**
      * 新用户默认头像URL
      * 邮箱注册时，自动填充默认头像，用户可后续在个人中心更换
-     * 实际使用时替换为真实的默认头像CDN地址
+     * 实际使用时替换为真实地默认头像CDN地址
      */
     public static final String DEFAULT_AVATAR = "默认头像URL";
 

@@ -4,7 +4,6 @@ package xyz.nanian.owl.crow.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.crow.domain.dto.CreateConversationDTO;
 import xyz.nanian.owl.crow.domain.entity.ConversationDO;
@@ -16,6 +15,7 @@ import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 import xyz.nanian.owl.crow.domain.vo.MessageVO;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -50,8 +50,10 @@ public class ConversationServiceImpl implements ConversationService {
         ConversationDO conversation = new ConversationDO();
         conversation.setId(conversationId);
         conversation.setTitle(dto != null ? dto.getTitle() : "新对话");
+        conversation.setCreatedAt(LocalDateTime.now());
+        conversation.setUpdatedAt(LocalDateTime.now());
 //        获取用户账号，
-        conversation.setUserId(UserContext.getUserCode());
+        conversation.setUserCode(UserContext.getUserCode());
 
         log.info("conversationId:{}",conversation);
 
@@ -70,7 +72,7 @@ public class ConversationServiceImpl implements ConversationService {
         String userCodeId = UserContext.getUserCode();
 
         LambdaQueryWrapper<ConversationDO> wrapper = new LambdaQueryWrapper<ConversationDO>();
-        wrapper.eq(ConversationDO::getUserId,userCodeId);
+        wrapper.eq(ConversationDO::getUserCode,userCodeId);
 
 //        查询当前用户的会话列表
         List<ConversationDO> conversationDOS= conversationMapper.selectList(wrapper);

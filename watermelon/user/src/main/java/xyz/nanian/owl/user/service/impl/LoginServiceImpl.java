@@ -19,7 +19,7 @@ import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.service.LoginService;
 
-import xyz.nanian.owl.constant.UserConstant;
+import xyz.nanian.owl.user.constant.UserConstant;
 import xyz.nanian.owl.constant.LoginConstant;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
 import xyz.nanian.owl.utils.redis.CodeCacheUtil;

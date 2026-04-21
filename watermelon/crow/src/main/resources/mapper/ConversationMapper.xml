@@ -3,14 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="xyz.nanian.owl.crow.mapper.ConversationMapper">
-
     <select id="selectByUserId" resultType="xyz.nanian.owl.crow.domain.vo.ConversationVO">
     </select>
 
-    <select id="addTotalTokens" resultType="int">
+    <update id="updateTotalTokens">
         update conversation
-            set total_tokens = total_tokens + #{addTokens},
-                updated_at = NOW()
+        set total_tokens = total_tokens + #{addTokens},
+            updated_at   = NOW()
         where id = #{conversationId}
-    </select>
+    </update>
 </mapper>

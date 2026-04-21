@@ -39,7 +39,7 @@ public class ConversationController {
     }
 
     /**
-     * 获取会话历史
+     * 获取历史会话列表
      * @return
      */
     @GetMapping("/list")

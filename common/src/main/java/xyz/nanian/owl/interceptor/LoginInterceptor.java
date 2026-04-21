@@ -5,12 +5,12 @@ import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import xyz.nanian.owl.exception.LoginException;
 import xyz.nanian.owl.result.ResultStatus;
-import xyz.nanian.owl.exception.BizException;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
 import xyz.nanian.owl.utils.jwt.UserContext;
 import xyz.nanian.owl.utils.jwt.UserInfo;
@@ -33,19 +33,15 @@ public class LoginInterceptor implements HandlerInterceptor {
 //    }
 
     @Override
-    public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) {
+    public boolean preHandle(@NotNull HttpServletRequest request,
+                             @NotNull HttpServletResponse response,
+                             @NotNull Object handler) {
 
         if(!(handler instanceof HandlerMethod)){
             return true;
         }
 
-//        log.info("request为：{}", request.getHeader());
-//          TODO 这里token为null,
         String token = request.getHeader("Authorization");
-
-//        log.info("token代码为:{}", token);
 
         if (token == null || !token.startsWith("Bearer ")) {
             throw new LoginException(ResultStatus.TOKEN_EXPIRED);
@@ -86,9 +82,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request,
-                                HttpServletResponse response,
-                                Object handler, Exception ex) {
+    public void afterCompletion(@NotNull HttpServletRequest request,
+                                @NotNull HttpServletResponse response,
+                                @NotNull Object handler, Exception ex) {
 
         UserContext.clear();
     }
