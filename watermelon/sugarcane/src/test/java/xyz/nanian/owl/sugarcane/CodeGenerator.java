@@ -40,7 +40,7 @@ public class CodeGenerator {
 
                 .packageConfig(builder -> {
                     builder.parent("xyz.nanian.owl.sugarcane")
-                            .entity("entity")
+                            .entity("domain.entity")
                             .mapper("mapper")
                             .service("service")
                             .serviceImpl("service.impl")
@@ -54,8 +54,8 @@ public class CodeGenerator {
 
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("price_category", "price_item", "price_source","price_record","geo_location")
-                            .addTablePrefix("price_")
+                            .addInclude("price_item_media")
+//                            .addTablePrefix("price_")
 
                             .entityBuilder()
                                 .enableLombok()
