@@ -2,12 +2,13 @@ package xyz.nanian.owl.sugarcane.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import xyz.nanian.owl.result.PageResult;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemDTO;
 import xyz.nanian.owl.sugarcane.domain.vo.ItemVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,19 +19,44 @@ import xyz.nanian.owl.sugarcane.domain.vo.ItemVO;
  * @since 2026-04-12 20:43:32
  */
 @RestController
-@RequestMapping("/item-do")
-@Tag(name = "物品价格查询管理",description = "放置有关物品查询的方法")
+@RequestMapping("/item")
 public class ItemController {
 
-    /**
-     * 查询物品价格信息
-     * @param dto
-     * @return
-     */
+    // 分页查询
+//    @PostMapping("/page")
+//    public PageResult<ItemVO> page(@RequestBody ItemQueryDTO dto){
+//        return null;
+//    }
 
-    @GetMapping("/price")
-    @Operation(summary = "查询物品价格",description = "所查物品名")
-    public Result<ItemVO> getItem(ItemDTO dto) {
+    // 创建
+//    @PostMapping
+//    public void create(@RequestBody ItemCreateDTO dto){
+//
+//    }
+
+    // 更新
+//    @PutMapping("/{id}")
+//    public void update(@PathVariable Long id,
+//                       @RequestBody ItemUpdateDTO dto){
+//
+//    }
+
+    // 删除
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){
+
+    }
+
+    // 详情
+    @GetMapping("/{id}")
+    public ItemVO detail(@PathVariable Long id){
+        return null;
+    }
+
+
+    @GetMapping("/search")
+    public List<ItemVO> search(@RequestParam String keyword){
         return null;
     }
 }
+

@@ -1,7 +1,6 @@
 package xyz.nanian.owl.sugarcane.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -12,7 +11,33 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2026-04-12 20:43:32
  */
 @RestController
-@RequestMapping("/source-do")
+@RequestMapping("/source")
 public class SourceController {
 
+//    @GetMapping("/list")
+//    public List<SourceVO> list(){
+//        return null;
+//    }
+
+//    @PostMapping
+//    public void create(@RequestBody SourceCreateDTO dto){
+//
+//    }
+
+//    @PutMapping("/{id}")
+//    public void update(@PathVariable Long id,
+//                       @RequestBody SourceUpdateDTO dto){
+//
+//    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id){}
+
+
+//    @GetMapping("/reliable")
+//    public List<SourceVO> getReliableSources(
+//            @RequestParam Integer minLevel){
+//        return null;
+//    }
 }
+
