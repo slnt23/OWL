@@ -2,20 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.nanian.owl.admin.mapper.FeatureMapper">
 
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="xyz.nanian.owl.admin.domain.entity.FeatureDO">
-        <id column="id" property="id" />
-        <result column="icon" property="icon" />
-        <result column="title" property="title" />
-        <result column="description" property="description" />
-        <result column="sort_order" property="sortOrder" />
-        <result column="created_at" property="createdAt" />
-        <result column="updated_at" property="updatedAt" />
-    </resultMap>
-
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id, icon, title, description, sort_order, created_at, updated_at
-    </sql>
-
+    <select id="selectLists" resultType="xyz.nanian.owl.admin.domain.entity.FeatureDO">
+        select id,icon,title,description,sort_order,created_at,updated_at
+        from feature
+    </select>
 </mapper>

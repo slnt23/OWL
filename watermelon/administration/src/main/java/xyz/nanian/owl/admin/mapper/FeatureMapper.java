@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import xyz.nanian.owl.admin.domain.entity.FeatureDO;
 
+import java.util.List;
+
 /**
  * <p>
  * 产品特性展示表 Mapper 接口
@@ -14,5 +16,6 @@ import xyz.nanian.owl.admin.domain.entity.FeatureDO;
  */
 @Mapper
 public interface FeatureMapper extends BaseMapper<FeatureDO> {
+    List<FeatureDO> selectLists();
 
 }

@@ -1,7 +1,11 @@
 package xyz.nanian.owl.admin.service;
 
+import xyz.nanian.owl.admin.domain.dto.FeatureDTO;
 import xyz.nanian.owl.admin.domain.entity.FeatureDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.nanian.owl.admin.domain.vo.FeatureVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface FeatureService extends IService<FeatureDO> {
 
+    List<FeatureVO> listByOrder();
+    FeatureVO getById(Integer id);
+    FeatureVO create(FeatureDTO dto);
+    FeatureVO update(FeatureDTO vo);
+    void deleteById(Integer id);
 }

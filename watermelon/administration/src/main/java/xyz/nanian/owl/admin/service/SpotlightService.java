@@ -1,7 +1,11 @@
 package xyz.nanian.owl.admin.service;
 
+import xyz.nanian.owl.admin.domain.dto.SpotlightDTO;
 import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.nanian.owl.admin.domain.vo.SpotlightVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +16,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2026-04-24 17:13:37
  */
 public interface SpotlightService extends IService<SpotlightDO> {
+    List<SpotlightVO> listByOrder();
+    SpotlightVO getById(Integer id);
+    SpotlightVO create(SpotlightDTO dto);
+    SpotlightVO update(SpotlightDTO dto);
+    void deleteById(Integer id);
 
 }

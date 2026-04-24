@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
 
+import java.util.List;
+
 /**
  * <p>
  * 首页焦点展示项目表 Mapper 接口
@@ -14,5 +16,5 @@ import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
  */
 @Mapper
 public interface SpotlightMapper extends BaseMapper<SpotlightDO> {
-
+    List<SpotlightDO> selectLists();
 }
