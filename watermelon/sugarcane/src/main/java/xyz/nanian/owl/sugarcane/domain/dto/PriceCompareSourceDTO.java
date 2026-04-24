@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Data
 public class PriceCompareSourceDTO extends BasePriceQueryDTO {
 
+    @NotNull
     private LocalDateTime targetTime;
 
 }

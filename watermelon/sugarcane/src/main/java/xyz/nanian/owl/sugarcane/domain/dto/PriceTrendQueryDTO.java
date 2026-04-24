@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import xyz.nanian.owl.sugarcane.constant.TimeGranularity;
@@ -18,10 +19,13 @@ import java.time.LocalDateTime;
 @Data
 public class PriceTrendQueryDTO extends BasePriceQueryDTO {
 
+    @NotNull
     private LocalDateTime startTime;
+    @NotNull
     private LocalDateTime endTime;
 
     // 聚合粒度
+    @NotNull
     private TimeGranularity granularity;
 
 }

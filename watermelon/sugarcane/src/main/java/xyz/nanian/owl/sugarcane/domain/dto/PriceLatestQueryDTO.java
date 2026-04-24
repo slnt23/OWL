@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,6 +17,7 @@ import lombok.EqualsAndHashCode;
 public class PriceLatestQueryDTO extends BasePriceQueryDTO {
 
     // 是否只取每个维度最新一条
+    @NotNull
     private Boolean latestOnly = true;
 
 }

@@ -54,8 +54,7 @@ public class CodeGenerator {
 
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("user", "role", "biz_log",
-                                    "admin_log")
+                            .addInclude("spotlight", "feature")
 //                            .addTablePrefix("price_")
 
                             .entityBuilder()

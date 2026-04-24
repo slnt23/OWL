@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * <p>
- * 价格记录表（时间序列数据） 前端控制器
+ * 价格记录表（时间序列数据） 前端控制器,复杂查询、高频调用、读多写少
  * </p>
  *
  * @author slnt23
@@ -74,7 +74,8 @@ public class RecordController {
 //    }
 
     /**
-     * 6. 写入价格数据
+     * 6. 写入价格数据,（后台/爬虫）
+     * 可以设计成爬虫的开关，
      */
     @PostMapping
     public void create(
