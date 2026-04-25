@@ -18,8 +18,8 @@ import java.util.List;
 public interface SpotlightService extends IService<SpotlightDO> {
     List<SpotlightVO> listByOrder();
     SpotlightVO getById(Integer id);
-    SpotlightVO create(SpotlightDTO dto);
-    SpotlightVO update(SpotlightDTO dto);
-    void deleteById(Integer id);
+    int create(SpotlightDTO dto);
+    Boolean update(SpotlightDTO dto);
+    Boolean deleteById(Integer id);
 
 }

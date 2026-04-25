@@ -19,7 +19,7 @@ public interface FeatureService extends IService<FeatureDO> {
 
     List<FeatureVO> listByOrder();
     FeatureVO getById(Integer id);
-    FeatureVO create(FeatureDTO dto);
-    FeatureVO update(FeatureDTO vo);
-    void deleteById(Integer id);
+    Integer create(FeatureDTO dto);
+    Boolean update(FeatureDTO vo);
+    Boolean deleteById(Integer id);
 }

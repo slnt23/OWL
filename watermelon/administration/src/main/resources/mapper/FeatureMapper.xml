@@ -3,7 +3,9 @@
 <mapper namespace="xyz.nanian.owl.admin.mapper.FeatureMapper">
 
     <select id="selectLists" resultType="xyz.nanian.owl.admin.domain.entity.FeatureDO">
-        select id,icon,title,description,sort_order,created_at,updated_at
+        select id, icon, title, description, sort_order, created_at, updated_at
         from feature
+        order by created_at desc
+        limit 4
     </select>
 </mapper>

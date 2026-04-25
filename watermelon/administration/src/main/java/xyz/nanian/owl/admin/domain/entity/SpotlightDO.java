@@ -60,9 +60,9 @@ public class SpotlightDO implements Serializable {
     /**
      * 配图，存储相对路径或CDN完整URL
      */
-    @TableField("image")
+    @TableField("image_url")
     @Schema(name = "配图，存储相对路径或CDN完整URL")
-    private String image;
+    private String imageUrl;
 
     /**
      * 排序序号，数学越小越靠前；同数值按创建时间排序

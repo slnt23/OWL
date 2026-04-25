@@ -9,6 +9,7 @@ import xyz.nanian.owl.admin.domain.dto.FeatureDTO;
 import xyz.nanian.owl.admin.domain.vo.FeatureVO;
 import xyz.nanian.owl.admin.service.FeatureService;
 import xyz.nanian.owl.result.Result;
+import xyz.nanian.owl.result.ResultStatus;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class FeatureController {
     @Operation(summary = "获取单挑特性")
     public Result<FeatureVO> getById(@PathVariable Integer id) {
         FeatureVO feature = featureService.getById(id);
-        return Result.success();
+        return Result.success(feature);
     }
 
     /**
@@ -53,9 +54,9 @@ public class FeatureController {
      */
     @PostMapping
     @Operation(summary = "新增产品特性")
-    public Result<FeatureVO> create(@Valid @RequestBody FeatureDTO dto) {
-        FeatureVO feature = featureService.create(dto);
-        return Result.success();
+    public Result<Integer> create(@Valid @RequestBody FeatureDTO dto) {
+        Integer result = featureService.create(dto);
+        return Result.success(result);
     }
 
     /**
@@ -63,11 +64,15 @@ public class FeatureController {
      */
     @PutMapping("/{id}")
     @Operation(summary = "修改产品特性")
-    public Result<FeatureVO> update(@PathVariable Integer id,
-                                    @Valid @RequestBody FeatureDTO dto) {
+    public Result<ResultStatus> update(@PathVariable Integer id,
+                                       @Valid @RequestBody FeatureDTO dto) {
         dto.setId(id);
-        FeatureVO feature = featureService.update(dto);
-        return Result.success();
+        Boolean result = featureService.update(dto);
+        if(result){
+            return Result.success();
+        }else {
+            return Result.fail();
+        }
     }
 
     /**
@@ -75,8 +80,12 @@ public class FeatureController {
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "删除产品特性")
-    public Result<Void> delete(@PathVariable Integer id) {
-        featureService.deleteById(id);
-        return Result.success();
+    public Result<ResultStatus> delete(@PathVariable Integer id) {
+        Boolean result = featureService.deleteById(id);
+        if(result){
+            return Result.success();
+        }else {
+            return Result.fail();
+        }
     }
 }

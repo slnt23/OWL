@@ -2,6 +2,7 @@ package xyz.nanian.owl.admin.convert;
 
 
 import org.mapstruct.Mapper;
+import xyz.nanian.owl.admin.domain.dto.SpotlightDTO;
 import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
 import xyz.nanian.owl.admin.domain.vo.SpotlightVO;
 
@@ -18,4 +19,6 @@ import java.util.List;
 public interface SpotlightConvert {
     SpotlightVO DOConvertVO(SpotlightDO spotlightDO);
     List<SpotlightVO> DOConvertVO(List<SpotlightDO> spotlightDOS);
+
+    SpotlightDO DTOConvertDO(SpotlightDTO spotlightDTO);
 }

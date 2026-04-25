@@ -37,21 +37,26 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
 
     @Override
     public SpotlightVO getById(Integer id) {
-        return null;
+        SpotlightDO spotlightDO = spotlightMapper.selectById(id);
+        return spotlightConvert.DOConvertVO(spotlightDO);
     }
 
     @Override
-    public SpotlightVO create(SpotlightDTO dto) {
-        return null;
+    public int create(SpotlightDTO dto) {
+        SpotlightDO spotlightDO= spotlightConvert.DTOConvertDO(dto);
+        return spotlightMapper.insert(spotlightDO);
     }
 
     @Override
-    public SpotlightVO update(SpotlightDTO dto) {
-        return null;
+    public Boolean update(SpotlightDTO dto) {
+        SpotlightDO spotlightDO = spotlightConvert.DTOConvertDO(dto);
+        int result = spotlightMapper.updateById(spotlightDO);
+        return result==1;
     }
 
     @Override
-    public void deleteById(Integer id) {
-
+    public Boolean deleteById(Integer id) {
+        int result = spotlightMapper.deleteById(id);
+        return result == 1;
     }
 }

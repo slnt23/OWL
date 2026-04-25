@@ -30,36 +30,34 @@ public class FeatureServiceImpl extends ServiceImpl<FeatureMapper, FeatureDO> im
     @Override
     public List<FeatureVO> listByOrder() {
         List<FeatureDO> doList= featureMapper.selectLists();
-
-        return List.of();
+        return featureConvert.DOtoVO(doList);
     }
 
     @Override
     public FeatureVO getById(Integer id) {
         FeatureDO featureDO=featureMapper.selectById(id);
 
-
-        return null;
+        return featureConvert.DOtoVO(featureDO);
     }
 
     @Override
-    public FeatureVO create(FeatureDTO dto) {
+    public Integer create(FeatureDTO dto) {
         FeatureDO featureDO=featureConvert.DTOtoEntity(dto);
-        Integer result = featureMapper.insert(featureDO);
 
-        return null;
+        return featureMapper.insert(featureDO);
     }
 
     @Override
-    public FeatureVO update(FeatureDTO dto) {
+    public Boolean update(FeatureDTO dto) {
         FeatureDO featureDO = featureConvert.DTOtoEntity(dto);
-        Integer result = featureMapper.updateById(featureDO);
+        int result = featureMapper.updateById(featureDO);
 
-        return null;
+        return result == 1;
     }
 
     @Override
-    public void deleteById(Integer id) {
-        featureMapper.deleteById(id);
+    public Boolean deleteById(Integer id) {
+        int result = featureMapper.deleteById(id);
+        return result == 1;
     }
 }

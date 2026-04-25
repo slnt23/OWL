@@ -27,7 +27,7 @@ public class SpotlightVO {
     private String description;
 
     @NotBlank(message = "图片不能为空")
-    private String image;
+    private String imageUrl;
 
     @NotNull(message = "排序序号不能为空")
     private Integer order;
