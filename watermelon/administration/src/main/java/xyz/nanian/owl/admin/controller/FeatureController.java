@@ -1,5 +1,7 @@
 package xyz.nanian.owl.admin.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/feature")
 @RequiredArgsConstructor
+@Tag(name = "前台特性管理")
 public class FeatureController {
 
     private final FeatureService featureService;
@@ -29,6 +32,7 @@ public class FeatureController {
      * 获取全部产品特性，按 sort_order 升序排列
      */
     @GetMapping
+    @Operation(summary = "获取特性列表",description = "这里只获取四个")
     public Result<List<FeatureVO>> list() {
         List<FeatureVO> list = featureService.listByOrder();
         return Result.success(list);
@@ -38,6 +42,7 @@ public class FeatureController {
      * 根据 id 获取单条特性
      */
     @GetMapping("/{id}")
+    @Operation(summary = "获取单挑特性")
     public Result<FeatureVO> getById(@PathVariable Integer id) {
         FeatureVO feature = featureService.getById(id);
         return Result.success();
@@ -47,6 +52,7 @@ public class FeatureController {
      * 新增产品特性
      */
     @PostMapping
+    @Operation(summary = "新增产品特性")
     public Result<FeatureVO> create(@Valid @RequestBody FeatureDTO dto) {
         FeatureVO feature = featureService.create(dto);
         return Result.success();
@@ -56,6 +62,7 @@ public class FeatureController {
      * 修改产品特性
      */
     @PutMapping("/{id}")
+    @Operation(summary = "修改产品特性")
     public Result<FeatureVO> update(@PathVariable Integer id,
                                     @Valid @RequestBody FeatureDTO dto) {
         dto.setId(id);
@@ -67,6 +74,7 @@ public class FeatureController {
      * 删除产品特性
      */
     @DeleteMapping("/{id}")
+    @Operation(summary = "删除产品特性")
     public Result<Void> delete(@PathVariable Integer id) {
         featureService.deleteById(id);
         return Result.success();
