@@ -1,5 +1,7 @@
 package xyz.nanian.owl.sugarcane.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +24,14 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/price")
+@Tag(name = "价格查询")
 public class RecordController {
 
     /**
      * 1. 查询最新价格
      */
     @PostMapping("/latest")
+    @Operation(summary = "查询最新价格")
     public List<PriceLatestVO> latest(
             @RequestBody PriceLatestQueryDTO dto) {
 //        return priceService.queryLatest(dto);
@@ -38,6 +42,7 @@ public class RecordController {
      * 2. 查询趋势
      */
     @PostMapping("/trend")
+    @Operation(summary = "查询趋势")
     public PriceTrendVO trend(
             @RequestBody PriceTrendQueryDTO dto) {
 //        return priceService.queryTrend(dto);
@@ -48,6 +53,7 @@ public class RecordController {
      * 3. 多地区对比
      */
     @PostMapping("/compare/location")
+    @Operation(summary = "多地区对比")
     public PriceCompareVO compareLocation(
             @RequestBody PriceCompareLocationDTO dto) {
 //        return priceService.compareLocation(dto);
@@ -58,6 +64,7 @@ public class RecordController {
      * 4. 多来源对比
      */
     @PostMapping("/compare/source")
+    @Operation(summary = "多来源对比")
     public List<SourceCompareVO> compareSource(
             @RequestBody PriceCompareSourceDTO dto) {
 //        return priceService.compareSource(dto);
@@ -68,6 +75,7 @@ public class RecordController {
      * 5. 原始记录分页
      */
 //    @PostMapping("/page")
+//    @Operation(summary = "原始记录分页")
 //    public PageResult<PriceRecordVO> page(
 //            @RequestBody PricePageQueryDTO dto) {
 //        return priceService.pageQuery(dto);
@@ -78,6 +86,7 @@ public class RecordController {
      * 可以设计成爬虫的开关，
      */
     @PostMapping
+    @Operation(summary = "写入价格数据",description = "可以作为后台爬虫的开关")
     public void create(
             @RequestBody PriceRecordCreateDTO dto) {
 //        priceService.create(dto);

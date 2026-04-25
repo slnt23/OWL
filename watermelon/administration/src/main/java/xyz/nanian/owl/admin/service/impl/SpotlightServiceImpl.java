@@ -9,6 +9,8 @@ import xyz.nanian.owl.admin.mapper.SpotlightMapper;
 import xyz.nanian.owl.admin.service.SpotlightService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import xyz.nanian.owl.infrastructure.minio.constant.MinioConstant;
+import xyz.nanian.owl.infrastructure.minio.service.FileStorageService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
 
     final SpotlightMapper spotlightMapper;
     final SpotlightConvert spotlightConvert;
+    private final FileStorageService fileStorageService;
 
     @Override
     public List<SpotlightVO> listByOrder() {
@@ -44,12 +47,21 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
     @Override
     public int create(SpotlightDTO dto) {
         SpotlightDO spotlightDO= spotlightConvert.DTOConvertDO(dto);
+//        这里要把照片上传到OSS
+        String imageUrl = fileStorageService.upload(dto.getImage(), MinioConstant.BUCKET_IMAGES);
+        spotlightDO.setImageUrl(imageUrl);
+
         return spotlightMapper.insert(spotlightDO);
     }
 
     @Override
     public Boolean update(SpotlightDTO dto) {
         SpotlightDO spotlightDO = spotlightConvert.DTOConvertDO(dto);
+
+//        这里如果照片更新，应该线删除，再上传，
+//        先查询DO,获取DO中url，删除，商创，
+
+
         int result = spotlightMapper.updateById(spotlightDO);
         return result==1;
     }
