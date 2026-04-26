@@ -2,5 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.nanian.owl.sugarcane.mapper.ItemMapper">
 
-
+    <select id="selectPageItems" resultType="xyz.nanian.owl.sugarcane.domain.entity.ItemDO">
+        select id,
+               item_code,
+               item_name,
+               category_id,
+               unit,
+               specification,
+               description,
+               ref_product_id,
+               status,
+               created_at,
+               updated_at
+        from price_item
+        where item_name LIKE CONCAT('%',#{itemName},'%')
+    </select>
 </mapper>

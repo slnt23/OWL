@@ -14,8 +14,24 @@ import java.util.List;
  */
 
 @Data
-public class ItemIntroListVO {
+public class ItemIntroVO {
+
+    /**
+     * id
+     */
+    Long id;
+
+    /**
+     * 单位
+     */
+    String unit;
+
+    /**
+     * 分类id
+     */
+    Long categoryId;
 
     @NotNull
-    List<String> ItemIntroList;
+    String itemName;
+//    List<String> ItemIntroList;
 }

@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
-import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroListVO;
+import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroVO;
 import xyz.nanian.owl.sugarcane.domain.vo.ItemVO;
 import xyz.nanian.owl.sugarcane.service.ItemService;
 
@@ -31,7 +31,7 @@ public class ItemController {
 //     分页查询
     @PostMapping("/page")
     @Operation(summary = "所查物品列表")
-    public ResultPage<ItemIntroListVO> page(@RequestBody ItemIntroDTO dto){
+    public ResultPage<ItemIntroVO> page(@RequestBody ItemIntroDTO dto){
 
         return ResultPage.create(itemService.getItemIntroList(dto));
     }

@@ -23,17 +23,4 @@ public class ItemIntroDTO extends PageDTO {
     @NotNull
     String ItemName;
 
-//    /**
-//     * 当前页
-//     */
-//    @NotNull
-//    Integer pageNumber;
-//
-//    /**
-//     * 每页大小
-//     */
-//    @NotNull
-//    Integer pageSize;
-
-
 }
