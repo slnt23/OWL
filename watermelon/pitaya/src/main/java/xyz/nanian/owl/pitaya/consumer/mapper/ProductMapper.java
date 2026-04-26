@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.nanian.owl.pitaya.entity.CategoryDO;
-import xyz.nanian.owl.pitaya.entity.ProductDO;
-import xyz.nanian.owl.pitaya.entity.ProductImageDO;
-import xyz.nanian.owl.pitaya.vo.ProductVO;
+import xyz.nanian.owl.pitaya.domain.entity.CategoryDO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductDO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductImageDO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductVO;
 
 import java.util.List;
 

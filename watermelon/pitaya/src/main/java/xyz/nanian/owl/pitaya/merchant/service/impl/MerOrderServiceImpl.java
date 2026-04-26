@@ -12,7 +12,7 @@ import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerOrderMapper;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
 import xyz.nanian.owl.pitaya.vo.OrderListVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.concurrent.TimeUnit;
@@ -63,7 +63,7 @@ public class MerOrderServiceImpl implements MerOrderService {
      */
     @Override
     @BizLog(module = "订单",action = "查询指定用户订单列表")
-    public PageResult<OrderListVO> listOrders(Integer pageNum,Integer pageSize,Long searchedUserId) {
+    public ResultPage<OrderListVO> listOrders(Integer pageNum, Integer pageSize, Long searchedUserId) {
 
 //        用户在该商家的订单，
 //        商家Id
@@ -75,23 +75,23 @@ public class MerOrderServiceImpl implements MerOrderService {
         }
 
 //        TODO 以下的这个方法只是暂时的，后续要找更好的方法替代
-        PageResult<OrderListVO> cache =
-                (PageResult<OrderListVO>) redisTemplate.opsForValue().get(key);
+        ResultPage<OrderListVO> cache =
+                (ResultPage<OrderListVO>) redisTemplate.opsForValue().get(key);
         if(cache!=null){
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
 
-            PageResult<OrderListVO> result =
-                    mapper.convertValue(cache,new  TypeReference<PageResult<OrderListVO>>(){});
+            ResultPage<OrderListVO> result =
+                    mapper.convertValue(cache,new  TypeReference<ResultPage<OrderListVO>>(){});
             return result;
         }
 
         Page<OrderListVO> page = new Page<>(pageNum,pageSize);
         IPage<OrderListVO> result = merOrderMapper.pageOrderList(page,searchedUserId);
-        PageResult<OrderListVO> pageResult = PageResult.create(result);
+        ResultPage<OrderListVO> resultPage = ResultPage.create(result);
 
-        redisTemplate.opsForValue().set(key,pageResult,MERCHANT_ORDER_TIME_OUT, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(key, resultPage,MERCHANT_ORDER_TIME_OUT, TimeUnit.MINUTES);
 
-        return pageResult;
+        return resultPage;
     }
 }

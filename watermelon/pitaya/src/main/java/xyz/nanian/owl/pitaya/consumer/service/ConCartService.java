@@ -1,10 +1,9 @@
 package xyz.nanian.owl.pitaya.consumer.service;
 
 
-import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
-import xyz.nanian.owl.pitaya.query.ShoppingCartQuery;
-import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.pitaya.domain.dto.ShoppingCartDTO;
+import xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO;
+import xyz.nanian.owl.result.ResultPage;
 
 /**
  * 消费者购物车Service
@@ -43,6 +42,6 @@ public interface ConCartService {
      * @param pageSize
      * @return
      */
-    PageResult<ShoppingCartVO> listCart(Integer pageNum, Integer pageSize);
+    ResultPage<ShoppingCartVO> listCart(Integer pageNum, Integer pageSize);
 
 }

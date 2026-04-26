@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.sugarcane.domain.dto.*;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceCompareVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceLatestVO;
@@ -32,8 +33,7 @@ public class RecordController {
      */
     @PostMapping("/latest")
     @Operation(summary = "查询最新价格")
-    public List<PriceLatestVO> latest(
-            @RequestBody PriceLatestQueryDTO dto) {
+    public Result<List<PriceLatestVO>> latest(@RequestBody PriceLatestQueryDTO dto) {
 //        return priceService.queryLatest(dto);
         return null;
     }
@@ -43,7 +43,7 @@ public class RecordController {
      */
     @PostMapping("/trend")
     @Operation(summary = "查询趋势")
-    public PriceTrendVO trend(
+    public Result<PriceTrendVO> trend(
             @RequestBody PriceTrendQueryDTO dto) {
 //        return priceService.queryTrend(dto);
         return null;
@@ -54,7 +54,7 @@ public class RecordController {
      */
     @PostMapping("/compare/location")
     @Operation(summary = "多地区对比")
-    public PriceCompareVO compareLocation(
+    public Result<PriceCompareVO> compareLocation(
             @RequestBody PriceCompareLocationDTO dto) {
 //        return priceService.compareLocation(dto);
         return null;
@@ -65,7 +65,7 @@ public class RecordController {
      */
     @PostMapping("/compare/source")
     @Operation(summary = "多来源对比")
-    public List<SourceCompareVO> compareSource(
+    public Result<List<SourceCompareVO>> compareSource(
             @RequestBody PriceCompareSourceDTO dto) {
 //        return priceService.compareSource(dto);
         return null;

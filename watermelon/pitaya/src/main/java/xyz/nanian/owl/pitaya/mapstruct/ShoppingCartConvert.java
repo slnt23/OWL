@@ -2,8 +2,8 @@ package xyz.nanian.owl.pitaya.mapstruct;
 
 
 import org.mapstruct.Mapper;
-import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
-import xyz.nanian.owl.pitaya.entity.ShoppingCartDO;
+import xyz.nanian.owl.pitaya.domain.dto.ShoppingCartDTO;
+import xyz.nanian.owl.pitaya.domain.entity.ShoppingCartDO;
 
 /**
  * 购物车映射Map

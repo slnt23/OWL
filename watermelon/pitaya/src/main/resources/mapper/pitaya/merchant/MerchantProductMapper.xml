@@ -39,7 +39,7 @@
             )
         </foreach>
     </insert>
-    <update id="updateProductDO" parameterType="xyz.nanian.owl.pitaya.entity.ProductDO">
+    <update id="updateProductDO" parameterType="xyz.nanian.owl.pitaya.domain.entity.ProductDO">
         update product
             <set>
                 <if test="categoryId != null">

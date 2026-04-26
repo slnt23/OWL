@@ -6,11 +6,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.result.ResultStatus;
-import xyz.nanian.owl.pitaya.consumer.cart.CartApi;
 import xyz.nanian.owl.pitaya.consumer.service.ConCartService;
-import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
-import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.pitaya.domain.dto.ShoppingCartDTO;
+import xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO;
+import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.result.Result;
 
 /**
@@ -24,7 +23,7 @@ import xyz.nanian.owl.result.Result;
 @RequestMapping("/pitaya/cart/consumer")
 @Tag(name = "消费者购物车管理",description = "购物车相关")
 @RequiredArgsConstructor
-public class ConCartController implements CartApi {
+public class ConCartController {
 
     private final ConCartService conCartService;
 
@@ -38,7 +37,6 @@ public class ConCartController implements CartApi {
      * @param shoppingCartDTO
      * @return
      */
-    @Override
     @PostMapping("/product")
     @Operation(summary = "新增购物车商品",description = "传DTO,添加商品")
     public Result<ResultStatus> addProduct(@RequestBody ShoppingCartDTO shoppingCartDTO) {
@@ -56,7 +54,6 @@ public class ConCartController implements CartApi {
      * @param productId
      * @return
      */
-    @Override
     @DeleteMapping("/product")
     @Operation(summary = "删除购物车商品",description = "通过用户ID，商品ID")
     public Result<ResultStatus> removeProduct(
@@ -74,7 +71,6 @@ public class ConCartController implements CartApi {
      * @param shoppingCartDTO
      * @return
      */
-    @Override
     @PutMapping("/product")
     @Operation(summary = "更新购物车商品",description = "通过DTO")
     public Result<ResultStatus> updateProduct(@RequestBody ShoppingCartDTO shoppingCartDTO) {
@@ -92,10 +88,9 @@ public class ConCartController implements CartApi {
      * @param pageSize
      * @return
      */
-    @Override
     @Operation(summary = "购物车列表")
     @GetMapping("/carts")
-    public Result<PageResult<ShoppingCartVO>> queryCartList(@RequestParam Integer pageNum,
+    public Result<ResultPage<ShoppingCartVO>> queryCartList(@RequestParam Integer pageNum,
                                                             @RequestParam Integer pageSize) {
 
         return Result.success(conCartService.listCart(pageNum,pageSize));

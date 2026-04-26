@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConCartMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConCartService;
-import xyz.nanian.owl.pitaya.dto.ShoppingCartDTO;
-import xyz.nanian.owl.pitaya.entity.ShoppingCartDO;
+import xyz.nanian.owl.pitaya.domain.dto.ShoppingCartDTO;
+import xyz.nanian.owl.pitaya.domain.entity.ShoppingCartDO;
 import xyz.nanian.owl.pitaya.mapstruct.ShoppingCartConvert;
-import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO;
+import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.util.concurrent.TimeUnit;
@@ -96,7 +96,7 @@ public class ConCartServiceImpl implements ConCartService {
      */
     @Override
     @BizLog(module = "购物车",action = "查询购物车列表")
-    public PageResult<ShoppingCartVO> listCart(Integer pageNum, Integer pageSize) {
+    public ResultPage<ShoppingCartVO> listCart(Integer pageNum, Integer pageSize) {
 
 //        这里 查询购物车的信息，但是商品表只有商品的id，没有，商品名，单价，封面图，这样也就是要按照id多次查询，这？
 //        AI的建议真的善变，业务的标准还是实际就业才行，
@@ -119,8 +119,8 @@ public class ConCartServiceImpl implements ConCartService {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
 
-            PageResult<ShoppingCartVO> result =
-                    mapper.convertValue(cache, new TypeReference<PageResult<ShoppingCartVO>>() {});
+            ResultPage<ShoppingCartVO> result =
+                    mapper.convertValue(cache, new TypeReference<ResultPage<ShoppingCartVO>>() {});
 
             return result;
         }
@@ -129,15 +129,15 @@ public class ConCartServiceImpl implements ConCartService {
         Page<ShoppingCartVO> pageParam = new Page<>(pageNum,pageSize);
         IPage<ShoppingCartVO> result = conCartMapper.pageCartVO(pageParam,userId);
 
-        PageResult<ShoppingCartVO> pageResult = PageResult.create(result);
+        ResultPage<ShoppingCartVO> resultPage = ResultPage.create(result);
 
 //        写入Redis
 
-        redisTemplate.opsForValue().set(key,pageResult,CART_TIME_OUT, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(key, resultPage,CART_TIME_OUT, TimeUnit.MINUTES);
 
 //        这里使用的是mybatis的wrapper 用法，前提：1.是要有数据库表对应的实体类DO/Entity，
 //        失败，wrapper 是用再单表查询中的，
 //        对于这种多表查询，就得用手写，
-        return pageResult;
+        return resultPage;
     }
 }

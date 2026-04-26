@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import xyz.nanian.owl.pitaya.consumer.mapper.ProductMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
-import xyz.nanian.owl.pitaya.vo.CategoryVO;
-import xyz.nanian.owl.pitaya.vo.ProductDetailVO;
+import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
 
 import java.util.List;
 

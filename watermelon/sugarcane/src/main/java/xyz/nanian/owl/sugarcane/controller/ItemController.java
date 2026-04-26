@@ -2,11 +2,13 @@ package xyz.nanian.owl.sugarcane.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.result.PageResult;
-import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.sugarcane.domain.dto.ItemDTO;
+import xyz.nanian.owl.result.ResultPage;
+import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
+import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroListVO;
 import xyz.nanian.owl.sugarcane.domain.vo.ItemVO;
+import xyz.nanian.owl.sugarcane.service.ItemService;
 
 import java.util.List;
 
@@ -20,13 +22,19 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/item")
+@Tag(name = "被定价物品管理")
+@RequiredArgsConstructor
 public class ItemController {
 
-    // 分页查询
-//    @PostMapping("/page")
-//    public PageResult<ItemVO> page(@RequestBody ItemQueryDTO dto){
-//        return null;
-//    }
+    private final ItemService itemService;
+
+//     分页查询
+    @PostMapping("/page")
+    @Operation(summary = "所查物品列表")
+    public ResultPage<ItemIntroListVO> page(@RequestBody ItemIntroDTO dto){
+
+        return ResultPage.create(itemService.getItemIntroList(dto));
+    }
 
     // 创建
 //    @PostMapping

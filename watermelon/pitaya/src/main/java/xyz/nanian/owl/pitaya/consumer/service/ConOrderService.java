@@ -2,12 +2,9 @@ package xyz.nanian.owl.pitaya.consumer.service;
 
 
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
-import xyz.nanian.owl.pitaya.query.OrderQuery;
-import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.vo.OrderListVO;
-import xyz.nanian.owl.result.PageResult;
-
-import java.util.List;
+import xyz.nanian.owl.result.ResultPage;
 
 /**
  * 消费者订单Service
@@ -46,5 +43,5 @@ public interface ConOrderService {
      * @param pageSize
      * @return
      */
-    PageResult<OrderListVO> listOrders(Integer pageNum,Integer pageSize);
+    ResultPage<OrderListVO> listOrders(Integer pageNum, Integer pageSize);
 }

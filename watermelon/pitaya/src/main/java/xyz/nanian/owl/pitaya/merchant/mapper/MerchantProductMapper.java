@@ -3,8 +3,8 @@ package xyz.nanian.owl.pitaya.merchant.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.nanian.owl.pitaya.entity.ProductDO;
-import xyz.nanian.owl.pitaya.entity.ProductImageDO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductDO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductImageDO;
 
 import java.util.List;
 

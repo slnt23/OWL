@@ -44,7 +44,7 @@
         delete from cart_item
         where user_id= #{userId} and product_id = #{productId}
     </delete>
-    <select id="pageCartVO" resultType="xyz.nanian.owl.pitaya.vo.ShoppingCartVO">
+    <select id="pageCartVO" resultType="xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO">
         SELECT
             ci.id            AS cartId,
             ci.product_id    AS productId,

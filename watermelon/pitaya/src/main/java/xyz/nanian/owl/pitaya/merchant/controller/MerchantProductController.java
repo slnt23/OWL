@@ -5,8 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.pitaya.dto.ProductDTO;
-import xyz.nanian.owl.pitaya.merchant.product.ProductApi;
+import xyz.nanian.owl.pitaya.domain.dto.ProductDTO;
 import xyz.nanian.owl.pitaya.merchant.service.MerchantProductService;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.result.ResultStatus;
@@ -21,7 +20,7 @@ import xyz.nanian.owl.result.ResultStatus;
 @RestController
 @RequestMapping("/pitaya/product/merchant")
 @Tag(name = "商家商品管理",description = "商家商品")
-public class MerchantProductController implements ProductApi {
+public class MerchantProductController {
 
     MerchantProductService merchantProductService;
 
@@ -34,7 +33,6 @@ public class MerchantProductController implements ProductApi {
      * @param productDTO DTO
      * @return
      */
-    @Override
     @PostMapping("/products")
     @Operation(summary = "新增商品")
     public Result<ResultStatus> addProduct(@RequestBody @Validated ProductDTO productDTO) {
@@ -51,7 +49,6 @@ public class MerchantProductController implements ProductApi {
      * @param productDTO DTO
      * @return
      */
-    @Override
     @PutMapping("/products/modify")
     @Operation(summary = "更新商品")
     public Result<ResultStatus> updateProduct(@RequestBody @Validated ProductDTO productDTO) {
@@ -68,7 +65,6 @@ public class MerchantProductController implements ProductApi {
      * @param productId id
      * @return
      */
-    @Override
     @Operation(summary = "删除商品",description = "通过商品ID删除商品")
     @DeleteMapping("/products/{productId}")
     public Result<ResultStatus> deleteProduct(@PathVariable Long productId) {
@@ -86,7 +82,6 @@ public class MerchantProductController implements ProductApi {
      * @param productStatus status
      * @return
      */
-    @Override
     @Operation(summary = "上下架更新",description = "更新上下架状态")
     @PutMapping("/products/{productId}/status")
     public Result<ResultStatus> updateProductStatus(@PathVariable Long productId,@RequestParam Integer productStatus) {

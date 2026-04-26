@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.nanian.owl.pitaya.entity.OrderDO;
-import xyz.nanian.owl.pitaya.entity.OrderDetailDO;
-import xyz.nanian.owl.pitaya.entity.UserAddressDO;
-import xyz.nanian.owl.pitaya.query.AddressQuery;
-import xyz.nanian.owl.pitaya.query.OrderQuery;
+import xyz.nanian.owl.pitaya.domain.entity.OrderDO;
+import xyz.nanian.owl.pitaya.domain.entity.OrderDetailDO;
+import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;
+import xyz.nanian.owl.pitaya.domain.query.AddressQuery;
+import xyz.nanian.owl.pitaya.domain.query.OrderDTO;
 import xyz.nanian.owl.pitaya.vo.OrderListVO;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public interface ConOrderMapper {
      * @param orderQuery
      * @return
      */
-    OrderDO selectOrder(OrderQuery orderQuery);
+    OrderDO selectOrder(OrderDTO orderQuery);
 
     /**
      * 查询地址

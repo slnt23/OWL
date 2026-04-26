@@ -1,12 +1,10 @@
 package xyz.nanian.owl.pitaya.consumer.service;
 
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import xyz.nanian.owl.pitaya.query.ProductQuery;
-import xyz.nanian.owl.pitaya.vo.CategoryVO;
-import xyz.nanian.owl.pitaya.vo.ProductDetailVO;
-import xyz.nanian.owl.pitaya.vo.ProductVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductVO;
+import xyz.nanian.owl.result.ResultPage;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ public interface ProductService {
      * @param productName 商品名，
      * @return 商品信息，
      */
-    PageResult<ProductVO> listProduct(String productName,Integer pageNum,Integer pageSize);
+    ResultPage<ProductVO> listProduct(String productName, Integer pageNum, Integer pageSize);
 
     /**
      * 商品分类

@@ -4,12 +4,12 @@ package xyz.nanian.owl.pitaya.mapstruct;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import xyz.nanian.owl.pitaya.dto.OrderDTO;
-import xyz.nanian.owl.pitaya.entity.OrderDO;
-import xyz.nanian.owl.pitaya.entity.OrderDetailDO;
-import xyz.nanian.owl.pitaya.entity.UserAddressDO;
-import xyz.nanian.owl.pitaya.vo.AddressVO;
-import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
-import xyz.nanian.owl.pitaya.vo.OrderItemVO;
+import xyz.nanian.owl.pitaya.domain.entity.OrderDO;
+import xyz.nanian.owl.pitaya.domain.entity.OrderDetailDO;
+import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;
+import xyz.nanian.owl.pitaya.domain.vo.AddressVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderItemVO;
 
 import java.util.List;
 

@@ -5,10 +5,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.result.ResultStatus;
-import xyz.nanian.owl.pitaya.merchant.order.OrderApi;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
 import xyz.nanian.owl.pitaya.vo.OrderListVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.result.Result;
 
 /**
@@ -21,7 +20,7 @@ import xyz.nanian.owl.result.Result;
 @RestController
 @Tag(name ="商家订单管理",description = "商家订单")
 @RequestMapping("/pitaya/order/merchant")
-public class MerOrderController implements OrderApi {
+public class MerOrderController {
 
     private MerOrderService merOrderService;
 
@@ -36,10 +35,9 @@ public class MerOrderController implements OrderApi {
      * @param userId
      * @return
      */
-    @Override
     @GetMapping("/orders")
     @Operation(summary = "订单列表",description = "商家搜查指定用户的订单列表")
-    public Result<PageResult<OrderListVO>> queryOrders(Integer pageNum,Integer pageSize,Long userId) {
+    public Result<ResultPage<OrderListVO>> queryOrders(Integer pageNum, Integer pageSize, Long userId) {
 
         return Result.success(merOrderService.listOrders(pageNum,pageSize,userId));
     }
@@ -50,7 +48,6 @@ public class MerOrderController implements OrderApi {
      * @param orderStatus
      * @return
      */
-    @Override
     @PutMapping()
     @Operation(summary = "更新订单状态",description = "订单状态：0=待支付，1=待发货，2=待收货，3=已完成，4=取消")
     public Result<ResultStatus> updateOrderStatus(@RequestParam Long orderId,

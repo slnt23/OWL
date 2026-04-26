@@ -2,7 +2,7 @@ package xyz.nanian.owl.pitaya.merchant.service;
 
 
 import xyz.nanian.owl.pitaya.vo.OrderListVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.result.ResultPage;
 
 /**
  * 商家订单Service
@@ -28,5 +28,5 @@ public interface MerOrderService {
      * @param searchedUserId
      * @return
      */
-    PageResult<OrderListVO> listOrders(Integer pageNum,Integer pageSize,Long searchedUserId);
+    ResultPage<OrderListVO> listOrders(Integer pageNum, Integer pageSize, Long searchedUserId);
 }

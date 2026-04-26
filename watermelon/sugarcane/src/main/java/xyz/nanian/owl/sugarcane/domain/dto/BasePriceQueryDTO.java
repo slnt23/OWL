@@ -18,7 +18,6 @@ import java.util.List;
 public abstract class BasePriceQueryDTO {
 
     // ==================== 物品相关 ====================
-
     /** 单个物品ID */
     @Positive(message = "物品ID必须为正整数")
     private Long itemId;
@@ -30,10 +29,7 @@ public abstract class BasePriceQueryDTO {
     /** 多个物品ID */
     @Size(max = 100, message = "单次查询的物品ID数量不能超过100个")
     private List<Long> itemIds;
-
-
     // ==================== 地点相关 ====================
-
     /** 单个地点ID */
     @Positive(message = "地点ID必须为正整数")
     private Long locationId;
@@ -41,10 +37,7 @@ public abstract class BasePriceQueryDTO {
     /** 多个地点ID */
     @Size(max = 50, message = "单次查询的地点ID数量不能超过50个")
     private List<Long> locationIds;
-
-
     // ==================== 来源相关 ====================
-
     /** 价格来源ID列表 */
     @Size(max = 20, message = "单次查询的价格来源数量不能超过20个")
     private List<Long> sourceIds;
@@ -53,10 +46,7 @@ public abstract class BasePriceQueryDTO {
     @Min(value = 1, message = "可靠等级最小值为1")
     @Max(value = 5, message = "可靠等级最大值为5")
     private Integer minReliability;
-
-
     // ==================== 通用过滤 ====================
-
     /** 币种 */
     @Pattern(regexp = "^(CNY|USD|EUR|JPY|GBP|HKD)$",
             message = "币种仅支持CNY、USD、EUR、JPY、GBP、HKD")

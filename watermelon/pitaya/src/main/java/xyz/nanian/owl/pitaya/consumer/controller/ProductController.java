@@ -6,12 +6,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.log.logging.BizLog;
-import xyz.nanian.owl.pitaya.consumer.product.ProductApi;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
-import xyz.nanian.owl.pitaya.vo.CategoryVO;
-import xyz.nanian.owl.pitaya.vo.ProductDetailVO;
-import xyz.nanian.owl.pitaya.vo.ProductVO;
-import xyz.nanian.owl.result.PageResult;
+import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductVO;
+import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.result.Result;
 
 import java.util.List;
@@ -28,7 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/pitaya/product/consumer")
 @Tag(name = "消费者商品管理",description = "有关商品的的接口")
-public class ProductController implements ProductApi{
+public class ProductController{
 
     private final ProductService productService;
 
@@ -43,17 +42,16 @@ public class ProductController implements ProductApi{
      * @param productName 商品名信息
      * @return 分页及json结果
      */
-    @Override
     @GetMapping("/products")
     @Operation(summary = "商品列表",description = "不区分商户，分页查询")
-    public Result<PageResult<ProductVO>> queryProduct( @RequestParam String productName,
-                                                       @RequestParam Integer pageNum,
-                                                       @RequestParam Integer pageSize) {
+    public Result<ResultPage<ProductVO>> queryProduct(@RequestParam String productName,
+                                                      @RequestParam Integer pageNum,
+                                                      @RequestParam Integer pageSize) {
 
 //        这里缺少对商品的检验，但是标准没有指定，暂时搁置
 
 //        log.info("开始查询商品信息");
-        PageResult<ProductVO> result =productService.listProduct(productName,pageNum,pageSize);
+        ResultPage<ProductVO> result =productService.listProduct(productName,pageNum,pageSize);
 
         return Result.success(result);
     }
@@ -63,7 +61,6 @@ public class ProductController implements ProductApi{
      * 商品分类
      * @return json商品分类数据
      */
-    @Override
     @Operation(summary = "商品分类",description = "商品的类别")
     @GetMapping("/category")
     public Result<List<CategoryVO>> queryCategory() {
@@ -73,7 +70,6 @@ public class ProductController implements ProductApi{
         return Result.success(category);
     }
 
-    @Override
     @GetMapping("/detail")
     @Operation(summary= "商品详情",description = "单个商品的详细信息")
     @BizLog(module = "商品详情",action = "查询商品详情")

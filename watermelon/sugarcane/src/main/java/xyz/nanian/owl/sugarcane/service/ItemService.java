@@ -1,7 +1,10 @@
 package xyz.nanian.owl.sugarcane.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
 import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroListVO;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ItemService extends IService<ItemDO> {
 
+    IPage<ItemIntroListVO> getItemIntroList(ItemIntroDTO itemIntroDTO);
 }
