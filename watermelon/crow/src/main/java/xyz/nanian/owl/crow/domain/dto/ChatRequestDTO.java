@@ -17,13 +17,6 @@ import lombok.Data;
 @Schema(name = "发送消息DTO")
 public class ChatRequestDTO {
     
-//      这个应该从登录状态获取，
-//    /**
-//     * 用户账号，
-//     */
-//    @NotBlank
-//    String UserCode;
-
     /**
      * 会话ID
      */

@@ -3,3 +3,4 @@
 ## 设计目标
 
 - 预计作为 AI 模块开展
+- 后期引入LangChain 开发agent 

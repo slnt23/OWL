@@ -18,6 +18,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ItemMapper extends BaseMapper<ItemDO> {
 
-    IPage<ItemDO> selectPageItems(Page<ItemDO> page,@Param("itemName") String itemName);
+    IPage<ItemDO> selectPageItems(Page<?> page,@Param("itemName") String itemName);
 
 }

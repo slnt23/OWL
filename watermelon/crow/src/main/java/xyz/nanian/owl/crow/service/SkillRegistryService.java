@@ -1,4 +1,4 @@
-package xyz.nanian.owl.crow.util;
+package xyz.nanian.owl.crow.service;
 
 
 import xyz.nanian.owl.crow.domain.pojo.SkillMetadata;
@@ -12,7 +12,7 @@ import java.util.List;
  * @since 2026/4/25
  */
 
-public interface SkillRegistry {
+public interface SkillRegistryService {
     SkillMetadata get(String skillName);        // 获取某个 Skill 的完整元数据和内容
     List<SkillMetadata> listAll();             // 列出所有 Skill 的轻量级元数据
 }

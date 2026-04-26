@@ -15,7 +15,14 @@ import java.time.LocalDateTime;
 
 @Data
 public class PriceTrendPointVO {
+    /**
+     * 时间点，表示该价格数据的采集或聚合时间
+     */
     private LocalDateTime time;
+
+    /**
+     * 该时间点对应的价格金额
+     */
     private BigDecimal price;
 }
 

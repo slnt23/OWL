@@ -1,7 +1,9 @@
 package xyz.nanian.owl.sugarcane.service;
 
+import xyz.nanian.owl.sugarcane.domain.dto.PriceLatestQueryDTO;
 import xyz.nanian.owl.sugarcane.domain.entity.RecordDO;
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.nanian.owl.sugarcane.domain.vo.PriceLatestVO;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RecordService extends IService<RecordDO> {
 
+    PriceLatestVO queryLatest(PriceLatestQueryDTO dto);
 }

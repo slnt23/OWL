@@ -5,8 +5,8 @@ import io.minio.MinioClient;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import xyz.nanian.owl.crow.util.SkillRegistry;
-import xyz.nanian.owl.crow.util.impl.MinioSkillRegistry;
+import xyz.nanian.owl.crow.service.SkillRegistryService;
+import xyz.nanian.owl.crow.service.impl.MinioSkillRegistryService;
 
 /**
  * 有关AI的
@@ -45,8 +45,8 @@ public class AiConfig {
     }
 
     @Bean
-    public SkillRegistry skillRegistry(MinioClient minioClient) {
-        return new MinioSkillRegistry(minioClient);
+    public SkillRegistryService skillRegistry(MinioClient minioClient) {
+        return new MinioSkillRegistryService(minioClient);
     }
 
 

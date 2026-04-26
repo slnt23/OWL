@@ -16,8 +16,14 @@ import java.util.List;
 @Data
 public class PriceCompareVO {
 
+    /**
+     * 物品基本信息（物品名称、编码等）
+     */
     private PriceItemVO item;
 
+    /**
+     * 各地区价格列表，每个元素包含地区名称和对应价格
+     */
     private List<LocationPriceVO> prices;
 }
 

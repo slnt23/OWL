@@ -32,9 +32,9 @@ public class MybatisPlusConfig {
         return interceptor;
     }
 
-    /**
-     * 配置 SqlSessionFactory，并设置下划线转驼峰映射
-     */
+//    /**
+//     * 配置 SqlSessionFactory，并设置下划线转驼峰映射
+//     */
 //    @Bean
 //    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource,
 //                                                                     MybatisPlusInterceptor mybatisPlusInterceptor) {

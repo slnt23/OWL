@@ -14,11 +14,11 @@ import java.util.Map;
 
 @Data
 public class SkillMetadata {
+    private String id;
     private String name;
     private String description;
     private String version;
-    private String promptTemplate;
-    private Map<String, Object> parameters;
-
-    // getter/setter
+    private String template;   //  prompt 模板内容，
+    private String ossPath;  // OSS文件路径
+    private Map<String, Object> parameters;  //  其他参数
 }

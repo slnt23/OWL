@@ -11,7 +11,18 @@ import java.util.List;
  */
 
 public class CategoryTreeVO {
-    Long id;
-    String name;
-    List<CategoryTreeVO> children;
+    /**
+     * 分类节点ID
+     */
+    private Long id;
+
+    /**
+     * 分类节点名称
+     */
+    private String name;
+
+    /**
+     * 子分类列表，为空表示该节点为叶子节点
+     */
+    private List<CategoryTreeVO> children;
 }

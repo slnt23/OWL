@@ -2,6 +2,7 @@ package xyz.nanian.owl.sugarcane.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import xyz.nanian.owl.sugarcane.domain.vo.PriceCompareVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceLatestVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceTrendVO;
 import xyz.nanian.owl.sugarcane.domain.vo.SourceCompareVO;
+import xyz.nanian.owl.sugarcane.service.RecordService;
 
 import java.util.List;
 
@@ -26,14 +28,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/price")
 @Tag(name = "价格查询")
+@RequiredArgsConstructor
 public class RecordController {
+
+    final RecordService recordService;
 
     /**
      * 1. 查询最新价格
      */
     @PostMapping("/latest")
     @Operation(summary = "查询最新价格")
-    public Result<List<PriceLatestVO>> latest(@RequestBody PriceLatestQueryDTO dto) {
+    public Result<PriceLatestVO> latest(@RequestBody PriceLatestQueryDTO dto) {
 //        return priceService.queryLatest(dto);
         return null;
     }

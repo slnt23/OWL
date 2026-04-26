@@ -1,10 +1,10 @@
-package xyz.nanian.owl.crow.util.impl;
+package xyz.nanian.owl.crow.service.impl;
 
 
 import io.minio.MinioClient;
 import org.springframework.stereotype.Component;
 import xyz.nanian.owl.crow.domain.pojo.SkillMetadata;
-import xyz.nanian.owl.crow.util.SkillRegistry;
+import xyz.nanian.owl.crow.service.SkillRegistryService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +18,12 @@ import java.util.Map;
  */
 
 @Component
-public class MinioSkillRegistry implements SkillRegistry {
+public class MinioSkillRegistryService implements SkillRegistryService {
 
     private final MinioClient minioClient; // OSS 客户端
     private final Map<String, SkillMetadata> cache = new HashMap<>();
 
-    public MinioSkillRegistry(MinioClient minioClient) {
+    public MinioSkillRegistryService(MinioClient minioClient) {
         this.minioClient = minioClient;
     }
 
@@ -55,7 +55,7 @@ public class MinioSkillRegistry implements SkillRegistry {
         SkillMetadata metadata = new SkillMetadata();
         metadata.setName(skillName);
         metadata.setDescription("从 OSS 加载的 Skill");
-        metadata.setPromptTemplate("...模板内容...");
+        metadata.setTemplate("...模板内容...");
         return metadata;
     }
 

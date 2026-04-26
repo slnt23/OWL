@@ -17,7 +17,13 @@ import lombok.EqualsAndHashCode;
 public class PriceLatestQueryDTO extends BasePriceQueryDTO {
 
     // 是否只取每个维度最新一条
+//    @NotNull
+//    private Boolean latestOnly = true;
+
+    /**
+     * 物品Id
+     */
     @NotNull
-    private Boolean latestOnly = true;
+    Long ItemId;
 
 }
