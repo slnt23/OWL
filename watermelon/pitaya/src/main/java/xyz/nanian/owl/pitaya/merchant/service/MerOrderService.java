@@ -1,7 +1,7 @@
 package xyz.nanian.owl.pitaya.merchant.service;
 
 
-import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 import xyz.nanian.owl.result.ResultPage;
 
 /**

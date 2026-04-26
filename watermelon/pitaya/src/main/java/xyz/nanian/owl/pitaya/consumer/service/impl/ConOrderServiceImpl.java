@@ -21,7 +21,7 @@ import xyz.nanian.owl.pitaya.domain.query.OrderDTO;
 import xyz.nanian.owl.pitaya.domain.vo.AddressVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderItemVO;
-import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
@@ -66,7 +66,7 @@ public class ConOrderServiceImpl implements ConOrderService {
      */
     @Override
     @BizLog(module = "订单",action = "新增订单")
-    public Boolean saveOrder(xyz.nanian.owl.pitaya.dto.OrderDTO orderDTO) {
+    public Boolean saveOrder(xyz.nanian.owl.pitaya.domain.dto.OrderDTO orderDTO) {
 
 //        对于不同的来源是怎么处理？
         Long arId = orderDTO.getAddressId();

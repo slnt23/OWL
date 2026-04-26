@@ -10,7 +10,7 @@ import xyz.nanian.owl.pitaya.domain.entity.OrderDetailDO;
 import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;
 import xyz.nanian.owl.pitaya.domain.query.AddressQuery;
 import xyz.nanian.owl.pitaya.domain.query.OrderDTO;
-import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 
 import java.util.List;
 

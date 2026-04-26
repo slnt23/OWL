@@ -1,45 +1,45 @@
-package xyz.nanian.owl.pitaya.plan;
-
-
-import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
-import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
-import xyz.nanian.owl.pitaya.domain.vo.ProductVO;
-import xyz.nanian.owl.result.ResultPage;
-import xyz.nanian.owl.result.Result;
-
-import java.util.List;
-
-/**
- * 消费者商品模块
- *
- * @author slnt23
- * @since 2025/11/10
- */
-
-public interface ProductApi {
-
-
-    /**
-     * 商品列表，通过商品名查询，可模糊搜索，分页查询，
-     * @param productName 商品名
-     * @return 商品信息
-     */
-    Result<ResultPage<ProductVO>> queryProduct(String productName,
-                                               Integer pageNum,
-                                               Integer pageSize);
-
-    /**
-     * 查询商品分类，类似拼多多首页多级分类，
-     * @return 分页包装的分类结构
-     */
-    Result<List<CategoryVO>> queryCategory();
-
-    /**
-     * 商品详情，
-     * @return 商品信息
-     */
-    Result<ProductDetailVO> queryProductDetail(Integer productId);
-
+//package xyz.nanian.owl.pitaya.plan;
+//
+//
+//import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
+//import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
+//import xyz.nanian.owl.pitaya.domain.vo.ProductVO;
+//import xyz.nanian.owl.result.ResultPage;
+//import xyz.nanian.owl.result.Result;
+//
+//import java.util.List;
+//
+///**
+// * 消费者商品模块
+// *
+// * @author slnt23
+// * @since 2025/11/10
+// */
+//
+//public interface ProductApi {
+//
+//
+//    /**
+//     * 商品列表，通过商品名查询，可模糊搜索，分页查询，
+//     * @param productName 商品名
+//     * @return 商品信息
+//     */
+//    Result<ResultPage<ProductVO>> queryProduct(String productName,
+//                                               Integer pageNum,
+//                                               Integer pageSize);
+//
+//    /**
+//     * 查询商品分类，类似拼多多首页多级分类，
+//     * @return 分页包装的分类结构
+//     */
+//    Result<List<CategoryVO>> queryCategory();
+//
+//    /**
+//     * 商品详情，
+//     * @return 商品信息
+//     */
+//    Result<ProductDetailVO> queryProductDetail(Integer productId);
+//
 //    /**
 //     * 商品搜索, 搜索指定商品，但是名字相似注定返回多个，所以list<> 但已实现，可搁置
 //     * @param productName 商品名
@@ -88,4 +88,4 @@ public interface ProductApi {
 //     */
 //    Result<PageResult<ProductVO>> queryProduct(String sellerId);
 
-}
+//}

@@ -3,7 +3,7 @@ package xyz.nanian.owl.pitaya.mapstruct;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import xyz.nanian.owl.pitaya.dto.OrderDTO;
+import xyz.nanian.owl.pitaya.domain.dto.OrderDTO;
 import xyz.nanian.owl.pitaya.domain.entity.OrderDO;
 import xyz.nanian.owl.pitaya.domain.entity.OrderDetailDO;
 import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;

@@ -1,7 +1,6 @@
 package xyz.nanian.owl.sugarcane.controller;
 
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.pitaya.vo.CategoryVO;
 import xyz.nanian.owl.sugarcane.domain.vo.CategoryTreeVO;
 
 import java.util.List;
@@ -38,9 +37,9 @@ public class CategoryController {
     public void delete(@PathVariable Long id){};
 
     // 获取单个分类
-    @GetMapping("/{id}")
-    public CategoryVO getById(@PathVariable Long id){
-        return null;
-    }
+//    @GetMapping("/{id}")
+//    public CategoryVO getById(@PathVariable Long id){
+//        return null;
+//    }
 }
 

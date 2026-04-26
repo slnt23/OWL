@@ -6,9 +6,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.pitaya.consumer.service.ConOrderService;
-import xyz.nanian.owl.pitaya.dto.OrderDTO;
+import xyz.nanian.owl.pitaya.domain.dto.OrderDTO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
-import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.result.Result;
 

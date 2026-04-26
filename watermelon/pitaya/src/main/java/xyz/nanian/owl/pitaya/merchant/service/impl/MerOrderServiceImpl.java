@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerOrderMapper;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
-import xyz.nanian.owl.pitaya.vo.OrderListVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 import xyz.nanian.owl.result.ResultPage;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
