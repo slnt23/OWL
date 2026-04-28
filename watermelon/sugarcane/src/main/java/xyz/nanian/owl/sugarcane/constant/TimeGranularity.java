@@ -13,5 +13,4 @@ public enum TimeGranularity {
     DAY,
     WEEK,
     MONTH
-
 }

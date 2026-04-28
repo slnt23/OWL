@@ -21,11 +21,11 @@ public class PriceTrendQueryDTO extends BasePriceQueryDTO {
 
     @NotNull
     private LocalDateTime startTime;
+
     @NotNull
     private LocalDateTime endTime;
 
     // 聚合粒度
     @NotNull
     private TimeGranularity granularity;
-
 }

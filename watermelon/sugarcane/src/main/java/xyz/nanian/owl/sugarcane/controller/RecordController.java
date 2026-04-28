@@ -39,8 +39,7 @@ public class RecordController {
     @PostMapping("/latest")
     @Operation(summary = "查询最新价格")
     public Result<PriceLatestVO> latest(@RequestBody PriceLatestQueryDTO dto) {
-//        return priceService.queryLatest(dto);
-        return null;
+        return Result.success(recordService.queryLatest(dto));
     }
 
     /**
@@ -48,10 +47,8 @@ public class RecordController {
      */
     @PostMapping("/trend")
     @Operation(summary = "查询趋势")
-    public Result<PriceTrendVO> trend(
-            @RequestBody PriceTrendQueryDTO dto) {
-//        return priceService.queryTrend(dto);
-        return null;
+    public Result<List<PriceTrendVO>> trend(@RequestBody PriceTrendQueryDTO dto) {
+        return Result.success(recordService.queryTrend(dto));
     }
 
     /**
@@ -59,10 +56,8 @@ public class RecordController {
      */
     @PostMapping("/compare/location")
     @Operation(summary = "多地区对比")
-    public Result<PriceCompareVO> compareLocation(
-            @RequestBody PriceCompareLocationDTO dto) {
-//        return priceService.compareLocation(dto);
-        return null;
+    public Result<PriceCompareVO> compareLocation(@RequestBody PriceCompareLocationDTO dto) {
+        return Result.success(recordService.compareLocation(dto));
     }
 
     /**
@@ -70,10 +65,8 @@ public class RecordController {
      */
     @PostMapping("/compare/source")
     @Operation(summary = "多来源对比")
-    public Result<List<SourceCompareVO>> compareSource(
-            @RequestBody PriceCompareSourceDTO dto) {
-//        return priceService.compareSource(dto);
-        return null;
+    public Result<List<SourceCompareVO>> compareSource(@RequestBody PriceCompareSourceDTO dto) {
+        return Result.success(recordService.compareSource(dto));
     }
 
     /**
@@ -81,8 +74,7 @@ public class RecordController {
      */
 //    @PostMapping("/page")
 //    @Operation(summary = "原始记录分页")
-//    public PageResult<PriceRecordVO> page(
-//            @RequestBody PricePageQueryDTO dto) {
+//    public PageResult<PriceRecordVO> page(@RequestBody PricePageQueryDTO dto) {
 //        return priceService.pageQuery(dto);
 //    }
 
@@ -91,9 +83,8 @@ public class RecordController {
      * 可以设计成爬虫的开关，
      */
     @PostMapping
-    @Operation(summary = "写入价格数据",description = "可以作为后台爬虫的开关")
-    public void create(
-            @RequestBody PriceRecordCreateDTO dto) {
+    @Operation(summary = "写入价格数据", description = "可以作为后台爬虫的开关")
+    public void create(@RequestBody PriceRecordCreateDTO dto) {
 //        priceService.create(dto);
 //        return null;
     }

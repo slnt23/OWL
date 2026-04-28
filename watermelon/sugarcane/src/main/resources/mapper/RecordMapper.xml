@@ -2,5 +2,167 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="xyz.nanian.owl.sugarcane.mapper.RecordMapper">
 
+    <select id="selectLatest" resultType="xyz.nanian.owl.sugarcane.domain.vo.PriceLatestVO">
+        SELECT
+            pi.id AS item_id,
+            pi.item_name,
+            pi.unit,
+            pi.specification,
+            pc.category_name,
+            gl.location_name,
+            pr.price,
+            pr.currency,
+            pr.price_unit,
+            ps.source_name,
+            ps.reliability_level,
+            pr.effective_time,
+            pr.confidence
+        FROM price_record pr
+                 INNER JOIN price_item pi ON pr.item_id = pi.id
+                 INNER JOIN price_category pc ON pi.category_id = pc.id
+                 INNER JOIN geo_location gl ON pr.location_id = gl.id
+                 INNER JOIN price_source ps ON pr.source_id = ps.id
+                 INNER JOIN (
+            -- 找到每个物品+地点的最新价格记录ID
+            SELECT
+                item_id,
+                location_id,
+                MAX(effective_time) AS max_effective_time
+            FROM price_record
+            WHERE item_id = #{item_id}   -- 这里传入你要查询的物品ID
+            GROUP BY item_id, location_id
+        ) latest ON pr.item_id = latest.item_id
+            AND pr.location_id = latest.location_id
+            AND pr.effective_time = latest.max_effective_time
+        WHERE pi.id = #{item_id}  -- 同样限制物品ID
+        ORDER BY gl.id;
+    </select>
 
+    <select id="selectTrend" resultType="xyz.nanian.owl.sugarcane.domain.vo.PriceTrendVO">
+        SELECT
+            pi.id AS item_id,
+            pi.item_name,
+            pi.unit,
+            pi.specification,
+            pc.category_name,
+            gl.location_name,
+            DATE(pr.effective_time) AS time,  -- 聚合粒度为天，可改为周/月
+            AVG(pr.price) AS price  -- 同一时间点多条价格取平均，可改为 MAX/MIN
+        FROM price_record pr
+                 INNER JOIN price_item pi ON pr.item_id = pi.id
+                 INNER JOIN price_category pc ON pi.category_id = pc.id
+                 INNER JOIN geo_location gl ON pr.location_id = gl.id
+                 INNER JOIN price_source ps ON pr.source_id = ps.id
+        WHERE 1=1
+          -- 物品筛选
+          AND (pi.id = :itemId OR pi.id IN (:itemIds) OR pi.item_code = :itemCode)
+          -- 地点筛选
+          AND (gl.id = :locationId OR gl.id IN (:locationIds))
+          -- 来源筛选
+          AND (pr.source_id IN (:sourceIds))
+          -- 最小可靠等级
+          AND (ps.reliability_level >= :minReliability)
+          -- 币种
+          AND (:currency IS NULL OR pr.currency = :currency)
+          -- 最小可信度
+          AND (:minConfidence IS NULL OR pr.confidence >= :minConfidence)
+          -- 时间范围
+          AND pr.effective_time BETWEEN :startTime AND :endTime
+        GROUP BY pi.id, gl.id, DATE(pr.effective_time)
+        ORDER BY pi.id, gl.id, DATE(pr.effective_time);
+    </select>
+
+    <select id="selectLocationPrices" resultType="xyz.nanian.owl.sugarcane.domain.vo.LocationPriceVO">
+        SELECT
+        gl.location_name AS locationName,
+        pr.price
+        FROM price_record pr
+        INNER JOIN geo_location gl ON pr.location_id = gl.id
+        INNER JOIN price_source ps ON pr.source_id = ps.id
+        WHERE 1=1
+        <!-- 物品过滤 -->
+        <if test="dto.itemId != null">
+            AND pr.item_id = #{dto.itemId}
+        </if>
+        <if test="dto.itemCode != null">
+            AND pr.item_id = (SELECT id FROM price_item WHERE item_code = #{dto.itemCode} LIMIT 1)
+        </if>
+        <!-- 多地区过滤 -->
+        <if test="dto.locationIds != null and dto.locationIds.size() > 0">
+            AND pr.location_id IN
+            <foreach collection="dto.locationIds" item="locId" open="(" separator="," close=")">
+                #{locId}
+            </foreach>
+        </if>
+        <!-- 来源过滤 -->
+        <if test="dto.sourceIds != null and dto.sourceIds.size() > 0">
+            AND pr.source_id IN
+            <foreach collection="dto.sourceIds" item="sid" open="(" separator="," close=")">
+                #{sid}
+            </foreach>
+        </if>
+        <!-- 可靠等级 -->
+        <if test="dto.minReliability != null">
+            AND ps.reliability_level >= #{dto.minReliability}
+        </if>
+        <!-- 币种过滤 -->
+        <if test="dto.currency != null">
+            AND pr.currency = #{dto.currency}
+        </if>
+        <!-- 可信度 -->
+        <if test="dto.minConfidence != null">
+            AND pr.confidence >= #{dto.minConfidence}
+        </if>
+        <!-- 指定时间：取targetTime对应的价格，如果有多个，取最新记录 -->
+        AND pr.effective_time <= #{dto.targetTime}
+        ORDER BY pr.effective_time DESC
+    </select>
+
+    <select id="selectSourcePrices" resultType="xyz.nanian.owl.sugarcane.domain.vo.SourceCompareVO">
+        SELECT
+        ps.source_name AS sourceName,
+        pr.price,
+        ps.reliability_level AS reliabilityLevel,
+        pr.confidence
+        FROM price_record pr
+        INNER JOIN price_source ps ON pr.source_id = ps.id
+        INNER JOIN price_item pi ON pr.item_id = pi.id
+        WHERE 1=1
+        <!-- 物品过滤 -->
+        <if test="dto.itemId != null">
+            AND pr.item_id = #{dto.itemId}
+        </if>
+        <if test="dto.itemCode != null">
+            AND pr.item_id = (SELECT id FROM price_item WHERE item_code = #{dto.itemCode} LIMIT 1)
+        </if>
+        <!-- 多物品过滤 -->
+        <if test="dto.itemIds != null and dto.itemIds.size() > 0">
+            AND pr.item_id IN
+            <foreach collection="dto.itemIds" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+        <!-- 来源过滤 -->
+        <if test="dto.sourceIds != null and dto.sourceIds.size() > 0">
+            AND pr.source_id IN
+            <foreach collection="dto.sourceIds" item="sid" open="(" separator="," close=")">
+                #{sid}
+            </foreach>
+        </if>
+        <!-- 最小可靠等级 -->
+        <if test="dto.minReliability != null">
+            AND ps.reliability_level >= #{dto.minReliability}
+        </if>
+        <!-- 币种过滤 -->
+        <if test="dto.currency != null">
+            AND pr.currency = #{dto.currency}
+        </if>
+        <!-- 最小可信度 -->
+        <if test="dto.minConfidence != null">
+            AND pr.confidence >= #{dto.minConfidence}
+        </if>
+        <!-- 指定时间：取targetTime对应价格之前最新 -->
+        AND pr.effective_time <= #{dto.targetTime}
+        ORDER BY pr.effective_time DESC
+    </select>
 </mapper>
