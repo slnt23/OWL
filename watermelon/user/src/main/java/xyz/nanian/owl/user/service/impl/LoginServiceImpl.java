@@ -108,22 +108,24 @@ public class LoginServiceImpl implements LoginService {
     public Boolean saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
 
 //        检验验证码是否正确,正确生成用户，错误，返回
-
 //        生成用户信息并注入默认值，
         UserDO userDO = new UserDO();
         String uuid = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now();
-        String password = passwordEncoder.encode(UserConstant.DEFAULT_PASSWORD);
+//        String password = passwordEncoder.encode(UserConstant.DEFAULT_PASSWORD);
 
         userDO.setUserCode(uuid);
         userDO.setUserName(UserConstant.DEFAULT_USER_NAME +uuid);
-//        非明文密码
 //        初始密码都是加密后的的”123456“，后续用户更改密码，也设定加密
-        userDO.setPassword(password);
+//        这里默认密码为空，当登陆时检测密码为空则不可进行密码登录，只能够验证码登录，
+//        userDO.setPassword(password);
+        userDO.setPassword(null);
         userDO.setEmail(emailLoginOrRegisterDTO.getEmail());
         userDO.setAvatar(UserConstant.DEFAULT_AVATAR);
         userDO.setRole(UserConstant.DEFAULT_ROLE);
         userDO.setStatus(UserConstant.DEFAULT_STATUS);
+//        userDO.setNickName();     //昵称
+//        userDO.setRemark();       //备注
         userDO.setCreateTime(now);
 
         userMapper.insert(userDO);
@@ -146,11 +148,11 @@ public class LoginServiceImpl implements LoginService {
                 .opsForValue()
                 .get(key);
 
-//        2. 比对code，然后如果正确，登陆30天
+//        2. 比对code，然后如果正确，登陆1天
         if(!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())){
             throw new LoginException(ResultStatus.FAIL);
         }
-//        删除验证码，放置成为短期密码，无限使用，
+//        删除验证码，防止成为短期密码，无限使用，
         stringRedisTemplate.delete(key);
 
 //        检查用户账号是否封禁，
@@ -182,14 +184,13 @@ public class LoginServiceImpl implements LoginService {
 //        2. 比对，
 //        判断用户
         if(Objects.isNull(userDO)){
-//            throw new LoginException(ExceptionConstant.USER_NOT_EXIST);
             throw new LoginException(ResultStatus.NOT_FOUND);
-        }
-
-//        判断密码
-        if(!passwordEncoder.matches(passwordLoginDTO.getPassword(),userDO.getPassword())){
-            throw new LoginException(ResultStatus.FAIL);
-//            throw new LoginException(ExceptionConstant.PASSWORD_ERROR);
+        }else if(userDO.getStatus() == 0){
+            throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
+        }else if(userDO.getPassword() == null){
+            throw new LoginException(ResultStatus.PASSWORD_NO_REWRITE);
+        }else if(!passwordEncoder.matches(passwordLoginDTO.getPassword(),userDO.getPassword())){
+            throw new LoginException(ResultStatus.PARAMS_INVALID);
         }
 
 //        返回token

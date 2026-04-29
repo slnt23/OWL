@@ -15,7 +15,7 @@ public class UserConstant {
      * 邮箱注册时，用户无需手动设置用户名，自动填充该默认值
      * 后续可在个人中心修改
      */
-    public static final String DEFAULT_USER_NAME = "用户";
+    public static final String DEFAULT_USER_NAME = "默认用户";
 
     /**
      * 新用户默认密码（仅作占位，邮箱注册无需密码，该字段可废弃）

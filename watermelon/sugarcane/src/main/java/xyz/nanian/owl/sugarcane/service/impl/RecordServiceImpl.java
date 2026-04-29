@@ -47,7 +47,6 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, RecordDO> imple
      */
     @Override
     public List<PriceTrendVO> queryTrend(PriceTrendQueryDTO dto) {
-
         return recordMapper.selectTrend(dto);
     }
 
