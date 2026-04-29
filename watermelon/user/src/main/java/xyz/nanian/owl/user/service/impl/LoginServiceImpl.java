@@ -105,8 +105,7 @@ public class LoginServiceImpl implements LoginService {
      * @return
      */
     @Override
-    public Boolean saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
-
+    public String saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
 //        检验验证码是否正确,正确生成用户，错误，返回
 //        生成用户信息并注入默认值，
         UserDO userDO = new UserDO();
@@ -129,7 +128,7 @@ public class LoginServiceImpl implements LoginService {
         userDO.setCreateTime(now);
 
         userMapper.insert(userDO);
-        return true;
+        return getToken(emailLoginOrRegisterDTO.getEmail());
     }
 
     /**

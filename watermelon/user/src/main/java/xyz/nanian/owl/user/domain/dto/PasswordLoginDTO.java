@@ -35,6 +35,6 @@ public class PasswordLoginDTO {
     /**
      * 角色
      */
-    @Schema(description = "角色",example = "0=用户，1=商家，10086=管理员")
+    @Schema(description = "0=用户，1=商家，10086=管理员",example = "0")
     private Integer role;
 }

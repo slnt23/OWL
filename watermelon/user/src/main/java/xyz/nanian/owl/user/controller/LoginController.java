@@ -40,14 +40,15 @@ public class LoginController {
      */
     @PostMapping("/register")
     @Operation(summary = "提交注册申请",description = "用户注册")
-    public Result<ResultStatus> registerUser(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
-
+    public Result<String> registerUser(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
 //        校验验证码，然后，生成用户，
-        if(loginService.saveUser(user)){
-            return Result.success();
-        }else{
-            return Result.fail();
-        }
+//        if(loginService.saveUser(user)){
+//            return Result.success();
+//        }else{
+//            return Result.fail();
+//        }
+//        还可以改为直接，注册后返回token，提升用户体验，
+        return Result.success(loginService.saveUser(user));
     }
 
     /**
@@ -60,7 +61,6 @@ public class LoginController {
     @PostMapping("/send-verification")
     @Operation(summary = "验证码发送",description = "用于发送验证邮件")
     public Result<String> sendVerificationCode(@RequestBody @Validated SendCodeDTO codeDTO) {
-
         return loginService.sendVerificationCode(codeDTO);
     }
 
@@ -73,7 +73,6 @@ public class LoginController {
     @PostMapping("/login-email")
     @Operation(summary = "登陆-验证码",description = "通过验证码登陆")
     public Result<String> loginVerifyEmail(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
-
         return Result.success(loginService.login(user));
     }
 
@@ -85,7 +84,6 @@ public class LoginController {
     @PostMapping("/login-password")
     @Operation(summary = "登陆-密码",description = "通过密码登陆")
     public Result<String> loginVerifyPassword(@RequestBody @Validated PasswordLoginDTO user) {
-
         return Result.success(loginService.login(user));
     }
 

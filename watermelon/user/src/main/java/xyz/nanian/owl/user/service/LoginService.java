@@ -26,7 +26,7 @@ public interface LoginService {
      * 注册新用户
      * @param emailLoginOrRegisterDTO 用户DTO基本信息
      */
-    Boolean saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO);
+    String saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO);
 
     /**
      * 登陆验证,邮箱验证码
