@@ -64,7 +64,6 @@ public class LoginController {
         return loginService.sendVerificationCode(codeDTO);
     }
 
-
     /**
      * 用户登录，邮箱验证码
      * @param user

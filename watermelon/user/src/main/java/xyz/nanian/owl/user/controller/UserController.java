@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 import xyz.nanian.owl.user.service.UserService;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
@@ -36,6 +37,17 @@ public class UserController {
     }
 
     /**
+     * 获取用户信息
+     * @return
+     */
+    @GetMapping("/info")
+    @Operation(summary = "获取用户信息")
+    public Result<UserInfoVO> getUserInfo(){
+       return Result.success(userService.getUserInfoByCode());
+    }
+
+
+    /**
      * 更新用户信息
      * @param userInfoDTO 用户最新信息
      * @return message
@@ -43,7 +55,6 @@ public class UserController {
     @PutMapping("/userInfo")
     @Operation(summary = "用户信息更新")
     public Result<ResultStatus> updateUser(@RequestBody UserInfoDTO userInfoDTO) {
-
         if(userService.updateUserInfo(userInfoDTO)){
             return Result.success();
         }else{
@@ -89,14 +100,11 @@ public class UserController {
     @PutMapping("/avatar")
     @Operation(summary = "用户头像更新")
     public Result<String> updateAvatar(@RequestParam("file") MultipartFile file) {
-
         String userCode = UserContext.getUserCode();
-
 //        检查用户是否登录
         if(userCode == null){
             return Result.fail(ResultStatus.UNAUTHORIZED);
         }
-
 //        String avatarUrl = minioFileServiceImpl.upload(file, MinioConstant.BUCKET_AVATARS);
         String avatarUrl = userService.updateUserAvatar(file,userCode);
 

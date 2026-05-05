@@ -72,6 +72,7 @@ public class UserDO {
 
     /**
      * 角色：0=用户，1=商家，2=管理员
+     * 这里改为1 = 管理员，后续给管理员具体数据指代
      */
     @TableField("role")
     private Integer role;

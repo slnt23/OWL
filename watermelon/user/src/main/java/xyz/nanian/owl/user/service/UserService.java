@@ -3,6 +3,7 @@ package xyz.nanian.owl.user.service;
 
 import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 
 /**
  * 用户相关的逻辑方法接口
@@ -28,5 +29,17 @@ public interface UserService {
      */
     Boolean updateUserPassword(String newPassword);
 
+    /**
+     * 更新用户头像
+     * @param file
+     * @param userCode
+     * @return
+     */
     String updateUserAvatar(MultipartFile file, String userCode);
+
+    /**
+     * 获取用户信息，
+     * @return
+     */
+    UserInfoVO getUserInfoByCode();
 }

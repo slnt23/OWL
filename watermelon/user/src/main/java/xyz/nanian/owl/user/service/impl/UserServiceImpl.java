@@ -13,6 +13,7 @@ import xyz.nanian.owl.infrastructure.minio.service.FileStorageService;
 import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
+import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
@@ -36,13 +37,6 @@ public class UserServiceImpl implements UserService {
     private final UserConvert userConvert;
     private final FileStorageService fileStorageService;
 
-
-    /**
-     * 更新用户信息
-     *
-     * @param userInfoDTO 用户DTO
-     * @return 更新是否成功的bool
-     */
     @Override
     @BizLog(module = "用户",action = "更新用户信息")
     public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
@@ -63,11 +57,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.update(user) > 0;
     }
 
-    /**
-     * 更新用户密码
-     * @param newPassword 新密码
-     * @return bool
-     */
     @Override
     @BizLog(module = "用户",action = "更新用户密码")
     public Boolean updateUserPassword(String newPassword) {
@@ -86,12 +75,7 @@ public class UserServiceImpl implements UserService {
         return result == 1;
     }
 
-    /**
-     * 更新用户头像
-     * @param file
-     * @param userCode
-     * @return
-     */
+
     @SneakyThrows
     @Override
     public String updateUserAvatar(MultipartFile file, String userCode) {
@@ -109,6 +93,22 @@ public class UserServiceImpl implements UserService {
         }else {
             throw new Exception("更新用户头像失败");
         }
+    }
+
+    @Override
+    public UserInfoVO getUserInfoByCode() {
+        Long userId = UserContext.getUserId();
+
+        UserDO userDO = userMapper.selectById(userId);
+        Integer role = userDO.getRole();
+
+        UserInfoVO userInfoVO = userConvert.UserDOToUserVO(userDO);
+        if (role == 0){
+            userInfoVO.setRole("user");
+        }else {
+            userInfoVO.setRole("admin");
+        }
+        return userInfoVO;
     }
 
 }
