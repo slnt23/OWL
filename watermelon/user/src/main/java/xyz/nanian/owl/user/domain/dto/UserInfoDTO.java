@@ -15,16 +15,12 @@ import lombok.Data;
 @Schema(name = "用户InfoDTO")
 public class UserInfoDTO {
 
-//    @Schema(description = "用户ID",example = "1")
-//    Long userId;
-
     @Schema(description= "用户名",example = "秦明")
     String userName;
 
     @Schema(description = "昵称",example = "小明")
     String nickName;
 
-//    这个不确定改不改
     @Schema(description= "邮箱",example = "qq.com")
     String email;
 
@@ -37,12 +33,4 @@ public class UserInfoDTO {
     @Schema(description = "原手机号",example = "119")
     String rawPhone;
 
-//    @Schema(description= "是否启用",example = "1:启用  0：未启用")
-//    String enabled;
-//
-//    @Schema(description= "创建时间",example = "2025-11-10 12-12-20")
-//    LocalDateTime createdTime;
-//
-//    @Schema(description= "最后登陆时间",example = "2025-12-12 12-12-30")
-//    LocalDateTime lastLoginTime;
 }

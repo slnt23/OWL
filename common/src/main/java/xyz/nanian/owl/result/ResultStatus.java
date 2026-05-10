@@ -35,6 +35,7 @@ public enum ResultStatus {
     STOCK_INSUFFICIENT("库存不足", 9101),
     ORDER_STATUS_INVALID("订单状态异常，无法执行当前操作", 9201),
     PAYMENT_FAILED("支付失败，请检查账户余额或支付方式", 9301),
+    ROLE_FAILED("登陆角色异常，",9401),
 
     // 特殊状态
     TOKEN_EXPIRED("登录已过期，请重新登录", 401001),

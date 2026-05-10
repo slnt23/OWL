@@ -55,8 +55,8 @@ public class UserDO {
     /**
      * 头像URL
      */
-    @TableField("avatar")
-    private String avatar;
+    @TableField("avatar_url")
+    private String avatarUrl;
 
     /**
      * 昵称
@@ -71,11 +71,10 @@ public class UserDO {
     private String remark;
 
     /**
-     * 角色：0=用户，1=商家，2=管理员
-     * 这里改为1 = 管理员，后续给管理员具体数据指代
+     * 角色：0=用户，1=商家，2=管理员, 具体信息查看 role 表
      */
-    @TableField("role")
-    private Integer role;
+    @TableField("role_id")
+    private Integer roleId;
 
     /**
      * 状态：0=正常，1=封禁

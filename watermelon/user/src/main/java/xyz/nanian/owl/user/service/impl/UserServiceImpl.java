@@ -14,6 +14,7 @@ import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
+import xyz.nanian.owl.user.mapper.RoleMapper;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserConvert userConvert;
     private final FileStorageService fileStorageService;
+    private final RoleMapper roleMapper;
 
     @Override
     @BizLog(module = "用户",action = "更新用户信息")
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
         UserDO userDO = new UserDO();
         userDO.setUserCode(userCode);
-        userDO.setAvatar(avatarUrl);
+        userDO.setAvatarUrl(avatarUrl);
 
         int success = userMapper.update(userDO);
 
@@ -100,14 +102,16 @@ public class UserServiceImpl implements UserService {
         Long userId = UserContext.getUserId();
 
         UserDO userDO = userMapper.selectById(userId);
-        Integer role = userDO.getRole();
-
+        Integer role = userDO.getRoleId();
+        String roleName = roleMapper.selectById(role).getRoleName();
         UserInfoVO userInfoVO = userConvert.UserDOToUserVO(userDO);
-        if (role == 0){
-            userInfoVO.setRole("user");
-        }else {
-            userInfoVO.setRole("admin");
-        }
+        userInfoVO.setRole(roleName);
+        userInfoVO.setRawPhone(userDO.getPhone());
+
+        String avatarUrl = userDO.getAvatarUrl();
+        String avatarResultUrl = fileStorageService.getUrl(MinioConstant.BUCKET_AVATARS,avatarUrl,MinioConstant.EXPIRY_MAX_TIME);
+        userInfoVO.setAvatarUrl(avatarResultUrl);
+
         return userInfoVO;
     }
 

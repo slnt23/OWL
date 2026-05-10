@@ -28,14 +28,14 @@ public class UserConstant {
      * 邮箱注册时，自动填充默认头像，用户可后续在个人中心更换
      * 实际使用时替换为真实地默认头像CDN地址
      */
-    public static final String DEFAULT_AVATAR = "默认头像URL";
+    public static final String DEFAULT_AVATAR = "/DEFAULT_AVATAR.png";
 
     /**
      * 新用户默认角色
-     * 0 = 普通消费者用户（对应数据库角色定义：0=用户，1=商家，2=管理员）
-     * 邮箱注册的新用户默认分配普通用户权限，商家/管理员需后台手动分配
+     * 0 = 普通消费者用户（对应数据库角色定义：1=用户，）
+     * 具体role信息查表
      */
-    public static final Integer DEFAULT_ROLE = 0;
+    public static final Integer DEFAULT_ROLE = 1;
 
     /**
      * 新用户默认账号状态
@@ -44,5 +44,7 @@ public class UserConstant {
      * 邮箱验证通过后，账号默认正常可用，无需手动激活
      */
     public static final Integer DEFAULT_STATUS = 0;
+    public static final String DEFAULT_NICK_NAME = "默认昵称";
+    public static final String DEFAULT_REMARK = "备注，写点什么好呢？";
 
 }

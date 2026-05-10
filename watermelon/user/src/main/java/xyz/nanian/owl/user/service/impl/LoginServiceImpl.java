@@ -10,6 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.result.ResultStatus;
 import xyz.nanian.owl.exception.LoginException;
+import xyz.nanian.owl.user.domain.entity.RoleDO;
+import xyz.nanian.owl.user.mapper.RoleMapper;
 import xyz.nanian.owl.utils.mail.MailUtil;
 import xyz.nanian.owl.result.Result;
 import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
@@ -42,15 +44,17 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-//    这里这个类的注册问题尚未解决，//已解决，是注入方式的问题，
+    //    这里这个类的注册问题尚未解决，//已解决，是注入方式的问题，
     final MailUtil mailUtil;
     final UserMapper userMapper;
     final StringRedisTemplate stringRedisTemplate;
     final PasswordEncoder passwordEncoder;
     final CodeCacheUtil codeCacheUtil;
+    private final RoleMapper roleMapper;
 
     /**
      * 发送验证码
+     *
      * @param sendCodeDTO
      * @return
      */
@@ -61,7 +65,7 @@ public class LoginServiceImpl implements LoginService {
 //                "1693676136@qq.com";
 
         //        这里加一步，5分钟内不可重复发，
-        if(codeCacheUtil.isLocked(emailAddress)){
+        if (codeCacheUtil.isLocked(emailAddress)) {
             return Result.fail(LoginConstant.CODE_TIME_IN_5_MIN);
         }
 
@@ -75,14 +79,23 @@ public class LoginServiceImpl implements LoginService {
         String verificationCode = generateVerificationCode();
 
         // 3. 构建邮件内容
-        String subject = "验证码 - 欢迎加入 OWL 兴趣探索";
+        String subject = "「OWL 账号验证」";
         String body = String.format("""
-                    您的验证码是：%s
-                    
-                    验证码有效期为 %d 分钟，请勿泄露给他人。
-                    
-                    如果这不是您本人的操作，请忽略此邮件。
-                    """, verificationCode,LoginConstant.CODE_EXPIRE_MINUTES);
+                尊敬的用户：
+                
+                您好！
+                
+                您的验证码为：**%s**
+                
+                该验证码有效期为 %d 分钟，请在有效时间内使用。
+                为保障您的账户安全，请勿将验证码泄露给他人。
+                
+                如果这不是您本人的操作，请忽略此邮件。
+                
+                此致
+                敬礼
+                [OWL] 团队
+                """, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES);
         // 4. 发送邮件
         mailUtil.sendMail(emailAddress, subject, body);
 
@@ -114,17 +127,19 @@ public class LoginServiceImpl implements LoginService {
 //        String password = passwordEncoder.encode(UserConstant.DEFAULT_PASSWORD);
 
         userDO.setUserCode(uuid);
-        userDO.setUserName(UserConstant.DEFAULT_USER_NAME +uuid);
+        userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
 //        初始密码都是加密后的的”123456“，后续用户更改密码，也设定加密
 //        这里默认密码为空，当登陆时检测密码为空则不可进行密码登录，只能够验证码登录，
 //        userDO.setPassword(password);
         userDO.setPassword(null);
         userDO.setEmail(emailLoginOrRegisterDTO.getEmail());
-        userDO.setAvatar(UserConstant.DEFAULT_AVATAR);
-        userDO.setRole(UserConstant.DEFAULT_ROLE);
+        userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
+//        这里后续可以改为搜索角色，再填入相关的id,目前可以默认 0=user,
+//        也可以不，放置前端随意传进来role信息，后端统一设计user，可以在管理端设计一个更改role的，让用户申请，
+        userDO.setRoleId(UserConstant.DEFAULT_ROLE);
         userDO.setStatus(UserConstant.DEFAULT_STATUS);
-//        userDO.setNickName();     //昵称
-//        userDO.setRemark();       //备注
+        userDO.setNickName(UserConstant.DEFAULT_NICK_NAME);     //昵称
+        userDO.setRemark(UserConstant.DEFAULT_REMARK);       //备注
         userDO.setCreateTime(now);
 
         userMapper.insert(userDO);
@@ -134,6 +149,7 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 用户登陆，邮箱验证码，
      * TODO 后期可以设置为验证码登陆，注册二合一，
+     *
      * @param emailLoginOrRegisterDTO 手机号
      * @return
      */
@@ -148,26 +164,36 @@ public class LoginServiceImpl implements LoginService {
                 .get(key);
 
 //        2. 比对code，然后如果正确，登陆1天
-        if(!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())){
+        if (!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())) {
             throw new LoginException(ResultStatus.FAIL);
         }
 //        删除验证码，防止成为短期密码，无限使用，
         stringRedisTemplate.delete(key);
 
-//        检查用户账号是否封禁，
+
+//        3.检查用户账号是否封禁，
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserDO::getEmail, emailLoginOrRegisterDTO.getEmail());
 
         UserDO userDO = userMapper.selectOne(wrapper);
-        if(userDO.getStatus() == 0){
+
+//        4.查询用户role
+        String role = emailLoginOrRegisterDTO.getRole();
+        RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
+        if (!roleDO.getRoleName().equals(role)) {
+            throw new LoginException(ResultStatus.ROLE_FAILED);
+        }
+
+        if (userDO.getStatus() == 0) {
             return getToken(emailLoginOrRegisterDTO.getEmail());
-        }else {
+        } else {
             throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
         }
     }
 
     /**
      * 用户登陆，密码
+     *
      * @param passwordLoginDTO
      * @return
      */
@@ -179,17 +205,23 @@ public class LoginServiceImpl implements LoginService {
         wrapper.eq(UserDO::getEmail, passwordLoginDTO.getEmail());
 
         UserDO userDO = userMapper.selectOne(wrapper);
-
-//        2. 比对，
-//        判断用户
-        if(Objects.isNull(userDO)){
+        if (Objects.isNull(userDO)) {
             throw new LoginException(ResultStatus.NOT_FOUND);
-        }else if(userDO.getStatus() == 0){
+        }
+
+//        2.查询用户role
+        String role = passwordLoginDTO.getRole();
+        RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
+
+//        3. 比对，判断用户
+        if (userDO.getStatus() == 0) {
             throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
-        }else if(userDO.getPassword() == null){
+        } else if (userDO.getPassword() == null) {
             throw new LoginException(ResultStatus.PASSWORD_NO_REWRITE);
-        }else if(!passwordEncoder.matches(passwordLoginDTO.getPassword(),userDO.getPassword())){
+        } else if (!passwordEncoder.matches(passwordLoginDTO.getPassword(), userDO.getPassword())) {
             throw new LoginException(ResultStatus.PARAMS_INVALID);
+        } else if (!roleDO.getRoleName().equals(role)) {
+            throw new LoginException(ResultStatus.ROLE_FAILED);
         }
 
 //        返回token
@@ -199,19 +231,20 @@ public class LoginServiceImpl implements LoginService {
 
     /**
      * 获取token，并在token中注入用户信息，
+     *
      * @return
      */
-    private String getToken(String email){
+    private String getToken(String email) {
 
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserDO::getEmail, email);
 
         UserDO userDO = userMapper.selectOne(wrapper);
 
-        String userCode= userDO.getUserCode();
+        String userCode = userDO.getUserCode();
         Long userId = userDO.getId();
 
-        return JwtUtil.generateToken(userId,userCode,email);
+        return JwtUtil.generateToken(userId, userCode, email);
     }
 
     /**

@@ -74,7 +74,7 @@ public class UserDO implements Serializable {
     /**
      * 头像URL
      */
-    @TableField("avatar")
+    @TableField("avatarUrl")
     @Schema(name = "头像URL")
     private String avatar;
 

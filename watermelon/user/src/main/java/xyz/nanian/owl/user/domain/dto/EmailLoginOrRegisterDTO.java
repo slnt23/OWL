@@ -35,8 +35,9 @@ public class EmailLoginOrRegisterDTO {
     String code;
 
     /**
-     * 角色
+     * 角色 ,
+     * 注册的时候传不传无所谓，但是登陆一定要有，
      */
     @Schema(description = "角色(0=用户，1=商家，10086=管理员)",example = "0")
-    private Integer role;
+    private String role;
 }
