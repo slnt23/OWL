@@ -38,6 +38,10 @@
             <groupId>xyz.nanian</groupId>
             <artifactId>crow</artifactId>
         </dependency>
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>administration</artifactId>
+        </dependency>
 
 
 <!--        test-->

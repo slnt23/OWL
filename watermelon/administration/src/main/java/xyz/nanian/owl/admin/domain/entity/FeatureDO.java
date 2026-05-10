@@ -33,7 +33,7 @@ public class FeatureDO implements Serializable {
      * 主键ID，唯一标识每条特性
      */
     @Schema(name = "主键ID，唯一标识每条特性")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "`id`", type = IdType.AUTO)
     private Integer id;
 
     /**

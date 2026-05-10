@@ -138,30 +138,29 @@ public class SpringdocConfig {
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
                 .group("管理员中心-admin")
-                .pathsToMatch("/admin/**")
+//                .pathsToMatch("/admin/**")
+                .packagesToScan("xyz.nanian.owl.admin.controller")
                 .build();
     }
 
     /**
      * 有关sugarcane 价多多模块
-     *
      */
     @Bean
     public GroupedOpenApi sugarcaneApi() {
         return GroupedOpenApi.builder()
-                .group("价格管理中心-sugarcane")
+                .group("价格中心-sugarcane")
 //                .pathsToMatch("/pitaya/**")
                 .packagesToScan("xyz.nanian.owl.sugarcane.controller")
                 .build();
     }
     /**
      * 有关crow ai模块
-     *
      */
     @Bean
     public GroupedOpenApi crowApi() {
         return GroupedOpenApi.builder()
-                .group("AI助手中心-crow")
+                .group("AI中心-crow")
 //                .pathsToMatch("/pitaya/**")
                 .packagesToScan("xyz.nanian.owl.crow.controller")
                 .build();

@@ -18,4 +18,7 @@ public class MinioConstant {
     public static final String BUCKET_DOCUMENTS = "documents";
 
 
+//    URL有效期
+    public static final Integer EXPIRY_MAX_TIME = 604800;
+
 }

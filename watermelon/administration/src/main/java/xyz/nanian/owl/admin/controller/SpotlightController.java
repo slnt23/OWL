@@ -48,7 +48,7 @@ public class SpotlightController {
     /** 新增焦点项目 */
     @PostMapping
     @Operation(summary = "新增焦点")
-    public Result<Integer> create(@Valid @RequestBody SpotlightDTO dto) {
+    public Result<Integer> create(@Valid @ModelAttribute SpotlightDTO dto) {
         int result= spotlightService.create(dto);
 
         return Result.success(result);
@@ -57,7 +57,9 @@ public class SpotlightController {
     /** 修改焦点项目 */
     @PutMapping("/{id}")
     @Operation(summary = "更新焦点")
-    public Result<ResultStatus> update(@Valid @RequestBody SpotlightDTO dto) {
+    public Result<ResultStatus> update(
+            @PathVariable Integer id,
+            @Valid @RequestBody SpotlightDTO dto) {
 //        dto.setId(id);  // 确保路径 id 与 body 一致
         Boolean result = spotlightService.update(dto);
         if(result){

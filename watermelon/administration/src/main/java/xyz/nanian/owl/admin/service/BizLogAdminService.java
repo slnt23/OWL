@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @author slnt23
  * @since 2026-04-13 23:53:18
  */
-public interface BizLogService extends IService<BizLogDO> {
+public interface BizLogAdminService extends IService<BizLogDO> {
 
 }

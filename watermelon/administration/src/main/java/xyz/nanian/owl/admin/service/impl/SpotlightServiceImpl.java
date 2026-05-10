@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import xyz.nanian.owl.infrastructure.minio.constant.MinioConstant;
 import xyz.nanian.owl.infrastructure.minio.service.FileStorageService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,6 +33,13 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
     @Override
     public List<SpotlightVO> listByOrder() {
         List<SpotlightDO> list = spotlightMapper.selectLists();
+
+        for(SpotlightDO spotlightDO : list) {
+            String imageUrl = spotlightDO.getImageUrl();
+
+            String resultUrl = fileStorageService.getUrl(MinioConstant.BUCKET_IMAGES,imageUrl);
+            spotlightDO.setImageUrl(resultUrl);
+        }
 
         return spotlightConvert.DOConvertVO(list);
     }
@@ -57,10 +63,9 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
     @Override
     public Boolean update(SpotlightDTO dto) {
         SpotlightDO spotlightDO = spotlightConvert.DTOConvertDO(dto);
-
 //        这里如果照片更新，应该线删除，再上传，
 //        先查询DO,获取DO中url，删除，商创，
-
+//        或者直接将原来的都删掉，新建一个，
 
         int result = spotlightMapper.updateById(spotlightDO);
         return result==1;

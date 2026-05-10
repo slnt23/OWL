@@ -1,8 +1,8 @@
 package xyz.nanian.owl.admin.service.impl;
 
 import xyz.nanian.owl.admin.domain.entity.BizLogDO;
-import xyz.nanian.owl.admin.mapper.BizLogMapper;
-import xyz.nanian.owl.admin.service.BizLogService;
+import xyz.nanian.owl.admin.mapper.BizLogAdminMapper;
+import xyz.nanian.owl.admin.service.BizLogAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2026-04-13 23:53:18
  */
 @Service
-public class BizLogServiceImpl extends ServiceImpl<BizLogMapper, BizLogDO> implements BizLogService {
+public class BizLogAdminServiceImpl extends ServiceImpl<BizLogAdminMapper, BizLogDO> implements BizLogAdminService {
 
 }

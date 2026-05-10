@@ -13,6 +13,6 @@ import xyz.nanian.owl.admin.domain.entity.BizLogDO;
  * @since 2026-04-13 23:53:18
  */
 @Mapper
-public interface BizLogMapper extends BaseMapper<BizLogDO> {
+public interface BizLogAdminMapper extends BaseMapper<BizLogDO> {
 
 }

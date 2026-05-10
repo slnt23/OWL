@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/biz-log-do")
-public class BizLogController {
+public class BizLogAdminController {
 
 }

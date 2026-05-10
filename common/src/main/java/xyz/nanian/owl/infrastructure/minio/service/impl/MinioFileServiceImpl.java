@@ -113,6 +113,30 @@ public class MinioFileServiceImpl implements FileStorageService {
         }
     }
 
+
+    /**
+     * 重载方法：支持自定义有效期
+     *
+     * @param bucketName 桶名称
+     * @param objectName 对象名称
+     * @param expiry      有效期（单位：秒）
+     * @return 预签名URL
+     */
+    public String getUrl(String bucketName, String objectName, int expiry) {
+        try {
+            return minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .bucket(bucketName)
+                            .object(objectName)
+                            .method(Method.GET)
+                            .expiry(expiry)
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException("生成文件URL失败", e);
+        }
+    }
+
     @Override
     public void delete(String bucketName, String objectName) {
         try {

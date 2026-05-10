@@ -3,8 +3,18 @@
 <mapper namespace="xyz.nanian.owl.admin.mapper.SpotlightMapper">
 
     <select id="selectLists" resultType="xyz.nanian.owl.admin.domain.entity.SpotlightDO">
-        select
-            id, eyebrow, title, description, image, `order`, link, target, created_at, updated_at
+        select id,
+               eyebrow,
+               title,
+               description,
+               image_url,
+               `order`,
+               link,
+               target,
+               created_at,
+               updated_at
         from spotlight
+        order by created_at desc
+        limit 6
     </select>
 </mapper>

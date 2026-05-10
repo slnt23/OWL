@@ -36,4 +36,7 @@ public class UserInfoVO {
     @Schema(description = "角色",example = "user")
     String role;
 
+    @Schema(description = "头像URL")
+    String avatar;
+
 }

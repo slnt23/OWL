@@ -46,9 +46,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/doc.html",
                         "/doc.html/**",
                         "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
                         "/v3/api-docs/**",
                         "/error",
-                        "/auth/**"
+                        "/auth/**",
+                        "/admin/feature/**",
+                        "/admin/spotlight/**"
                 );
 
 //        这里对全局拦截器没有使用，暂时去除，

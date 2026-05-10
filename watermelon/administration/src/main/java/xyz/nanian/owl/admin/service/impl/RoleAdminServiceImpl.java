@@ -1,8 +1,8 @@
 package xyz.nanian.owl.admin.service.impl;
 
 import xyz.nanian.owl.admin.domain.entity.RoleDO;
-import xyz.nanian.owl.admin.mapper.RoleMapper;
-import xyz.nanian.owl.admin.service.RoleService;
+import xyz.nanian.owl.admin.mapper.RoleAdminMapper;
+import xyz.nanian.owl.admin.service.RoleAdminService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2026-04-13 23:53:18
  */
 @Service
-public class RoleServiceImpl extends ServiceImpl<RoleMapper, RoleDO> implements RoleService {
+public class RoleAdminServiceImpl extends ServiceImpl<RoleAdminMapper, RoleDO> implements RoleAdminService {
 
 }

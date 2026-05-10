@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/admin/user-do")
-public class UserController {
+public class UserAdminController {
 
 //    分页获取用户信息，这里只要100个
     public void listUser(){}

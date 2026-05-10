@@ -114,7 +114,7 @@
             AND pr.confidence >= #{dto.minConfidence}
         </if>
         <!-- 指定时间：取targetTime对应的价格，如果有多个，取最新记录 -->
-        AND pr.effective_time <= #{dto.targetTime}
+<!--        AND pr.effective_time <= #{dto.targetTime}-->
         ORDER BY pr.effective_time DESC
     </select>
 
@@ -162,7 +162,7 @@
             AND pr.confidence >= #{dto.minConfidence}
         </if>
         <!-- 指定时间：取targetTime对应价格之前最新 -->
-        AND pr.effective_time <= #{dto.targetTime}
+<!--        AND pr.effective_time <= #{dto.targetTime}-->
         ORDER BY pr.effective_time DESC
     </select>
 </mapper>

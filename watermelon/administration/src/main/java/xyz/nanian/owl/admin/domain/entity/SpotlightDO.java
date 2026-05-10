@@ -67,7 +67,7 @@ public class SpotlightDO implements Serializable {
     /**
      * 排序序号，数学越小越靠前；同数值按创建时间排序
      */
-    @TableField("order")
+    @TableField("`order`")
     @Schema(name = "排序序号，数学越小越靠前；同数值按创建时间排序")
     private Integer order;
 

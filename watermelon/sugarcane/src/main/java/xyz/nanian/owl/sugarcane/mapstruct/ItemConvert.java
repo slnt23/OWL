@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2026/4/26
  */
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ItemConvert {
     List<ItemIntroVO> DOtoVO(List<ItemDO> itemDOS);
 }

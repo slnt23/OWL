@@ -13,6 +13,6 @@ import xyz.nanian.owl.admin.domain.entity.RoleDO;
  * @since 2026-04-13 23:53:18
  */
 @Mapper
-public interface RoleMapper extends BaseMapper<RoleDO> {
+public interface RoleAdminMapper extends BaseMapper<RoleDO> {
 
 }

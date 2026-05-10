@@ -15,7 +15,7 @@ import java.util.List;
  * @since 2026/4/25
  */
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface FeatureConvert {
 
     FeatureDO DTOtoEntity(FeatureDTO dto);
