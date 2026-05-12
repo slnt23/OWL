@@ -23,7 +23,7 @@ public class PriceLatestQueryDTO extends BasePriceQueryDTO {
     /**
      * 物品Id
      */
-    @NotNull
-    Long ItemId;
+//    @NotNull
+//    Long itemId;
 
 }

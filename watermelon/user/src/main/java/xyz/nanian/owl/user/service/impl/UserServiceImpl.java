@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
         UserDO user = new UserDO();
         user.setPassword(encryptedPassword);
 
-        LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<UserDO>();
+        LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserDO::getUserCode,userCode);
 
         int result = userMapper.update(user,wrapper);

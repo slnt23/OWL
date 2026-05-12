@@ -73,6 +73,10 @@ public class UserController {
     @Operation(summary = "用户密码更新")
     public Result<ResultStatus> updatePassword(@PathVariable String password) {
 
+//        1. 应该线发送邮箱验证码
+
+//        2. 验证码校验成功后,改动密码，
+
         if(userService.updateUserPassword(password)){
             return Result.success();
         }else{

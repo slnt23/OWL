@@ -21,6 +21,6 @@ public class ItemIntroDTO extends PageDTO {
      * 所查物品名
      */
     @NotNull
-    String ItemName;
+    String itemName;
 
 }

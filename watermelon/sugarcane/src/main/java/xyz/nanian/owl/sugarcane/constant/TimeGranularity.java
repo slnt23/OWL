@@ -12,5 +12,6 @@ public enum TimeGranularity {
     HOUR,
     DAY,
     WEEK,
-    MONTH
+    MONTH,
+    YEAR
 }
