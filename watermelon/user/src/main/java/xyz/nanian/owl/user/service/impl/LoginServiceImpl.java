@@ -24,7 +24,7 @@ import xyz.nanian.owl.user.service.LoginService;
 import xyz.nanian.owl.user.constant.UserConstant;
 import xyz.nanian.owl.constant.LoginConstant;
 import xyz.nanian.owl.utils.jwt.JwtUtil;
-import xyz.nanian.owl.utils.redis.CodeCacheUtil;
+import xyz.nanian.owl.infrastructure.redis.util.CodeCacheUtil;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -64,7 +64,7 @@ public class LoginServiceImpl implements LoginService {
         String emailAddress = sendCodeDTO.getEmail();
 //                "1693676136@qq.com";
 
-        //        这里加一步，5分钟内不可重复发，
+//        这里加一步，5分钟内不可重复发，
         if (codeCacheUtil.isLocked(emailAddress)) {
             return Result.fail(LoginConstant.CODE_TIME_IN_5_MIN);
         }
@@ -94,7 +94,7 @@ public class LoginServiceImpl implements LoginService {
                 
                 此致
                 敬礼
-                [OWL] 团队
+                [Energy] 团队
                 """, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES);
         // 4. 发送邮件
         mailUtil.sendMail(emailAddress, subject, body);
@@ -119,76 +119,93 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public String saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
-//        检验验证码是否正确,正确生成用户，错误，返回
-//        生成用户信息并注入默认值，
-        UserDO userDO = new UserDO();
-        String uuid = UUID.randomUUID().toString();
-        LocalDateTime now = LocalDateTime.now();
-//        String password = passwordEncoder.encode(UserConstant.DEFAULT_PASSWORD);
+//        1. 检验验证码是否正确,正确生成用户，错误，返回
+        if(!verificationCode(emailLoginOrRegisterDTO.getEmail(),emailLoginOrRegisterDTO.getCode())){
+            throw new LoginException(ResultStatus.VERIFY_CODE_ERROR);
+        }
 
-        userDO.setUserCode(uuid);
-        userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
-//        初始密码都是加密后的的”123456“，后续用户更改密码，也设定加密
-//        这里默认密码为空，当登陆时检测密码为空则不可进行密码登录，只能够验证码登录，
-//        userDO.setPassword(password);
-        userDO.setPassword(null);
-        userDO.setEmail(emailLoginOrRegisterDTO.getEmail());
-        userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
-//        这里后续可以改为搜索角色，再填入相关的id,目前可以默认 0=user,
-//        也可以不，放置前端随意传进来role信息，后端统一设计user，可以在管理端设计一个更改role的，让用户申请，
-        userDO.setRoleId(UserConstant.DEFAULT_ROLE);
-        userDO.setStatus(UserConstant.DEFAULT_STATUS);
-        userDO.setNickName(UserConstant.DEFAULT_NICK_NAME);     //昵称
-        userDO.setRemark(UserConstant.DEFAULT_REMARK);       //备注
-        userDO.setCreateTime(now);
+//        2. 生成用户信息并注入默认值，
+//        UserDO userDO = new UserDO();
+//        String uuid = UUID.randomUUID().toString();
+//        LocalDateTime now = LocalDateTime.now();
+////        String password = passwordEncoder.encode(UserConstant.DEFAULT_PASSWORD);
+//
+//        userDO.setUserCode(uuid);
+//        userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
+////        初始密码都是加密后的的”123456“，后续用户更改密码，也设定加密
+////        3. 这里默认密码为空，当登陆时检测密码为空则不可进行密码登录，只能够验证码登录，只有用户更改密码后，才可以用密码登陆，
+////        userDO.setPassword(password);
+//        userDO.setPassword(null);
+//        userDO.setEmail(emailLoginOrRegisterDTO.getEmail());
+//        userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
+////        这里后续可以改为搜索角色，再填入相关的id,目前可以默认 0=user,
+////        也可以不，防止前端随意传 role 信息，后端统一设计 user ，可以在管理端设计一个更改 role 的，让用户申请，
+//        userDO.setRoleId(UserConstant.DEFAULT_ROLE);
+//        userDO.setStatus(UserConstant.DEFAULT_STATUS);
+//        userDO.setNickName(UserConstant.DEFAULT_NICK_NAME);
+//        userDO.setRemark(UserConstant.DEFAULT_REMARK);
+//        userDO.setCreateTime(now);
+//
+//        userMapper.insert(userDO);
 
-        userMapper.insert(userDO);
+//        生成用户信息，
+        if(!saveUserInfo(emailLoginOrRegisterDTO.getEmail())){
+            throw new LoginException(ResultStatus.BIZ_ERROR);
+        }
+
         return getToken(emailLoginOrRegisterDTO.getEmail());
     }
 
     /**
-     * 用户登陆，邮箱验证码，
+     * 用户登陆 + 注册 ，邮箱验证码，
      * TODO 后期可以设置为验证码登陆，注册二合一，
      *
-     * @param emailLoginOrRegisterDTO 手机号
+     * @param emailLoginOrRegisterDTO DTO
      * @return
      */
     @Override
     public String login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
 
 //        1.根据获取的邮箱地址，以及邮箱KEY 获取redis中的code，
-        String key = LoginConstant.VERIFICATION_CODE_PREFIX + emailLoginOrRegisterDTO.getEmail();
-
-        String verificationCode = stringRedisTemplate
-                .opsForValue()
-                .get(key);
-
+//        String key = LoginConstant.VERIFICATION_CODE_PREFIX + emailLoginOrRegisterDTO.getEmail();
+//
+//        String verificationCode = stringRedisTemplate
+//                .opsForValue()
+//                .get(key);
+//
 //        2. 比对code，然后如果正确，登陆1天
-        if (!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())) {
-            throw new LoginException(ResultStatus.FAIL);
-        }
+//        if (!Objects.equals(verificationCode, emailLoginOrRegisterDTO.getCode())) {
+//            throw new LoginException(ResultStatus.FAIL);
+//        }
 //        删除验证码，防止成为短期密码，无限使用，
-        stringRedisTemplate.delete(key);
+//        stringRedisTemplate.delete(key);
+
+//        1. 检验验证码是否正确
+        if(!verificationCode(emailLoginOrRegisterDTO.getEmail(),emailLoginOrRegisterDTO.getCode())){
+            throw new LoginException(ResultStatus.VERIFY_CODE_ERROR);
+        }
+
+//        2.  搜索数据库是否有此账户，有直接登陆，无注册用户，
 
 
-//        3.检查用户账号是否封禁，
+
+//        3.检查用户账号是否封禁，0 = 正常
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserDO::getEmail, emailLoginOrRegisterDTO.getEmail());
-
         UserDO userDO = userMapper.selectOne(wrapper);
+        if (userDO.getStatus() != 0){
+            throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
+        }
 
-//        4.查询用户role
+//        4.查询用户role是否匹配，
         String role = emailLoginOrRegisterDTO.getRole();
         RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
         if (!roleDO.getRoleName().equals(role)) {
             throw new LoginException(ResultStatus.ROLE_FAILED);
         }
 
-        if (userDO.getStatus() == 0) {
-            return getToken(emailLoginOrRegisterDTO.getEmail());
-        } else {
-            throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
-        }
+//        5.一切成功
+        return getToken(emailLoginOrRegisterDTO.getEmail());
     }
 
     /**
@@ -254,6 +271,63 @@ public class LoginServiceImpl implements LoginService {
         Random random = new Random();
         int code = 100000 + random.nextInt(900000);
         return String.valueOf(code);
+    }
+
+    /**
+     * 检验验证码是否正确，
+     * @param email
+     * @param code
+     * @return
+     */
+    private Boolean verificationCode(String email,String code) {
+//        1.根据获取的邮箱地址，以及邮箱KEY 获取redis中的code，
+        String key = LoginConstant.VERIFICATION_CODE_PREFIX + email;
+
+        String verificationCode = stringRedisTemplate
+                .opsForValue()
+                .get(key);
+
+//        2. 比对code，
+        if (!Objects.equals(verificationCode, code)) {
+//            throw new LoginException(ResultStatus.FAIL);
+            return false;
+        }
+//        3. 删除验证码，防止成为短期密码，无限使用，
+        stringRedisTemplate.delete(key);
+        return true;
+    }
+
+    /**
+     * 生成默认用户信息，并保存
+     * @param email
+     * @return
+     */
+    private Boolean saveUserInfo(String email){
+
+//        2. 生成用户信息并注入默认值，
+        UserDO userDO = new UserDO();
+        String uuid = UUID.randomUUID().toString();
+        LocalDateTime now = LocalDateTime.now();
+//        String password = passwordEncoder.encode(UserConstant.DEFAULT_PASSWORD);
+
+        userDO.setUserCode(uuid);
+        userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
+//        初始密码都是加密后的的”123456“，后续用户更改密码，也设定加密
+//        3. 这里默认密码为空，当登陆时检测密码为空则不可进行密码登录，只能够验证码登录，只有用户更改密码后，才可以用密码登陆，
+//        userDO.setPassword(password);
+        userDO.setPassword(null);
+        userDO.setEmail(email);
+        userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
+//        这里后续可以改为搜索角色，再填入相关的id,目前可以默认 0=user,
+//        也可以不，防止前端随意传 role 信息，后端统一设计 user ，可以在管理端设计一个更改 role 的，让用户申请，
+        userDO.setRoleId(UserConstant.DEFAULT_ROLE);
+        userDO.setStatus(UserConstant.DEFAULT_STATUS);
+        userDO.setNickName(UserConstant.DEFAULT_NICK_NAME);
+        userDO.setRemark(UserConstant.DEFAULT_REMARK);
+        userDO.setCreateTime(now);
+
+        userMapper.insert(userDO);
+        return true;
     }
 
 }

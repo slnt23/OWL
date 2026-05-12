@@ -2,7 +2,7 @@ package xyz.nanian.owl.constant;
 
 
 /**
- * Login
+ * Login,有关验证码的，
  *
  * @author slnt23
  * @since 2026/4/10
@@ -10,7 +10,6 @@ package xyz.nanian.owl.constant;
 
 public class LoginConstant {
 
-//    有关验证码的，
     // Redis中验证码的key前缀,必须是这个 前缀 + 邮箱号，
     public static final String VERIFICATION_CODE_PREFIX = "verification:code:";
 

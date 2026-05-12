@@ -1,4 +1,4 @@
-package xyz.nanian.owl.utils.redis;
+package xyz.nanian.owl.infrastructure.redis.util;
 
 
 import org.springframework.data.redis.core.StringRedisTemplate;

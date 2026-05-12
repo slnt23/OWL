@@ -58,22 +58,23 @@ public class CodeGenerator {
 //                            .addTablePrefix("price_")
 
                             .entityBuilder()
-                                .enableLombok()
-                                .enableTableFieldAnnotation()
-                                .formatFileName("%sDO")
+                            .enableLombok()
+                            .enableTableFieldAnnotation()
+                            .formatFileName("%sDO")
 
                             .mapperBuilder()
-                                .mapperAnnotation(org.apache.ibatis.annotations.Mapper.class)  // ← 这里是重点修改
-                                .enableBaseResultMap()
-                                .enableBaseColumnList()
+                            .mapperAnnotation(org.apache.ibatis.annotations.Mapper.class)  // ← 这里是重点修改
+                            .enableBaseResultMap()
+                            .enableBaseColumnList()
 
                             .serviceBuilder()
-                                .formatServiceFileName("%sService")
-                                .formatServiceImplFileName("%sServiceImpl")
+                            .formatServiceFileName("%sAdminService")
+                            .formatServiceImplFileName("%sAdminServiceImpl")
 
                             .controllerBuilder()
-                                .enableRestStyle()
-                                .enableHyphenStyle();
+                            .formatFileName("%sAdminController")
+                            .enableRestStyle()
+                            .enableHyphenStyle();
                 })
 
                 .templateEngine(new VelocityTemplateEngine())

@@ -36,7 +36,7 @@ public enum ResultStatus {
     ORDER_STATUS_INVALID("订单状态异常，无法执行当前操作", 9201),
     PAYMENT_FAILED("支付失败，请检查账户余额或支付方式", 9301),
     ROLE_FAILED("登陆角色异常，",9401),
-
+    VERIFY_CODE_ERROR("验证码错误",9501),
     // 特殊状态
     TOKEN_EXPIRED("登录已过期，请重新登录", 401001),
     TOKEN_INVALID("token无效", 401002),
@@ -49,6 +49,7 @@ public enum ResultStatus {
     SERVER_BUSY("服务器繁忙", 9998),
     FAIL("操作失败", 9999),
     BIZ_ERROR("业务异常",9995);
+
 
 
     private final String message;

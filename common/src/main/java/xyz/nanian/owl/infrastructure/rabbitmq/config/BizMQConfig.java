@@ -1,4 +1,4 @@
-package xyz.nanian.owl.infrastructure.rabbitmq;
+package xyz.nanian.owl.infrastructure.rabbitmq.config;
 
 
 import org.springframework.amqp.core.Binding;
@@ -10,7 +10,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static xyz.nanian.owl.infrastructure.rabbitmq.RabbitMQConstant.*;
+import static xyz.nanian.owl.infrastructure.rabbitmq.constant.RabbitMQConstant.*;
 
 /**
  * rabbitMQ配置
