@@ -57,4 +57,27 @@ public abstract class BasePriceQueryDTO {
     @DecimalMin(value = "0.00", inclusive = true, message = "可信度不能小于0")
     @DecimalMax(value = "100.00", inclusive = true, message = "可信度不能大于100")
     private BigDecimal minConfidence;
+
+
+    /**
+     * 生成缓存 key 字符串（供 SpEL #dto.cacheKey() 调用）
+     */
+    public String cacheKey() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("i:").append(itemId);
+        sb.append("|ic:").append(itemCode);
+        sb.append("|ids:").append(sorted(itemIds));
+        sb.append("|l:").append(locationId);
+        sb.append("|lids:").append(sorted(locationIds));
+        sb.append("|sids:").append(sorted(sourceIds));
+        sb.append("|r:").append(minReliability);
+        sb.append("|c:").append(currency);
+        sb.append("|mc:").append(minConfidence);
+        return sb.toString();
+    }
+
+    private String sorted(List<?> list) {
+        if (list == null || list.isEmpty()) return "[]";
+        return list.stream().sorted().toList().toString();
+    }
 }

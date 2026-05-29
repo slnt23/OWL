@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
  * @since 2026/4/24
  */
 
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class PriceTrendQueryDTO extends BasePriceQueryDTO {
 
     @NotNull
@@ -28,4 +28,13 @@ public class PriceTrendQueryDTO extends BasePriceQueryDTO {
     // 聚合粒度
     @NotNull
     private TimeGranularity granularity;
+
+
+    @Override
+    public String cacheKey() {
+        return super.cacheKey()
+                + "|st:" + startTime
+                + "|et:" + endTime
+                + "|g:" + granularity;
+    }
 }

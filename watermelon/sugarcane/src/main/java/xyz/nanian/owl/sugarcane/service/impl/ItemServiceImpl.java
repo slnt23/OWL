@@ -3,6 +3,8 @@ package xyz.nanian.owl.sugarcane.service.impl;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
+import xyz.nanian.owl.sugarcane.constant.CacheConstant;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
 import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
 import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroVO;
@@ -30,16 +32,19 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, ItemDO> implements 
     final ItemConvert itemConvert;
 
     @Override
+    @Cacheable(value = CacheConstant.ITEM_PAGE,
+            key = "'page:' + #itemIntroDTO.pageNum + ':' + #itemIntroDTO.pageSize + ':' + #itemIntroDTO.itemName",
+            unless = "#result == null || #result.records.size() == 0")
     public IPage<ItemIntroVO> getItemIntroList(ItemIntroDTO itemIntroDTO) {
 
 //        分页查询，
-        Page<ItemDO> pageItems= new Page<>(itemIntroDTO.getPageNum(),itemIntroDTO.getPageSize());
-        IPage<ItemDO> itemDOIPage = itemMapper.selectPageItems(pageItems,itemIntroDTO.getItemName());
+        Page<ItemDO> pageItems = new Page<>(itemIntroDTO.getPageNum(), itemIntroDTO.getPageSize());
+        IPage<ItemDO> itemDOIPage = itemMapper.selectPageItems(pageItems, itemIntroDTO.getItemName());
 
 //        仅仅转换list
         List<ItemIntroVO> itemIntroVOList = itemConvert.DOtoVO(itemDOIPage.getRecords());
 
-        IPage<ItemIntroVO> itemIntroVOIPage = new Page<>(itemIntroDTO.getPageNum(),itemIntroDTO.getPageSize());
+        IPage<ItemIntroVO> itemIntroVOIPage = new Page<>(itemIntroDTO.getPageNum(), itemIntroDTO.getPageSize());
         itemIntroVOIPage.setRecords(itemIntroVOList);
         itemIntroVOIPage.setTotal(itemDOIPage.getTotal());
 

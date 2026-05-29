@@ -1,6 +1,8 @@
 package xyz.nanian.owl.sugarcane.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
+import xyz.nanian.owl.sugarcane.constant.CacheConstant;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceCompareLocationDTO;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceCompareSourceDTO;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceLatestQueryDTO;
@@ -28,34 +30,22 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, RecordDO> imple
 
     final private RecordMapper recordMapper;
 
-    /**
-     * 最新价格
-     * @param dto
-     * @return
-     */
     @Override
+    @Cacheable(value = CacheConstant.PRICE_LATEST, key = "#dto.itemId", unless = "#result == null ")
     public PriceLatestVO queryLatest(PriceLatestQueryDTO dto) {
 
         PriceLatestVO vo = recordMapper.selectLatest(dto.getItemId());
         return vo;
     }
 
-    /**
-     * 查询趋势
-     * @param dto
-     * @return
-     */
     @Override
+    @Cacheable(value = CacheConstant.PRICE_TREND, key = "#dto.cacheKey()", unless = "#result == null")
     public List<PriceTrendVO> queryTrend(PriceTrendQueryDTO dto) {
         return recordMapper.selectTrend(dto);
     }
 
-    /**
-     * 地区对比
-     * @param dto
-     * @return
-     */
     @Override
+    @Cacheable(value = CacheConstant.PRICE_COMPARE_LOCATION, key = "#dto.cacheKey()", unless = "#result == null")
     public PriceCompareVO compareLocation(PriceCompareLocationDTO dto) {
         // 查询物品信息
         PriceItemVO item = recordMapper.selectItemByIdOrCode(dto.getItemId(), dto.getItemCode());
@@ -69,13 +59,8 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, RecordDO> imple
         return vo;
     }
 
-
-    /**
-     * 多来源对比
-     * @param dto
-     * @return
-     */
     @Override
+    @Cacheable(value = CacheConstant.PRICE_COMPARE_SOURCE, key = "#dto.cacheKey()", unless = "#result == null")
     public List<SourceCompareVO> compareSource(PriceCompareSourceDTO dto) {
         return recordMapper.selectSourcePrices(dto);
     }

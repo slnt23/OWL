@@ -16,5 +16,11 @@ import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroVO;
  */
 public interface ItemService extends IService<ItemDO> {
 
+    /**
+     * 查询物品Item
+     *
+     * @param itemIntroDTO
+     * @return
+     */
     IPage<ItemIntroVO> getItemIntroList(ItemIntroDTO itemIntroDTO);
 }
