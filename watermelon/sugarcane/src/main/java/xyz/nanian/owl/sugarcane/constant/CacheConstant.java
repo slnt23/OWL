@@ -54,4 +54,9 @@ public final class CacheConstant {
 
     /** 仅在结果不为 null 时缓存 */
     public static final String UNLESS_NULL = "#result == null";
+
+    // ==================== 布隆过滤器 ====================
+
+    /** itemId 前缀，sugarcane 专用 */
+    public static final String BLOOM_ITEM_PREFIX = "item:";
 }

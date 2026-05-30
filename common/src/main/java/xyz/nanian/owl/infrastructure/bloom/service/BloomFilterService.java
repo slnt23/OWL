@@ -1,4 +1,4 @@
-package xyz.nanian.owl.infrastructure.redis.service;
+package xyz.nanian.owl.infrastructure.bloom.service;
 
 
 /**

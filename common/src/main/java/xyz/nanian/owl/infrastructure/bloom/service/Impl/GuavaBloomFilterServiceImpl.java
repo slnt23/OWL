@@ -1,10 +1,10 @@
-package xyz.nanian.owl.infrastructure.redis.service.Impl;
+package xyz.nanian.owl.infrastructure.bloom.service.Impl;
 
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.infrastructure.redis.service.BloomFilterService;
+import xyz.nanian.owl.infrastructure.bloom.service.BloomFilterService;
 
 import java.nio.charset.StandardCharsets;
 
