@@ -7,15 +7,12 @@ import org.springframework.cache.annotation.Cacheable;
 import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.sugarcane.constant.CacheConstant;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
-import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
-import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroVO;
+import xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO;
 import xyz.nanian.owl.sugarcane.mapper.ItemMapper;
-import xyz.nanian.owl.sugarcane.mapstruct.ItemConvert;
 import xyz.nanian.owl.sugarcane.service.ItemService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
 
 /**
  * <p>
@@ -30,33 +27,19 @@ import java.util.List;
 public class ItemServiceImpl extends ServiceImpl<ItemMapper, ItemDO> implements ItemService {
 
     final ItemMapper itemMapper;
-    final ItemConvert itemConvert;
 
     @Override
     @BizLog(module = "sugarcane",action = "模糊分页搜索物品Item")
     @Cacheable(value = CacheConstant.ITEM_PAGE,
             key = "'page:' + #itemIntroDTO.pageNum + ':' + #itemIntroDTO.pageSize + ':' + #itemIntroDTO.itemName",
             sync = true)
-//            unless = "#result == null || #result.records == null || #result.records.isEmpty()")
-    public IPage<ItemIntroVO> getItemIntroList(ItemIntroDTO itemIntroDTO) {
+    public IPage<PriceItemVO> getItemIntroList(ItemIntroDTO itemIntroDTO) {
+        Page<PriceItemVO> pageItems = new Page<>(itemIntroDTO.getPageNum(), itemIntroDTO.getPageSize());
+        IPage<PriceItemVO> result = itemMapper.selectPageItems(pageItems, itemIntroDTO.getItemName());
 
-//        分页查询，
-        Page<ItemDO> pageItems = new Page<>(itemIntroDTO.getPageNum(), itemIntroDTO.getPageSize());
-        IPage<ItemDO> itemDOIPage = itemMapper.selectPageItems(pageItems, itemIntroDTO.getItemName());
-
-//        仅仅转换list
-        List<ItemIntroVO> itemIntroVOList = itemConvert.DOtoVO(itemDOIPage.getRecords());
-//        如果没有数据，直接返回 null（不进入缓存）
-        if (itemIntroVOList == null || itemIntroVOList.isEmpty()) {
-            return null;// 返回 null，sync=true 时也不会缓存
+        if (result.getRecords() == null || result.getRecords().isEmpty()) {
+            return null;
         }
-
-        IPage<ItemIntroVO> itemIntroVOIPage = new Page<>(
-                itemIntroDTO.getPageNum(),
-                itemIntroDTO.getPageSize());
-        itemIntroVOIPage.setRecords(itemIntroVOList);
-        itemIntroVOIPage.setTotal(itemDOIPage.getTotal());
-
-        return itemIntroVOIPage;
+        return result;
     }
 }

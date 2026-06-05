@@ -66,8 +66,9 @@ public class ConversationController {
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "删除会话")
-    public void delete(@PathVariable String id) {
+    public Result<Void> delete(@PathVariable String id) {
         conversationService.deleteConversation(id);
+        return Result.success();
     }
 }
 

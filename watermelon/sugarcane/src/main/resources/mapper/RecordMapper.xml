@@ -31,7 +31,7 @@
 
     <resultMap id="PriceTrendVOMap" type="xyz.nanian.owl.sugarcane.domain.vo.PriceTrendVO">
         <id column="item_id" property="itemId"/>
-        <id column="location_id" property="locationName"/>
+        <id column="location_id" property="locationId"/>
         <result column="item_name" property="itemName"/>
         <result column="unit" property="unit"/>
         <result column="specification" property="specification"/>

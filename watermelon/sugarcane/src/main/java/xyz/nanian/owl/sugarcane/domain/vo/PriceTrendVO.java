@@ -16,6 +16,11 @@ import java.util.List;
 public class PriceTrendVO extends PriceItemVO {
 
     /**
+     * 地点ID
+     */
+    private Long locationId;
+
+    /**
      * 地点名称，如"北京"、"上海"等
      */
     private String locationName;

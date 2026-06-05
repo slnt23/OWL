@@ -40,7 +40,7 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, RecordDO> imple
 //    @Cacheable(value = CacheConstant.PRICE_LATEST, key = "#dto.cacheKey()", sync = true )
     public PriceLatestVO queryLatest(PriceLatestQueryDTO dto) {
 
-        log.warn(dto.getCurrency() + "  " + dto.getItemId() + "   " + dto.getLocationId() + "  ");
+//        log.warn(dto.getCurrency() + "  " + dto.getItemId() + "   " + dto.getLocationId() + "  ");
 
 //        if (dto.getItemId() != null && !bloomFilter.mightContain(BLOOM_ITEM_PREFIX + dto.getItemId())) {
 //            return null;
@@ -52,23 +52,23 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, RecordDO> imple
 
     @Override
     @BizLog(module = "Record", action = "查询物品价格趋势")
-    @Cacheable(value = CacheConstant.PRICE_TREND, key = "#dto.cacheKey()", sync = true)
+//    @Cacheable(value = CacheConstant.PRICE_TREND, key = "#dto.cacheKey()", sync = true)
     public List<PriceTrendVO> queryTrend(PriceTrendQueryDTO dto) {
 
-        if (dto.getItemId() != null && !bloomFilter.mightContain(BLOOM_ITEM_PREFIX + dto.getItemId())) {
-            return null;
-        }
+//        if (dto.getItemId() != null && !bloomFilter.mightContain(BLOOM_ITEM_PREFIX + dto.getItemId())) {
+//            return null;
+//        }
         return recordMapper.selectTrend(dto);
     }
 
     @Override
     @BizLog(module = "Record", action = "地区对比")
-    @Cacheable(value = CacheConstant.PRICE_COMPARE_LOCATION, key = "#dto.cacheKey()", sync = true)
+//    @Cacheable(value = CacheConstant.PRICE_COMPARE_LOCATION, key = "#dto.cacheKey()", sync = true)
     public PriceCompareVO compareLocation(PriceCompareLocationDTO dto) {
 
-        if (dto.getItemId() != null && !bloomFilter.mightContain(BLOOM_ITEM_PREFIX + dto.getItemId())) {
-            return null;
-        }
+//        if (dto.getItemId() != null && !bloomFilter.mightContain(BLOOM_ITEM_PREFIX + dto.getItemId())) {
+//            return null;
+//        }
         // 查询物品信息
         PriceItemVO item = recordMapper.selectItemByIdOrCode(dto.getItemId(), dto.getItemCode());
 
@@ -86,11 +86,11 @@ public class RecordServiceImpl extends ServiceImpl<RecordMapper, RecordDO> imple
 
     @Override
     @BizLog(module = "Record", action = "来源对比")
-    @Cacheable(value = CacheConstant.PRICE_COMPARE_SOURCE, key = "#dto.cacheKey()", sync = true)
+//    @Cacheable(value = CacheConstant.PRICE_COMPARE_SOURCE, key = "#dto.cacheKey()", sync = true)
     public List<SourceCompareVO> compareSource(PriceCompareSourceDTO dto) {
-        if (dto.getItemId() != null && !bloomFilter.mightContain(BLOOM_ITEM_PREFIX + dto.getItemId())) {
-            return null;
-        }
+//        if (dto.getItemId() != null && !bloomFilter.mightContain(BLOOM_ITEM_PREFIX + dto.getItemId())) {
+//            return null;
+//        }
         return recordMapper.selectSourcePrices(dto);
     }
 }

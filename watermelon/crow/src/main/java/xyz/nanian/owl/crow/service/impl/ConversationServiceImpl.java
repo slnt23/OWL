@@ -13,6 +13,7 @@ import xyz.nanian.owl.crow.mapstruct.ConversationConvert;
 import xyz.nanian.owl.crow.service.ConversationService;
 import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 import xyz.nanian.owl.crow.domain.vo.MessageVO;
+import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.utils.jwt.UserContext;
 
 import java.time.LocalDateTime;
@@ -90,7 +91,16 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
+    @BizLog(module = "ai-conversation",action = "删除本ai会话，")
     public void deleteConversation(String conversationId) {
+        String userCode = UserContext.getUserCode();
+        ConversationDO conversation = conversationMapper.selectOne(
+                new LambdaQueryWrapper<ConversationDO>()
+                        .eq(ConversationDO::getId, conversationId)
+                        .eq(ConversationDO::getUserCode, userCode));
+        if (conversation == null) {
+            return;
+        }
         conversationMapper.deleteById(conversationId);
     }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Param;
 import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
+import xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,6 +19,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ItemMapper extends BaseMapper<ItemDO> {
 
-    IPage<ItemDO> selectPageItems(Page<?> page,@Param("itemName") String itemName);
+    IPage<PriceItemVO> selectPageItems(Page<?> page, @Param("itemName") String itemName);
 
 }
