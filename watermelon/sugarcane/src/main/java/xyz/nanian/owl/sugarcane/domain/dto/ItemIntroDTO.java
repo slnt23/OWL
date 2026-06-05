@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,9 +18,7 @@ import xyz.nanian.owl.dto.PageDTO;
 @Data
 public class ItemIntroDTO extends PageDTO {
 
-    /**
-     * 所查物品名
-     */
+    @Schema(description = "所查物品名", example = "白砂糖")
     @NotNull
     String itemName;
 

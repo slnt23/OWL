@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 public class PriceCompareLocationDTO extends BasePriceQueryDTO {
 
-    // 可选：指定时间（否则默认最新）
+    @Schema(description = "对比目标时间（不填默认最新）", example = "2026-06-05T10:30:00")
     @NotNull
     private LocalDateTime targetTime;
 

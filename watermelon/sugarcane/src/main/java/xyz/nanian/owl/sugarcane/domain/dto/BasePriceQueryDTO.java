@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -18,60 +19,42 @@ import java.util.List;
 public abstract class BasePriceQueryDTO {
 
     // ==================== 物品相关 ====================
-    /**
-     * 单个物品ID
-     */
+    @Schema(description = "单个物品ID", example = "1")
     @Positive(message = "物品ID必须为正整数")
     private Long itemId;
 
-    /**
-     * 物品编码
-     */
+    @Schema(description = "物品编码", example = "SUGAR_WHITE_001")
     @Size(max = 64, message = "物品编码长度不能超过64个字符")
     private String itemCode;
 
-    /**
-     * 多个物品ID
-     */
+    @Schema(description = "多个物品ID列表", example = "[1, 2, 3]")
     @Size(max = 100, message = "单次查询的物品ID数量不能超过100个")
     private List<Long> itemIds;
     // ==================== 地点相关 ====================
-    /**
-     * 单个地点ID
-     */
+    @Schema(description = "单个地点ID", example = "1")
     @Positive(message = "地点ID必须为正整数")
     private Long locationId;
 
-    /**
-     * 多个地点ID
-     */
+    @Schema(description = "多个地点ID列表", example = "[1, 2]")
     @Size(max = 50, message = "单次查询的地点ID数量不能超过50个")
     private List<Long> locationIds;
     // ==================== 来源相关 ====================
-    /**
-     * 价格来源ID列表
-     */
+    @Schema(description = "价格来源ID列表", example = "[1, 2]")
     @Size(max = 20, message = "单次查询的价格来源数量不能超过20个")
     private List<Long> sourceIds;
 
-    /**
-     * 最小可靠等级
-     */
+    @Schema(description = "最小可靠等级 (1-5)", example = "3")
     @Min(value = 1, message = "可靠等级最小值为1")
     @Max(value = 5, message = "可靠等级最大值为5")
     private Integer minReliability;
     // ==================== 通用过滤 ====================
-    /**
-     * 币种
-     */
+    @Schema(description = "币种", example = "CNY")
     @Pattern(regexp = "^(CNY|USD|EUR|JPY|GBP|HKD)$",
             message = "币种仅支持CNY、USD、EUR、JPY、GBP、HKD")
     @Size(max = 8, message = "币种长度不能超过8个字符")
     private String currency;
 
-    /**
-     * 最小可信度
-     */
+    @Schema(description = "最小可信度 (0-100)", example = "80.00")
     @DecimalMin(value = "0.00", inclusive = true, message = "可信度不能小于0")
     @DecimalMax(value = "100.00", inclusive = true, message = "可信度不能大于100")
     private BigDecimal minConfidence;

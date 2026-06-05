@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @Data
 public class PriceCompareSourceDTO extends BasePriceQueryDTO {
 
+    @Schema(description = "对比目标时间", example = "2026-06-05T10:30:00")
     @NotNull
     private LocalDateTime targetTime;
 

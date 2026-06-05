@@ -33,7 +33,6 @@ public class ItemController {
     @PostMapping("/page")
     @Operation(summary = "所查物品列表")
     public Result<ResultPage<ItemIntroVO>> page(@RequestBody ItemIntroDTO dto){
-
         return Result.success(ResultPage.create(itemService.getItemIntroList(dto)));
     }
 
@@ -53,7 +52,6 @@ public class ItemController {
     // 删除
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
-
     }
 
     // 详情

@@ -20,5 +20,5 @@ public class PriceLatestQueryDTO extends BasePriceQueryDTO {
 //    @NotNull
 //    private Boolean latestOnly = true;
 
-//    这里传递参数有，itemId，地点，货币类型，
+//    这里传递参数有，1. itemId，2. 地点，3. 货币类型，
 }

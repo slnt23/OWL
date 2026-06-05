@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,13 +20,15 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 public class PriceTrendQueryDTO extends BasePriceQueryDTO {
 
+    @Schema(description = "趋势查询开始时间", example = "2026-01-01T00:00:00")
     @NotNull
     private LocalDateTime startTime;
 
+    @Schema(description = "趋势查询结束时间", example = "2026-06-05T23:59:59")
     @NotNull
     private LocalDateTime endTime;
 
-    // 聚合粒度
+    @Schema(description = "聚合粒度", example = "DAILY")
     @NotNull
     private TimeGranularity granularity;
 
