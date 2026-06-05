@@ -111,8 +111,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     /**
-     * 保存用户信息，
-     * 可以用于注册
+     * 保存用户信息，可以用于注册,TODO 当前端注册，登陆合一，本方法可删除，
      *
      * @param emailLoginOrRegisterDTO 用户DTO基本信息
      * @return
@@ -120,7 +119,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
 //        1. 检验验证码是否正确,正确生成用户，错误，返回
-        if(!verificationCode(emailLoginOrRegisterDTO.getEmail(),emailLoginOrRegisterDTO.getCode())){
+        if (!verificationCode(emailLoginOrRegisterDTO.getEmail(), emailLoginOrRegisterDTO.getCode())) {
             throw new LoginException(ResultStatus.VERIFY_CODE_ERROR);
         }
 
@@ -149,7 +148,7 @@ public class LoginServiceImpl implements LoginService {
 //        userMapper.insert(userDO);
 
 //        生成用户信息，
-        if(!saveUserInfo(emailLoginOrRegisterDTO.getEmail())){
+        if (!saveUserInfo(emailLoginOrRegisterDTO.getEmail())) {
             throw new LoginException(ResultStatus.BIZ_ERROR);
         }
 
@@ -158,7 +157,6 @@ public class LoginServiceImpl implements LoginService {
 
     /**
      * 用户登陆 + 注册 ，邮箱验证码，
-     * TODO 后期可以设置为验证码登陆，注册二合一，
      *
      * @param emailLoginOrRegisterDTO DTO
      * @return
@@ -181,19 +179,21 @@ public class LoginServiceImpl implements LoginService {
 //        stringRedisTemplate.delete(key);
 
 //        1. 检验验证码是否正确
-        if(!verificationCode(emailLoginOrRegisterDTO.getEmail(),emailLoginOrRegisterDTO.getCode())){
+        if (!verificationCode(emailLoginOrRegisterDTO.getEmail(), emailLoginOrRegisterDTO.getCode())) {
             throw new LoginException(ResultStatus.VERIFY_CODE_ERROR);
         }
 
 //        2.  搜索数据库是否有此账户，有直接登陆，无注册用户，
-
-
+//        TODO 后期可以设置为验证码登陆，注册二合一，也就是将上面的方法与本方法融合，
+//        if (!saveUserInfo(emailLoginOrRegisterDTO.getEmail())) {
+//            throw new LoginException(ResultStatus.BIZ_ERROR);
+//        }
 
 //        3.检查用户账号是否封禁，0 = 正常
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserDO::getEmail, emailLoginOrRegisterDTO.getEmail());
         UserDO userDO = userMapper.selectOne(wrapper);
-        if (userDO.getStatus() != 0){
+        if (userDO.getStatus() != 0) {
             throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
         }
 
@@ -204,7 +204,7 @@ public class LoginServiceImpl implements LoginService {
             throw new LoginException(ResultStatus.ROLE_FAILED);
         }
 
-//        5.一切成功
+//        5.一切成功,
         return getToken(emailLoginOrRegisterDTO.getEmail());
     }
 
@@ -275,11 +275,12 @@ public class LoginServiceImpl implements LoginService {
 
     /**
      * 检验验证码是否正确，
+     *
      * @param email
      * @param code
      * @return
      */
-    private Boolean verificationCode(String email,String code) {
+    private Boolean verificationCode(String email, String code) {
 //        1.根据获取的邮箱地址，以及邮箱KEY 获取redis中的code，
         String key = LoginConstant.VERIFICATION_CODE_PREFIX + email;
 
@@ -299,10 +300,11 @@ public class LoginServiceImpl implements LoginService {
 
     /**
      * 生成默认用户信息，并保存
+     *
      * @param email
      * @return
      */
-    private Boolean saveUserInfo(String email){
+    private Boolean saveUserInfo(String email) {
 
 //        2. 生成用户信息并注入默认值，
         UserDO userDO = new UserDO();

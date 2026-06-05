@@ -16,7 +16,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/category")
-@Tag(name = "分类")
+@Tag(name = "Category分类")
 public class CategoryController {
 
     // 获取分类树（最重要）

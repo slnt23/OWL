@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
  * @since 2026/4/24
  */
 @Data
-public class PriceLatestVO {
+public class PriceLatestVO extends PriceItemVO{
 
     /**
      * 物品基本信息
      */
-    private PriceItemVO item;
+//    private PriceItemVO item;
 
     /**
      * 地点名称

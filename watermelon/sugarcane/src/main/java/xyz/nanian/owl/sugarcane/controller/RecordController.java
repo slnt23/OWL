@@ -27,7 +27,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/price")
-@Tag(name = "价格查询")
+@Tag(name = "Record查询")
 @RequiredArgsConstructor
 public class RecordController {
 

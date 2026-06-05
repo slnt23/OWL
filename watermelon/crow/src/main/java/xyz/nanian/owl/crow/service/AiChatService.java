@@ -2,6 +2,7 @@ package xyz.nanian.owl.crow.service;
 
 
 import xyz.nanian.owl.crow.domain.dto.ChatRequestDTO;
+import reactor.core.publisher.Flux;
 
 /**
  * AI
@@ -11,7 +12,20 @@ import xyz.nanian.owl.crow.domain.dto.ChatRequestDTO;
  */
 
 public interface AiChatService {
-
+    /**
+     * chat
+     *
+     * @param dto
+     * @return
+     */
     String chat(ChatRequestDTO dto);
+
+    /**
+     * stream
+     *
+     * @param dto
+     * @return
+     */
+    Flux<String> chatStream(ChatRequestDTO dto);
 }
 

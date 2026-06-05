@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.nanian.owl.crow.domain.dto.ChatRequestDTO;
 import xyz.nanian.owl.crow.service.AiChatService;
+import xyz.nanian.owl.result.Result;
+import org.springframework.http.MediaType;
+import reactor.core.publisher.Flux;
 
 /**
  * 消息
@@ -22,16 +25,30 @@ import xyz.nanian.owl.crow.service.AiChatService;
 @RestController
 @RequestMapping("/ai")
 @RequiredArgsConstructor
-@Tag(name = "AI聊天管理",description = "chat")
+@Tag(name = "AI聊天管理", description = "chat")
 public class AiChatController {
 
     private final AiChatService aiChatService;
 
-
+    //    非流式输出
     @Operation(summary = "用户聊天")
     @PostMapping("/chat")
-    public String chat(@RequestBody @Valid ChatRequestDTO dto) {
-        return aiChatService.chat(dto);
+    public Result<String> chat(@RequestBody @Valid ChatRequestDTO dto) {
+        return Result.success(aiChatService.chat(dto));
     }
+
+    //    流式输出回复，
+    @Operation(summary = "流式聊天")
+    @PostMapping(
+            value = "/chat/stream",
+            produces = MediaType.TEXT_EVENT_STREAM_VALUE
+    )
+    public Flux<String> chatStream(
+            @RequestBody @Valid ChatRequestDTO dto) {
+
+        return aiChatService.chatStream(dto);
+    }
+
+
 }
 

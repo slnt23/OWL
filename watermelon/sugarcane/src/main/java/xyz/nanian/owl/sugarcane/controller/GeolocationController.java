@@ -1,5 +1,6 @@
 package xyz.nanian.owl.sugarcane.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/location")
+@Tag(name = "地区管理")
 public class GeolocationController {
 
     // 树结构（国家-城市-区域）

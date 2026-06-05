@@ -35,17 +35,13 @@ public class ConversationServiceImpl implements ConversationService {
     private final MessageMapper messageMapper;
     private final ConversationConvert conversationConvert;
 
-    /**
-     * 创建会话ID，
-     * @param dto
-     * @return
-     */
+
     @Override
     public String createConversation(CreateConversationDTO dto) {
 
         String conversationId = UUID.randomUUID().toString();
 
-        log.info("conversationId:{}",conversationId);
+        log.info("conversationId:{}", conversationId);
 
         ConversationDO conversation = new ConversationDO();
         conversation.setId(conversationId);
@@ -55,27 +51,24 @@ public class ConversationServiceImpl implements ConversationService {
 //        获取用户账号，
         conversation.setUserCode(UserContext.getUserCode());
 
-        log.info("conversationId:{}",conversation);
+        log.info("conversationId:{}", conversation);
 
         conversationMapper.insert(conversation);
 
         return conversationId;
     }
 
-    /**
-     * 获取当前用户的会话列表
-     * @return
-     */
+
     @Override
     public List<ConversationVO> listCurrentUserConversations() {
 
         String userCodeId = UserContext.getUserCode();
 
         LambdaQueryWrapper<ConversationDO> wrapper = new LambdaQueryWrapper<ConversationDO>();
-        wrapper.eq(ConversationDO::getUserCode,userCodeId);
+        wrapper.eq(ConversationDO::getUserCode, userCodeId);
 
 //        查询当前用户的会话列表
-        List<ConversationDO> conversationDOS= conversationMapper.selectList(wrapper);
+        List<ConversationDO> conversationDOS = conversationMapper.selectList(wrapper);
 
         return conversationConvert.conversationDOListToConversationVOList(conversationDOS);
 
@@ -90,20 +83,12 @@ public class ConversationServiceImpl implements ConversationService {
 //                .toList();
     }
 
-    /**
-     * 获取会话消息列表
-     * @param conversationId
-     * @return
-     */
+
     @Override
     public List<MessageVO> getMessages(String conversationId) {
         return messageMapper.selectByConversationId(conversationId);
     }
 
-    /**
-     * 删除会话
-     * @param conversationId
-     */
     @Override
     public void deleteConversation(String conversationId) {
         conversationMapper.deleteById(conversationId);

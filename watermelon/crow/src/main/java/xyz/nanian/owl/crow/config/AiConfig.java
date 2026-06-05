@@ -26,6 +26,7 @@ public class AiConfig {
     public ChatClient chatClient(ChatClient.Builder builder, ChatClientProperties properties) {
         return builder
                 .defaultSystem(properties.getDefaultSystem())
+//                .httpClient(okHttpClient())
                 .build();
     }
 
@@ -33,4 +34,13 @@ public class AiConfig {
     public SkillRegistryService skillRegistry(MinioClient minioClient) {
         return new MinioSkillRegistryService(minioClient);
     }
+
+//    @Bean
+//    public okhttp3.OkHttpClient okHttpClient() {
+//        return new okhttp3.OkHttpClient.Builder()
+//                .connectTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+//                .readTimeout(360, java.util.concurrent.TimeUnit.SECONDS)
+//                .writeTimeout(60, java.util.concurrent.TimeUnit.SECONDS)
+//                .build();
+//    }
 }

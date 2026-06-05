@@ -24,7 +24,7 @@ import xyz.nanian.owl.utils.jwt.UserContext;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-@Tag(name = "用户管理",description = "有关用户个人的一系列controller")
+@Tag(name = "用户管理", description = "有关用户个人的一系列controller")
 public class UserController {
 
 //    private final static Logger log= LoggerFactory.getLogger(UserController.class);
@@ -38,26 +38,28 @@ public class UserController {
 
     /**
      * 获取用户信息
+     *
      * @return
      */
     @GetMapping("/info")
     @Operation(summary = "获取用户信息")
-    public Result<UserInfoVO> getUserInfo(){
-       return Result.success(userService.getUserInfoByCode());
+    public Result<UserInfoVO> getUserInfo() {
+        return Result.success(userService.getUserInfoByCode());
     }
 
 
     /**
      * 更新用户信息
+     *
      * @param userInfoDTO 用户最新信息
      * @return message
      */
     @PutMapping("/userInfo")
     @Operation(summary = "用户信息更新")
     public Result<ResultStatus> updateUser(@RequestBody UserInfoDTO userInfoDTO) {
-        if(userService.updateUserInfo(userInfoDTO)){
+        if (userService.updateUserInfo(userInfoDTO)) {
             return Result.success();
-        }else{
+        } else {
             return Result.fail();
         }
     }
@@ -77,9 +79,9 @@ public class UserController {
 
 //        2. 验证码校验成功后,改动密码，
 
-        if(userService.updateUserPassword(password)){
+        if (userService.updateUserPassword(password)) {
             return Result.success();
-        }else{
+        } else {
             return Result.fail();
         }
     }
@@ -97,7 +99,8 @@ public class UserController {
     }
 
     /**
-     *更新用户头像
+     * 更新用户头像
+     *
      * @param file
      * @return
      */
@@ -106,11 +109,10 @@ public class UserController {
     public Result<String> updateAvatar(@RequestParam("file") MultipartFile file) {
         String userCode = UserContext.getUserCode();
 //        检查用户是否登录
-        if(userCode == null){
+        if (userCode == null) {
             return Result.fail(ResultStatus.UNAUTHORIZED);
         }
-//        String avatarUrl = minioFileServiceImpl.upload(file, MinioConstant.BUCKET_AVATARS);
-        String avatarUrl = userService.updateUserAvatar(file,userCode);
+        String avatarUrl = userService.updateUserAvatar(file, userCode);
 
         return Result.success(avatarUrl);
     }

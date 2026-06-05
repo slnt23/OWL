@@ -9,6 +9,7 @@ import xyz.nanian.owl.crow.domain.dto.CreateConversationDTO;
 import xyz.nanian.owl.crow.service.ConversationService;
 import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 import xyz.nanian.owl.crow.domain.vo.MessageVO;
+import xyz.nanian.owl.result.Result;
 
 import java.util.List;
 
@@ -34,8 +35,8 @@ public class ConversationController {
      */
     @PostMapping
     @Operation(summary = "新建会话")
-    public String createConversation(@RequestBody(required = false) CreateConversationDTO dto) {
-        return conversationService.createConversation(dto);
+    public Result<String> createConversation(@RequestBody(required = false) CreateConversationDTO dto) {
+        return Result.success(conversationService.createConversation(dto));
     }
 
     /**
@@ -44,8 +45,8 @@ public class ConversationController {
      */
     @GetMapping("/list")
     @Operation(summary = "获取会话历史")
-    public List<ConversationVO> list() {
-        return conversationService.listCurrentUserConversations();
+    public Result<List<ConversationVO>> list() {
+        return Result.success(conversationService.listCurrentUserConversations());
     }
 
     /**
@@ -55,8 +56,8 @@ public class ConversationController {
      */
     @GetMapping("/{id}/messages")
     @Operation(summary = "获取历史消息")
-    public List<MessageVO> messages(@PathVariable String id) {
-        return conversationService.getMessages(id);
+    public Result<List<MessageVO>> messages(@PathVariable String id) {
+        return Result.success(conversationService.getMessages(id));
     }
 
     /**

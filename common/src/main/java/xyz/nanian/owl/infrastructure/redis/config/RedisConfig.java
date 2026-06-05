@@ -17,6 +17,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.time.Duration;
 
@@ -32,44 +35,32 @@ import java.time.Duration;
 public class RedisConfig {
 
     /**
-     * 配置序列化
-     *
-     * @param redisConnectionFactory 工厂
-     * @return
+     * 配置 RedisTemplate
      */
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
 
-//        key 与 hashKey 使用String
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 
+        // 关键修改：为 ObjectMapper 开启类型信息
         ObjectMapper om = new ObjectMapper();
         om.registerModule(new JavaTimeModule());
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-//        这里序列化与反序列化redis中的value值 使用Json代替jdk
+        om.activateDefaultTyping(
+                LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.PROPERTY
+        );
+        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(om);
-//        以下方法已经废弃
-//        value使用json
-//        Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer =
-//                new Jackson2JsonRedisSerializer<>(Object.class);
-//
-//        ObjectMapper om = new ObjectMapper();
-//        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-//        om.activateDefaultTyping(
-//                LaissezFaireSubTypeValidator.instance,
-//                ObjectMapper.DefaultTyping.NON_FINAL
-//        );
-//        jackson2JsonRedisSerializer.setObjectMapper(mapper);
 
-
-//        配置序列化方式
-//        key
+        // key
         redisTemplate.setKeySerializer(stringRedisSerializer);
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
-//        value
+        // value
         redisTemplate.setValueSerializer(serializer);
         redisTemplate.setHashValueSerializer(serializer);
         redisTemplate.afterPropertiesSet();
@@ -78,11 +69,7 @@ public class RedisConfig {
     }
 
     /**
-     * 配置序列化
-     * 可选的，但推荐的只操作字符串，推荐使用这个，感觉这个和哈希都好
-     *
-     * @param redisConnectionFactory 连接工厂
-     * @return StringRedisTemplate
+     * StringRedisTemplate
      */
     @Bean
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
@@ -90,9 +77,7 @@ public class RedisConfig {
     }
 
     /**
-     * 配置Redis 的读写分离，目前是优先从子节点 读取，主节点 写入
-     *
-     * @return
+     * Lettuce 读写分离配置
      */
     @Bean
     public LettuceClientConfigurationBuilderCustomizer configurationBuilderCustomizer() {
@@ -101,29 +86,32 @@ public class RedisConfig {
     }
 
     /**
-     * Spring Cache 的 RedisCacheManager，
-     * 使用与 RedisTemplate 一致的 GenericJackson2JsonRedisSerializer
+     * Spring Cache 配置（重点修改部分）
      */
     @Bean
     public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
+        // 关键修改：为 ObjectMapper 开启类型信息
         ObjectMapper om = new ObjectMapper();
         om.registerModule(new JavaTimeModule());
         om.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        om.activateDefaultTyping(
+                LaissezFaireSubTypeValidator.instance,
+                ObjectMapper.DefaultTyping.NON_FINAL,
+                JsonTypeInfo.As.PROPERTY
+        );
+        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer(om);
 
         RedisCacheConfiguration defaultConfig = RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(10))  // 默认 TTL 10 分钟
-                .serializeKeysWith(
-                        RedisSerializationContext.SerializationPair
-                                .fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(
-                        RedisSerializationContext.SerializationPair
-                                .fromSerializer(serializer))
-                .disableCachingNullValues();    // 不缓存 null,这里可以缓存，用来解决缓存穿透问题，同时注解不加unless,
+                .entryTtl(Duration.ofMinutes(10))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(serializer))
+                .disableCachingNullValues();
 
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(defaultConfig)
                 .build();
     }
 }
+

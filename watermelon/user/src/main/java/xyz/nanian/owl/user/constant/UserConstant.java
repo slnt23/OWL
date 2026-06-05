@@ -39,7 +39,6 @@ public class UserConstant {
      */
     public static final Integer DEFAULT_STATUS = 0;
 
-
     public static final String DEFAULT_NICK_NAME = "默认昵称";
     public static final String DEFAULT_REMARK = "备注，写点什么好呢？";
 

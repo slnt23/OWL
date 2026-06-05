@@ -34,20 +34,13 @@ public class LoginController {
     }
 
     /**
-     * 用户注册
+     * 用户注册,TODO 这个和ServiceImpl,中，后续注册登陆合到一起，提升用户体验，
      * @param user 用户DTO
      * @return
      */
     @PostMapping("/register")
     @Operation(summary = "提交注册申请",description = "用户注册")
     public Result<String> registerUser(@RequestBody @Validated EmailLoginOrRegisterDTO user) {
-//        校验验证码，然后，生成用户，
-//        if(loginService.saveUser(user)){
-//            return Result.success();
-//        }else{
-//            return Result.fail();
-//        }
-//        还可以改为直接，注册后返回token，提升用户体验，
         return Result.success(loginService.saveUser(user));
     }
 

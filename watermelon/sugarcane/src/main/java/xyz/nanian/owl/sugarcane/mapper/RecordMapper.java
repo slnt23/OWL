@@ -2,7 +2,6 @@ package xyz.nanian.owl.sugarcane.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import xyz.nanian.owl.sugarcane.domain.dto.PriceCompareLocationDTO;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceCompareSourceDTO;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceTrendQueryDTO;
 import xyz.nanian.owl.sugarcane.domain.entity.RecordDO;
@@ -24,7 +23,9 @@ import java.util.List;
 public interface RecordMapper extends BaseMapper<RecordDO> {
 
 //    查询最新的
-    PriceLatestVO selectLatest(@Param("item_id") Long id);
+    PriceLatestVO selectLatest(@Param("itemId") Long itemId,
+                              @Param("locationId") Long locationId,
+                              @Param("currency") String currency);
 
 //    查询趋势
     List<PriceTrendVO> selectTrend(@Param("query") PriceTrendQueryDTO query);
@@ -38,7 +39,9 @@ public interface RecordMapper extends BaseMapper<RecordDO> {
                                      @Param("itemCode") String itemCode);
 
     // 查询指定时间的各地区价格
-    List<LocationPriceVO> selectLocationPrices(@Param("dto") PriceCompareLocationDTO dto);
+    List<LocationPriceVO> selectLocationPrices(@Param("itemId") Long itemId,
+                                               @Param("locationId") Long locationId,
+                                               @Param("targetTime") java.time.LocalDateTime targetTime);
 
     // 查询指定时间各来源价格
     List<SourceCompareVO> selectSourcePrices(@Param("dto") PriceCompareSourceDTO dto);

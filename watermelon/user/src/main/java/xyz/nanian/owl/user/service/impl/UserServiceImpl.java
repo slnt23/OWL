@@ -2,6 +2,7 @@ package xyz.nanian.owl.user.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -33,14 +34,14 @@ import xyz.nanian.owl.utils.jwt.UserContext;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserMapper userMapper ;
+    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserConvert userConvert;
     private final FileStorageService fileStorageService;
     private final RoleMapper roleMapper;
 
     @Override
-    @BizLog(module = "用户",action = "更新用户信息")
+    @BizLog(module = "用户", action = "更新用户信息")
     public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
 
 //        1. 获取用户信息，
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @BizLog(module = "用户",action = "更新用户密码")
+    @BizLog(module = "用户", action = "更新用户密码")
     public Boolean updateUserPassword(String newPassword) {
 
         String userCode = UserContext.getUserCode();
@@ -69,10 +70,11 @@ public class UserServiceImpl implements UserService {
         UserDO user = new UserDO();
         user.setPassword(encryptedPassword);
 
-        LambdaQueryWrapper<UserDO> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserDO::getUserCode,userCode);
+        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(UserDO::getUserCode, userCode)
+                .set(UserDO::getPassword, encryptedPassword);
 
-        int result = userMapper.update(user,wrapper);
+        int result = userMapper.update(user, wrapper);
 
         return result == 1;
     }
@@ -90,9 +92,9 @@ public class UserServiceImpl implements UserService {
 
         int success = userMapper.update(userDO);
 
-        if (success> 0) {
+        if (success > 0) {
             return avatarUrl;
-        }else {
+        } else {
             throw new Exception("更新用户头像失败");
         }
     }
@@ -109,7 +111,7 @@ public class UserServiceImpl implements UserService {
         userInfoVO.setRawPhone(userDO.getPhone());
 
         String avatarUrl = userDO.getAvatarUrl();
-        String avatarResultUrl = fileStorageService.getUrl(MinioConstant.BUCKET_AVATARS,avatarUrl,MinioConstant.EXPIRY_MAX_TIME);
+        String avatarResultUrl = fileStorageService.getUrl(MinioConstant.BUCKET_AVATARS, avatarUrl, MinioConstant.EXPIRY_MAX_TIME);
         userInfoVO.setAvatarUrl(avatarResultUrl);
 
         return userInfoVO;

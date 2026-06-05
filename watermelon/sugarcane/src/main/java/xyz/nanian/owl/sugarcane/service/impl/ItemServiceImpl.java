@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
+import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.sugarcane.constant.CacheConstant;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
 import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
@@ -32,9 +33,11 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, ItemDO> implements 
     final ItemConvert itemConvert;
 
     @Override
+    @BizLog(module = "sugarcane",action = "模糊分页搜索物品Item")
     @Cacheable(value = CacheConstant.ITEM_PAGE,
             key = "'page:' + #itemIntroDTO.pageNum + ':' + #itemIntroDTO.pageSize + ':' + #itemIntroDTO.itemName",
-            unless = "#result == null || #result.records.size() == 0")
+            sync = true)
+//            unless = "#result == null || #result.records == null || #result.records.isEmpty()")
     public IPage<ItemIntroVO> getItemIntroList(ItemIntroDTO itemIntroDTO) {
 
 //        分页查询，
@@ -43,8 +46,14 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, ItemDO> implements 
 
 //        仅仅转换list
         List<ItemIntroVO> itemIntroVOList = itemConvert.DOtoVO(itemDOIPage.getRecords());
+//        如果没有数据，直接返回 null（不进入缓存）
+        if (itemIntroVOList == null || itemIntroVOList.isEmpty()) {
+            return null;// 返回 null，sync=true 时也不会缓存
+        }
 
-        IPage<ItemIntroVO> itemIntroVOIPage = new Page<>(itemIntroDTO.getPageNum(), itemIntroDTO.getPageSize());
+        IPage<ItemIntroVO> itemIntroVOIPage = new Page<>(
+                itemIntroDTO.getPageNum(),
+                itemIntroDTO.getPageSize());
         itemIntroVOIPage.setRecords(itemIntroVOList);
         itemIntroVOIPage.setTotal(itemDOIPage.getTotal());
 

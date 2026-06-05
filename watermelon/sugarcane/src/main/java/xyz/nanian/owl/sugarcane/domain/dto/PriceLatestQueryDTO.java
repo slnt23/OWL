@@ -26,4 +26,5 @@ public class PriceLatestQueryDTO extends BasePriceQueryDTO {
 //    @NotNull
 //    Long itemId;
 
+//    这里传递参数有，itemId，地点，货币类型，
 }

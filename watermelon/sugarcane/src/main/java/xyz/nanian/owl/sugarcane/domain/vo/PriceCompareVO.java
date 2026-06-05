@@ -2,6 +2,7 @@ package xyz.nanian.owl.sugarcane.domain.vo;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @since 2026/4/24
  */
 
+//@EqualsAndHashCode(callSuper = true)
 @Data
 public class PriceCompareVO {
 

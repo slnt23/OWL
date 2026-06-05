@@ -16,6 +16,11 @@ import xyz.nanian.owl.crow.mapper.ConversationMapper;
 import xyz.nanian.owl.crow.mapper.MessageMapper;
 import xyz.nanian.owl.crow.service.AiChatService;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
+import reactor.core.publisher.Flux;
+
 import xyz.nanian.owl.crow.constant.AIConstant;
 
 import java.time.LocalDateTime;
@@ -43,11 +48,7 @@ public class AiChatServiceImpl implements AiChatService {
         this.conversationMapper = conversationMapper;
     }
 
-    /**
-     * chat
-     * @param dto
-     * @return
-     */
+
     @SneakyThrows
     @Override
     public String chat(ChatRequestDTO dto) {
@@ -67,9 +68,13 @@ public class AiChatServiceImpl implements AiChatService {
                 AIConstant.RecentMessageNumberLimit);
 
 //        3. 转换，AI格式（Message列表）
-        List<Message> messages = history.stream()
+//        List<Message> messages = history.stream()
+//                .map(this::convertMessageDO)
+//                .toList();
+        List<Message> messages = new ArrayList<>(history.stream()
                 .map(this::convertMessageDO)
-                .toList();
+                .toList());
+        Collections.reverse(messages);
 
 //        4. 调用模型
         ChatResponse resp = chatClient.prompt()
@@ -84,7 +89,7 @@ public class AiChatServiceImpl implements AiChatService {
         }
 
 //        获取消耗的token
-        Usage usage= null;
+        Usage usage = null;
         if (resp != null) {
             usage = resp.getMetadata().getUsage();
         }
@@ -108,16 +113,68 @@ public class AiChatServiceImpl implements AiChatService {
 
 //        7. 更新本轮对话累计token消耗总数，以及当前这段会话的最后对话的时间，
         if (usage != null) {
-            conversationMapper.updateTotalTokens(dto.getConversationId(),usage.getTotalTokens());
+            conversationMapper.updateTotalTokens(dto.getConversationId(), usage.getTotalTokens());
         }
 
 //        8. 回复前端
         return reply;
     }
 
+    @Override
+    public Flux<String> chatStream(ChatRequestDTO dto) {
+
+        // 1. 保存用户消息
+        MessageDO messageUser = new MessageDO();
+        messageUser.setContent(dto.getMessage());
+        messageUser.setConversationId(dto.getConversationId());
+        messageUser.setRole(AIConstant.ROLE_USER);
+        messageUser.setCreatedAt(LocalDateTime.now());
+
+        messageMapper.insert(messageUser);
+
+        // 2. 查询历史消息
+        List<MessageDO> history =
+                messageMapper.selectRecentMessages(
+                        dto.getConversationId(),
+                        AIConstant.RecentMessageNumberLimit);
+
+        // 3. 转换消息
+        List<Message> messages = new ArrayList<>(
+                history.stream()
+                        .map(this::convertMessageDO)
+                        .toList());
+
+        Collections.reverse(messages);
+
+        // 4. 用于保存完整回复
+        StringBuilder answerBuilder = new StringBuilder();
+
+        // 5. 流式调用
+        return chatClient.prompt()
+                .messages(messages)
+                .stream()
+                .content()
+
+                // 每收到一个片段就拼接
+                .doOnNext(answerBuilder::append)
+
+                // 全部完成后保存数据库
+                .doOnComplete(() -> {
+
+                    MessageDO messageAI = new MessageDO();
+                    messageAI.setConversationId(dto.getConversationId());
+                    messageAI.setRole(AIConstant.ROLE_ASSISTANT);
+                    messageAI.setContent(answerBuilder.toString());
+                    messageAI.setCreatedAt(LocalDateTime.now());
+
+                    messageMapper.insert(messageAI);
+                });
+    }
+
 
     /**
      * 消息转换
+     *
      * @param messageDO
      * @return
      */

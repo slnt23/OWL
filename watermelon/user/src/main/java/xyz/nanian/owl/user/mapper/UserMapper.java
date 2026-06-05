@@ -25,14 +25,6 @@ public interface UserMapper extends BaseMapper<UserDO> {
     IPage<UserDO> selectUserByName(String name);
 
     /**
-     * 对以上的两个方法的汇总，数据就查询完整的DO，然后交给Service对数据进行处理，
-     * 通过手机号来查询用户所有信息
-     * @param phone phone
-     * @return UserDO
-     */
-//    UserDO select(String phone);
-
-    /**
      * 用户信息更新，通过userCode
      * 只要是UserDO中有的，都可以更新，不需要单独的接口来更新某个字段，注意参数，
      *
