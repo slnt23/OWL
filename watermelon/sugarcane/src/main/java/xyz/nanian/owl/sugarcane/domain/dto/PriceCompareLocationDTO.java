@@ -23,5 +23,9 @@ public class PriceCompareLocationDTO extends BasePriceQueryDTO {
     @NotNull
     private LocalDateTime targetTime;
 
+    @Override
+    public String cacheKey() {
+        return super.cacheKey() + "|tt:" + targetTime;
+    }
 }
 
