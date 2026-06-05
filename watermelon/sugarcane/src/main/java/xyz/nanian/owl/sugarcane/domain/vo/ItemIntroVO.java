@@ -33,5 +33,4 @@ public class ItemIntroVO {
 
     @NotNull
     String itemName;
-//    List<String> ItemIntroList;
 }

@@ -24,13 +24,4 @@ public interface UserMapper extends BaseMapper<UserDO> {
      */
     IPage<UserDO> selectUserByName(String name);
 
-    /**
-     * 用户信息更新，通过userCode
-     * 只要是UserDO中有的，都可以更新，不需要单独的接口来更新某个字段，注意参数，
-     *
-     * @param userDO 用户账号
-     * @return bool
-     */
-    int update(UserDO userDO);
-
 }

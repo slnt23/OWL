@@ -23,7 +23,6 @@ public class PricePageQueryDTO extends BasePriceQueryDTO {
     @NotNull
     private LocalDateTime endTime;
 
-
     private Integer pageNo = 1;
     private Integer pageSize = 20;
 

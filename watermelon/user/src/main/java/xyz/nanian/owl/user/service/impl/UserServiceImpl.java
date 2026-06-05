@@ -1,7 +1,6 @@
 package xyz.nanian.owl.user.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -47,17 +46,29 @@ public class UserServiceImpl implements UserService {
 //        1. 获取用户信息，
         String userCode = UserContext.getUserCode();
 
-//        这里还是有商讨，万一传过来的是空的，岂不是覆盖原有的值，
-        UserDO user = userConvert.UserInfoToUserDO(userInfoDTO);
-        user.setUserCode(userCode);
+//        2. 防止空值覆盖，
+        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(UserDO::getUserCode, userCode);
 
-//        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
-//        wrapper.eq(UserDO::getUserCode, userCode);
-//
-//        int result = userMapper.update(user, wrapper);
-//        用下面的，上面的是单独的，下面的是总的，
+        // 只更新非 null 字段，注意字段对应关系
+        if (userInfoDTO.getUserName() != null) {
+            wrapper.set(UserDO::getUserName, userInfoDTO.getUserName());
+        }
+        if (userInfoDTO.getEmail() != null) {
+            wrapper.set(UserDO::getEmail, userInfoDTO.getEmail());
+        }
+        if (userInfoDTO.getPhone() != null) {
+            wrapper.set(UserDO::getPhone, userInfoDTO.getPhone());
+        }
+        if (userInfoDTO.getNickname() != null) {
+            wrapper.set(UserDO::getNickname, userInfoDTO.getNickname());  // 对应数据库 nickname
+        }
+        if (userInfoDTO.getRemark() != null) {
+            wrapper.set(UserDO::getRemark, userInfoDTO.getRemark());
+        }
 
-        return userMapper.update(user) > 0;
+        int result = userMapper.update(null, wrapper);
+        return result > 0;
     }
 
     @Override
@@ -65,16 +76,13 @@ public class UserServiceImpl implements UserService {
     public Boolean updateUserPassword(String newPassword) {
 
         String userCode = UserContext.getUserCode();
-
         String encryptedPassword = passwordEncoder.encode(newPassword);
-        UserDO user = new UserDO();
-        user.setPassword(encryptedPassword);
 
         LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(UserDO::getUserCode, userCode)
                 .set(UserDO::getPassword, encryptedPassword);
 
-        int result = userMapper.update(user, wrapper);
+        int result = userMapper.update(null, wrapper);
 
         return result == 1;
     }
@@ -86,11 +94,11 @@ public class UserServiceImpl implements UserService {
 
         String avatarUrl = fileStorageService.upload(file, MinioConstant.BUCKET_AVATARS);
 
-        UserDO userDO = new UserDO();
-        userDO.setUserCode(userCode);
-        userDO.setAvatarUrl(avatarUrl);
+        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(UserDO::getUserCode, userCode)
+                .set(UserDO::getAvatarUrl, avatarUrl);
 
-        int success = userMapper.update(userDO);
+        int success = userMapper.update(null, wrapper);
 
         if (success > 0) {
             return avatarUrl;

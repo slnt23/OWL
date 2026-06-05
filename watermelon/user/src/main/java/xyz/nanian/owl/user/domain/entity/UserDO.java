@@ -62,7 +62,7 @@ public class UserDO {
      * 昵称
      */
     @TableField("nickname")
-    private String nickName;
+    private String nickname;
 
     /**
      * 备注

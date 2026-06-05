@@ -231,7 +231,7 @@ public class LoginServiceImpl implements LoginService {
         RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
 
 //        3. 比对，判断用户
-        if (userDO.getStatus() == 0) {
+        if (userDO.getStatus() == 1) {
             throw new LoginException(ResultStatus.ACCOUNT_DISABLED);
         } else if (userDO.getPassword() == null) {
             throw new LoginException(ResultStatus.PASSWORD_NO_REWRITE);
@@ -290,7 +290,6 @@ public class LoginServiceImpl implements LoginService {
 
 //        2. 比对code，
         if (!Objects.equals(verificationCode, code)) {
-//            throw new LoginException(ResultStatus.FAIL);
             return false;
         }
 //        3. 删除验证码，防止成为短期密码，无限使用，
@@ -310,13 +309,10 @@ public class LoginServiceImpl implements LoginService {
         UserDO userDO = new UserDO();
         String uuid = UUID.randomUUID().toString();
         LocalDateTime now = LocalDateTime.now();
-//        String password = passwordEncoder.encode(UserConstant.DEFAULT_PASSWORD);
 
         userDO.setUserCode(uuid);
         userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
-//        初始密码都是加密后的的”123456“，后续用户更改密码，也设定加密
 //        3. 这里默认密码为空，当登陆时检测密码为空则不可进行密码登录，只能够验证码登录，只有用户更改密码后，才可以用密码登陆，
-//        userDO.setPassword(password);
         userDO.setPassword(null);
         userDO.setEmail(email);
         userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
@@ -324,7 +320,7 @@ public class LoginServiceImpl implements LoginService {
 //        也可以不，防止前端随意传 role 信息，后端统一设计 user ，可以在管理端设计一个更改 role 的，让用户申请，
         userDO.setRoleId(UserConstant.DEFAULT_ROLE);
         userDO.setStatus(UserConstant.DEFAULT_STATUS);
-        userDO.setNickName(UserConstant.DEFAULT_NICK_NAME);
+        userDO.setNickname(UserConstant.DEFAULT_NICK_NAME);
         userDO.setRemark(UserConstant.DEFAULT_REMARK);
         userDO.setCreateTime(now);
 

@@ -19,7 +19,7 @@ public class UserInfoDTO {
     String userName;
 
     @Schema(description = "昵称",example = "小明")
-    String nickName;
+    String nickname;
 
     @Schema(description= "邮箱",example = "qq.com")
     String email;

@@ -16,15 +16,9 @@ import lombok.EqualsAndHashCode;
 @Data
 public class PriceLatestQueryDTO extends BasePriceQueryDTO {
 
-    // 是否只取每个维度最新一条
+//     是否只取每个维度最新一条
 //    @NotNull
 //    private Boolean latestOnly = true;
-
-    /**
-     * 物品Id
-     */
-//    @NotNull
-//    Long itemId;
 
 //    这里传递参数有，itemId，地点，货币类型，
 }
