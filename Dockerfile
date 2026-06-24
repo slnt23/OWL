@@ -55,6 +55,7 @@ COPY --from=build /app/start/target/start-*.jar app.jar
 
 # 暴露应用端口
 EXPOSE 8080
+# 232323 自己的项目用这个，
 
 # JVM 参数（可通过 docker run -e JAVA_OPTS="..." 覆盖）
 ENV JAVA_OPTS="-Xms256m -Xmx512m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
