@@ -1,0 +1,16 @@
+.git
+.idea
+.claude
+.docs
+.vscode
+
+**/target
+**/build
+
+*.log
+*.tmp
+*.iml
+
+HELP.md
+README.md
+.gitignore
