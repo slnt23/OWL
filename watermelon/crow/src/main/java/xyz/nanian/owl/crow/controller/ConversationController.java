@@ -9,7 +9,7 @@ import xyz.nanian.owl.crow.domain.dto.CreateConversationDTO;
 import xyz.nanian.owl.crow.service.ConversationService;
 import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 import xyz.nanian.owl.crow.domain.vo.MessageVO;
-import xyz.nanian.owl.result.Result;
+import xyz.nanian.owl.common.result.Result;
 
 import java.util.List;
 

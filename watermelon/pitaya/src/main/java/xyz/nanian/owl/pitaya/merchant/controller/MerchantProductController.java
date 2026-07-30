@@ -7,8 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.pitaya.domain.dto.ProductDTO;
 import xyz.nanian.owl.pitaya.merchant.service.MerchantProductService;
-import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.result.ResultStatus;
+import xyz.nanian.owl.common.result.Result;
+import xyz.nanian.owl.common.result.ResultStatus;
 
 /**
  * 商家商品管理接口

@@ -15,8 +15,8 @@ import xyz.nanian.owl.pitaya.domain.dto.ShoppingCartDTO;
 import xyz.nanian.owl.pitaya.domain.entity.ShoppingCartDO;
 import xyz.nanian.owl.pitaya.mapstruct.ShoppingCartConvert;
 import xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO;
-import xyz.nanian.owl.result.ResultPage;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.common.result.ResultPage;
+import xyz.nanian.owl.common.utils.jwt.UserContext;
 
 import java.util.concurrent.TimeUnit;
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.nanian.owl.crow.domain.dto.ChatRequestDTO;
 import xyz.nanian.owl.crow.service.AiChatService;
-import xyz.nanian.owl.result.Result;
+import xyz.nanian.owl.common.result.Result;
 import org.springframework.http.MediaType;
 import reactor.core.publisher.Flux;
 

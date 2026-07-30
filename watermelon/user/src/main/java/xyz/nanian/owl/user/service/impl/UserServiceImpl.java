@@ -8,8 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.nanian.owl.infrastructure.minio.constant.MinioConstant;
-import xyz.nanian.owl.infrastructure.minio.service.FileStorageService;
+import xyz.nanian.owl.infra.minio.constant.MinioConstant;
+import xyz.nanian.owl.infra.minio.service.FileStorageService;
 import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
@@ -18,7 +18,7 @@ import xyz.nanian.owl.user.mapper.RoleMapper;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.common.utils.jwt.UserContext;
 
 
 /**

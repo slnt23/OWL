@@ -4,7 +4,7 @@ package xyz.nanian.owl.pitaya.consumer.service;
 import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
 import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
 import xyz.nanian.owl.pitaya.domain.vo.ProductVO;
-import xyz.nanian.owl.result.ResultPage;
+import xyz.nanian.owl.common.result.ResultPage;
 
 import java.util.List;
 

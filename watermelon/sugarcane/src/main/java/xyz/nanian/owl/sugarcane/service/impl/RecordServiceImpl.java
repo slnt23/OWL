@@ -2,7 +2,7 @@ package xyz.nanian.owl.sugarcane.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import xyz.nanian.owl.infrastructure.bloom.service.BloomFilterService;
+import xyz.nanian.owl.infra.bloom.service.BloomFilterService;
 import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.sugarcane.constant.CacheConstant;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceCompareLocationDTO;
@@ -17,8 +17,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static xyz.nanian.owl.sugarcane.constant.CacheConstant.BLOOM_ITEM_PREFIX;
 
 /**
  * <p>

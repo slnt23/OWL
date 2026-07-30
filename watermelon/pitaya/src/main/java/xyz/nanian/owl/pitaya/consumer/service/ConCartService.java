@@ -3,7 +3,7 @@ package xyz.nanian.owl.pitaya.consumer.service;
 
 import xyz.nanian.owl.pitaya.domain.dto.ShoppingCartDTO;
 import xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO;
-import xyz.nanian.owl.result.ResultPage;
+import xyz.nanian.owl.common.result.ResultPage;
 
 /**
  * 消费者购物车Service

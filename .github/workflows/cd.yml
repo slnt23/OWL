@@ -1,0 +1,46 @@
+# ============================================================
+# CD 工作流：合并到 master 时自动构建 Docker 镜像并推送
+# 触发条件：push 到 master（仅主分支触发部署）
+# ============================================================
+name: CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  docker-build-push:
+    name: Build & Push Docker Image
+    runs-on: ubuntu-latest
+
+    # 如果只需要打包 Docker 镜像而不测试，可以取消下面的注释来跳过 CI
+    # 否则每次 CI + CD 都会重复构建
+    steps:
+      # 1. 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. 登录 GitHub Container Registry
+      #    使用 GITHUB_TOKEN 自动认证，无需额外配置 Secret
+      #    如果需要推送到 Docker Hub，替换为 docker/login-action
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # 3. 构建并推送 Docker 镜像
+      #    镜像标签：
+      #    - latest  ：最新版本
+      #    - commit SHA ：方便回滚到指定提交
+      #    替换 ghcr.io/slnt23/owl 为你的实际仓库路径
+      - name: Build and Push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/owl:latest
+            ghcr.io/${{ github.repository_owner }}/owl:${{ github.sha }}

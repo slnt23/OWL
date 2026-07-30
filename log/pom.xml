@@ -24,6 +24,10 @@
             <groupId>xyz.nanian</groupId>
             <artifactId>common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>infra</artifactId>
+        </dependency>
 
 <!--        test-->
         <dependency>

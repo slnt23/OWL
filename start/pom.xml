@@ -18,10 +18,13 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>xyz.nanian</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
+<!--        公共模块-->
+<!--        <dependency>-->
+<!--            <groupId>xyz.nanian</groupId>-->
+<!--            <artifactId>common</artifactId>-->
+<!--        </dependency>-->
+
+<!--        业务模块-->
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>user</artifactId>
@@ -51,6 +54,7 @@
             <scope>test</scope>
         </dependency>
 <!--        mail-->
+<!--        这个感觉多余-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>

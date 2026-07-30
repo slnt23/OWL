@@ -22,7 +22,6 @@
 
     <modules>
         <module>common</module>
-        <module>domain</module>
         <module>api</module>
         <module>start</module>
         <module>watermelon</module>
@@ -31,10 +30,8 @@
         <module>watermelon/sugarcane</module>
         <module>watermelon/crow</module>
         <module>watermelon/pitaya</module>
-
-
-        <!--        <module>infrastructure</module>-->
         <module>log</module>
+        <module>infra</module>
     </modules>
 
 
@@ -75,22 +72,12 @@
             </dependency>
             <dependency>
                 <groupId>xyz.nanian</groupId>
-                <artifactId>domain</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>xyz.nanian</groupId>
                 <artifactId>user</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>xyz.nanian</groupId>
                 <artifactId>pitaya</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>xyz.nanian</groupId>
-                <artifactId>infrastructure</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -116,6 +103,11 @@
             <dependency>
                 <groupId>xyz.nanian</groupId>
                 <artifactId>administration</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>infra</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
 

@@ -4,7 +4,7 @@ package xyz.nanian.owl.pitaya.consumer.service;
 import xyz.nanian.owl.pitaya.domain.dto.OrderDTO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
-import xyz.nanian.owl.result.ResultPage;
+import xyz.nanian.owl.common.result.ResultPage;
 
 /**
  * 消费者订单Service

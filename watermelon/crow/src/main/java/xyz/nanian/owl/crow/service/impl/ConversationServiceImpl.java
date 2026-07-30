@@ -14,7 +14,7 @@ import xyz.nanian.owl.crow.service.ConversationService;
 import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 import xyz.nanian.owl.crow.domain.vo.MessageVO;
 import xyz.nanian.owl.log.logging.BizLog;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.common.utils.jwt.UserContext;
 
 import java.time.LocalDateTime;
 import java.util.List;

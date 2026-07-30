@@ -4,14 +4,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.result.ResultPage;
+import xyz.nanian.owl.common.result.Result;
+import xyz.nanian.owl.common.result.ResultPage;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
 //import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO;
 import xyz.nanian.owl.sugarcane.service.ItemService;
-
-import java.util.List;
 
 /**
  * <p>

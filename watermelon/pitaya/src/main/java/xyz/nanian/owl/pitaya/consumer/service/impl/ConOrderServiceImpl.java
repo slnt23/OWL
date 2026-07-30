@@ -22,15 +22,15 @@ import xyz.nanian.owl.pitaya.domain.vo.AddressVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderItemVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
-import xyz.nanian.owl.result.ResultPage;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.common.result.ResultPage;
+import xyz.nanian.owl.common.utils.jwt.UserContext;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.infrastructure.rabbitmq.constant.RabbitMQConstant.ORDER_QUEUE;
-import static xyz.nanian.owl.infrastructure.rabbitmq.constant.RabbitMQConstant.ORDER_ROUTING_KEY;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.ORDER_QUEUE;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.ORDER_ROUTING_KEY;
 import static xyz.nanian.owl.pitaya.constant.ShopConstant.ORDER_KEY;
 import static xyz.nanian.owl.pitaya.constant.ShopConstant.ORDER_TIME_OUT;
 

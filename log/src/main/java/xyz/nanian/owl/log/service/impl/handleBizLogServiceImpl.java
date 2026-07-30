@@ -13,7 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.log.service.handleBizLogService;
 
-import static xyz.nanian.owl.infrastructure.rabbitmq.constant.RabbitMQConstant.*;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.*;
 
 /**
  * 业务日志记录处理

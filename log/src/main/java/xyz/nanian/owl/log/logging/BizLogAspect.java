@@ -11,9 +11,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.MDC;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.common.utils.jwt.UserContext;
 
-import static xyz.nanian.owl.infrastructure.rabbitmq.constant.RabbitMQConstant.*;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.BIZ_LOG_EXCHANGE;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.BIZ_LOG_ROUTING_KEY;
 
 /**
  * 业务日志

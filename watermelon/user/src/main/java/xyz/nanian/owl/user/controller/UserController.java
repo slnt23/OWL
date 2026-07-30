@@ -6,12 +6,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import xyz.nanian.owl.result.ResultStatus;
-import xyz.nanian.owl.result.Result;
+import xyz.nanian.owl.common.result.ResultStatus;
+import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 import xyz.nanian.owl.user.service.UserService;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.common.utils.jwt.UserContext;
 
 /**
  * 用户相关的控制器方法,

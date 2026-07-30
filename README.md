@@ -4,17 +4,18 @@
 
 ## 技术栈
 
-| 类别 | 技术 |
-|------|------|
+| 类别 | 技术                            |
+|------|-------------------------------|
 | 框架 | Spring Boot 3.3.13, Spring Cloud Alibaba (Nacos) |
-| ORM | MyBatis-Plus 3.5.5 |
-| 数据库 | MySQL 8.4 |
-| 缓存 | Redis 6.2.7 (Sentinel 集群) |
+| 构建 | Maven 3.9.16                  |
+| ORM | MyBatis-Plus 3.5.5            |
+| 数据库 | MySQL 8.4                     |
+| 缓存 | Redis 6.2.7 (Sentinel 集群)     |
 | 消息队列 | RabbitMQ 3.12, RocketMQ (规划中) |
-| 对象存储 | MinIO 8.5.10 |
-| AI | Spring AI 1.1.4 (OpenAI 兼容) |
-| 接口文档 | Knife4j 4.5.0 |
-| 容器 | Docker 26.1.3 |
+| 对象存储 | MinIO 8.5.10                  |
+| AI | Spring AI 1.1.4 (OpenAI 兼容)   |
+| 接口文档 | Knife4j 4.5.0                 |
+| 容器 | Docker 26.1.3                 |
 
 ## 项目模块
 

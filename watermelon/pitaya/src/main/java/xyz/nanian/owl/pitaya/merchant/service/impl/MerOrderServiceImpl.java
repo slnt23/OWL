@@ -12,8 +12,8 @@ import xyz.nanian.owl.log.logging.BizLog;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerOrderMapper;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
-import xyz.nanian.owl.result.ResultPage;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.common.result.ResultPage;
+import xyz.nanian.owl.common.utils.jwt.UserContext;
 
 import java.util.concurrent.TimeUnit;
 

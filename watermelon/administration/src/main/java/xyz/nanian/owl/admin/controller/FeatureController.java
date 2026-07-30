@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.admin.domain.dto.FeatureDTO;
 import xyz.nanian.owl.admin.domain.vo.FeatureVO;
 import xyz.nanian.owl.admin.service.FeatureService;
-import xyz.nanian.owl.result.Result;
-import xyz.nanian.owl.result.ResultStatus;
+import xyz.nanian.owl.common.result.Result;
+import xyz.nanian.owl.common.result.ResultStatus;
 
 import java.util.List;
 

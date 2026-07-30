@@ -9,8 +9,8 @@ import xyz.nanian.owl.admin.mapper.SpotlightMapper;
 import xyz.nanian.owl.admin.service.SpotlightService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.infrastructure.minio.constant.MinioConstant;
-import xyz.nanian.owl.infrastructure.minio.service.FileStorageService;
+import xyz.nanian.owl.infra.minio.constant.MinioConstant;
+import xyz.nanian.owl.infra.minio.service.FileStorageService;
 
 import java.util.List;
 

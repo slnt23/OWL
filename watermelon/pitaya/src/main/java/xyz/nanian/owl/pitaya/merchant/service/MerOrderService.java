@@ -2,7 +2,7 @@ package xyz.nanian.owl.pitaya.merchant.service;
 
 
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
-import xyz.nanian.owl.result.ResultPage;
+import xyz.nanian.owl.common.result.ResultPage;
 
 /**
  * 商家订单Service

@@ -3,7 +3,7 @@ package xyz.nanian.owl.sugarcane.component;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import xyz.nanian.owl.infrastructure.bloom.service.BloomFilterService;
+import xyz.nanian.owl.infra.bloom.service.BloomFilterService;
 import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
 import xyz.nanian.owl.sugarcane.service.ItemService;
 
