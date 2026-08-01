@@ -6,7 +6,7 @@
     <parent>
         <groupId>xyz.nanian</groupId>
         <artifactId>OWL</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -38,7 +38,7 @@
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
                 <version>1.4.2</version>
                 <configuration>
-                    <configurationFile>src/main/resources/generatorConfig.xml</configurationFile>
+                    <configurationFile>src/test/resources/generatorConfig.xml</configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>
