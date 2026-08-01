@@ -1,79 +1,79 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+本文件为 Claude Code（claude.ai/code）在此仓库中工作时提供指引。
 
-## Build & Run
+## 构建与运行
 
 第三层：ADR（架构决策记录）—— 大厂的隐藏武器
-定位：记录“为什么这样做”，而不是“怎么做”
+定位：记录"为什么这样做"，而不是"怎么做"
 
 ```bash
-# Build all modules (skip tests)
+# 全模块编译（跳过测试）
 ./mvnw clean package -DskipTests
 
-# Run tests for a single module
+# 单模块测试
 ./mvnw test -pl watermelon/user
 
-# Start the app (requires MySQL, Redis, RabbitMQ, Nacos, MinIO)
+# 启动应用（需 MySQL、Redis、RabbitMQ、Nacos、MinIO）
 java -jar start/target/start-0.0.1-SNAPSHOT.jar
 ```
 
-Active Spring profile is `dev` by default (see `start/src/main/resources/application-dev.yml`). Infrastructure connection config is commented out in dev — uncomment or pass via env vars.
+默认激活的 Spring profile 为 `dev`（参见 `start/src/main/resources/application-dev.yml`）。基础设施连接配置在 dev 中默认注释 —— 取消注释或通过环境变量传入。
 
-## Architecture
+## 架构
 
-Multi-module Maven project: **Spring Boot 3.3.13 + Java 17 + MyBatis-Plus 3.5.5**.
+多模块 Maven 项目：**Spring Boot 3.3.13 + Java 17 + MyBatis-Plus 3.5.5**。
 
-### Module dependency chain
+### 模块依赖链
 
 ```
-common (infrastructure: MinIO, Redis, RabbitMQ, JWT, exceptions, interceptors, Result wrapper)
-  → domain (shared DTO/VO)
-    → log (AOP business logging + TraceId)
-      → api (Feign client interfaces for inter-service calls)
-        → watermelon/* (business modules)
+common（基础层：Result、异常、拦截器、JWT、MyBatisPlus/Knife4j 配置）
+  → infra（中间件适配器：MinIO、Redis、RabbitMQ、Bloom Filter）
+    → log（AOP 业务日志 + TraceId）
+      → api（接口契约层，Feign 接口 + 对外 API）
+        → watermelon/*（业务模块）
             ↑
-common ─── start (bootstrap, aggregates all modules)
+common + infra + watermelon/* ─── start（启动模块，聚合所有模块）
 ```
 
-- `common` is the base: config, interceptors, unified `Result<T>` response wrapper, `GlobalExceptionHandler`, and infrastructure adapters (MinIO, Redis, RabbitMQ).
-- `watermelon/` contains business modules: **user** (auth & user center), **sugarcane** (price tracking), **crow** (AI chat), **pitaya** (e-commerce), **administration** (admin panel).
-- `infrastructure/` top-level module is a skeleton (no Java source yet).
+- `common` 是基础层：配置、拦截器、统一 `Result<T>` 响应包装、`GlobalExceptionHandler`、JWT 工具、邮件工具、正则工具。
+- `infra` 是中间件适配层：MinIO 文件存储、Redis 缓存、RabbitMQ 消息队列、Guava 布隆过滤器。
+- `watermelon/` 包含业务模块：**user**（用户认证中心）、**sugarcane**（价多多-价格追踪）、**crow**（乌鸦-AI 对话）、**pitaya**（火龙果-电商平台）、**administration**（后台管理）。
 
-### Business module layered pattern
+### 业务模块分层模式
 
-Every watermelon sub-module follows the same layered structure:
+每个 watermelon 子模块遵循统一的分层结构：
 
 ```
-controller → service (interface + impl) → mapper (MyBatis-Plus) → domain/entity
+controller → service（interface + impl）→ mapper（MyBatis-Plus）→ domain/entity
                   ↓
-            mapstruct (Entity ↔ DTO/VO conversion via MapStruct)
+            mapstruct（Entity ↔ DTO/VO 转换，通过 MapStruct）
 ```
 
-Entities use `*DO` suffix, DTOs/VOs follow MyBatis-Plus conventions with `@TableName`, `@TableId`, etc.
+实体类使用 `*DO` 后缀，DTO/VO 遵循 MyBatis-Plus 规范（`@TableName`、`@TableId` 等）。
 
-### Key cross-cutting concerns
+### 关键横切关注点
 
-- **Unified response**: All controllers return `Result<T>` (from `common`). Use `Result.success(data)` / `Result.fail(ResultStatus.xxx)`.
-- **Auth**: JWT-based. `LoginInterceptor` reads `Authorization: Bearer <token>` header, parses claims, stores user in `UserContext` (ThreadLocal). Cleared on `afterCompletion`. Check `WebMvcConfig` for path exclusions.
-- **Business logging**: `@BizLog(module = "用户", action = "更新用户信息")` on service methods — AOP in `log` module records to DB.
-- **Exception handling**: `GlobalExceptionHandler` (`@RestControllerAdvice`) catches `BizException`, validation errors, 404, 405, and generic exceptions, returning `Result.fail(...)`.
+- **统一响应**：所有 controller 返回 `Result<T>`（来自 `common`）。使用 `Result.success(data)` / `Result.fail(ResultStatus.xxx)`。
+- **认证**：基于 JWT。`LoginInterceptor` 读取 `Authorization: Bearer <token>` 请求头，解析 claims，将用户信息存入 `UserContext`（ThreadLocal）。`afterCompletion` 中清理。路径排除规则见 `WebMvcConfig`。
+- **业务日志**：在 service 方法上使用 `@BizLog(module = "用户", action = "更新用户信息")` —— `log` 模块中的 AOP 切面记录到数据库。
+- **异常处理**：`GlobalExceptionHandler`（`@RestControllerAdvice`）捕获 `BizException`、参数校验异常、404、405 及通用异常，统一返回 `Result.fail(...)`。
 
-### Infrastructure services needed
+### 需要的基础设施服务
 
-MySQL 8.4 (database: `pitaya`), Redis 6.2 Sentinel cluster, RabbitMQ 3.12, Nacos (Spring Cloud Alibaba), MinIO (object storage), and DeepSeek API (OpenAI-compatible via Spring AI).
+MySQL 8.4（数据库：`pitaya`），Redis 6.2 Sentinel 集群，RabbitMQ 3.12，Nacos（Spring Cloud Alibaba），MinIO（对象存储），DeepSeek API（通过 Spring AI 的 OpenAI 兼容协议接入）。
 
-## Code conventions
+## 代码规范
 
-- Annotations: `@Slf4j`, `@RequiredArgsConstructor` (constructor injection), `@Service`, `@RestController`.
-- MyBatis-Plus: `LambdaUpdateWrapper` for safe column references; pagination + optimistic locking configured in `MybatisPlusConfig`.
-- MapStruct for entity↔DTO conversions (e.g., `UserConvert`).
-- Multi-environment: `application-dev.yml` (commented-out configs) and `application-prod.yml` (env-var placeholders).
-- Docker: multi-stage build in `Dockerfile`, JRE-only runtime image, exposed on port 8080.
+- 注解：`@Slf4j`、`@RequiredArgsConstructor`（构造器注入）、`@Service`、`@RestController`。
+- MyBatis-Plus：`LambdaUpdateWrapper` 进行安全字段引用；分页 + 乐观锁在 `MybatisPlusConfig` 中配置。
+- MapStruct 用于 entity↔DTO 转换（如 `UserConvert`）。
+- 多环境：`application-dev.yml`（全注释配置）和 `application-prod.yml`（环境变量占位符）。
+- Docker：`Dockerfile` 多阶段构建，仅 JRE 运行时镜像，暴露 8080 端口。
 
-## Writing a new watermelon module
+## 编写新的 watermelon 模块
 
-1. Create `watermelon/<name>/pom.xml` — depend on `log` (or `api`) for the dependency chain.
-2. Add the module to root `pom.xml` `<modules>` block and `<dependencyManagement>`.
-3. Follow the standard layered package structure: `controller`, `service` (+ `impl`), `mapper`, `domain/{entity,dto,vo}`, `mapstruct`.
-4. Register interceptors/exclusions in `WebMvcConfig` in `common`.
+1. 创建 `watermelon/<name>/pom.xml` —— 依赖 `api`（或 `log`）接入依赖链。
+2. 将模块加入根 `pom.xml` 的 `<modules>` 块和 `<dependencyManagement>`。
+3. 遵循标准分层包结构：`controller`、`service`（+ `impl`）、`mapper`、`domain/{entity,dto,vo}`、`mapstruct`。
+4. 在 `common` 的 `WebMvcConfig` 中注册拦截器路径排除规则。

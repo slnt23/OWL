@@ -1,0 +1,94 @@
+# ADR-004: 个人博客模块设计
+
+## 状态
+
+提案中（2026-08）
+
+## 背景
+
+作为个人全栈项目的自然延伸，需要添加个人博客模块。博客既是技术输出窗口，也是验证项目技术栈完整性的业务场景（涉及内容管理、SEO、评论、RSS 等）。
+
+## 决策
+
+### 1. 作为 watermelon 子模块独立存在
+
+**选择**：新建 `watermelon/blog` 模块，命名为 "kiwi"（猕猴桃），遵循现有水果命名约定。
+
+**原因**：
+- 博客是独立的业务域，与用户、电商、AI 聊天无直接耦合
+- 复用现有基础设施：JWT 认证、MinIO 文件存储、MyBatis-Plus ORM
+- 按现有依赖链 `common → infra → log → api → watermelon/blog` 接入，零额外成本
+
+### 2. 数据模型设计
+
+**核心表设计**：
+
+```
+article（文章）
+  - id, title, slug（SEO 友好 URL）, content（Markdown 原文）,
+    html_content（渲染后 HTML）, summary（摘要，自动截取）,
+    cover_image（封面图 MinIO URL）, status（draft/published/archived）,
+    is_top（置顶）, view_count（浏览数）,
+    user_code（作者）, category_id, created_at, updated_at
+
+category（分类）
+  - id, name, slug, description, sort_order
+
+tag（标签）
+  - id, name, slug
+
+article_tag（文章-标签关联）
+  - article_id, tag_id
+
+comment（评论）
+  - id, article_id, parent_id（支持嵌套回复）,
+    author_name, author_email, content,
+    status（pending/approved/spam）, ip_address,
+    user_code（登录用户可关联）, created_at
+```
+
+**原因**：
+- `slug` 字段用于 SEO 友好的 URL（`/blog/my-first-post`），而非 `/blog/123`
+- Markdown 原文 + HTML 渲染分离：编辑时存 Markdown，展示时用渲染后的 HTML（渲染在服务端做，减少前端依赖）
+- 评论支持嵌套回复（`parent_id` 自引用），最多 2 层（避免过深嵌套）
+- 评论状态审核机制：首次评论需审核，通过后同邮箱自动放行
+- 软删除用于文章回收站功能
+
+### 3. Markdown 渲染在服务端
+
+**选择**：文章存储 Markdown 原文，服务端渲染为 HTML 后返回。推荐使用 flexmark-java 或 commonmark-java。
+
+**原因**：
+- 前端不需要引入 Markdown 渲染库，保持前端轻量
+- HTML 输出可以做 XSS 过滤（如 jsoup），安全性可控
+- 渲染结果可缓存，减少重复计算
+
+### 4. 全文搜索方案
+
+**选择**：初期使用 MySQL `LIKE` / 全文索引，后续迁移到 Elasticsearch。
+
+**原因**：
+- 初期文章量少（< 1000 篇），MySQL 全文索引足够
+- Elasticsearch 增加运维成本，等文章量增长后再引入
+- 架构上预留搜索接口抽象层，方便切换
+
+### 5. RSS 订阅支持
+
+**选择**：提供 `/blog/rss.xml` 端点，返回 RSS 2.0 格式的最近文章列表。
+
+**原因**：
+- RSS 是技术博客的事实标准，利于内容分发
+- 实现简单，只需查询最近 N 篇文章拼 XML
+- 不计入浏览数
+
+## 待定
+
+- 是否需要点赞/收藏功能（初期不做，保持简洁）
+- 是否需要文章版本历史（暂不做，编辑后直接覆盖）
+- 静态化方案（SSG）：后续可考虑 Hugo/Next.js 生成静态页面，API 仅作为 CMS
+
+## 后果
+
+- 新增 5 张表，增加数据库维护成本
+- 评论审核机制需要运营配合（初期可设为自动通过）
+- 如果后续考虑国际化，slug 需要支持多语言
