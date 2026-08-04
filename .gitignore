@@ -13,5 +13,9 @@
 .gitlab-ci.yaml
 
 
+# Runtime logs
+/logs/
+
+
 qodana.yaml
 
