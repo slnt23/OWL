@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.infra.minio.constant.MinioConstant;
 import xyz.nanian.owl.infra.minio.service.FileStorageService;
+import xyz.nanian.owl.log.annotation.OperationLog;
+import xyz.nanian.owl.log.constant.LogType;
 
 import java.util.List;
 
@@ -51,6 +53,7 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
     }
 
     @Override
+    @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "新增焦点项目", persist = true)
     public int create(SpotlightDTO dto) {
         SpotlightDO spotlightDO= spotlightConvert.DTOConvertDO(dto);
 //        这里要把照片上传到OSS
@@ -61,6 +64,7 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
     }
 
     @Override
+    @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "修改焦点项目", persist = true)
     public Boolean update(SpotlightDTO dto) {
         SpotlightDO spotlightDO = spotlightConvert.DTOConvertDO(dto);
 //        这里如果照片更新，应该线删除，再上传，
@@ -72,6 +76,7 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
     }
 
     @Override
+    @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "删除焦点项目", persist = true)
     public Boolean deleteById(Integer id) {
         int result = spotlightMapper.deleteById(id);
         return result == 1;

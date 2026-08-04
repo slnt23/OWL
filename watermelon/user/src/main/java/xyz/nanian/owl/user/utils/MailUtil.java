@@ -18,14 +18,8 @@ import xyz.nanian.owl.user.constant.MailConstant;
 @Component
 public class MailUtil {
 
-//    @Autowired
     @Resource
     public JavaMailSender mailSender;
-
-//    构造注入
-//    public Mail(JavaMailSender mailSender) {
-//        this.mailSender = mailSender;
-//    }
 
     /**
      * 验证码发送,

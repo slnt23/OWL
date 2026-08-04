@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.infra.minio.constant.MinioConstant;
 import xyz.nanian.owl.infra.minio.service.FileStorageService;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
+import xyz.nanian.owl.log.constant.LogType;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
@@ -18,7 +19,7 @@ import xyz.nanian.owl.user.mapper.RoleMapper;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
-import xyz.nanian.owl.common.utils.jwt.UserContext;
+import xyz.nanian.owl.common.security.CurrentUserContext;
 
 
 /**
@@ -40,11 +41,11 @@ public class UserServiceImpl implements UserService {
     private final RoleMapper roleMapper;
 
     @Override
-    @BizLog(module = "用户", action = "更新用户信息")
+    @OperationLog(type = LogType.USER, module = "用户", action = "更新用户信息", persist = true)
     public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
 
 //        1. 获取用户信息，
-        String userCode = UserContext.getUserCode();
+        String userCode = CurrentUserContext.getUserCode();
 
 //        2. 防止空值覆盖，
         LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
@@ -72,10 +73,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @BizLog(module = "用户", action = "更新用户密码")
+    @OperationLog(type = LogType.USER, module = "用户", action = "更新用户密码", persist = true)
     public Boolean updateUserPassword(String newPassword) {
 
-        String userCode = UserContext.getUserCode();
+        String userCode = CurrentUserContext.getUserCode();
         String encryptedPassword = passwordEncoder.encode(newPassword);
 
         LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
@@ -90,6 +91,7 @@ public class UserServiceImpl implements UserService {
 
     @SneakyThrows
     @Override
+    @OperationLog(type = LogType.USER, module = "用户", action = "更新用户头像", persist = true)
     public String updateUserAvatar(MultipartFile file, String userCode) {
 
         String avatarUrl = fileStorageService.upload(file, MinioConstant.BUCKET_AVATARS);
@@ -109,7 +111,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoVO getUserInfoByCode() {
-        Long userId = UserContext.getUserId();
+        Long userId = CurrentUserContext.getUserId();
 
         UserDO userDO = userMapper.selectById(userId);
         Integer role = userDO.getRoleId();

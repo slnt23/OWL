@@ -31,10 +31,6 @@
     <build>
         <plugins>
 <!--            crow 为库模块，不独立启动，boot 插件在 start 模块中统一执行 -->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            </plugin>-->
 
         </plugins>
     </build>

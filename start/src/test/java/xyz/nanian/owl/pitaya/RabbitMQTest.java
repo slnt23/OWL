@@ -23,7 +23,7 @@
 //    @Test
 //    public void sentMessage(){
 //        String msg = "Hello World!";
-//        String exchange = "biz_log_exchange";
+//        String exchange = "operation_log_exchange";
 //        rabbitTemplate.convertAndSend(exchange, msg);
 //
 //    }

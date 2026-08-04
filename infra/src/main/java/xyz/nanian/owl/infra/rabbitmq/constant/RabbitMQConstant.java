@@ -19,8 +19,8 @@ public class RabbitMQConstant {
     public static final String ORDER_ROUTING_KEY = "order_routing_key";
 
 
-    public static final String BIZ_LOG_QUEUE = "biz_log_queue";
-    public static final String BIZ_LOG_EXCHANGE = "biz_log_exchange";
-    public static final String BIZ_LOG_ROUTING_KEY = "biz_log_routing_key";
+    public static final String OPERATION_LOG_QUEUE = "operation_log_queue";
+    public static final String OPERATION_LOG_EXCHANGE = "operation_log_exchange";
+    public static final String OPERATION_LOG_ROUTING_KEY = "operation_log_routing_key";
 
 }

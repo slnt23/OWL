@@ -60,7 +60,6 @@ public class SpotlightController {
     public Result<ResultStatus> update(
             @PathVariable Integer id,
             @Valid @RequestBody SpotlightDTO dto) {
-//        dto.setId(id);  // 确保路径 id 与 body 一致
         Boolean result = spotlightService.update(dto);
         if(result){
             return Result.success();

@@ -71,25 +71,5 @@ public class RecordController {
     public Result<List<SourceCompareVO>> compareSource(@RequestBody PriceCompareSourceDTO dto) {
         return Result.success(recordService.compareSource(dto));
     }
-
-//    /**
-//     * 5. 原始记录分页
-//     */
-//    @PostMapping("/page")
-//    @Operation(summary = "原始记录分页")
-//    public PageResult<PriceRecordVO> page(@RequestBody PricePageQueryDTO dto) {
-//        return priceService.pageQuery(dto);
-//    }
-
-//    /**
-//     * 6. 写入价格数据,（后台/爬虫）
-//     * 可以设计成爬虫的开关，
-//     */
-//    @PostMapping
-//    @Operation(summary = "写入价格数据", description = "可以作为后台爬虫的开关")
-//    public void create(@RequestBody PriceRecordCreateDTO dto) {
-//        priceService.create(dto);
-//        return null;
-//    }
 }
 

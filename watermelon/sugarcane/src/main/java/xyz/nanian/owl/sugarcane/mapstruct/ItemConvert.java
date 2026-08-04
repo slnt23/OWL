@@ -3,7 +3,6 @@ package xyz.nanian.owl.sugarcane.mapstruct;
 
 import org.mapstruct.Mapper;
 import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
-//import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO;
 
 import java.util.List;

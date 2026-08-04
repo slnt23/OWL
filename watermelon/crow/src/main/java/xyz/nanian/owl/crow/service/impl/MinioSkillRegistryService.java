@@ -61,10 +61,6 @@ public class MinioSkillRegistryService implements SkillRegistryService {
 
     private List<SkillMetadata> listSkillsFromOss() {
         // 只读取文件名和描述
-//        return Arrays.asList(
-//                new SkillMetadata("skill1", "演示 Skill 1", null),
-//                new SkillMetadata("skill2", "演示 Skill 2", null)
-//        );
         return null;
     }
 }

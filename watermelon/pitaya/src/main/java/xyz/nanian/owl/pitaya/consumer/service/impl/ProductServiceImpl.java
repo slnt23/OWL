@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.pitaya.domain.entity.CategoryDO;
 import xyz.nanian.owl.pitaya.domain.entity.ProductDO;
 import xyz.nanian.owl.pitaya.consumer.mapper.ProductMapper;
@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
      * @return List<productVO
      */
     @Override
-    @BizLog(module = "用户商品",action = "查询商品")
+    @OperationLog(module = "用户商品", action = "查询商品")
     public ResultPage<ProductVO> listProduct(String productName, Integer pageNum, Integer pageSize) {
 
         if(pageSize >50){
@@ -90,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
      * @return list<商品分类VO
      */
     @Override
-    @BizLog(module = "用户商品",action = "查询商品分类")
+    @OperationLog(module = "用户商品", action = "查询商品分类")
     public List<CategoryVO> listCategory() {
 
         String key = CATEGORY_KEY;
@@ -116,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
      * @return productDetailVO
      */
     @Override
-    @BizLog(module = "用户商品",action = "查询商品详情")
+    @OperationLog(module = "用户商品", action = "查询商品详情")
     public ProductDetailVO getProductDetail(Integer productId) {
 
         String key = PRODUCT_DETAIL_KEY + productId;

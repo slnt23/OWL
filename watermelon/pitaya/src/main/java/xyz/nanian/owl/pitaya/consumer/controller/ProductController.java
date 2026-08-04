@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.pitaya.consumer.service.ProductService;
 import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
 import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
@@ -72,7 +72,7 @@ public class ProductController{
 
     @GetMapping("/detail")
     @Operation(summary= "商品详情",description = "单个商品的详细信息")
-    @BizLog(module = "商品详情",action = "查询商品详情")
+    @OperationLog(module = "商品详情", action = "查询商品详情")
     public Result<ProductDetailVO> queryProductDetail(@RequestParam Integer productId) {
 
         ProductDetailVO productDetailVO =productService.getProductDetail(productId);

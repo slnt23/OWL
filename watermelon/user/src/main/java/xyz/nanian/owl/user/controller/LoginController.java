@@ -33,9 +33,10 @@ public class LoginController {
     }
 
     /**
-     * 用户注册,TODO 这个和ServiceImpl,中，后续注册登陆合到一起，提升用户体验，
+     * 用户注册
+     * TODO(login): 注册与登录流程合并
      * @param user 用户DTO
-     * @return
+     * @return 登录 Token
      */
     @PostMapping("/register")
     @Operation(summary = "提交注册申请",description = "用户注册")

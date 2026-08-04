@@ -7,18 +7,8 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.models.GroupedOpenApi;
-import org.springframework.ai.model.ApiKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.media.StringSchema;
-import io.swagger.v3.oas.models.parameters.Parameter;
-import org.springdoc.core.customizers.OperationCustomizer;
-import org.springframework.web.method.HandlerMethod;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Swagger信息配置 (统一配置到 common 模块),
@@ -49,7 +39,7 @@ public class SpringdocConfig {
                                 .email("relax271828@petalmail.com")
                         )
                 )
-//                目前来说下面的配置没有生效，问题未知,不，是生效了,但是是全局的，
+//                全局 SecurityScheme，所有 API 分组共用
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName,
                                 new SecurityScheme()
@@ -64,46 +54,6 @@ public class SpringdocConfig {
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));
     }
 
-//    /**
-//     * 全局为每个接口添加请求头部输入框（关键配置）
-//     * 这会让所有接口的“请求头部”标签下出现可输入框
-//     */
-//    @Bean
-//    public OperationCustomizer customGlobalHeaders() {
-//        return (Operation operation, HandlerMethod handlerMethod) -> {
-//
-//            // 添加 Authorization 请求头部输入框
-//            Parameter authorizationHeader = new Parameter()
-//                    .in("header")                                      // 指定为 Header
-//                    .name("Authorization")                             // Header 名称
-//                    .description("请输入 Bearer Token（格式：Bearer xxxxx）")
-//                    .required(false)                                   // 是否必填，可改为 true
-//                    .schema(new StringSchema());                       // 输入类型为字符串
-//
-//            operation.addParametersItem(authorizationHeader);
-//
-//            // 如果还需要添加其他 Header，可以继续添加，例如：
-//            // Parameter traceIdHeader = new Parameter()
-//            //         .in("header")
-//            //         .name("X-Trace-Id")
-//            //         .description("链路追踪ID")
-//            //         .required(false)
-//            //         .schema(new StringSchema());
-//            // operation.addParametersItem(traceIdHeader);
-//
-//            return operation;
-//        };
-//    }
-//    /**
-//     * 构建权限协议列表
-//     * @return 认证协议列表
-//     */
-//    @Bean
-//    private static List<SecurityScheme> securitySchemes() {
-//        return Collections.singletonList(
-//                new ApiKey("Authorization", "Authorization", "header"));
-//    }
-
     /**
      * 配置用户中心 API 分组
      * 启用 GroupedOpenApi 来创建不同的分组。
@@ -113,7 +63,6 @@ public class SpringdocConfig {
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
                 .group("用户中心-user") // 分组名称
-//                .pathsToMatch("/user/**")// 匹配 user 模块的接口路径
                 .packagesToScan("xyz.nanian.owl.user.controller")//搜索特定的分路径
                 .build();
     }
@@ -126,7 +75,6 @@ public class SpringdocConfig {
     public GroupedOpenApi pitayaApi() {
         return GroupedOpenApi.builder()
                 .group("电商中心-pitaya")
-//                .pathsToMatch("/pitaya/**")
                 .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
                 .build();
     }
@@ -138,7 +86,6 @@ public class SpringdocConfig {
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
                 .group("管理员中心-admin")
-//                .pathsToMatch("/admin/**")
                 .packagesToScan("xyz.nanian.owl.admin.controller")
                 .build();
     }
@@ -150,7 +97,6 @@ public class SpringdocConfig {
     public GroupedOpenApi sugarcaneApi() {
         return GroupedOpenApi.builder()
                 .group("价格中心-sugarcane")
-//                .pathsToMatch("/pitaya/**")
                 .packagesToScan("xyz.nanian.owl.sugarcane.controller")
                 .build();
     }
@@ -161,7 +107,6 @@ public class SpringdocConfig {
     public GroupedOpenApi crowApi() {
         return GroupedOpenApi.builder()
                 .group("AI中心-crow")
-//                .pathsToMatch("/pitaya/**")
                 .packagesToScan("xyz.nanian.owl.crow.controller")
                 .build();
     }

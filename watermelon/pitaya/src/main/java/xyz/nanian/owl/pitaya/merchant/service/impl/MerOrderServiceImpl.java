@@ -8,12 +8,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerOrderMapper;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 import xyz.nanian.owl.common.result.ResultPage;
-import xyz.nanian.owl.common.utils.jwt.UserContext;
+import xyz.nanian.owl.common.security.CurrentUserContext;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +46,7 @@ public class MerOrderServiceImpl implements MerOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "更新订单状态")
+    @OperationLog(module = "订单", action = "更新订单状态", persist = true)
     public Boolean updateOrderStatus(Long orderId, Integer orderStatus) {
 
         Integer intUpdate = merOrderMapper.updateOrder(orderId,orderStatus);
@@ -62,12 +62,12 @@ public class MerOrderServiceImpl implements MerOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "查询指定用户订单列表")
+    @OperationLog(module = "订单", action = "查询指定用户订单列表")
     public ResultPage<OrderListVO> listOrders(Integer pageNum, Integer pageSize, Long searchedUserId) {
 
 //        用户在该商家的订单，
 //        商家Id
-        Long userId = UserContext.getUserId();
+        Long userId = CurrentUserContext.getUserId();
 //        搜索用户Id
         String key= MERCHANT_ORDER_KEY + searchedUserId + userId;
         if(pageSize > 50){

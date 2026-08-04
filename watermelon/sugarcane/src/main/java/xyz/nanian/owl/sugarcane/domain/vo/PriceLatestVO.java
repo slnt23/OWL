@@ -18,11 +18,6 @@ import java.time.LocalDateTime;
 public class PriceLatestVO extends PriceItemVO{
 
     /**
-     * 物品基本信息
-     */
-//    private PriceItemVO item;
-
-    /**
      * 地点名称
      */
     private String locationName;

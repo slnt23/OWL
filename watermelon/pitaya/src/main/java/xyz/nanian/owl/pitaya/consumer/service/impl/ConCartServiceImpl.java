@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConCartMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConCartService;
 import xyz.nanian.owl.pitaya.domain.dto.ShoppingCartDTO;
@@ -16,7 +16,7 @@ import xyz.nanian.owl.pitaya.domain.entity.ShoppingCartDO;
 import xyz.nanian.owl.pitaya.mapstruct.ShoppingCartConvert;
 import xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO;
 import xyz.nanian.owl.common.result.ResultPage;
-import xyz.nanian.owl.common.utils.jwt.UserContext;
+import xyz.nanian.owl.common.security.CurrentUserContext;
 
 import java.util.concurrent.TimeUnit;
 
@@ -51,7 +51,7 @@ public class ConCartServiceImpl implements ConCartService {
      * @return
      */
     @Override
-    @BizLog(module = "购物车",action = "购物车新增商品")
+    @OperationLog(module = "购物车", action = "购物车新增商品", persist = true)
     public Boolean saveProduct(ShoppingCartDTO shoppingCartDTO) {
 
         ShoppingCartDO  shoppingCartDO = shoppingCartConvert.cartToDO(shoppingCartDTO);
@@ -65,7 +65,7 @@ public class ConCartServiceImpl implements ConCartService {
      * @return
      */
     @Override
-    @BizLog(module = "购物车",action = "购物车更新商品信息")
+    @OperationLog(module = "购物车", action = "购物车更新商品信息", persist = true)
     public Boolean updateProduct(ShoppingCartDTO shoppingCartDTO) {
 
         ShoppingCartDO shoppingCartDO = shoppingCartConvert.cartToDO(shoppingCartDTO);
@@ -80,7 +80,7 @@ public class ConCartServiceImpl implements ConCartService {
      * @return
      */
     @Override
-    @BizLog(module = "购物车",action = "购物车删除商品")
+    @OperationLog(module = "购物车", action = "购物车删除商品", persist = true)
     public Boolean deleteProduct(Long userId, Long productId) {
 
         Integer intDelete = conCartMapper.deleteCartDO(userId,productId);
@@ -95,14 +95,14 @@ public class ConCartServiceImpl implements ConCartService {
      * @return
      */
     @Override
-    @BizLog(module = "购物车",action = "查询购物车列表")
+    @OperationLog(module = "购物车", action = "查询购物车列表")
     public ResultPage<ShoppingCartVO> listCart(Integer pageNum, Integer pageSize) {
 
 //        这里 查询购物车的信息，但是商品表只有商品的id，没有，商品名，单价，封面图，这样也就是要按照id多次查询，这？
 //        AI的建议真的善变，业务的标准还是实际就业才行，
 //        这里的建议是 单表：DO；多表+ 聚合：用VO，DTO可以，
 
-        Long userId = UserContext.getUserId();
+        Long userId = CurrentUserContext.getUserId();
 
         if(pageSize > 50){
             pageSize = 50;

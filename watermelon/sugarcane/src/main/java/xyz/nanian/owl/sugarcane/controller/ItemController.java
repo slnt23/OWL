@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.common.result.ResultPage;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
-//import xyz.nanian.owl.sugarcane.domain.vo.ItemIntroVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO;
 import xyz.nanian.owl.sugarcane.service.ItemService;
 
@@ -34,34 +33,9 @@ public class ItemController {
         return Result.success(ResultPage.create(itemService.getItemIntroList(dto)));
     }
 
-    // 创建
-//    @PostMapping
-//    public void create(@RequestBody ItemCreateDTO dto){
-//
-//    }
-
-    // 更新
-//    @PutMapping("/{id}")
-//    public void update(@PathVariable Long id,
-//                       @RequestBody ItemUpdateDTO dto){
-//
-//    }
-
     // 删除
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){
     }
-
-    // 详情
-//    @GetMapping("/{id}")
-//    public ItemVO detail(@PathVariable Long id){
-//        return null;
-//    }
-
-
-//    @GetMapping("/search")
-//    public List<ItemVO> search(@RequestParam String keyword){
-//        return null;
-//    }
 }
 

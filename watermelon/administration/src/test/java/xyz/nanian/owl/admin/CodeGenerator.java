@@ -21,7 +21,6 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 
-//        String projectPath = System.getProperty("user.dir");
         String projectPath = "D:/IT/IDEA/Dev/OWL/watermelon/administration";
 
         FastAutoGenerator.create(
@@ -55,7 +54,6 @@ public class CodeGenerator {
                 .strategyConfig(builder -> {
                     builder
                             .addInclude("spotlight", "feature")
-//                            .addTablePrefix("price_")
 
                             .entityBuilder()
                             .enableLombok()

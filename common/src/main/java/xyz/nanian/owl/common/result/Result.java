@@ -20,15 +20,12 @@ import lombok.NoArgsConstructor;
 @Tag(name = "统一返回包装类")
 public class Result<T> {
 
-//    状态码
     @Schema(description = "状态码" ,example = "10000")
     private Integer code;
 
-//    返回提示信息
     @Schema(description = "提示信息",example = "发送信息成功")
     private String message;
 
-//    返回数据
     @Schema(description = "data",example = "数据")
     private T data;
 
@@ -62,7 +59,7 @@ public class Result<T> {
      * @param data 获取的数据
      * @param code 状态码
      * @param message 提示信息
-     * @return 返会创建的VO对象
+     * @return 返回创建的 Result 对象
      * @param <T> Result嵌套元素
      */
     public static <T> Result<T> create(T data,int code,String message){
@@ -105,9 +102,9 @@ public class Result<T> {
 
     /**
      * 失败，支持参数，
-     * @param code
-     * @param message
-     * @return
+     * @param code 状态码
+     * @param message 提示信息
+     * @return 无数据的结果
      */
     public static Result<?> fail(Integer code,String message){
         return create(null,code,message);

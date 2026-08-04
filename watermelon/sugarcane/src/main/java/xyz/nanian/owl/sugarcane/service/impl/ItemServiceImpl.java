@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.sugarcane.constant.CacheConstant;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO;
@@ -29,7 +29,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, ItemDO> implements 
     final ItemMapper itemMapper;
 
     @Override
-    @BizLog(module = "sugarcane",action = "模糊分页搜索物品Item")
+    @OperationLog(module = "sugarcane", action = "模糊分页搜索物品Item")
     @Cacheable(value = CacheConstant.ITEM_PAGE,
             key = "'page:' + #itemIntroDTO.pageNum + ':' + #itemIntroDTO.pageSize + ':' + #itemIntroDTO.itemName",
             sync = true)

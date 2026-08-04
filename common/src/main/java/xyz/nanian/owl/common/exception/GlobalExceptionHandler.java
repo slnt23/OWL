@@ -16,6 +16,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.common.result.ResultStatus;
+import xyz.nanian.owl.common.security.LoginFailureException;
 
 import java.util.stream.Collectors;
 
@@ -35,14 +36,35 @@ public class GlobalExceptionHandler {
 
     /**
      * 自定义业务异常1
-     * @param e
-     * @return
+     * @param e 业务异常
+     * @return 统一响应
      */
     @ExceptionHandler(value = BizException.class)
     public Result<?> handleBiz(BizException e) {
-//        打印错误日志
         log.warn("业务异常{}",e.getMessage(), e);
         return Result.fail(e.getCode(),e.getMessage());
+    }
+
+    /**
+     * 登录认证异常
+     * @param e 登录异常
+     * @return 统一响应
+     */
+    @ExceptionHandler(value = LoginFailureException.class)
+    public Result<?> handleLoginFailure(LoginFailureException e) {
+        log.warn("登录异常：{}", e.getMessage());
+        return Result.fail(e.getCode(), e.getMessage());
+    }
+
+    /**
+     * 方法级权限不足（@PreAuthorize 等）
+     * @param e 权限异常
+     * @return 统一响应
+     */
+    @ExceptionHandler(value = org.springframework.security.access.AccessDeniedException.class)
+    public Result<?> handleAccessDenied(org.springframework.security.access.AccessDeniedException e) {
+        log.warn("权限不足：{}", e.getMessage());
+        return Result.fail(ResultStatus.FORBIDDEN);
     }
 
     /**

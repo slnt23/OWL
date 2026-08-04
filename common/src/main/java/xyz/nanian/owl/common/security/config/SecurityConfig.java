@@ -1,0 +1,84 @@
+package xyz.nanian.owl.common.security.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import xyz.nanian.owl.common.security.filter.JwtAuthenticationFilter;
+import xyz.nanian.owl.common.security.JwtTokenProvider;
+import xyz.nanian.owl.common.security.RoleConstants;
+import xyz.nanian.owl.common.security.handler.RestAccessDeniedHandler;
+import xyz.nanian.owl.common.security.handler.RestAuthenticationEntryPoint;
+
+/**
+ * Spring Security 安全配置
+ * 后续如需拆分为独立 security 模块，可整体迁移本包
+ *
+ * @author slnt23
+ * @since 2026/8/3
+ */
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final RestAccessDeniedHandler restAccessDeniedHandler;
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public SecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint,
+                          RestAccessDeniedHandler restAccessDeniedHandler,
+                          JwtTokenProvider jwtTokenProvider) {
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.restAccessDeniedHandler = restAccessDeniedHandler;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/auth/**",
+                                "/user",
+                                "/user/login",
+                                "/user/register",
+                                "/public",
+                                "/public/**",
+                                "/doc.html",
+                                "/doc.html/**",
+                                "/webjars/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/v3/api-docs/**",
+                                "/error",
+                                "/favicon.ico",
+                                "/admin/feature/**",
+                                "/admin/spotlight/**"
+                        ).permitAll()
+                        .requestMatchers("/admin/**").hasRole(RoleConstants.ADMIN)
+                        .anyRequest().authenticated())
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(restAuthenticationEntryPoint)
+                        .accessDeniedHandler(restAccessDeniedHandler))
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+}

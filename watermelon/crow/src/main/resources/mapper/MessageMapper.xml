@@ -4,17 +4,6 @@
 
 <mapper namespace="xyz.nanian.owl.crow.mapper.MessageMapper">
 
-<!--    <select id="selectByConversationId" resultType="xyz.nanian.owl.crow.domain.vo.MessageVO">-->
-<!--        SELECT-->
-<!--            id,-->
-<!--            role,-->
-<!--            content,-->
-<!--            created_at as createdAt-->
-<!--        FROM message-->
-<!--        WHERE conversation_id = #{conversationId}-->
-<!--          AND deleted = 0-->
-<!--        ORDER BY created_at ASC-->
-<!--    </select>-->
     <!-- 先定义 resultMap -->
     <resultMap id="MessageVOResultMap"
                type="xyz.nanian.owl.crow.domain.vo.MessageVO">

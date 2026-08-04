@@ -1,82 +1,37 @@
-# OWL (猫头鹰)
+# OWL（猫头鹰）
 
-以开创多功能、发散性思维的 Java 项目，基于 **Spring Boot 3.3.13** + **Java 17**。
+OWL 是一个以多业务、多方向方式探索后端能力的 Java 项目，覆盖用户认证、AI 对话、价格追踪、电商交易和后台管理。项目基于 **Spring Boot 3.3.13**、**Java 17** 与 **MyBatis-Plus** 构建，采用多模块 Maven 工程组织，通用能力沉淀在基础模块，业务模块独立演进。
+
+## 项目特色
+
+- **用户中心**：邮箱验证码注册/登录、密码登录、JWT 鉴权、角色与用户地址管理。
+- **AI 对话**：基于 Spring AI 接入 DeepSeek，支持流式输出、会话持久化、Token 统计与可配置的 Skill 模板。
+- **价格追踪（价多多）**：商品分类、物品、价格来源、地理位置、价格记录、趋势分析与多来源对比。
+- **电商平台（火龙果）**：商品、购物车、订单、地址，覆盖消费者与商家两端。
+- **后台管理**：用户、角色、业务日志、功能位与聚光灯管理。
+- **工程化基础**：统一 `Result<T>` 响应、全局异常处理、JWT + Spring Security 鉴权、AOP 业务日志与 TraceId、Knife4j 接口文档。
+- **中间件集成**：MySQL、Redis、RabbitMQ、Nacos、MinIO，以及 Guava 布隆过滤器。
+- **可运行与可部署**：Docker 多阶段构建，支持 Nacos 动态配置。
 
 ## 技术栈
 
-| 类别 | 技术                            |
-|------|-------------------------------|
-| 框架 | Spring Boot 3.3.13, Spring Cloud Alibaba (Nacos) |
-| 构建 | Maven 3.9.16                  |
-| ORM | MyBatis-Plus 3.5.5            |
-| 数据库 | MySQL 8.4                     |
-| 缓存 | Redis 6.2.7 (Sentinel 集群)     |
-| 消息队列 | RabbitMQ 3.12, RocketMQ (规划中) |
-| 对象存储 | MinIO 8.5.10                  |
-| AI | Spring AI 1.1.4 (OpenAI 兼容)   |
-| 接口文档 | Knife4j 4.5.0                 |
-| 容器 | Docker 26.1.3                 |
-
-## 项目模块
-
-```
-OWL
- ├── common              ← 基础设施层（工具、缓存、MQ、JWT、MinIO）
- ├── domain              ← 领域层（共享 DTO）
- ├── log                 ← 日志层（AOP 业务日志 + TraceId）
- ├── api                 ← 对外接口契约层
- ├── watermelon/         ← 业务父模块
- │   ├── user            ← 用户中心
- │   ├── administration  ← 后台管理
- │   ├── sugarcane       ← 价多多（价格追踪）
- │   ├── crow            ← 乌鸦（AI 对话）
- │   └── pitaya          ← 火龙果（电商平台）
- └── start               ← 启动模块
-```
-
-## 模块依赖链
-
-```
-common → domain → log → api → watermelon/*
-                              ↑
-common ──────────────────── start (聚合启动)
-```
+| 类别 | 技术 |
+| --- | --- |
+| 框架 | Spring Boot 3.3.13、Spring Cloud Alibaba（Nacos） |
+| ORM | MyBatis-Plus 3.5.5 |
+| 数据库 | MySQL 8.4 |
+| 缓存 | Redis（Sentinel 集群） |
+| 消息队列 | RabbitMQ |
+| 对象存储 | MinIO |
+| AI | Spring AI 1.1.4（OpenAI 兼容协议接入 DeepSeek） |
+| 接口文档 | Knife4j 4.5.0 |
+| 构建 / 容器 | Maven 3.9.16、Docker |
 
 ## 快速开始
 
 ```bash
-# 编译
-./mvnw clean package -DskipTests
-
-# 启动（需先启动 MySQL/Redis/RabbitMQ/Nacos/MinIO）
+mvn clean package -DskipTests
 java -jar start/target/start-0.0.1-SNAPSHOT.jar
 ```
 
-## 详细文档
-
-完整架构说明、模块详情、部署指南见 [.docs/](./.docs/) 目录：
-
-| 文档 | 内容 |
-|------|------|
-| [01-项目总览](./.docs/01-project-overview.md) | 技术栈、模块架构、依赖关系 |
-| [02-common 模块](./.docs/02-module-common.md) | 基础设施、工具类、拦截器 |
-| [03-domain 模块](./.docs/03-module-domain.md) | 领域模型中心 |
-| [04-api 模块](./.docs/04-module-api.md) | 对外接口层 |
-| [05-start 模块](./.docs/05-module-start.md) | 启动入口、配置文件 |
-| [06-log 模块](./.docs/06-module-log.md) | AOP 业务日志 |
-| [07-watermelon 总览](./.docs/07-watermelon-overview.md) | 业务模块架构 |
-| [08-user 模块](./.docs/08-watermelon-user.md) | 用户中心 |
-| [09-administration 模块](./.docs/09-watermelon-administration.md) | 后台管理 |
-| [10-sugarcane 模块](./.docs/10-watermelon-sugarcane.md) | 价格追踪 |
-| [11-crow 模块](./.docs/11-watermelon-crow.md) | AI 对话 |
-| [12-pitaya 模块](./.docs/12-watermelon-pitaya.md) | 电商平台 |
-| [13-部署指南](./.docs/13-deployment.md) | 环境要求、部署步骤 |
-
-## 设计目标
-
-- 会当凌绝顶
-- 下一趟：爬虫 + Vue3 + 价多多
-
-## 联系方式
-
-Email: relax271828@petalmail.com
+启动前需准备 MySQL、Redis、RabbitMQ、Nacos、MinIO；连接配置默认通过 Nacos 导入（`optional:nacos:*`），本地开发可在 `start` 模块配置文件中取消注释。

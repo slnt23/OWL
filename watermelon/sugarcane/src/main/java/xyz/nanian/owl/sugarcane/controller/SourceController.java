@@ -16,30 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Source来源")
 public class SourceController {
 
-//    @GetMapping("/list")
-//    public List<SourceVO> list(){
-//        return null;
-//    }
-
-//    @PostMapping
-//    public void create(@RequestBody SourceCreateDTO dto){
-//
-//    }
-
-//    @PutMapping("/{id}")
-//    public void update(@PathVariable Long id,
-//                       @RequestBody SourceUpdateDTO dto){
-//
-//    }
-
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){}
-
-
-//    @GetMapping("/reliable")
-//    public List<SourceVO> getReliableSources(
-//            @RequestParam Integer minLevel){
-//        return null;
-//    }
 }
 

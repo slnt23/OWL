@@ -12,7 +12,7 @@
 
 ### 1. JWT 无状态认证
 
-**选择**：使用 JWT（jjwt 库，HMAC-SHA256 签名），token 有效期 30 天。`LoginInterceptor` 从 `Authorization: Bearer <token>` 头解析 token，将用户信息注入 `UserContext`（ThreadLocal），请求结束自动清理。
+**选择**：使用 JWT（jjwt 库，HMAC-SHA256 签名），token 有效期 30 天。`JwtAuthenticationFilter` 从 `Authorization: Bearer <token>` 头解析 token，将用户信息注入 `CurrentUserContext`（ThreadLocal），请求结束自动清理。
 
 **原因**：
 - 无状态：不需要 Redis 存 session，服务重启不影响已登录用户
@@ -49,7 +49,7 @@
 
 ### 4. 用户上下文 ThreadLocal 管理
 
-**选择**：`UserContext` 使用 `ThreadLocal<UserInfo>` 存储当前请求的用户信息（userId、userCode、email），不存完整 UserDO。
+**选择**：`CurrentUserContext` 使用 `ThreadLocal<LoginUser>` 存储当前请求的用户信息（userId、userCode、email、roleName），不存完整 UserDO。
 
 **原因**：
 - 只存最小必要信息，减少内存占用

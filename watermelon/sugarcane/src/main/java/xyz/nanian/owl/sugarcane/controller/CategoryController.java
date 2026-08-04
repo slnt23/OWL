@@ -25,23 +25,8 @@ public class CategoryController {
         return null;
     }
 
-    // 新增分类
-//    @PostMapping
-//    public void create(@RequestBody CategoryCreateDTO dto){};
-
-    // 更新分类
-//    @PutMapping("/{id}")
-//    public void update(@PathVariable Long id,
-//                       @RequestBody CategoryUpdateDTO dto){};
-
     // 删除分类
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){};
-
-    // 获取单个分类
-//    @GetMapping("/{id}")
-//    public CategoryVO getById(@PathVariable Long id){
-//        return null;
-//    }
 }
 

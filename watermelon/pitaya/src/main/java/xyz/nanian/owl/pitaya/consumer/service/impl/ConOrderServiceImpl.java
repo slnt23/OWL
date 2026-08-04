@@ -9,7 +9,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.pitaya.consumer.mapper.ConOrderMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConOrderService;
 import xyz.nanian.owl.pitaya.domain.entity.OrderDO;
@@ -23,7 +23,7 @@ import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderItemVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 import xyz.nanian.owl.common.result.ResultPage;
-import xyz.nanian.owl.common.utils.jwt.UserContext;
+import xyz.nanian.owl.common.security.CurrentUserContext;
 
 import java.util.List;
 import java.util.UUID;
@@ -65,7 +65,7 @@ public class ConOrderServiceImpl implements ConOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "新增订单")
+    @OperationLog(module = "订单", action = "新增订单", persist = true)
     public Boolean saveOrder(xyz.nanian.owl.pitaya.domain.dto.OrderDTO orderDTO) {
 
 //        对于不同的来源是怎么处理？
@@ -81,7 +81,7 @@ public class ConOrderServiceImpl implements ConOrderService {
 //        这里的数据类型没有考虑号，结果这里快照用地址id替代，
         orderDO.setAddressSnapshot(userAddressDO.getId()+"");
 
-        Long userId = UserContext.getUserId();
+        Long userId = CurrentUserContext.getUserId();
         String orderCode = UUID.randomUUID().toString();
         orderDO.setOrderNo(orderCode);
         orderDO.setUserId(userId);
@@ -121,7 +121,7 @@ public class ConOrderServiceImpl implements ConOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "更新订单")
+    @OperationLog(module = "订单", action = "更新订单", persist = true)
     public Boolean updateOrder(Long orderId, Integer orderStatus) {
 
         Integer intUpdate = conOrderMapper.updateOrder(orderId,orderStatus);
@@ -134,7 +134,7 @@ public class ConOrderServiceImpl implements ConOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "查询订单详情")
+    @OperationLog(module = "订单", action = "查询订单详情")
     public OrderDetailVO getOrderDetail(Long orderId) {
 
 //        order detail
@@ -168,10 +168,10 @@ public class ConOrderServiceImpl implements ConOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "用户订单列表")
+    @OperationLog(module = "订单", action = "用户订单列表")
     public ResultPage<OrderListVO> listOrders(Integer pageNum, Integer pageSize) {
 
-        Long userId = UserContext.getUserId();
+        Long userId = CurrentUserContext.getUserId();
         if(pageSize> 50){
             pageSize = 50;
         }

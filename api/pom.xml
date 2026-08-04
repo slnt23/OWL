@@ -19,11 +19,6 @@
     </properties>
 
     <dependencies>
-<!--        自建模块-->
-<!--        <dependency>-->
-<!--            <groupId>xyz.nanian</groupId>-->
-<!--            <artifactId>domain</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>log</artifactId>

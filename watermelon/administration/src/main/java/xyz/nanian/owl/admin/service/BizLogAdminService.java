@@ -1,6 +1,6 @@
 package xyz.nanian.owl.admin.service;
 
-import xyz.nanian.owl.admin.domain.entity.BizLogDO;
+import xyz.nanian.owl.log.domain.entity.BizLogDO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

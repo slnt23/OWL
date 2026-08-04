@@ -58,7 +58,6 @@ public class AiChatServiceImpl implements AiChatService {
         messageUser.setConversationId(dto.getConversationId());
         messageUser.setRole(AIConstant.ROLE_USER);
         messageUser.setCreatedAt(LocalDateTime.now());
-//        messageUser.set
 
 //        1.保存用户消息
         messageMapper.insert(messageUser);
@@ -68,9 +67,6 @@ public class AiChatServiceImpl implements AiChatService {
                 AIConstant.RecentMessageNumberLimit);
 
 //        3. 转换，AI格式（Message列表）
-//        List<Message> messages = history.stream()
-//                .map(this::convertMessageDO)
-//                .toList();
         List<Message> messages = new ArrayList<>(history.stream()
                 .map(this::convertMessageDO)
                 .toList());

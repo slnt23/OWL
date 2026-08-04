@@ -87,9 +87,7 @@ public class MinioFileServiceImpl implements FileStorageService {
                             .build()
             );
 
-            // 返回预签名URL（推荐方式，更安全）
-//            return getUrl(bucketName, objectName);
-//            这里改为OSS的存储路径，
+            // 返回对象存储路径，前端按需拼接访问地址
             return objectName;
         } catch (Exception e) {
             throw new RuntimeException("文件上传失败", e);

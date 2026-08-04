@@ -22,7 +22,6 @@ public class SpotlightDTO {
 
     /** 新增时不传，修改时必传 */
     @Schema(description = "ID，新增时不传，修改时必传")
-//    @NotNull(message = "修改时ID不能为空")
     private Integer id;
 
     @NotBlank(message = "眉题不能为空")

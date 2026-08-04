@@ -61,8 +61,6 @@ public class SkillExecutorService {
     private String downloadTemplateFromOSS(SkillMetadata skill) {
         // 调用你的 OSS 下载逻辑
         // 这里假设返回文件内容
-//        return ossService.download(skill.getOssPath());
-
         return null;
     }
 
@@ -80,7 +78,6 @@ public class SkillExecutorService {
      */
     private String chatWithAI(String prompt) {
         // Spring AI 最新调用方式
-//        return chatClient.chat(ChatMessage.ofUser(prompt)).blockOptional().orElse("AI 未返回结果");
         return null;
     }
 }

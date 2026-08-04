@@ -13,8 +13,8 @@ import xyz.nanian.owl.crow.mapstruct.ConversationConvert;
 import xyz.nanian.owl.crow.service.ConversationService;
 import xyz.nanian.owl.crow.domain.vo.ConversationVO;
 import xyz.nanian.owl.crow.domain.vo.MessageVO;
-import xyz.nanian.owl.log.logging.BizLog;
-import xyz.nanian.owl.common.utils.jwt.UserContext;
+import xyz.nanian.owl.log.annotation.OperationLog;
+import xyz.nanian.owl.common.security.CurrentUserContext;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,7 +50,7 @@ public class ConversationServiceImpl implements ConversationService {
         conversation.setCreatedAt(LocalDateTime.now());
         conversation.setUpdatedAt(LocalDateTime.now());
 //        获取用户账号，
-        conversation.setUserCode(UserContext.getUserCode());
+        conversation.setUserCode(CurrentUserContext.getUserCode());
 
         log.info("conversationId:{}", conversation);
 
@@ -63,7 +63,7 @@ public class ConversationServiceImpl implements ConversationService {
     @Override
     public List<ConversationVO> listCurrentUserConversations() {
 
-        String userCodeId = UserContext.getUserCode();
+        String userCodeId = CurrentUserContext.getUserCode();
 
         LambdaQueryWrapper<ConversationDO> wrapper = new LambdaQueryWrapper<ConversationDO>();
         wrapper.eq(ConversationDO::getUserCode, userCodeId);
@@ -72,16 +72,6 @@ public class ConversationServiceImpl implements ConversationService {
         List<ConversationDO> conversationDOS = conversationMapper.selectList(wrapper);
 
         return conversationConvert.conversationDOListToConversationVOList(conversationDOS);
-
-//        下面是手动转换的代码，使用mapstruct后就不需要了
-//        return conversationDOS.stream()
-//                .map(conversationDO -> {
-//                    ConversationVO vo = new ConversationVO();
-//                    vo.setId(conversationDO.getId());
-//                    vo.setTitle(conversationDO.getTitle());
-//                    return vo;
-//                })
-//                .toList();
     }
 
 
@@ -91,9 +81,9 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
-    @BizLog(module = "ai-conversation",action = "删除本ai会话，")
+    @OperationLog(module = "ai-conversation", action = "删除本ai会话", persist = true)
     public void deleteConversation(String conversationId) {
-        String userCode = UserContext.getUserCode();
+        String userCode = CurrentUserContext.getUserCode();
         ConversationDO conversation = conversationMapper.selectOne(
                 new LambdaQueryWrapper<ConversationDO>()
                         .eq(ConversationDO::getId, conversationId)

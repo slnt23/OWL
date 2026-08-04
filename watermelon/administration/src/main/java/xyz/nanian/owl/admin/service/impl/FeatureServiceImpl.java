@@ -9,6 +9,8 @@ import xyz.nanian.owl.admin.mapper.FeatureMapper;
 import xyz.nanian.owl.admin.service.FeatureService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import xyz.nanian.owl.log.annotation.OperationLog;
+import xyz.nanian.owl.log.constant.LogType;
 
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class FeatureServiceImpl extends ServiceImpl<FeatureMapper, FeatureDO> im
     }
 
     @Override
+    @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "新增产品特性", persist = true)
     public Integer create(FeatureDTO dto) {
         FeatureDO featureDO=featureConvert.DTOtoEntity(dto);
 
@@ -48,6 +51,7 @@ public class FeatureServiceImpl extends ServiceImpl<FeatureMapper, FeatureDO> im
     }
 
     @Override
+    @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "修改产品特性", persist = true)
     public Boolean update(FeatureDTO dto) {
         FeatureDO featureDO = featureConvert.DTOtoEntity(dto);
         int result = featureMapper.updateById(featureDO);
@@ -56,6 +60,7 @@ public class FeatureServiceImpl extends ServiceImpl<FeatureMapper, FeatureDO> im
     }
 
     @Override
+    @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "删除产品特性", persist = true)
     public Boolean deleteById(Integer id) {
         int result = featureMapper.deleteById(id);
         return result == 1;

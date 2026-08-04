@@ -11,7 +11,7 @@ import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 import xyz.nanian.owl.user.service.UserService;
-import xyz.nanian.owl.common.utils.jwt.UserContext;
+import xyz.nanian.owl.common.security.CurrentUserContext;
 
 /**
  * 用户相关的控制器方法,
@@ -26,9 +26,6 @@ import xyz.nanian.owl.common.utils.jwt.UserContext;
 @RequestMapping("/user")
 @Tag(name = "用户管理", description = "有关用户个人的一系列controller")
 public class UserController {
-
-//    private final static Logger log= LoggerFactory.getLogger(UserController.class);
-//    添加注解@Slf4j后，相当于自动生成这一行，
 
     private final UserService userService;
 
@@ -75,10 +72,7 @@ public class UserController {
     @Operation(summary = "用户密码更新")
     public Result<ResultStatus> updatePassword(@PathVariable String password) {
 
-//        1. 应该线发送邮箱验证码
-
-//        2. 验证码校验成功后,改动密码，
-
+        // TODO(login): 修改密码前先校验邮箱验证码
         if (userService.updateUserPassword(password)) {
             return Result.success();
         } else {
@@ -107,7 +101,7 @@ public class UserController {
     @PutMapping("/avatar")
     @Operation(summary = "用户头像更新")
     public Result<String> updateAvatar(@RequestParam("file") MultipartFile file) {
-        String userCode = UserContext.getUserCode();
+        String userCode = CurrentUserContext.getUserCode();
 //        检查用户是否登录
         if (userCode == null) {
             return Result.fail(ResultStatus.UNAUTHORIZED);
