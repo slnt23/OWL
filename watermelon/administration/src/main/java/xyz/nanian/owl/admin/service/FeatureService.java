@@ -2,7 +2,7 @@ package xyz.nanian.owl.admin.service;
 
 import xyz.nanian.owl.admin.domain.dto.FeatureDTO;
 import xyz.nanian.owl.admin.domain.entity.FeatureDO;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import xyz.nanian.owl.admin.domain.vo.FeatureVO;
 
 import java.util.List;

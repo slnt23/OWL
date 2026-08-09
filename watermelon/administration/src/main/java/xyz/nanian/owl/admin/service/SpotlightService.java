@@ -2,7 +2,7 @@ package xyz.nanian.owl.admin.service;
 
 import xyz.nanian.owl.admin.domain.dto.SpotlightDTO;
 import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import xyz.nanian.owl.admin.domain.vo.SpotlightVO;
 
 import java.util.List;

@@ -1,9 +1,10 @@
 
 
 # ============================================================
-# Stage 2: 运行阶段 — 仅保留 JRE + JAR，镜像更小
+# Stage 2: 运行阶段 - 仅保留 JRE + JAR，镜像更小
 # ============================================================
-FROM eclipse-temurin:17-jre
+# JDK 25 LTS 与 Spring Boot 4.x 对齐
+FROM eclipse-temurin:25-jre
 WORKDIR /app
 
 # 设置时区为东八区

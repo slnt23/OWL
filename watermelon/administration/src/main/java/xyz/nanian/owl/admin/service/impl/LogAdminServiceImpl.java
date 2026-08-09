@@ -3,7 +3,7 @@ package xyz.nanian.owl.admin.service.impl;
 import xyz.nanian.owl.log.domain.entity.AdminLogDO;
 import xyz.nanian.owl.admin.mapper.LogAdminMapper;
 import xyz.nanian.owl.admin.service.LogAdminService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

@@ -5,8 +5,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.13</version>
-        <relativePath/> <!-- 原版本3.3.13 lookup parent from repository -->
+        <version>4.1.0</version>
+        <relativePath/> <!-- 最新正式版 4.1.0；Spring Framework 7.0.8 / Spring Security 7.1.0 由 Boot BOM 管理 -->
     </parent>
 
     <groupId>xyz.nanian</groupId>
@@ -36,21 +36,23 @@
 <!--        项目版本-->
         <revision>0.0.1-SNAPSHOT</revision>
 <!--        依赖版本-->
-        <java.version>17</java.version>
+        <java.version>25</java.version>
         <easyexcel.version>4.0.3</easyexcel.version>
-        <mybatis.plus.version>3.5.5</mybatis.plus.version>
-        <nacos.config.discovery.version>2023.0.3.4</nacos.config.discovery.version>
+        <mybatis.plus.version>3.5.17</mybatis.plus.version>
+        <spring.cloud.version>2025.1.2</spring.cloud.version>
+        <nacos.config.discovery.version>2025.1.0.0</nacos.config.discovery.version>
         <swagger.version>2.8.14</swagger.version>
-        <knife4j.version>4.5.0</knife4j.version>
+        <knife4j.version>5.2.3</knife4j.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <druid.version>1.2.25</druid.version>
-        <rocketmq.version>2.2.3</rocketmq.version>
-        <jwt.version>0.11.5</jwt.version>
+        <druid.version>1.2.28</druid.version>
+        <rocketmq.version>2.3.6</rocketmq.version>
+        <jwt.version>0.13.0</jwt.version>
         <mybatis.generator.version>3.5.14</mybatis.generator.version>
-        <velocity.engine.version>2.3</velocity.engine.version>
-        <spring.ai.model.version>1.1.4</spring.ai.model.version>
-        <minio.version>8.5.10</minio.version>
-        <redis.guava.bloom.version>33.0.0-jre</redis.guava.bloom.version>
+        <mybatis.generator.plugin.version>2.0.0</mybatis.generator.plugin.version>
+        <velocity.engine.version>2.4.1</velocity.engine.version>
+        <spring.ai.model.version>2.0.0</spring.ai.model.version>
+        <minio.version>9.0.3</minio.version>
+        <redis.guava.bloom.version>33.6.0-jre</redis.guava.bloom.version>
     </properties>
 
 
@@ -113,13 +115,14 @@
             <!--            子模块如果要使用依赖，要声明依赖，但是不用声明版本，版本管理中心-->
             <!--            https://mvnrepository.com/artifact/com.alibaba/easyexcel -->
 
-            <!--            spring 家族-->
+            <!--            Spring Boot 4 使用 boot4 starter；3.5.17 修复 JDK 9+ 模块化包名问题 -->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
             </dependency>
             <!--            ai-->
+            <!--            Spring AI 2.0 为 Boot 4 系列，2.x 对 ChatOptions / Tool API 有破坏性变更 -->
             <dependency>
                 <groupId>org.springframework.ai</groupId>
                 <artifactId>spring-ai-starter-model-openai</artifactId>
@@ -134,10 +137,18 @@
                 <version>${rocketmq.version}</version>
             </dependency>
             <!--            nacos -->
+            <!--            Boot 4.1 要求 Spring Cloud 2025.1.2；BOM 先声明，确保覆盖 SCA 带入的 Cloud 2025.1.0 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${nacos.config.discovery.version}</version>   <!-- 或最新兼容版本，如 2025.0.0.0 -->
+                <version>${nacos.config.discovery.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -149,10 +160,10 @@
 
 
             <!--            日志-->
-            <!--            knife 4j-->
+            <!--            knife4j 官方尚未适配 Boot 4；5.2.3 为已发布到 Maven Central 的社区维护分支 -->
             <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <groupId>com.baizhukui</groupId>
+                <artifactId>knife4j-openapi3-boot4-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
             </dependency>
             <!--            MapStruct-->
@@ -175,10 +186,16 @@
                 <artifactId>mybatis-plus-generator</artifactId>
                 <version>${mybatis.generator.version}</version>
             </dependency>
-            <!--            druid ，用于Redis-->
+            <!--            Pagination plugin moved to a separate module since 3.5.9 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser-4.9</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <!--            Boot 4 需使用 druid-spring-boot-4-starter -->
             <dependency>
                 <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-3-starter</artifactId>
+                <artifactId>druid-spring-boot-4-starter</artifactId>
                 <version>${druid.version}</version>
             </dependency>
 
@@ -243,8 +260,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>25</source>
+                    <target>25</target>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>

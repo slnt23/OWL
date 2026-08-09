@@ -3,7 +3,7 @@ package xyz.nanian.owl.sugarcane.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import xyz.nanian.owl.sugarcane.domain.dto.ItemIntroDTO;
 import xyz.nanian.owl.sugarcane.domain.entity.ItemDO;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO;
 
 /**

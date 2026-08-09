@@ -2,7 +2,7 @@ package xyz.nanian.owl.infra.minio.service.impl;
 
 
 import io.minio.*;
-import io.minio.http.Method;
+import io.minio.Http.Method;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +82,7 @@ public class MinioFileServiceImpl implements FileStorageService {
                     PutObjectArgs.builder()
                             .bucket(bucketName)
                             .object(objectName)
-                            .stream(file.getInputStream(), file.getSize(), -1)
+                            .stream(file.getInputStream(), file.getSize(), (long) -1)
                             .contentType(file.getContentType())
                             .build()
             );

@@ -7,7 +7,7 @@ import xyz.nanian.owl.admin.domain.entity.FeatureDO;
 import xyz.nanian.owl.admin.domain.vo.FeatureVO;
 import xyz.nanian.owl.admin.mapper.FeatureMapper;
 import xyz.nanian.owl.admin.service.FeatureService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.log.constant.LogType;

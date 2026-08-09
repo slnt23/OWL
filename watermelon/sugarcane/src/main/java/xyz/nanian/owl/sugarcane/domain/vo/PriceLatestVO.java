@@ -2,6 +2,7 @@ package xyz.nanian.owl.sugarcane.domain.vo;
 
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * @since 2026/4/24
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class PriceLatestVO extends PriceItemVO{
 
     /**

@@ -7,7 +7,7 @@ import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
 import xyz.nanian.owl.admin.domain.vo.SpotlightVO;
 import xyz.nanian.owl.admin.mapper.SpotlightMapper;
 import xyz.nanian.owl.admin.service.SpotlightService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.infra.minio.constant.MinioConstant;
 import xyz.nanian.owl.infra.minio.service.FileStorageService;

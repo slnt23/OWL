@@ -5,7 +5,7 @@ import xyz.nanian.owl.sugarcane.domain.dto.PriceCompareSourceDTO;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceLatestQueryDTO;
 import xyz.nanian.owl.sugarcane.domain.dto.PriceTrendQueryDTO;
 import xyz.nanian.owl.sugarcane.domain.entity.RecordDO;
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceCompareVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceLatestVO;
 import xyz.nanian.owl.sugarcane.domain.vo.PriceTrendVO;

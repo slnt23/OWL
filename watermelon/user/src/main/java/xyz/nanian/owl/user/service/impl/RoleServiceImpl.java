@@ -3,7 +3,7 @@ package xyz.nanian.owl.user.service.impl;
 import xyz.nanian.owl.user.domain.entity.RoleDO;
 import xyz.nanian.owl.user.mapper.RoleMapper;
 import xyz.nanian.owl.user.service.RoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
