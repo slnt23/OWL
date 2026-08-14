@@ -37,6 +37,6 @@ public class MessageVO {
     /**
      * 消息创建时间
      */
-    private LocalDateTime createdAt;
+    private LocalDateTime createTime;
 }
 

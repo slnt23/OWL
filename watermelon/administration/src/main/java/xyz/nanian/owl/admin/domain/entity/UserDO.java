@@ -74,9 +74,9 @@ public class UserDO implements Serializable {
     /**
      * 头像URL
      */
-    @TableField("avatarUrl")
+    @TableField("avatar_url")
     @Schema(name = "头像URL")
-    private String avatar;
+    private String avatarUrl;
 
     /**
      * 昵称
@@ -88,9 +88,9 @@ public class UserDO implements Serializable {
     /**
      * 角色：0=用户，1=商家，2=管理员
      */
-    @TableField("role")
-    @Schema(name = "角色：0=用户，1=商家，2=管理员")
-    private Byte role;
+    @TableField("role_id")
+    @Schema(name = "角色ID")
+    private Long roleId;
 
     /**
      * 状态：0=正常，1=封禁

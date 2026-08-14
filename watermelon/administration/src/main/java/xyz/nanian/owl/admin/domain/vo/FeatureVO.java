@@ -16,7 +16,7 @@ import lombok.Data;
 public class FeatureVO {
 
     /** 新增时不传，修改时必传 */
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "图标不能为空")
     private String icon;

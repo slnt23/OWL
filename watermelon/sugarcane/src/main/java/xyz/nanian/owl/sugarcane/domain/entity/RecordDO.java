@@ -72,6 +72,6 @@ public class RecordDO implements Serializable {
     private BigDecimal confidence;
 
     @Schema(description = "创建时间", example = "2025-04-12T10:30:00")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
+    @TableField("create_time")
+    private LocalDateTime createTime;
 }

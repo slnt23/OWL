@@ -44,7 +44,7 @@ public class FeatureController {
      */
     @GetMapping("/{id}")
     @Operation(summary = "获取单挑特性")
-    public Result<FeatureVO> getById(@PathVariable Integer id) {
+    public Result<FeatureVO> getById(@PathVariable Long id) {
         FeatureVO feature = featureService.getById(id);
         return Result.success(feature);
     }
@@ -64,7 +64,7 @@ public class FeatureController {
      */
     @PutMapping("/{id}")
     @Operation(summary = "修改产品特性")
-    public Result<ResultStatus> update(@PathVariable Integer id,
+    public Result<ResultStatus> update(@PathVariable Long id,
                                        @Valid @RequestBody FeatureDTO dto) {
         dto.setId(id);
         Boolean result = featureService.update(dto);
@@ -80,7 +80,7 @@ public class FeatureController {
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "删除产品特性")
-    public Result<ResultStatus> delete(@PathVariable Integer id) {
+    public Result<ResultStatus> delete(@PathVariable Long id) {
         Boolean result = featureService.deleteById(id);
         if(result){
             return Result.success();

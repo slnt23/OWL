@@ -47,7 +47,7 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
     }
 
     @Override
-    public SpotlightVO getById(Integer id) {
+    public SpotlightVO getById(Long id) {
         SpotlightDO spotlightDO = spotlightMapper.selectById(id);
         return spotlightConvert.DOConvertVO(spotlightDO);
     }
@@ -77,7 +77,7 @@ public class SpotlightServiceImpl extends ServiceImpl<SpotlightMapper, Spotlight
 
     @Override
     @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "删除焦点项目", persist = true)
-    public Boolean deleteById(Integer id) {
+    public Boolean deleteById(Long id) {
         int result = spotlightMapper.deleteById(id);
         return result == 1;
     }

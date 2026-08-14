@@ -34,7 +34,7 @@ public class SpotlightDO implements Serializable {
      */
     @Schema(name = "主键ID，唯一标识")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 眉题/前置标题，通常为短标签或引导文字
@@ -67,9 +67,9 @@ public class SpotlightDO implements Serializable {
     /**
      * 排序序号，数学越小越靠前；同数值按创建时间排序
      */
-    @TableField("`order`")
-    @Schema(name = "排序序号，数学越小越靠前；同数值按创建时间排序")
-    private Integer order;
+    @TableField("sort_order")
+    @Schema(name = "排序序号，数值越小越靠前")
+    private Integer sortOrder;
 
     /**
      * 点击跳转链接，可为内部路由或外部URL
@@ -88,14 +88,14 @@ public class SpotlightDO implements Serializable {
     /**
      * 创建时间，行首次插入时自动设置
      */
-    @TableField("created_at")
-    @Schema(name = "创建时间，行首次插入时自动设置")
-    private LocalDateTime createdAt;
+    @TableField("create_time")
+    @Schema(name = "创建时间")
+    private LocalDateTime createTime;
 
     /**
      * 更新时间，行每次修改时自动刷新
      */
-    @TableField("updated_at")
-    @Schema(name = "更新时间，行每次修改时自动刷新")
-    private LocalDateTime updatedAt;
+    @TableField("update_time")
+    @Schema(name = "更新时间")
+    private LocalDateTime updateTime;
 }

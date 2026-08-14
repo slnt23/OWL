@@ -33,8 +33,8 @@ public class FeatureDO implements Serializable {
      * 主键ID，唯一标识每条特性
      */
     @Schema(name = "主键ID，唯一标识每条特性")
-    @TableId(value = "`id`", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Long id;
 
     /**
      * 图标，可为Font Awesome类名、SVG内容或图片地址
@@ -67,14 +67,14 @@ public class FeatureDO implements Serializable {
     /**
      * 记录创建时间
      */
-    @TableField("created_at")
-    @Schema(name = "记录创建时间")
-    private LocalDateTime createdAt;
+    @TableField("create_time")
+    @Schema(name = "创建时间")
+    private LocalDateTime createTime;
 
     /**
      * 记录最后更新时间
      */
-    @TableField("updated_at")
-    @Schema(name = "记录最后更新时间")
-    private LocalDateTime updatedAt;
+    @TableField("update_time")
+    @Schema(name = "更新时间")
+    private LocalDateTime updateTime;
 }

@@ -1,16 +1,37 @@
+# 版本控制
 .git
+.github
+.gitignore
+
+# IDE
 .idea
-.claude
-.docs
 .vscode
-
-**/target
-**/build
-
-*.log
-*.tmp
 *.iml
 
-HELP.md
+# AI 工具目录
+.claude
+.codex
+
+# 文档与说明，构建镜像不需要
+.docs
 README.md
-.gitignore
+AGENTS.md
+CLAUDE.md
+HELP.md
+qodana.yaml
+
+# 保留 start/target 下的 fat jar，忽略其他 target 内容
+**/target/*
+!start/target/start-*.jar
+**/build
+
+# 日志与临时文件
+*.log
+*.tmp
+*.pid
+*.swp
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db

@@ -18,8 +18,8 @@ import java.util.List;
 public interface FeatureService extends IService<FeatureDO> {
 
     List<FeatureVO> listByOrder();
-    FeatureVO getById(Integer id);
+    FeatureVO getById(Long id);
     Integer create(FeatureDTO dto);
     Boolean update(FeatureDTO vo);
-    Boolean deleteById(Integer id);
+    Boolean deleteById(Long id);
 }

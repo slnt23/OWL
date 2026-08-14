@@ -1,43 +1,48 @@
 -- ======================================================
--- 个人探索数据库：ecommerce
--- 数据库版本：v3
--- 模块：admin（管理员模块）
--- MySQL版本：8.x
--- 日志
+-- OWL 数据库：admin 模块 canonical DDL
+-- 模块：admin
+-- MySQL 版本：8.4
+-- 说明：首页展示配置由 admin 模块维护。
 -- ======================================================
 
--- 5.1 管理员操作日志表
-CREATE TABLE admin_log
+-- ------------------------------------------------------
+-- 1. 首页焦点展示项目表
+-- ------------------------------------------------------
+CREATE TABLE spotlight
 (
-    id          BIGINT PRIMARY KEY AUTO_INCREMENT COMMENT '主键ID',
-    admin_id    BIGINT NOT NULL COMMENT '管理员ID',
-    action      VARCHAR(100) COMMENT '操作类型',
-    detail      VARCHAR(255) COMMENT '操作描述',
-    ip          VARCHAR(50) COMMENT '操作IP',
-    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-
-    INDEX idx_admin_id (admin_id)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='管理员操作日志表';
-
--- 7.1 业务操作日志表
-CREATE TABLE biz_log
-(
-    id          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    module      VARCHAR(64)     NOT NULL COMMENT '业务模块（如：订单、用户）',
-    action      VARCHAR(128)    NOT NULL COMMENT '业务动作（如：创建订单、用户登录）',
-    user_id     BIGINT       DEFAULT NULL COMMENT '用户ID',
-    method      VARCHAR(255)    NOT NULL COMMENT '类名#方法名',
-    success     TINYINT(1)      NOT NULL COMMENT '是否成功：1=成功，0=失败',
-    cost        BIGINT          NOT NULL COMMENT '耗时（毫秒）',
-    error_msg   VARCHAR(512) DEFAULT NULL COMMENT '错误信息（失败时记录）',
-    trace_id    VARCHAR(64)  DEFAULT NULL COMMENT '链路追踪ID',
-    create_time DATETIME     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
+    eyebrow     VARCHAR(100) NOT NULL COMMENT '眉题/前置标题',
+    title       VARCHAR(200) NOT NULL COMMENT '主标题',
+    description TEXT COMMENT '详细描述',
+    image_url   VARCHAR(500) NOT NULL COMMENT '配图URL',
+    sort_order  INT          NOT NULL DEFAULT 0 COMMENT '排序序号，数值越小越靠前',
+    link        VARCHAR(500) COMMENT '点击跳转链接',
+    target      VARCHAR(20)  NOT NULL DEFAULT '_self' COMMENT '链接打开方式',
+    create_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
     PRIMARY KEY (id),
-    KEY idx_create_time (create_time),
-    KEY idx_user_id (user_id),
-    KEY idx_module_action (module, action),
-    KEY idx_success (success)
+    KEY idx_spotlight_sort_order (sort_order)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='业务操作日志表';
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  COMMENT = '首页焦点展示项目表';
+
+-- ------------------------------------------------------
+-- 2. 产品特性展示表
+-- ------------------------------------------------------
+CREATE TABLE feature
+(
+    id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
+    icon        VARCHAR(500) NOT NULL COMMENT '图标标识',
+    title       VARCHAR(200) NOT NULL COMMENT '特性标题',
+    description TEXT COMMENT '特性详细说明',
+    sort_order  INT          NOT NULL DEFAULT 0 COMMENT '排序序号，数值越小越靠前',
+    create_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+
+    PRIMARY KEY (id)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci
+  COMMENT = '产品特性展示表';

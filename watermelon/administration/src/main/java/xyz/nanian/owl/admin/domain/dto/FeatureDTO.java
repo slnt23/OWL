@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class FeatureDTO {
     /** 新增时不传，修改时必传 */
-    private Integer id;
+    private Long id;
 
     /** 图标标识：示例 '01'、'🔥'、'star' */
     @NotBlank(message = "图标不能为空")

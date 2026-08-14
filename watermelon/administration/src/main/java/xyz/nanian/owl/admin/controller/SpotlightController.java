@@ -29,7 +29,7 @@ public class SpotlightController {
 
     private final SpotlightService spotlightService;
 
-    /** 获取全部焦点项目，按 order 升序排列 */
+    /** 获取全部焦点项目，按 sort_order 升序排列 */
     @GetMapping
     @Operation(summary = "获取全部焦点特性")
     public Result<List<SpotlightVO>> list() {
@@ -40,7 +40,7 @@ public class SpotlightController {
     /** 根据 id 获取单条 */
     @Operation(summary = "获取单条焦点特性")
     @GetMapping("/{id}")
-    public Result<SpotlightVO> getById(@PathVariable Integer id) {
+    public Result<SpotlightVO> getById(@PathVariable Long id) {
         SpotlightVO spotlightVO = spotlightService.getById(id);
         return Result.success(spotlightVO);
     }
@@ -58,7 +58,7 @@ public class SpotlightController {
     @PutMapping("/{id}")
     @Operation(summary = "更新焦点")
     public Result<ResultStatus> update(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @Valid @RequestBody SpotlightDTO dto) {
         Boolean result = spotlightService.update(dto);
         if(result){
@@ -71,7 +71,7 @@ public class SpotlightController {
     /** 删除焦点项目 */
     @DeleteMapping("/{id}")
     @Operation(summary = "删除焦点")
-    public Result<Void> delete(@PathVariable Integer id) {
+    public Result<Void> delete(@PathVariable Long id) {
         Boolean result = spotlightService.deleteById(id);
         if(result){
             return Result.success();

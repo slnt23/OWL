@@ -28,7 +28,7 @@ public class UserConstant {
      * 新用户默认角色 0 = 普通消费者用户（对应数据库角色定义：1=用户，）
      * 具体role信息查表
      */
-    public static final Integer DEFAULT_ROLE = 1;
+    public static final Long DEFAULT_ROLE = 1L;
 
     /**
      * 新用户默认账号状态

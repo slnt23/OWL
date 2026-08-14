@@ -68,6 +68,6 @@ public class PriceItemMediaDO implements Serializable {
      * 创建时间
      */
     @Schema(name = "创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
+    @TableField("create_time")
+    private LocalDateTime createTime;
 }

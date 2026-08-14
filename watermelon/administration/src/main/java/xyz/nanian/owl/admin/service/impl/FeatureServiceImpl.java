@@ -36,7 +36,7 @@ public class FeatureServiceImpl extends ServiceImpl<FeatureMapper, FeatureDO> im
     }
 
     @Override
-    public FeatureVO getById(Integer id) {
+    public FeatureVO getById(Long id) {
         FeatureDO featureDO=featureMapper.selectById(id);
 
         return featureConvert.DOtoVO(featureDO);
@@ -61,7 +61,7 @@ public class FeatureServiceImpl extends ServiceImpl<FeatureMapper, FeatureDO> im
 
     @Override
     @OperationLog(type = LogType.ADMIN, module = "首页配置", action = "删除产品特性", persist = true)
-    public Boolean deleteById(Integer id) {
+    public Boolean deleteById(Long id) {
         int result = featureMapper.deleteById(id);
         return result == 1;
     }

@@ -8,13 +8,13 @@
                title,
                description,
                image_url,
-               `order`,
+               sort_order,
                link,
                target,
-               created_at,
-               updated_at
+               create_time,
+               update_time
         from spotlight
-        order by created_at desc
+        order by create_time desc
         limit 6
     </select>
 </mapper>

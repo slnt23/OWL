@@ -22,7 +22,7 @@ public class SpotlightDTO {
 
     /** 新增时不传，修改时必传 */
     @Schema(description = "ID，新增时不传，修改时必传")
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "眉题不能为空")
     @Size(max = 50, message = "眉题长度不能超过50个字符")
@@ -46,7 +46,7 @@ public class SpotlightDTO {
     @Min(value = 0, message = "排序序号不能小于0")
     @Max(value = 9999, message = "排序序号不能大于9999")
     @Schema(description = "排序序号", example = "1", minimum = "0", maximum = "9999")
-    private Integer order;
+    private Integer sortOrder;
 
     @Size(max = 255, message = "跳转链接长度不能超过255个字符")
     @Schema(description = "跳转链接", example = "https://example.com", maxLength = 255)

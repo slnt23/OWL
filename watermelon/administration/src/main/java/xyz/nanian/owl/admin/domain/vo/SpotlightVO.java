@@ -16,7 +16,7 @@ import lombok.Data;
 public class SpotlightVO {
 
     /** 新增时不传，修改时必传 */
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "眉题不能为空")
     private String eyebrow;
@@ -30,7 +30,7 @@ public class SpotlightVO {
     private String imageUrl;
 
     @NotNull(message = "排序序号不能为空")
-    private Integer order;
+    private Integer sortOrder;
 
     private String link;
 

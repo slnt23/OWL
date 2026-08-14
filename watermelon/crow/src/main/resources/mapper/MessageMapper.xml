@@ -10,7 +10,7 @@
         <id property="id" column="id"/>
         <result property="role" column="role"/>
         <result property="content" column="content"/>
-        <result property="createdAt" column="created_at"/>
+        <result property="createTime" column="create_time"/>
     </resultMap>
 
     <!-- 然后使用 resultMap -->
@@ -19,10 +19,10 @@
             id,
             role,
             content,
-            created_at AS createdAt
+            create_time AS createTime
         FROM message
         WHERE conversation_id = #{conversationId}
-        ORDER BY created_at ASC
+        ORDER BY create_time ASC
     </select>
 
     <select id="selectRecentMessages" resultType="xyz.nanian.owl.crow.domain.entity.MessageDO">
@@ -36,10 +36,10 @@
             total_token_count AS totalTokenCount,
             model,
             finish_reason AS finishReason,
-            created_at AS createdAt
+            create_time AS createTime
         FROM message
         WHERE conversation_id = #{conversationId}
-        ORDER BY created_at desc
+        ORDER BY create_time desc
         LIMIT #{limit}
     </select>
 </mapper>

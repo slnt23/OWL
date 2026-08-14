@@ -25,7 +25,7 @@ VALUES ('fa-solid fa-microchip',
         6);
 
 
-INSERT INTO spotlight (eyebrow, title, description, imageUrl, `order`, link, target)
+INSERT INTO spotlight (eyebrow, title, description, image_url, sort_order, link, target)
 VALUES ('全新发布',
         '2026 旗舰新品震撼上市',
         '搭载新一代自研芯片，性能提升 200%，续航突破 36 小时，重新定义智能体验。',

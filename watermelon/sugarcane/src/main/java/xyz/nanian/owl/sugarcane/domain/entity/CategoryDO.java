@@ -55,10 +55,10 @@ public class CategoryDO implements Serializable {
     private Byte status;
 
     @Schema(name = "创建时间")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
+    @TableField("create_time")
+    private LocalDateTime createTime;
 
     @Schema(name = "更新时间")
-    @TableField("updated_at")
-    private LocalDateTime updatedAt;
+    @TableField("update_time")
+    private LocalDateTime updateTime;
 }

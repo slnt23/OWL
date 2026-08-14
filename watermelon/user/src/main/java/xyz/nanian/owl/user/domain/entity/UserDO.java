@@ -74,7 +74,7 @@ public class UserDO {
      * 角色：0=用户，1=商家，2=管理员, 具体信息查看 role 表
      */
     @TableField("role_id")
-    private Integer roleId;
+    private Long roleId;
 
     /**
      * 状态：0=正常，1=封禁

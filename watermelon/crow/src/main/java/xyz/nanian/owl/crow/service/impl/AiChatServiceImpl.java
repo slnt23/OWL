@@ -57,7 +57,7 @@ public class AiChatServiceImpl implements AiChatService {
         messageUser.setContent(dto.getMessage());
         messageUser.setConversationId(dto.getConversationId());
         messageUser.setRole(AIConstant.ROLE_USER);
-        messageUser.setCreatedAt(LocalDateTime.now());
+        messageUser.setCreateTime(LocalDateTime.now());
 
 //        1.保存用户消息
         messageMapper.insert(messageUser);
@@ -95,7 +95,7 @@ public class AiChatServiceImpl implements AiChatService {
         messageAI.setContent(reply);
         messageAI.setConversationId(dto.getConversationId());
         messageAI.setRole(AIConstant.ROLE_ASSISTANT);
-        messageAI.setCreatedAt(LocalDateTime.now());
+        messageAI.setCreateTime(LocalDateTime.now());
         if (usage != null) {
             messageAI.setPromptTokens(usage.getPromptTokens());
         }
@@ -124,7 +124,7 @@ public class AiChatServiceImpl implements AiChatService {
         messageUser.setContent(dto.getMessage());
         messageUser.setConversationId(dto.getConversationId());
         messageUser.setRole(AIConstant.ROLE_USER);
-        messageUser.setCreatedAt(LocalDateTime.now());
+        messageUser.setCreateTime(LocalDateTime.now());
 
         messageMapper.insert(messageUser);
 
@@ -161,7 +161,7 @@ public class AiChatServiceImpl implements AiChatService {
                     messageAI.setConversationId(dto.getConversationId());
                     messageAI.setRole(AIConstant.ROLE_ASSISTANT);
                     messageAI.setContent(answerBuilder.toString());
-                    messageAI.setCreatedAt(LocalDateTime.now());
+                    messageAI.setCreateTime(LocalDateTime.now());
 
                     messageMapper.insert(messageAI);
                 });

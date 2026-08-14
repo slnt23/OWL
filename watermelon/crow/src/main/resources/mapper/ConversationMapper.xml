@@ -9,7 +9,7 @@
     <update id="updateTotalTokens">
         update conversation
         set total_tokens = total_tokens + #{addTokens},
-            updated_at   = NOW()
+            update_time  = NOW()
         where id = #{conversationId}
     </update>
 </mapper>

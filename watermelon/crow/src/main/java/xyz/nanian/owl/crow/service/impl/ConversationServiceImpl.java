@@ -47,8 +47,8 @@ public class ConversationServiceImpl implements ConversationService {
         ConversationDO conversation = new ConversationDO();
         conversation.setId(conversationId);
         conversation.setTitle(dto != null ? dto.getTitle() : "新对话");
-        conversation.setCreatedAt(LocalDateTime.now());
-        conversation.setUpdatedAt(LocalDateTime.now());
+        conversation.setCreateTime(LocalDateTime.now());
+        conversation.setUpdateTime(LocalDateTime.now());
 //        获取用户账号，
         conversation.setUserCode(CurrentUserContext.getUserCode());
 

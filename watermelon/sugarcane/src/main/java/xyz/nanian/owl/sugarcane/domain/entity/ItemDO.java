@@ -63,10 +63,10 @@ public class ItemDO implements Serializable {
     private Byte status;
 
     @Schema(description = "创建时间", example = "2025-04-12T08:30:00")
-    @TableField("created_at")
-    private LocalDateTime createdAt;
+    @TableField("create_time")
+    private LocalDateTime createTime;
 
     @Schema(description = "更新时间", example = "2025-04-12T10:15:00")
-    @TableField("updated_at")
-    private LocalDateTime updatedAt;
+    @TableField("update_time")
+    private LocalDateTime updateTime;
 }

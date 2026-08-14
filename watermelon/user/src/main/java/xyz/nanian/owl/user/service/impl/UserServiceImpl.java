@@ -253,7 +253,7 @@ public class UserServiceImpl implements UserService {
         if (!Objects.equals(userDO.getStatus(), UserConstant.DEFAULT_STATUS)) {
             throw new LoginFailureException(ResultStatus.ACCOUNT_DISABLED);
         }
-        Integer role = userDO.getRoleId();
+        Long role = userDO.getRoleId();
         String roleName = roleMapper.selectById(role) == null ? null : roleMapper.selectById(role).getRoleName();
         UserInfoVO userInfoVO = userConvert.UserDOToUserVO(userDO);
         userInfoVO.setRole(roleName);
