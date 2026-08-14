@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.sugarcane.mapper.ItemMapper">
+
+    <select id="selectPageItems" resultType="xyz.nanian.owl.sugarcane.domain.vo.PriceItemVO">
+        SELECT pi.id          AS itemId,
+               pi.item_name   AS itemName,
+               pi.unit,
+               pi.specification,
+               pc.category_name AS categoryName
+        FROM price_item pi
+                 LEFT JOIN price_category pc ON pi.category_id = pc.id
+        WHERE pi.item_name LIKE CONCAT('%', #{itemName}, '%')
+    </select>
+</mapper>

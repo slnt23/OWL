@@ -1,0 +1,25 @@
+package xyz.nanian.owl.admin.service;
+
+import xyz.nanian.owl.admin.domain.dto.SpotlightDTO;
+import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
+import com.baomidou.mybatisplus.spring.service.IService;
+import xyz.nanian.owl.admin.domain.vo.SpotlightVO;
+
+import java.util.List;
+
+/**
+ * <p>
+ * 首页焦点展示项目表 服务类
+ * </p>
+ *
+ * @author slnt23
+ * @since 2026-04-24 17:13:37
+ */
+public interface SpotlightService extends IService<SpotlightDO> {
+    List<SpotlightVO> listByOrder();
+    SpotlightVO getById(Long id);
+    int create(SpotlightDTO dto);
+    Boolean update(SpotlightDTO dto);
+    Boolean deleteById(Long id);
+
+}

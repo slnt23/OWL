@@ -5,7 +5,7 @@
     <parent>
         <groupId>xyz.nanian</groupId>
         <artifactId>OWL</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
         <relativePath>../../pom.xml</relativePath> <!-- lookup parent from repository -->
 <!--        先看自设置，后本地仓库，再后远程仓库，查看父项目pom.xml的地址-->
     </parent>
@@ -14,8 +14,8 @@
     <packaging>jar</packaging>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -25,14 +25,13 @@
             <artifactId>api</artifactId>
         </dependency>
 
+
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+<!--            crow 为库模块，不独立启动，boot 插件在 start 模块中统一执行 -->
+
         </plugins>
     </build>
 

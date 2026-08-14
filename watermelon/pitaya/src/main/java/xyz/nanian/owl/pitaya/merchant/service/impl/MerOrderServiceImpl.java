@@ -8,17 +8,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.log.logging.BizLog;
+import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerOrderMapper;
 import xyz.nanian.owl.pitaya.merchant.service.MerOrderService;
-import xyz.nanian.owl.pitaya.vo.OrderListVO;
-import xyz.nanian.owl.result.PageResult;
-import xyz.nanian.owl.utils.jwt.UserContext;
+import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
+import xyz.nanian.owl.common.result.ResultPage;
+import xyz.nanian.owl.common.security.CurrentUserContext;
 
 import java.util.concurrent.TimeUnit;
 
-import static xyz.nanian.owl.constant.RedisConstant.MERCHANT_ORDER_KEY;
-import static xyz.nanian.owl.constant.RedisConstant.MERCHANT_ORDER_TIME_OUT;
+import static xyz.nanian.owl.pitaya.constant.ShopConstant.MERCHANT_ORDER_KEY;
+import static xyz.nanian.owl.pitaya.constant.ShopConstant.MERCHANT_ORDER_TIME_OUT;
 
 /**
  * 商家订单Service Impl
@@ -46,7 +46,7 @@ public class MerOrderServiceImpl implements MerOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "更新订单状态")
+    @OperationLog(module = "订单", action = "更新订单状态", persist = true)
     public Boolean updateOrderStatus(Long orderId, Integer orderStatus) {
 
         Integer intUpdate = merOrderMapper.updateOrder(orderId,orderStatus);
@@ -62,12 +62,12 @@ public class MerOrderServiceImpl implements MerOrderService {
      * @return
      */
     @Override
-    @BizLog(module = "订单",action = "查询指定用户订单列表")
-    public PageResult<OrderListVO> listOrders(Integer pageNum,Integer pageSize,Long searchedUserId) {
+    @OperationLog(module = "订单", action = "查询指定用户订单列表")
+    public ResultPage<OrderListVO> listOrders(Integer pageNum, Integer pageSize, Long searchedUserId) {
 
 //        用户在该商家的订单，
 //        商家Id
-        Long userId = UserContext.getUserId();
+        Long userId = CurrentUserContext.getUserId();
 //        搜索用户Id
         String key= MERCHANT_ORDER_KEY + searchedUserId + userId;
         if(pageSize > 50){
@@ -75,23 +75,23 @@ public class MerOrderServiceImpl implements MerOrderService {
         }
 
 //        TODO 以下的这个方法只是暂时的，后续要找更好的方法替代
-        PageResult<OrderListVO> cache =
-                (PageResult<OrderListVO>) redisTemplate.opsForValue().get(key);
+        ResultPage<OrderListVO> cache =
+                (ResultPage<OrderListVO>) redisTemplate.opsForValue().get(key);
         if(cache!=null){
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
 
-            PageResult<OrderListVO> result =
-                    mapper.convertValue(cache,new  TypeReference<PageResult<OrderListVO>>(){});
+            ResultPage<OrderListVO> result =
+                    mapper.convertValue(cache,new  TypeReference<ResultPage<OrderListVO>>(){});
             return result;
         }
 
         Page<OrderListVO> page = new Page<>(pageNum,pageSize);
         IPage<OrderListVO> result = merOrderMapper.pageOrderList(page,searchedUserId);
-        PageResult<OrderListVO> pageResult = PageResult.create(result);
+        ResultPage<OrderListVO> resultPage = ResultPage.create(result);
 
-        redisTemplate.opsForValue().set(key,pageResult,MERCHANT_ORDER_TIME_OUT, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(key, resultPage,MERCHANT_ORDER_TIME_OUT, TimeUnit.MINUTES);
 
-        return pageResult;
+        return resultPage;
     }
 }

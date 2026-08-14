@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import xyz.nanian.owl.pitaya.entity.ShoppingCartDO;
-import xyz.nanian.owl.pitaya.vo.ShoppingCartVO;
+import xyz.nanian.owl.pitaya.domain.entity.ShoppingCartDO;
+import xyz.nanian.owl.pitaya.domain.vo.ShoppingCartVO;
 
 /**
  * consumer cart Mapper

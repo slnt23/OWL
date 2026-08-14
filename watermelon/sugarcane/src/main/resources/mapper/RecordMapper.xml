@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.sugarcane.mapper.RecordMapper">
+
+    <select id="selectLatest" resultType="xyz.nanian.owl.sugarcane.domain.vo.PriceLatestVO">
+        SELECT
+            pi.id AS item_id,
+            pi.item_name,
+            pi.unit,
+            pi.specification,
+            pc.category_name,
+            gl.location_name,
+            pr.price,
+            pr.currency,
+            pr.price_unit,
+            ps.source_name,
+            ps.reliability_level,
+            pr.effective_time,
+            pr.confidence
+        FROM price_record pr
+                 INNER JOIN price_item pi ON pr.item_id = pi.id
+                 INNER JOIN price_category pc ON pi.category_id = pc.id
+                 INNER JOIN geo_location gl ON pr.location_id = gl.id
+                 INNER JOIN price_source ps ON pr.source_id = ps.id
+        WHERE pr.item_id = #{itemId}
+          AND pr.location_id = #{locationId}
+          AND pr.currency = #{currency}
+        ORDER BY pr.effective_time DESC
+        LIMIT 1
+    </select>
+
+    <resultMap id="PriceTrendVOMap" type="xyz.nanian.owl.sugarcane.domain.vo.PriceTrendVO">
+        <id column="item_id" property="itemId"/>
+        <id column="location_id" property="locationId"/>
+        <result column="item_name" property="itemName"/>
+        <result column="unit" property="unit"/>
+        <result column="specification" property="specification"/>
+        <result column="category_name" property="categoryName"/>
+        <result column="location_name" property="locationName"/>
+        <collection property="trend" ofType="xyz.nanian.owl.sugarcane.domain.vo.PriceTrendPointVO">
+            <result column="time" property="time"/>
+            <result column="price" property="price"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectTrend" resultMap="PriceTrendVOMap">
+        SELECT
+            pi.id AS item_id,
+            pi.item_name,
+            pi.unit,
+            pi.specification,
+            pc.category_name,
+            gl.id AS location_id,
+            gl.location_name,
+            <choose>
+                <when test="query.granularity.name() == 'WEEK'">
+                    DATE_SUB(DATE(pr.effective_time), INTERVAL WEEKDAY(pr.effective_time) DAY) AS time,
+                </when>
+                <when test="query.granularity.name() == 'MONTH'">
+                    DATE_FORMAT(pr.effective_time, '%Y-%m-01') AS time,
+                </when>
+                <otherwise>
+                    DATE(pr.effective_time) AS time,
+                </otherwise>
+            </choose>
+            AVG(pr.price) AS price
+        FROM price_record pr
+                 INNER JOIN price_item pi ON pr.item_id = pi.id
+                 INNER JOIN price_category pc ON pi.category_id = pc.id
+                 INNER JOIN geo_location gl ON pr.location_id = gl.id
+        WHERE pr.item_id = #{query.itemId}
+          AND pr.effective_time BETWEEN #{query.startTime} AND #{query.endTime}
+        GROUP BY pi.id, gl.id,
+            <choose>
+                <when test="query.granularity.name() == 'WEEK'">
+                    DATE_SUB(DATE(pr.effective_time), INTERVAL WEEKDAY(pr.effective_time) DAY)
+                </when>
+                <when test="query.granularity.name() == 'MONTH'">
+                    DATE_FORMAT(pr.effective_time, '%Y-%m-01')
+                </when>
+                <otherwise>
+                    DATE(pr.effective_time)
+                </otherwise>
+            </choose>
+        ORDER BY pi.id, gl.id, time
+    </select>
+
+    <select id="selectLocationPrices" resultType="xyz.nanian.owl.sugarcane.domain.vo.LocationPriceVO">
+        SELECT
+            gl.location_name AS locationName,
+            pr.price
+        FROM price_record pr
+        INNER JOIN geo_location gl ON pr.location_id = gl.id
+        INNER JOIN (
+            SELECT
+                item_id,
+                location_id,
+                MAX(effective_time) AS max_effective_time
+            FROM price_record
+            WHERE item_id = #{itemId}
+              AND location_id = #{locationId}
+              AND effective_time &lt;= #{targetTime}
+            GROUP BY item_id, location_id
+        ) latest ON pr.item_id = latest.item_id
+            AND pr.location_id = latest.location_id
+            AND pr.effective_time = latest.max_effective_time
+        WHERE pr.item_id = #{itemId}
+          AND pr.location_id = #{locationId}
+        ORDER BY gl.id
+    </select>
+
+    <select id="selectSourcePrices" resultType="xyz.nanian.owl.sugarcane.domain.vo.SourceCompareVO">
+        SELECT
+            ps.source_name AS sourceName,
+            pr.price,
+            ps.reliability_level AS reliabilityLevel,
+            pr.confidence
+        FROM price_record pr
+        INNER JOIN price_source ps ON pr.source_id = ps.id
+        INNER JOIN (
+            SELECT
+                item_id,
+                location_id,
+                source_id,
+                MAX(effective_time) AS max_effective_time
+            FROM price_record
+            WHERE item_id = #{dto.itemId}
+              AND location_id = #{dto.locationId}
+              AND effective_time &lt;= #{dto.targetTime}
+            GROUP BY item_id, location_id, source_id
+        ) latest ON pr.item_id = latest.item_id
+            AND pr.location_id = latest.location_id
+            AND pr.source_id = latest.source_id
+            AND pr.effective_time = latest.max_effective_time
+        WHERE pr.item_id = #{dto.itemId}
+          AND pr.location_id = #{dto.locationId}
+        ORDER BY ps.reliability_level DESC
+    </select>
+</mapper>

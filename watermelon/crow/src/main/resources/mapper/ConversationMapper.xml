@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xyz.nanian.owl.crow.mapper.ConversationMapper">
+    <select id="selectByUserId" resultType="xyz.nanian.owl.crow.domain.vo.ConversationVO">
+    </select>
+
+    <update id="updateTotalTokens">
+        update conversation
+        set total_tokens = total_tokens + #{addTokens},
+            update_time  = NOW()
+        where id = #{conversationId}
+    </update>
+</mapper>

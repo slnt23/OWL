@@ -3,10 +3,10 @@ package xyz.nanian.owl.pitaya.merchant.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import xyz.nanian.owl.log.logging.BizLog;
-import xyz.nanian.owl.pitaya.dto.ProductDTO;
-import xyz.nanian.owl.pitaya.entity.ProductDO;
-import xyz.nanian.owl.pitaya.entity.ProductImageDO;
+import xyz.nanian.owl.log.annotation.OperationLog;
+import xyz.nanian.owl.pitaya.domain.dto.ProductDTO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductDO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductImageDO;
 import xyz.nanian.owl.pitaya.mapstruct.ProductConvert;
 import xyz.nanian.owl.pitaya.merchant.mapper.MerchantProductMapper;
 import xyz.nanian.owl.pitaya.merchant.service.MerchantProductService;
@@ -38,7 +38,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
      * @return 0/1
      */
     @Override
-    @BizLog(module = "商品",action = "新增商品")
+    @OperationLog(module = "商品", action = "新增商品", persist = true)
     public Boolean saveProduct(ProductDTO productDTO) {
 
 //        DTO-》DO
@@ -58,7 +58,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
      * @return
      */
     @Override
-    @BizLog(module = "商品",action = "更新商品")
+    @OperationLog(module = "商品", action = "更新商品", persist = true)
     public Boolean updateProduct(ProductDTO productDTO) {
         ProductDO productDO=productConvert.productToDO(productDTO);
         List<ProductImageDO> productImageDOList=productConvert.productImageDOList(productDTO.getImages());
@@ -77,7 +77,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
      * @return
      */
     @Override
-    @BizLog(module = "商品",action = "删除商品")
+    @OperationLog(module = "商品", action = "删除商品", persist = true)
     public Boolean removeProduct(Long productId) {
 
         Integer intProductImage = merchantProductMapper.deleteProductImageDO(productId);
@@ -94,7 +94,7 @@ public class MerchantProductServiceImpl implements MerchantProductService {
      * @return
      */
     @Override
-    @BizLog(module = "商品",action = "商品上下架更新状态")
+    @OperationLog(module = "商品", action = "商品上下架更新状态", persist = true)
     public Boolean updateProductStatus(Long productId, Integer status) {
 
         Integer intUpdateStatus=merchantProductMapper.updateProductStatus(productId,status);

@@ -6,18 +6,19 @@
     <parent>
         <groupId>xyz.nanian</groupId>
         <artifactId>OWL</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>start</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
+<!--        业务模块-->
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>user</artifactId>
@@ -34,6 +35,10 @@
             <groupId>xyz.nanian</groupId>
             <artifactId>crow</artifactId>
         </dependency>
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>administration</artifactId>
+        </dependency>
 
 
 <!--        test-->
@@ -42,8 +47,25 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<!--        mail-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
 
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

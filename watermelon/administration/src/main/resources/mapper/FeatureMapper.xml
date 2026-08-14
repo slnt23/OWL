@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.admin.mapper.FeatureMapper">
+
+    <select id="selectLists" resultType="xyz.nanian.owl.admin.domain.entity.FeatureDO">
+        select id, icon, title, description, sort_order, create_time, update_time
+        from feature
+        order by create_time desc
+        limit 4
+    </select>
+</mapper>

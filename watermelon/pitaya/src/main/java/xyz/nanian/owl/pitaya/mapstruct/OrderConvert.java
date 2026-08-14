@@ -2,14 +2,16 @@ package xyz.nanian.owl.pitaya.mapstruct;
 
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import xyz.nanian.owl.pitaya.dto.OrderDTO;
-import xyz.nanian.owl.pitaya.entity.OrderDO;
-import xyz.nanian.owl.pitaya.entity.OrderDetailDO;
-import xyz.nanian.owl.pitaya.entity.UserAddressDO;
-import xyz.nanian.owl.pitaya.vo.AddressVO;
-import xyz.nanian.owl.pitaya.vo.OrderDetailVO;
-import xyz.nanian.owl.pitaya.vo.OrderItemVO;
+// [TO_BE_DELETED] old address mapping imports
+// import org.mapstruct.Mapping;
+import xyz.nanian.owl.pitaya.domain.dto.OrderDTO;
+import xyz.nanian.owl.pitaya.domain.entity.OrderDO;
+import xyz.nanian.owl.pitaya.domain.entity.OrderDetailDO;
+// [TO_BE_DELETED] old address mapping imports
+// import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;
+// import xyz.nanian.owl.pitaya.domain.vo.AddressVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
+import xyz.nanian.owl.pitaya.domain.vo.OrderItemVO;
 
 import java.util.List;
 
@@ -29,9 +31,10 @@ public interface OrderConvert {
 
     OrderDetailVO OrderDOToOrderDetailVO(OrderDO orderDO);
 
-    @Mapping(source = "district",target = "area")
-    @Mapping(source = "detail",target = "detailAddress")
-    AddressVO addressDOToAddressVO(UserAddressDO addressDO);
+    // [TO_BE_DELETED] 地址已收归 user 模块，旧转换方法待删除
+    // @Mapping(source = "district",target = "area")
+    // @Mapping(source = "detail",target = "detailAddress")
+    // AddressVO addressDOToAddressVO(UserAddressDO addressDO);
 
     OrderItemVO orderDetailDOToOrderItemVO(OrderDetailDO orderDetailDO);
 

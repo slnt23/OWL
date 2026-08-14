@@ -1,7 +1,7 @@
 package xyz.nanian.owl.pitaya.merchant.service;
 
 
-import xyz.nanian.owl.pitaya.dto.ProductDTO;
+import xyz.nanian.owl.pitaya.domain.dto.ProductDTO;
 
 /**
  * 商家商品service

@@ -12,7 +12,7 @@
         </set>
         where id = #{orderId}
     </update>
-    <select id="pageOrderList" resultType="xyz.nanian.owl.pitaya.vo.OrderListVO">
+    <select id="pageOrderList" resultType="xyz.nanian.owl.pitaya.domain.vo.OrderListVO">
         select
             om.id as orderId,
             om.order_no,

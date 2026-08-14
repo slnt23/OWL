@@ -3,13 +3,13 @@ package xyz.nanian.owl.pitaya.mapstruct;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import xyz.nanian.owl.pitaya.dto.ProductDTO;
-import xyz.nanian.owl.pitaya.entity.CategoryDO;
-import xyz.nanian.owl.pitaya.entity.ProductDO;
-import xyz.nanian.owl.pitaya.entity.ProductImageDO;
-import xyz.nanian.owl.pitaya.vo.CategoryVO;
-import xyz.nanian.owl.pitaya.vo.ProductDetailVO;
-import xyz.nanian.owl.pitaya.vo.ProductVO;
+import xyz.nanian.owl.pitaya.domain.dto.ProductDTO;
+import xyz.nanian.owl.pitaya.domain.entity.CategoryDO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductDO;
+import xyz.nanian.owl.pitaya.domain.entity.ProductImageDO;
+import xyz.nanian.owl.pitaya.domain.vo.CategoryVO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductDetailVO;
+import xyz.nanian.owl.pitaya.domain.vo.ProductVO;
 
 import java.util.List;
 

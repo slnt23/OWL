@@ -1,47 +1,28 @@
-#  OWL(猫头鹰)
+# OWL（猫头鹰）
 
-- 宗旨：以开创多功能，发散性思维的Java项目
-- 采用spring boot3，
+![一念神魔](.docs/一念神魔.jpg)
 
+OWL 是一个多业务 Java 后端项目，基于 Spring Boot 4.1 与 Java 25 构建，覆盖用户认证、AI 对话、价格追踪、电商交易与后台管理。通用能力沉淀在 `common`、`infra`、`log` 等基础模块，业务模块独立演进。
 
+## 技术栈
 
-## 项目模块
+| 类别 | 技术 |
+| --- | --- |
+| 基础 | Java 25、Spring Boot 4.1、Maven 多模块 |
+| 数据库与中间件 | MyBatis-Plus、MySQL、Redis、RabbitMQ、MinIO、Nacos |
+| AI | Spring AI（DeepSeek） |
+| 接口文档 | Knife4j |
 
-1. common：工具类
-2. domain：领域模块
-3. api：对外接口模块
-4. start：启动模块
-5. 其余：见名指意
+## 快速开始
 
-## 设计目标
+```bash
+mvn clean package -DskipTests
+java -jar start/target/start-0.0.1-SNAPSHOT.jar
+```
 
-- 会当凌绝顶
-- 老实了，年轻人，
-- 是不是不该趟电商的浑水，
-- 下一趟弄 爬虫 + Vue3 + 价多多
+启动前需要准备 MySQL、Redis、RabbitMQ、Nacos、MinIO；连接配置默认通过 Nacos 导入。
 
+## 文档
 
-
-## 官方邮箱
-
-Email: kitejoy@outlook.com
-
-
-
-## 如何部署
-
-#### 工具版本
-
-- Docker
-    - 版本：26.1.3
-- MySQL：
-    - 版本：
-    - root：自己密码
-- Redis
-    - 版本：6.2.7
-    - 采用哨兵集群：分别7001，7002，7003，27001，27002，27003
-- RabbitMQ
-    - 版本：3.12-management
-    - 用户：admin
-    - 密码：123456qin
-
+- [文档中心](.docs/README.md)
+- [前端联调接口文档](.docs/api/frontend-api.md)

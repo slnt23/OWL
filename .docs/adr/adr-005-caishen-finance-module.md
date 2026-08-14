@@ -1,0 +1,100 @@
+# ADR-005: Caishen 理财模块设计（基金/股票）
+
+| 属性 | 值 |
+| --- | --- |
+| 状态 | 提案中 |
+| 负责人 | Caishen Owner |
+| 创建时间 | 2026-08-09 |
+| 更新时间 | 2026-08-09 |
+
+## 背景
+
+OWL 需要新增理财模块，代号 caishen，核心能力是查看基金和股票变化并生成总结。
+按照既定技术分工，本仓库只实现 Java 侧业务；Python 负责数据获取、清洗和 AI 分析，C++ 负责高性能计算，后续作为独立项目接入。
+因此需要记录模块边界、外部服务契约和第一版实现策略，避免后续跨语言接入时改动 Java 控制器与持久化层。
+
+## 决策
+
+### 1. 作为 watermelon 子模块独立存在
+
+**选择**：新建 `watermelon/caishen`，Maven artifactId 为 `caishen`，基础包为 `xyz.nanian.owl.caishen`。
+
+**原因**：
+- 理财业务与用户、电商、AI 对话无直接耦合，适合独立演进。
+- 复用现有 `api → log → infra → common` 依赖链和 JWT、MyBatis-Plus、Knife4j 基础设施。
+- 与现有业务模块目录规范一致。
+
+**备选**：直接放入 `start` 或 `user` 模块；会造成启动模块过重或业务边界模糊，不采用。
+
+### 2. Java 作为宿主，Python/C++ 作为外部服务
+
+**选择**：本仓库只实现 Java 侧业务，Python/C++ 源码不在 OWL 仓库中编写。
+Java 侧通过 `MarketDataClient` 和 `AssetAnalysisClient` 两个接口隔离外部能力。
+
+**原因**：
+- 避免 JVM、Python 解释器和 C++ 编译链在同一个工程内互相影响。
+- Java 侧聚焦用户业务、持久化、查询和任务管理。
+- Python/C++ 独立项目接入时只需实现既有接口，不修改控制器和数据库层。
+
+**备选**：
+- JNI 或 Python C API 同进程混编：调试和构建成本高，不采用。
+- 在 Java 模块内直接编写 Python/C++ 代码：违背既定技术分工，不采用。
+
+### 3. 数据模型采用七张核心表
+
+**选择**：
+- `caishen_fund`：基金档案，`unique(fund_code)`。
+- `caishen_fund_nav`：基金净值历史，`unique(fund_code, nav_date)`。
+- `caishen_stock`：股票档案，`unique(stock_code)`。
+- `caishen_stock_daily`：股票日线，`unique(stock_code, trade_date)`。
+- `caishen_holding`：用户持仓或关注，`unique(user_code, asset_type, asset_code)`。
+- `caishen_summary`：总结任务与结果，包含状态机。
+- `caishen_sync_log`：数据同步日志。
+
+**原因**：
+- 基金净值和股票日线按资产与日期唯一存储，支持幂等 upsert。
+- 用户数据按 `user_code` 和 `asset_type` 隔离，复用现有认证上下文。
+- 总结任务需要异步执行，因此把任务状态和结果持久化。
+
+**备选**：仅存持仓和行情数据，不落总结任务；无法支持异步重试和结果追踪，不采用。
+
+### 4. 总结能力通过 AssetAnalysisClient 抽象
+
+**选择**：定义 `AssetAnalysisClient`，第一版可配置 `spring-ai`、`python` 或 `mock` 三种 provider。
+开发期使用 `MockAssetAnalysisClient` 或 `SpringAiAssetAnalysisClient` 保证闭环，后续切换为 `PythonAssetAnalysisClient`。
+
+**原因**：
+- Python 项目尚未建立，需要先让 Java 侧业务可运行、可测试。
+- 总结 provider 只影响分析层，不影响基金、股票、持仓和行情查询。
+
+**备选**：Java 侧直接写死大模型调用；后续接入 Python 时需改动业务代码，不采用。
+
+### 5. 第一版异步任务使用线程池
+
+**选择**：总结任务先在进程内异步执行，使用 Spring `@Async` 或自建线程池，暂不引入 RabbitMQ 任务队列。
+
+**原因**：
+- 第一版用户量和任务量有限，线程池足以支撑。
+- 减少中间件依赖，降低本地运行门槛。
+
+**备选**：直接使用 RabbitMQ 解耦；会增加配置和运维成本，留作后续任务量增长时的演进方案。
+
+## 后果
+
+- 新增 `watermelon/caishen` 模块和 7 张数据库表，需要维护对应 DDL。
+- 需要在根 pom、start pom 和 `SpringdocConfig` 中注册模块。
+- Python/C++ 接入时以 REST 契约为准，Java 控制器保持稳定。
+- 总结内容不作为投资建议，需要在前端或文档中明确提示。
+- 后续维护由 Caishen Owner 负责。
+
+## 待定
+
+- 是否提供公开基金/股票行情免登录接口。
+- Python 项目由 Java 主动拉取数据，还是 Python 主动推送到 Java。
+- C++ 指标服务提供独立 HTTP 服务，还是由 Python 封装动态库。
+- RabbitMQ 异步任务在任务量增长后是否引入。
+
+## 相关文档
+
+- [Caishen 理财模块开发计划](../design/caishen-finance-module-plan.md)
+- [新模块添加手册](../manual/new-module-guide.md)
