@@ -82,6 +82,11 @@
             <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+<!--        Boot 4 错误处理 / ErrorController 所在模块-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-webmvc</artifactId>
+        </dependency>
 <!--        mapstruct-->
         <dependency>
             <groupId>org.mapstruct</groupId>

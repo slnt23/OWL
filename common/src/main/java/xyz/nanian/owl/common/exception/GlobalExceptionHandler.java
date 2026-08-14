@@ -129,7 +129,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Result<?> handleNoHandlerFound(Exception e) {
 
-        log.warn("资源不存在：{}",e.getMessage(),e);
+        log.warn("资源不存在：{}", e.getMessage());
         return Result.fail(ResultStatus.NOT_FOUND);
     }
 
