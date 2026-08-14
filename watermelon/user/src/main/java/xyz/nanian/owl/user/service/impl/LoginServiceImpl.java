@@ -102,7 +102,7 @@ public class LoginServiceImpl implements LoginService {
                 
                 此致
                 敬礼
-                [Energy] 团队
+                [OWL] 团队
                 """, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES);
         // 4. 发送邮件
         mailService.send(MailMessage.builder()

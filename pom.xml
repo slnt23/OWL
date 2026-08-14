@@ -34,7 +34,7 @@
 
     <properties>
 <!--        项目版本-->
-        <revision>0.0.1-SNAPSHOT</revision>
+        <revision>0.0.1</revision>
 <!--        依赖版本-->
         <java.version>25</java.version>
         <easyexcel.version>4.0.3</easyexcel.version>

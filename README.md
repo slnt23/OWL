@@ -17,7 +17,7 @@ OWL 是一个多业务 Java 后端项目，基于 Spring Boot 4.1 与 Java 25 �
 
 ```bash
 mvn clean package -DskipTests
-java -jar start/target/start-0.0.1-SNAPSHOT.jar
+java -jar start/target/start-0.0.1.jar
 ```
 
 启动前需要准备 MySQL、Redis、RabbitMQ、Nacos、MinIO；连接配置默认通过 Nacos 导入。
