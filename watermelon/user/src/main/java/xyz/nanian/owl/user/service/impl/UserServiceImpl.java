@@ -22,7 +22,6 @@ import xyz.nanian.owl.common.utils.regex.RegexUtil;
 import xyz.nanian.owl.user.constant.UserConstant;
 import xyz.nanian.owl.user.domain.dto.EmailBindDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordUpdateDTO;
-// [TO_BE_DELETED] import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.dto.UserInfoUpdateDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
@@ -35,7 +34,6 @@ import xyz.nanian.owl.user.utils.PasswordPolicy;
 
 import java.util.Objects;
 import java.util.Set;
-import java.util.List;
 
 /**
  * 用户相关的逻辑类实现
