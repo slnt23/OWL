@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.common.result.ResultStatus;
 import xyz.nanian.owl.common.security.LoginFailureException;
@@ -65,6 +67,24 @@ public class GlobalExceptionHandler {
     public Result<?> handleAccessDenied(org.springframework.security.access.AccessDeniedException e) {
         log.warn("权限不足：{}", e.getMessage());
         return Result.fail(ResultStatus.FORBIDDEN);
+    }
+
+    /**
+     * [UPGRADE] 唯一索引冲突统一返回数据已存在。
+     */
+    @ExceptionHandler(value = DuplicateKeyException.class)
+    public Result<?> handleDuplicateKey(DuplicateKeyException e) {
+        log.warn("唯一键冲突：{}", e.getMessage());
+        return Result.fail(ResultStatus.DATA_ALREADY_EXIST);
+    }
+
+    /**
+     * [UPGRADE] 上传文件超过大小限制。
+     */
+    @ExceptionHandler(value = MaxUploadSizeExceededException.class)
+    public Result<?> handleMaxUploadSize(MaxUploadSizeExceededException e) {
+        log.warn("上传文件超限：{}", e.getMessage());
+        return Result.fail(ResultStatus.FILE_SIZE_EXCEEDED);
     }
 
     /**

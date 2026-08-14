@@ -7,8 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import xyz.nanian.owl.pitaya.domain.entity.OrderDO;
 import xyz.nanian.owl.pitaya.domain.entity.OrderDetailDO;
-import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;
-import xyz.nanian.owl.pitaya.domain.query.AddressQuery;
+// [TO_BE_DELETED] 地址查询已迁移到 user 模块
+// import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;
+// import xyz.nanian.owl.pitaya.domain.query.AddressQuery;
 import xyz.nanian.owl.pitaya.domain.query.OrderDTO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 
@@ -67,12 +68,8 @@ public interface ConOrderMapper {
      */
     OrderDO selectOrder(OrderDTO orderQuery);
 
-    /**
-     * 查询地址
-     * @param addressQuery
-     * @return
-     */
-    UserAddressDO selectAddress(AddressQuery addressQuery);
+    // [TO_BE_DELETED] 地址查询已迁移到 user 模块
+    // UserAddressDO selectAddress(AddressQuery addressQuery);
 
     /**
      * 查询订单列表

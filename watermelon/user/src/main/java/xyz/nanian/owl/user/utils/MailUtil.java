@@ -1,45 +1,22 @@
 package xyz.nanian.owl.user.utils;
 
-
-import jakarta.annotation.Resource;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-
 import org.springframework.stereotype.Component;
-import xyz.nanian.owl.user.constant.MailConstant;
+import xyz.nanian.owl.common.mail.MailService;
 
 /**
- * 邮箱登录，注册
- *
- * @author slnt23
- * @since 2026/4/9
+ * [TO_BE_DELETED] 邮件发送已迁移至 common MailService，本类仅保留旧调用入口。
  */
-
+@Deprecated
 @Component
 public class MailUtil {
 
-    @Resource
-    public JavaMailSender mailSender;
+    private final MailService mailService;
 
-    /**
-     * 验证码发送,
-     * 这里应该可以复用，
-     * @param to
-     * @param subject
-     * @param body
-     */
+    public MailUtil(MailService mailService) {
+        this.mailService = mailService;
+    }
+
     public void sendMail(String to, String subject, String body) {
-        SimpleMailMessage message = new SimpleMailMessage();
-
-//        发件邮箱
-        message.setFrom(MailConstant.MAIL);
-//        收件人邮箱
-        message.setTo(to);
-//        邮箱标题
-        message.setSubject(subject);
-//        邮件正文内容
-        message.setText(body);
-
-        mailSender.send(message);
+        mailService.send(to, subject, body);
     }
 }

@@ -90,7 +90,7 @@ public class UserAddressDO implements Serializable {
      */
     @TableField("is_default")
     @Schema(name = "是否默认地址")
-    private Byte isDefault;
+    private Integer isDefault;
 
     /**
      * 创建时间
@@ -98,4 +98,11 @@ public class UserAddressDO implements Serializable {
     @Schema(name = "创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @TableField("update_time")
+    @Schema(name = "更新时间")
+    private LocalDateTime updateTime;
 }

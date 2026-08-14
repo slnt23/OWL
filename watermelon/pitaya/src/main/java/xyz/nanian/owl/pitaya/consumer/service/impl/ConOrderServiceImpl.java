@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.SneakyThrows;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -14,16 +15,15 @@ import xyz.nanian.owl.pitaya.consumer.mapper.ConOrderMapper;
 import xyz.nanian.owl.pitaya.consumer.service.ConOrderService;
 import xyz.nanian.owl.pitaya.domain.entity.OrderDO;
 import xyz.nanian.owl.pitaya.domain.entity.OrderDetailDO;
-import xyz.nanian.owl.pitaya.domain.entity.UserAddressDO;
 import xyz.nanian.owl.pitaya.mapstruct.OrderConvert;
-import xyz.nanian.owl.pitaya.domain.query.AddressQuery;
 import xyz.nanian.owl.pitaya.domain.query.OrderDTO;
-import xyz.nanian.owl.pitaya.domain.vo.AddressVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderDetailVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderItemVO;
 import xyz.nanian.owl.pitaya.domain.vo.OrderListVO;
 import xyz.nanian.owl.common.result.ResultPage;
 import xyz.nanian.owl.common.security.CurrentUserContext;
+import xyz.nanian.owl.user.domain.vo.AddressVO;
+import xyz.nanian.owl.user.service.UserAddressService;
 
 import java.util.List;
 import java.util.UUID;
@@ -48,15 +48,21 @@ public class ConOrderServiceImpl implements ConOrderService {
     private final OrderConvert orderConvert;
     private final RedisTemplate<String ,Object> redisTemplate;
     private final RabbitTemplate rabbitTemplate;
+    private final UserAddressService userAddressService;
+    private final ObjectMapper objectMapper;
 
     public ConOrderServiceImpl(ConOrderMapper conOrderMapper,
                                OrderConvert orderConvert,
                                RedisTemplate redisTemplate,
-                               RabbitTemplate rabbitTemplate) {
+                               RabbitTemplate rabbitTemplate,
+                               UserAddressService userAddressService,
+                               ObjectMapper objectMapper) {
         this.conOrderMapper = conOrderMapper;
         this.orderConvert = orderConvert;
         this.redisTemplate = redisTemplate;
         this.rabbitTemplate = rabbitTemplate;
+        this.userAddressService = userAddressService;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -65,23 +71,22 @@ public class ConOrderServiceImpl implements ConOrderService {
      * @return
      */
     @Override
+    @SneakyThrows
     @OperationLog(module = "订单", action = "新增订单", persist = true)
     public Boolean saveOrder(xyz.nanian.owl.pitaya.domain.dto.OrderDTO orderDTO) {
 
 //        对于不同的来源是怎么处理？
         Long arId = orderDTO.getAddressId();
-        AddressQuery addressQuery = new AddressQuery();
-        addressQuery.setAddressId(arId);
-        UserAddressDO userAddressDO = conOrderMapper.selectAddress(addressQuery);
+        Long userId = CurrentUserContext.getUserId();
+        AddressVO addressVO = userAddressService.getOwned(userId, arId);
 
         OrderDO orderDO = new OrderDO();
         List<OrderDetailDO> orderDetailDO = orderConvert.
                 orderItemToOrderDetailDOList(orderDTO.getItems());
 
-//        这里的数据类型没有考虑号，结果这里快照用地址id替代，
-        orderDO.setAddressSnapshot(userAddressDO.getId()+"");
+//        [UPGRADE] 地址快照保存完整收件信息 JSON，不再使用地址 id 顶替
+        orderDO.setAddressSnapshot(objectMapper.writeValueAsString(addressVO));
 
-        Long userId = CurrentUserContext.getUserId();
         String orderCode = UUID.randomUUID().toString();
         orderDO.setOrderNo(orderCode);
         orderDO.setUserId(userId);
@@ -134,6 +139,7 @@ public class ConOrderServiceImpl implements ConOrderService {
      * @return
      */
     @Override
+    @SneakyThrows
     @OperationLog(module = "订单", action = "查询订单详情")
     public OrderDetailVO getOrderDetail(Long orderId) {
 
@@ -146,15 +152,10 @@ public class ConOrderServiceImpl implements ConOrderService {
         orderQuery.setId(orderId);
         OrderDO orderDO = conOrderMapper.selectOrder(orderQuery);
 
-//        address
-        Long userId = orderDO.getUserId();
-        AddressQuery  addressQuery = new AddressQuery();
-        addressQuery.setUserId(userId);
-        UserAddressDO addressDO = conOrderMapper.selectAddress(addressQuery);
-        AddressVO addressVO = orderConvert.addressDOToAddressVO(addressDO);
-
 //        注入
         OrderDetailVO orderDetailVO = orderConvert.OrderDOToOrderDetailVO(orderDO);
+        AddressVO addressVO = objectMapper.readValue(
+                orderDO.getAddressSnapshot(), AddressVO.class);
         orderDetailVO.setAddress(addressVO);
         orderDetailVO.setItems(orderItemVOS);
 

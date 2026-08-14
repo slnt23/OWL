@@ -13,6 +13,12 @@ public class LoginConstant {
     // Redis中验证码的key前缀,必须是这个 前缀 + 邮箱号，
     public static final String VERIFICATION_CODE_PREFIX = "verification:code:";
 
+    // 验证码错误次数前缀
+    public static final String CODE_ATTEMPT_PREFIX = "verification:attempt:";
+
+    // 验证码允许的最大错误次数
+    public static final long CODE_ATTEMPT_LIMIT = 5;
+
     // 验证码过期时间（分钟）
     public static final long CODE_EXPIRE_MINUTES = 5;
 

@@ -4,6 +4,9 @@
 
 <mapper namespace="xyz.nanian.owl.user.mapper.UserMapper">
 
+    <!-- [TO_BE_DELETED] 空实现，用户搜索后续交给 administration 模块 -->
+    <!--
     <select id="selectUserByName" resultType="xyz.nanian.owl.user.domain.entity.UserDO">
     </select>
+    -->
 </mapper>

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
 /**
+ * [TO_BE_DELETED] 当前无使用方，角色管理后续在 administration 模块实现。
  * 角色DTO,对于新版架构可能没有太大的用处，但是可以作为扩展，
  *
  * @author slnt23

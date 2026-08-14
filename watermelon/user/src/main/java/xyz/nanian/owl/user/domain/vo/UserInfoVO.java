@@ -4,6 +4,8 @@ package xyz.nanian.owl.user.domain.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 /**
  * 用户个人信息VO
  *
@@ -15,28 +17,48 @@ import lombok.Data;
 @Schema(name = "用户信息VO")
 public class UserInfoVO {
 
+    @Schema(description = "用户ID")
+    private Long id;
+
+    @Schema(description = "账号编号")
+    private String userCode;
+
     @Schema(description= "用户名",example = "秦明")
-    String userName;
+    private String userName;
 
     @Schema(description = "昵称",example = "小明")
-    String nickName;
+    private String nickname;
+
+    /**
+     * [TO_BE_DELETED] 旧字段，使用 nickname。
+     */
+    @Deprecated
+    @Schema(description = "昵称-旧字段", example = "小明")
+    private String nickName;
 
     @Schema(description= "邮箱",example = "qq.com")
-    String email;
+    private String email;
 
     @Schema(description = "手机号" ,example = "110")
-    String phone;
+    private String phone;
 
     @Schema(description= "备注",example = "备注")
-    String remark;
+    private String remark;
 
-    @Schema(description = "原手机号",example = "119")
-    String rawPhone;
+    /**
+     * [TO_BE_DELETED] 冗余字段。
+     */
+    @Deprecated
+    @Schema(description = "原手机号-冗余字段", example = "119")
+    private String rawPhone;
 
     @Schema(description = "角色",example = "user")
-    String role;
+    private String role;
 
     @Schema(description = "头像URL")
-    String avatarUrl;
+    private String avatarUrl;
+
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
 
 }

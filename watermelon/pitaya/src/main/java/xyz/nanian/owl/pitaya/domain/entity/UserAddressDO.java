@@ -1,72 +1,34 @@
-package xyz.nanian.owl.pitaya.domain.entity;
-
-
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-
-import java.time.LocalDateTime;
-
-/**
- * 用户地址DO
- *
- * @author slnt23
- * @since 2026/1/17
- */
-
-@Data
-@TableName("user_address")
-public class UserAddressDO {
-
-    /**
-     * 主键ID
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
-
-    /**
-     * 用户ID
-     */
-    private Long userId;
-
-    /**
-     * 收件人姓名
-     */
-    private String receiverName;
-
-    /**
-     * 收件人电话
-     */
-    private String receiverPhone;
-
-    /**
-     * 省
-     */
-    private String province;
-
-    /**
-     * 市
-     */
-    private String city;
-
-    /**
-     * 区/县
-     */
-    private String district;
-
-    /**
-     * 详细地址
-     */
-    private String detail;
-
-    /**
-     * 是否默认地址：0=否，1=是
-     */
-    private Integer isDefault;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-}
+// [TO_BE_DELETED] 旧地址实体已收归 user 模块，等待人工删除。
+// package xyz.nanian.owl.pitaya.domain.entity;
+//
+// import com.baomidou.mybatisplus.annotation.*;
+// import lombok.Data;
+//
+// import java.time.LocalDateTime;
+//
+// @Data
+// @TableName("user_address")
+// public class UserAddressDO {
+//     @TableId(type = IdType.AUTO)
+//     private Long id;
+//
+//     private Long userId;
+//
+//     private String receiverName;
+//
+//     private String receiverPhone;
+//
+//     private String province;
+//
+//     private String city;
+//
+//     private String district;
+//
+//     private String detail;
+//
+//     private Integer isDefault;
+//
+//     @TableField(fill = FieldFill.INSERT)
+//     private LocalDateTime createTime;
+// }
 

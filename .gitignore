@@ -9,11 +9,7 @@
 # Build folders from other tools
 /build/
 .github/
-.claude/settings.local.json
-
-
-# Runtime logs
-/logs/
+.claude/
 
 
 qodana.yaml

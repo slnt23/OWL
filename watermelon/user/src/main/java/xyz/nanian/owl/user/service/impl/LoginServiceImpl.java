@@ -2,6 +2,7 @@ package xyz.nanian.owl.user.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,12 +11,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.common.result.ResultStatus;
 import xyz.nanian.owl.common.security.LoginFailureException;
+import xyz.nanian.owl.common.security.TokenRevocationService;
+import xyz.nanian.owl.common.mail.MailService;
+import xyz.nanian.owl.common.utils.regex.RegexUtil;
 import xyz.nanian.owl.user.domain.entity.RoleDO;
 import xyz.nanian.owl.user.mapper.RoleMapper;
-import xyz.nanian.owl.user.utils.MailUtil;
 import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
+import xyz.nanian.owl.user.domain.dto.EmailLoginDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordLoginDTO;
+import xyz.nanian.owl.user.domain.dto.ResetPasswordDTO;
 import xyz.nanian.owl.user.domain.dto.SendCodeDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.mapper.UserMapper;
@@ -25,6 +30,7 @@ import xyz.nanian.owl.user.constant.UserConstant;
 import xyz.nanian.owl.user.constant.LoginConstant;
 import xyz.nanian.owl.common.security.JwtTokenProvider;
 import xyz.nanian.owl.user.utils.CodeCacheUtil;
+import xyz.nanian.owl.user.utils.PasswordPolicy;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -44,13 +50,14 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-    final MailUtil mailUtil;
+    final MailService mailService;
     final UserMapper userMapper;
     final StringRedisTemplate stringRedisTemplate;
     final PasswordEncoder passwordEncoder;
     final CodeCacheUtil codeCacheUtil;
     private final RoleMapper roleMapper;
     private final JwtTokenProvider jwtTokenProvider;
+    private final TokenRevocationService tokenRevocationService;
 
     /**
      * 发送验证码
@@ -63,13 +70,13 @@ public class LoginServiceImpl implements LoginService {
 
         String emailAddress = sendCodeDTO.getEmail();
 
-//        这里加一步，5分钟内不可重复发，
-        if (codeCacheUtil.isLocked(emailAddress)) {
-            return Result.fail(LoginConstant.CODE_TIME_IN_5_MIN);
+        // [UPGRADE] 先校验邮箱，再走 5 分钟冷却
+        if (Objects.isNull(emailAddress) || !RegexUtil.isEmail(emailAddress)) {
+            return Result.fail();
         }
 
-        if (Objects.isNull(emailAddress)) {
-            return Result.fail();
+        if (codeCacheUtil.isLocked(emailAddress)) {
+            return Result.fail(ResultStatus.CODE_SEND_TOO_FREQUENT);
         }
 
         // 2. 生成6位随机验证码
@@ -94,7 +101,7 @@ public class LoginServiceImpl implements LoginService {
                 [Energy] 团队
                 """, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES);
         // 4. 发送邮件
-        mailUtil.sendMail(emailAddress, subject, body);
+        mailService.send(emailAddress, subject, body);
 
         // 5. 保存验证码到Redis
         String redisKey = LoginConstant.VERIFICATION_CODE_PREFIX + emailAddress;
@@ -102,107 +109,124 @@ public class LoginServiceImpl implements LoginService {
                 .opsForValue()
                 .set(redisKey, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES, TimeUnit.MINUTES);
 
+        // 5.1 新验证码发送成功后重置错误次数
+        stringRedisTemplate.delete(LoginConstant.CODE_ATTEMPT_PREFIX + emailAddress);
+
         return Result.success();
     }
 
     /**
-     * 保存用户信息，可以用于注册
-     * TODO(login): 注册与登录流程合并后可删除本方法
-     *
-     * @param emailLoginOrRegisterDTO 用户DTO基本信息
-     * @return 登录 Token
+     * [TO_BE_DELETED] 旧注册接口，已由邮箱登录自动注册取代。
      */
     @Override
+    @Deprecated
     public String saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
-//        1. 检验验证码是否正确,正确生成用户，错误，返回
-        if (!verificationCode(emailLoginOrRegisterDTO.getEmail(), emailLoginOrRegisterDTO.getCode())) {
-            throw new LoginFailureException(ResultStatus.VERIFY_CODE_ERROR);
-        }
-
-//        生成用户信息，
-        if (!saveUserInfo(emailLoginOrRegisterDTO.getEmail())) {
-            throw new LoginFailureException(ResultStatus.BIZ_ERROR);
-        }
-
-        return getToken(emailLoginOrRegisterDTO.getEmail());
+        EmailLoginDTO emailLoginDTO = new EmailLoginDTO();
+        emailLoginDTO.setEmail(emailLoginOrRegisterDTO.getEmail());
+        emailLoginDTO.setCode(emailLoginOrRegisterDTO.getCode());
+        return login(emailLoginDTO);
     }
 
     /**
-     * 用户登陆 + 注册 ，邮箱验证码，
-     *
-     * @param emailLoginOrRegisterDTO DTO
-     * @return
+     * [TO_BE_DELETED] 旧邮箱验证码登录，已升级为 login(EmailLoginDTO)。
      */
     @Override
+    @Deprecated
     public String login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
-
-//        1. 检验验证码是否正确
-        if (!verificationCode(emailLoginOrRegisterDTO.getEmail(), emailLoginOrRegisterDTO.getCode())) {
-            throw new LoginFailureException(ResultStatus.VERIFY_CODE_ERROR);
-        }
-
-//        3.检查用户账号是否封禁，0 = 正常
-        LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(UserDO::getEmail, emailLoginOrRegisterDTO.getEmail());
-        UserDO userDO = userMapper.selectOne(wrapper);
-        if (userDO.getStatus() != 0) {
-            throw new LoginFailureException(ResultStatus.ACCOUNT_DISABLED);
-        }
-
-//        4.查询用户role是否匹配，
-        String role = emailLoginOrRegisterDTO.getRole();
-        RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
-        if (!roleDO.getRoleName().equals(role)) {
-            throw new LoginFailureException(ResultStatus.ROLE_FAILED);
-        }
-
-//        5.一切成功,
-        return getToken(emailLoginOrRegisterDTO.getEmail());
+        EmailLoginDTO emailLoginDTO = new EmailLoginDTO();
+        emailLoginDTO.setEmail(emailLoginOrRegisterDTO.getEmail());
+        emailLoginDTO.setCode(emailLoginOrRegisterDTO.getCode());
+        return login(emailLoginDTO);
     }
 
     /**
-     * 用户登陆，密码
-     *
-     * @param passwordLoginDTO
-     * @return
+     * [UPGRADE] 密码登录，role 从数据库读取，补齐账号状态与角色启用校验。
      */
     @Override
     public String login(PasswordLoginDTO passwordLoginDTO) {
-
-//        1. 数据库中获取密码，比对经过加密后的密码，
-        LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(UserDO::getEmail, passwordLoginDTO.getEmail());
-
-        UserDO userDO = userMapper.selectOne(wrapper);
+        UserDO userDO = findByEmail(passwordLoginDTO.getEmail());
         if (Objects.isNull(userDO)) {
             throw new LoginFailureException(ResultStatus.NOT_FOUND);
         }
-
-//        2.查询用户role
-        String role = passwordLoginDTO.getRole();
-        RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
-
-//        3. 比对，判断用户
-        if (userDO.getStatus() == 1) {
+        if (!Objects.equals(userDO.getStatus(), UserConstant.DEFAULT_STATUS)) {
             throw new LoginFailureException(ResultStatus.ACCOUNT_DISABLED);
-        } else if (userDO.getPassword() == null) {
+        }
+        if (userDO.getPassword() == null) {
             throw new LoginFailureException(ResultStatus.PASSWORD_NO_REWRITE);
-        } else if (!passwordEncoder.matches(passwordLoginDTO.getPassword(), userDO.getPassword())) {
+        }
+        if (!passwordEncoder.matches(passwordLoginDTO.getPassword(), userDO.getPassword())) {
             throw new LoginFailureException(ResultStatus.PARAMS_INVALID);
-        } else if (!roleDO.getRoleName().equals(role)) {
-            throw new LoginFailureException(ResultStatus.ROLE_FAILED);
+        }
+        RoleDO roleDO = loadEnabledRole(userDO);
+
+        return getToken(userDO, roleDO);
+    }
+
+    /**
+     * [UPGRADE] 邮箱验证码登录，未注册邮箱自动创建默认 USER 账号。
+     */
+    @Override
+    public String login(EmailLoginDTO emailLoginDTO) {
+        verifyEmailCode(emailLoginDTO.getEmail(), emailLoginDTO.getCode());
+
+        UserDO userDO = findByEmail(emailLoginDTO.getEmail());
+        if (Objects.isNull(userDO)) {
+            userDO = createUser(emailLoginDTO.getEmail());
+        }
+        if (!Objects.equals(userDO.getStatus(), UserConstant.DEFAULT_STATUS)) {
+            throw new LoginFailureException(ResultStatus.ACCOUNT_DISABLED);
+        }
+        RoleDO roleDO = loadEnabledRole(userDO);
+
+        return getToken(userDO, roleDO);
+    }
+
+    /**
+     * [UPGRADE] 忘记密码重置，重置后旧 token 全部失效。
+     */
+    @Override
+    public void resetPassword(ResetPasswordDTO resetPasswordDTO) {
+        verifyEmailCode(resetPasswordDTO.getEmail(), resetPasswordDTO.getCode());
+
+        UserDO userDO = findByEmail(resetPasswordDTO.getEmail());
+        if (Objects.isNull(userDO)) {
+            throw new LoginFailureException(ResultStatus.NOT_FOUND);
+        }
+        if (!PasswordPolicy.isValid(resetPasswordDTO.getNewPassword())) {
+            throw new LoginFailureException(ResultStatus.PARAMS_INVALID);
         }
 
-//        返回token
-        return getToken(passwordLoginDTO.getEmail());
+        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(UserDO::getEmail, resetPasswordDTO.getEmail())
+                .set(UserDO::getPassword, passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
+        userMapper.update(null, wrapper);
+
+        tokenRevocationService.bumpVersion(userDO.getId());
+    }
+
+    /**
+     * [UPGRADE] 登出，当前 token 加入黑名单直到自然过期。
+     */
+    @Override
+    public void logout(String token) {
+        if (token == null || token.isBlank()) {
+            return;
+        }
+        io.jsonwebtoken.Claims claims = jwtTokenProvider.parseToken(token);
+        String jti = claims.getId();
+        if (jti == null || claims.getExpiration() == null) {
+            return;
+        }
+        long ttlSeconds = Math.max(1,
+                (claims.getExpiration().getTime() - System.currentTimeMillis()) / 1000);
+        tokenRevocationService.revoke(jti, ttlSeconds);
     }
 
 
     /**
-     * 获取token，并在token中注入用户信息，
-     *
-     * @return
+     * [TO_BE_DELETED] 旧 token 生成逻辑，仅保留给旧代码审查。
      */
+    @Deprecated
     private String getToken(String email) {
 
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
@@ -215,6 +239,57 @@ public class LoginServiceImpl implements LoginService {
 
         RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
         return jwtTokenProvider.generateToken(userId, userCode, email, roleDO.getRoleName());
+    }
+
+    /**
+     * [UPGRADE] 使用 jti 和 tokenVersion 生成 token。
+     */
+    private String getToken(UserDO userDO, RoleDO roleDO) {
+        long tokenVersion = tokenRevocationService.getTokenVersion(userDO.getId());
+        return jwtTokenProvider.generateToken(
+                userDO.getId(),
+                userDO.getUserCode(),
+                userDO.getEmail(),
+                roleDO.getRoleName(),
+                tokenVersion);
+    }
+
+    private UserDO findByEmail(String email) {
+        LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(UserDO::getEmail, email);
+        return userMapper.selectOne(wrapper);
+    }
+
+    private RoleDO loadEnabledRole(UserDO userDO) {
+        RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
+        if (roleDO == null || !Boolean.TRUE.equals(roleDO.getEnabled())) {
+            throw new LoginFailureException(ResultStatus.ROLE_FAILED);
+        }
+        return roleDO;
+    }
+
+    private UserDO createUser(String email) {
+        UserDO userDO = new UserDO();
+        String uuid = UUID.randomUUID().toString();
+        LocalDateTime now = LocalDateTime.now();
+
+        userDO.setUserCode(uuid);
+        userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
+        userDO.setPassword(null);
+        userDO.setEmail(email);
+        userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
+        userDO.setRoleId(UserConstant.DEFAULT_ROLE);
+        userDO.setStatus(UserConstant.DEFAULT_STATUS);
+        userDO.setNickname(UserConstant.DEFAULT_NICK_NAME);
+        userDO.setRemark(UserConstant.DEFAULT_REMARK);
+        userDO.setCreateTime(now);
+
+        userMapper.insert(userDO);
+        return userDO;
+    }
+
+    private void verifyEmailCode(String email, String code) {
+        codeCacheUtil.verifyOrThrow(email, code);
     }
 
     /**

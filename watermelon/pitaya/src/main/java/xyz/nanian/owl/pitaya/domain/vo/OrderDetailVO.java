@@ -7,6 +7,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import xyz.nanian.owl.user.domain.vo.AddressVO;
 
 /**
  * 主订单详情VO

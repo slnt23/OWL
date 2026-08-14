@@ -12,9 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.beans.factory.ObjectProvider;
 import xyz.nanian.owl.common.security.filter.JwtAuthenticationFilter;
 import xyz.nanian.owl.common.security.JwtTokenProvider;
 import xyz.nanian.owl.common.security.RoleConstants;
+import xyz.nanian.owl.common.security.TokenRevocationService;
 import xyz.nanian.owl.common.security.handler.RestAccessDeniedHandler;
 import xyz.nanian.owl.common.security.handler.RestAuthenticationEntryPoint;
 
@@ -33,13 +35,16 @@ public class SecurityConfig {
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final RestAccessDeniedHandler restAccessDeniedHandler;
     private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectProvider<TokenRevocationService> tokenRevocationServiceProvider;
 
     public SecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint,
                           RestAccessDeniedHandler restAccessDeniedHandler,
-                          JwtTokenProvider jwtTokenProvider) {
+                          JwtTokenProvider jwtTokenProvider,
+                          ObjectProvider<TokenRevocationService> tokenRevocationServiceProvider) {
         this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
         this.restAccessDeniedHandler = restAccessDeniedHandler;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.tokenRevocationServiceProvider = tokenRevocationServiceProvider;
     }
 
     @Bean
@@ -50,12 +55,16 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/auth/**",
-                                "/user",
-                                "/user/login",
-                                "/user/register",
-                                "/public",
-                                "/public/**",
+                                // [UPGRADE] public auth endpoints only; logout stays authenticated
+                                "/api/auth/send-code",
+                                "/api/auth/send-verification",
+                                "/api/auth/login-email",
+                                "/api/auth/login-email-v2",
+                                "/api/auth/login-password",
+                                "/api/auth/register",
+                                "/api/auth/password/reset",
+                                "/api/public",
+                                "/api/public/**",
                                 "/doc.html",
                                 "/doc.html/**",
                                 "/webjars/**",
@@ -65,15 +74,15 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/error",
                                 "/favicon.ico",
-                                "/admin/feature/**",
-                                "/admin/spotlight/**"
+                                "/api/admin/feature/**",
+                                "/api/admin/spotlight/**"
                         ).permitAll()
-                        .requestMatchers("/admin/**").hasRole(RoleConstants.ADMIN)
+                        .requestMatchers("/api/admin/**").hasRole(RoleConstants.ADMIN)
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(restAuthenticationEntryPoint)
                         .accessDeniedHandler(restAccessDeniedHandler))
-                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, tokenRevocationServiceProvider), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

@@ -140,6 +140,8 @@
         </where>
     </select>
 
+    <!-- [TO_BE_DELETED] 地址查询已迁移到 user 模块 -->
+    <!--
     <select id="selectAddress"
             parameterType="xyz.nanian.owl.pitaya.domain.query.AddressQuery"
             resultType="xyz.nanian.owl.pitaya.domain.entity.UserAddressDO">
@@ -164,6 +166,7 @@
             </if>
         </where>
     </select>
+    -->
     <select id="pageOrderList" resultType="xyz.nanian.owl.pitaya.domain.vo.OrderListVO">
         select
             om.id as orderId,

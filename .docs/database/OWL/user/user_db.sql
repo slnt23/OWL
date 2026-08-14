@@ -35,7 +35,8 @@ CREATE TABLE user
     create_time DATETIME                    DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time DATETIME                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     FOREIGN KEY (role_id) references role (id) on delete restrict,
-    index idx_role (role_id)
+    index idx_role (role_id),
+    UNIQUE KEY uk_email (email)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='用户表';
 
@@ -58,6 +59,7 @@ CREATE TABLE user_address
     detail         VARCHAR(255) COMMENT '详细地址',
     is_default     TINYINT  DEFAULT 0 COMMENT '是否默认地址：1=是，0=否',
     create_time    DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time    DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
     INDEX idx_user_id (user_id),
     FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE

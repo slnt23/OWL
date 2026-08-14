@@ -37,6 +37,12 @@ public enum ResultStatus {
     PAYMENT_FAILED("支付失败，请检查账户余额或支付方式", 9301),
     ROLE_FAILED("登陆角色异常，",9401),
     VERIFY_CODE_ERROR("验证码错误",9501),
+    CODE_ATTEMPT_EXCEEDED("验证码错误次数过多，请重新发送",9502),
+    CODE_SEND_TOO_FREQUENT("验证码发送过于频繁，请稍后再试",9503),
+    OLD_PASSWORD_ERROR("旧密码不正确",9402),
+    EMAIL_ALREADY_BOUND("邮箱已被使用",9403),
+    FILE_TYPE_ERROR("仅支持 jpeg/png/webp 图片",9404),
+    FILE_SIZE_EXCEEDED("图片大小不能超过 5MB",9405),
     // 特殊状态
     TOKEN_EXPIRED("登录已过期，请重新登录", 401001),
     TOKEN_INVALID("token无效", 401002),

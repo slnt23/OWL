@@ -2,7 +2,10 @@ package xyz.nanian.owl.user.service;
 
 
 import org.springframework.web.multipart.MultipartFile;
+import xyz.nanian.owl.user.domain.dto.EmailBindDTO;
+import xyz.nanian.owl.user.domain.dto.PasswordUpdateDTO;
 import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+import xyz.nanian.owl.user.domain.dto.UserInfoUpdateDTO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 
 /**
@@ -16,17 +19,15 @@ public interface UserService {
 
 
     /**
-     * 更新用户信息
-     * @param userInfoDTO 用户DTO
-     * @return 是否更改成功bool
+     * [TO_BE_DELETED] 旧资料更新接口，请使用 updateUserInfo(UserInfoUpdateDTO)。
      */
+    @Deprecated
     Boolean updateUserInfo(UserInfoDTO userInfoDTO);
 
     /**
-     * 更改用户密码
-     * @param newPassword 新密码
-     * @return message
+     * [TO_BE_DELETED] 旧改密接口，请使用 updateUserPassword(PasswordUpdateDTO)。
      */
+    @Deprecated
     Boolean updateUserPassword(String newPassword);
 
     /**
@@ -42,4 +43,19 @@ public interface UserService {
      * @return
      */
     UserInfoVO getUserInfoByCode();
+
+    /**
+     * [UPGRADE] 更新用户资料，仅允许 userName/nickname/phone/remark。
+     */
+    Boolean updateUserInfo(UserInfoUpdateDTO userInfoUpdateDTO);
+
+    /**
+     * [UPGRADE] 换绑邮箱，需要新邮箱验证码。
+     */
+    Boolean updateUserEmail(EmailBindDTO emailBindDTO);
+
+    /**
+     * [UPGRADE] 登录后修改密码，旧密码校验由服务层完成。
+     */
+    Boolean updateUserPassword(PasswordUpdateDTO passwordUpdateDTO);
 }

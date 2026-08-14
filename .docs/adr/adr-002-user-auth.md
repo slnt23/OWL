@@ -62,3 +62,13 @@
 - 验证码依赖邮件服务（QQ SMTP），邮件到达率受邮件服务商限制
 - 注册登录合一的模式下，用户无法"浏览"后再决定注册（已通过不要求登录的页面解决）
 - 2026-07 重构：`LoginConstant`、`MailConstant`、`MailUtil`、`CodeCacheUtil` 从 common 下沉到 user 模块
+
+## 2026-08-14 升级记录
+
+- 邮箱验证码登录自动注册落地：新增 `/auth/login-email-v2`，旧 `/auth/login-email`、`/auth/register` 保留并标记待删除。
+- 登录不再依赖前端传入 role，角色从数据库读取并校验启用状态。
+- 新增 `/auth/send-code`、`/auth/password/reset`、`/auth/logout`。
+- JWT 增加 `jti` 与 `tokenVersion`，登出黑名单、改密/重置/换绑邮箱递增版本，旧 token 可主动失效。
+- 收货地址收归 user 模块，新增 `/user/addresses` CRUD 与默认地址逻辑；pitaya 旧地址实体/查询/转换已注释并标记待删除，订单地址快照改为完整收件信息 JSON。
+- 邮件发送下沉到 `common` 的 `MailService`，user 的 `MailUtil`/`MailConstant` 保留并标记待删除；后续 caishen 等模块直接复用 `MailService`。
+- 待人工清理项统一使用 `[TO_BE_DELETED]` 标记。

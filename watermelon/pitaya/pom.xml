@@ -22,6 +22,11 @@
 
 
     <dependencies>
+<!--        [UPGRADE] 地址已收归 user 模块 -->
+        <dependency>
+            <groupId>xyz.nanian</groupId>
+            <artifactId>user</artifactId>
+        </dependency>
 <!--        模块依赖-->
         <dependency>
             <groupId>xyz.nanian</groupId>

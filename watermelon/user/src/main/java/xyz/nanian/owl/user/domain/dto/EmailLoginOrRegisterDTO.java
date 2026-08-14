@@ -28,9 +28,10 @@ public class EmailLoginOrRegisterDTO {
 
     /**
      * 邮箱验证码
+     * [UPGRADE] 正则补充起始锚点，避免前缀字符绕过。
      */
     @NotNull
-    @Pattern(regexp = "\\d{6}$",message = "验证码必须6位数字")
+    @Pattern(regexp = "^\\d{6}$",message = "验证码必须6位数字")
     @Schema(description = "验证码",example = "123456")
     String code;
 

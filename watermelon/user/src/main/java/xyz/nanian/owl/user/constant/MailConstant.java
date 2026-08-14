@@ -2,12 +2,9 @@ package xyz.nanian.owl.user.constant;
 
 
 /**
- * 邮箱相关常量
- *
- * @author slnt23
- * @since 2026/4/9
+ * [TO_BE_DELETED] 邮箱发送已迁移至 common MailService，常量待人工清理。
  */
-
+@Deprecated
 public class MailConstant {
 
     /**

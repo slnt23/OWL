@@ -3,7 +3,12 @@ package xyz.nanian.owl.user.utils;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import xyz.nanian.owl.common.result.ResultStatus;
+import xyz.nanian.owl.common.security.LoginFailureException;
 import xyz.nanian.owl.user.constant.LoginConstant;
+
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 检验邮箱验证码是否过期
@@ -32,5 +37,68 @@ public class CodeCacheUtil {
         return stringRedisTemplate.hasKey(lockKey);
     }
 
+    /**
+     * [UPGRADE] 校验并消费验证码。
+     */
+    public boolean verifyAndConsume(String email, String code) {
+        String key = LoginConstant.VERIFICATION_CODE_PREFIX + email;
+        String saved = stringRedisTemplate.opsForValue().get(key);
+        if (!Objects.equals(saved, code)) {
+            return false;
+        }
+        stringRedisTemplate.delete(key);
+        return true;
+    }
+
+    /**
+     * [UPGRADE] 增加一次错误尝试，返回当前累计次数。
+     */
+    public long increaseAttempt(String email) {
+        String key = LoginConstant.CODE_ATTEMPT_PREFIX + email;
+        Long count = stringRedisTemplate.opsForValue().increment(key);
+        if (count != null && count == 1L) {
+            stringRedisTemplate.expire(key, LoginConstant.CODE_EXPIRE_MINUTES, TimeUnit.MINUTES);
+        }
+        return count == null ? 1L : count;
+    }
+
+    /**
+     * [UPGRADE] 是否已超过验证码错误次数上限。
+     */
+    public boolean isAttemptExceeded(String email) {
+        String key = LoginConstant.CODE_ATTEMPT_PREFIX + email;
+        String value = stringRedisTemplate.opsForValue().get(key);
+        if (value == null) {
+            return false;
+        }
+        return Long.parseLong(value) >= LoginConstant.CODE_ATTEMPT_LIMIT;
+    }
+
+    /**
+     * [UPGRADE] 清理验证码及错误次数。
+     */
+    public void clear(String email) {
+        stringRedisTemplate.delete(LoginConstant.VERIFICATION_CODE_PREFIX + email);
+        stringRedisTemplate.delete(LoginConstant.CODE_ATTEMPT_PREFIX + email);
+    }
+
+    /**
+     * [UPGRADE] 校验验证码，失败或超限时抛出登录异常。
+     */
+    public void verifyOrThrow(String email, String code) {
+        if (isAttemptExceeded(email)) {
+            clear(email);
+            throw new LoginFailureException(ResultStatus.CODE_ATTEMPT_EXCEEDED);
+        }
+        if (!verifyAndConsume(email, code)) {
+            long attempts = increaseAttempt(email);
+            if (attempts >= LoginConstant.CODE_ATTEMPT_LIMIT) {
+                clear(email);
+                throw new LoginFailureException(ResultStatus.CODE_ATTEMPT_EXCEEDED);
+            }
+            throw new LoginFailureException(ResultStatus.VERIFY_CODE_ERROR);
+        }
+        stringRedisTemplate.delete(LoginConstant.CODE_ATTEMPT_PREFIX + email);
+    }
 
 }

@@ -18,10 +18,9 @@ public interface UserMapper extends BaseMapper<UserDO> {
 
 
     /**
-     * 分页查询用户，用户名可能有多个重复的，
-     * @param name 用户名
-     * @return 用户的分页数据
+     * [TO_BE_DELETED] 空实现，用户搜索后续交给 administration 模块。
      */
+    @Deprecated
     IPage<UserDO> selectUserByName(String name);
 
 }
