@@ -4,7 +4,7 @@ package xyz.nanian.owl.pitaya.domain.query;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import xyz.nanian.owl.common.dto.PageDTO;
+import xyz.nanian.owl.common.domain.dto.PageDTO;
 
 /**
  * 购物车查询

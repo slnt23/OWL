@@ -11,7 +11,7 @@ import xyz.nanian.owl.common.result.ResultStatus;
 import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.user.domain.dto.EmailBindDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordUpdateDTO;
-import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+// [TO_BE_DELETED] import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.dto.UserInfoUpdateDTO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 import xyz.nanian.owl.user.service.UserService;
@@ -49,45 +49,37 @@ public class UserController {
     }
 
 
-    /**
-     * [TO_BE_DELETED] 旧资料更新接口，请使用 PUT /user/info。
-     */
-    @PutMapping("/userInfo")
-    @Operation(summary = "用户信息更新")
-    @Deprecated
-    public Result<ResultStatus> updateUser(@RequestBody UserInfoDTO userInfoDTO) {
-        if (userService.updateUserInfo(userInfoDTO)) {
-            return Result.success();
-        } else {
-            return Result.fail();
-        }
-    }
+    // [TO_BE_DELETED] 旧资料更新接口，请使用 PUT /user/info。
+    // @PutMapping("/userInfo")
+    // @Operation(summary = "用户信息更新")
+    // @Deprecated
+    // public Result<ResultStatus> updateUser(@RequestBody UserInfoDTO userInfoDTO) {
+    //     if (userService.updateUserInfo(userInfoDTO)) {
+    //         return Result.success();
+    //     } else {
+    //         return Result.fail();
+    //     }
+    // }
 
-    /**
-     * [TO_BE_DELETED] 旧改密接口，请使用 PUT /user/password。
-     */
-    @PutMapping("/password/{password}")
-    @Operation(summary = "用户密码更新")
-    @Deprecated
-    public Result<ResultStatus> updatePassword(@PathVariable String password) {
+    // [TO_BE_DELETED] 旧改密接口，请使用 PUT /user/password。
+    // @PutMapping("/password/{password}")
+    // @Operation(summary = "用户密码更新")
+    // @Deprecated
+    // public Result<ResultStatus> updatePassword(@PathVariable String password) {
+    //     if (userService.updateUserPassword(password)) {
+    //         return Result.success();
+    //     } else {
+    //         return Result.fail();
+    //     }
+    // }
 
-        // TODO(login): 修改密码前先校验邮箱验证码
-        if (userService.updateUserPassword(password)) {
-            return Result.success();
-        } else {
-            return Result.fail();
-        }
-    }
-
-    /**
-     * [TO_BE_DELETED] 空实现，用户搜索后续交给 administration 模块。
-     */
-    @GetMapping("/users")
-    @Operation(summary = "用户搜索")
-    @Deprecated
-    public Result<ResultStatus> searchUser(String name) {
-        return Result.fail(ResultStatus.API_UN_IMPL);
-    }
+    // [TO_BE_DELETED] 空实现，用户搜索后续交给 administration 模块。
+    // @GetMapping("/users")
+    // @Operation(summary = "用户搜索")
+    // @Deprecated
+    // public Result<ResultStatus> searchUser(String name) {
+    //     return Result.fail(ResultStatus.API_UN_IMPL);
+    // }
 
     /**
      * 更新用户头像

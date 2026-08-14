@@ -32,9 +32,7 @@ public class PasswordLoginDTO {
     @Schema(description = "密码",example = "123456")
     String password;
 
-    /**
-     * 角色
-     */
-    @Schema(description = "'user'=用户，1=商家，'admin'=管理员",example = "0")
-    private String role;
+    // [TO_BE_DELETED] role 已废弃，登录角色从数据库读取。
+    // @Schema(description = "角色", example = "0")
+    // private String role;
 }

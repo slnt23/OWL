@@ -34,20 +34,20 @@ public class JwtTokenProvider {
         this.expireTime = expireTime;
     }
 
-    public String generateToken(Long userId, String userCode, String userEmail, String roleName) {
-        long now = System.currentTimeMillis();
-
-        return Jwts.builder()
-                .setSubject("login")
-                .claim(CLAIM_USER_ID, userId)
-                .claim(CLAIM_USER_CODE, userCode)
-                .claim(CLAIM_USER_EMAIL, userEmail)
-                .claim(CLAIM_ROLE, roleName)
-                .setIssuedAt(new Date(now))
-                .setExpiration(new Date(now + expireTime))
-                .signWith(key, SignatureAlgorithm.HS256)
-                .compact();
-    }
+    // [TO_BE_DELETED] 旧 token 生成逻辑，请使用带 tokenVersion 的重载。
+    // public String generateToken(Long userId, String userCode, String userEmail, String roleName) {
+    //     long now = System.currentTimeMillis();
+    //     return Jwts.builder()
+    //             .setSubject("login")
+    //             .claim(CLAIM_USER_ID, userId)
+    //             .claim(CLAIM_USER_CODE, userCode)
+    //             .claim(CLAIM_USER_EMAIL, userEmail)
+    //             .claim(CLAIM_ROLE, roleName)
+    //             .setIssuedAt(new Date(now))
+    //             .setExpiration(new Date(now + expireTime))
+    //             .signWith(key, SignatureAlgorithm.HS256)
+    //             .compact();
+    // }
 
     /**
      * [UPGRADE] token with jti and token version for revocation support.

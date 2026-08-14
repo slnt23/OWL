@@ -4,7 +4,7 @@ package xyz.nanian.owl.user.service;
 import org.springframework.web.multipart.MultipartFile;
 import xyz.nanian.owl.user.domain.dto.EmailBindDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordUpdateDTO;
-import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+// [TO_BE_DELETED] import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.dto.UserInfoUpdateDTO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 
@@ -18,17 +18,13 @@ import xyz.nanian.owl.user.domain.vo.UserInfoVO;
 public interface UserService {
 
 
-    /**
-     * [TO_BE_DELETED] 旧资料更新接口，请使用 updateUserInfo(UserInfoUpdateDTO)。
-     */
-    @Deprecated
-    Boolean updateUserInfo(UserInfoDTO userInfoDTO);
+    // [TO_BE_DELETED] 旧资料更新接口，请使用 updateUserInfo(UserInfoUpdateDTO)。
+    // @Deprecated
+    // Boolean updateUserInfo(UserInfoDTO userInfoDTO);
 
-    /**
-     * [TO_BE_DELETED] 旧改密接口，请使用 updateUserPassword(PasswordUpdateDTO)。
-     */
-    @Deprecated
-    Boolean updateUserPassword(String newPassword);
+    // [TO_BE_DELETED] 旧改密接口，请使用 updateUserPassword(PasswordUpdateDTO)。
+    // @Deprecated
+    // Boolean updateUserPassword(String newPassword);
 
     /**
      * 更新用户头像

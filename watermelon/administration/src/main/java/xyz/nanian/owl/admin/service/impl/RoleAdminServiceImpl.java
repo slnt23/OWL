@@ -1,6 +1,6 @@
 package xyz.nanian.owl.admin.service.impl;
 
-import xyz.nanian.owl.admin.domain.entity.RoleDO;
+import xyz.nanian.owl.api.domain.entity.RoleDO;
 import xyz.nanian.owl.admin.mapper.RoleAdminMapper;
 import xyz.nanian.owl.admin.service.RoleAdminService;
 import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;

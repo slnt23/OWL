@@ -2,7 +2,7 @@ package xyz.nanian.owl.user.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+// [TO_BE_DELETED] import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Mapper;
 import xyz.nanian.owl.user.domain.entity.UserDO;
 
@@ -17,10 +17,8 @@ import xyz.nanian.owl.user.domain.entity.UserDO;
 public interface UserMapper extends BaseMapper<UserDO> {
 
 
-    /**
-     * [TO_BE_DELETED] 空实现，用户搜索后续交给 administration 模块。
-     */
-    @Deprecated
-    IPage<UserDO> selectUserByName(String name);
+    // [TO_BE_DELETED] 空实现，用户搜索后续交给 administration 模块。
+    // @Deprecated
+    // IPage<UserDO> selectUserByName(String name);
 
 }

@@ -51,3 +51,10 @@
 - admin 模块当前处于半完成状态，部分功能待开发
 - admin 和 user 共享数据表，需要注意 admin 操作不影响 user 端逻辑
 - 后续需要为 admin 接口添加权限校验（当前未实现）
+
+## 2026-08-14 更新
+
+- `RoleDO`/`RoleMapper` 上移到 `api`，登录校验与后台角色管理共用同一模型；`PageDTO` 属于通用分页 DTO，继续留在 common。
+- 角色管理保留在 admin 模块（`RoleAdminController`/`RoleAdminService`），user 只保留登录时的角色查询。
+- `BizLogAdminController`、`LogAdminController`、`RoleAdminController`、`UserAdminController` 均保留并用 `[KEEP]` 注明用途，后续实现。
+- 已删除 user 侧角色空壳控制器/DTO/服务，以及 pitaya 旧地址实体/查询/VO 等整文件注释代码。

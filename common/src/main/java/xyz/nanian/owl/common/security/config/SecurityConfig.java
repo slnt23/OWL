@@ -57,11 +57,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 // [UPGRADE] public auth endpoints only; logout stays authenticated
                                 "/api/auth/send-code",
-                                "/api/auth/send-verification",
                                 "/api/auth/login-email",
-                                "/api/auth/login-email-v2",
                                 "/api/auth/login-password",
-                                "/api/auth/register",
                                 "/api/auth/password/reset",
                                 "/api/public",
                                 "/api/public/**",

@@ -22,11 +22,11 @@ import xyz.nanian.owl.common.utils.regex.RegexUtil;
 import xyz.nanian.owl.user.constant.UserConstant;
 import xyz.nanian.owl.user.domain.dto.EmailBindDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordUpdateDTO;
-import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
+// [TO_BE_DELETED] import xyz.nanian.owl.user.domain.dto.UserInfoDTO;
 import xyz.nanian.owl.user.domain.dto.UserInfoUpdateDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
-import xyz.nanian.owl.user.mapper.RoleMapper;
+import xyz.nanian.owl.api.mapper.RoleMapper;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
@@ -58,55 +58,46 @@ public class UserServiceImpl implements UserService {
     private final CodeCacheUtil codeCacheUtil;
     private final TokenRevocationService tokenRevocationService;
 
-    @Override
-    @Deprecated
-    @OperationLog(type = LogType.USER, module = "用户", action = "更新用户信息", persist = true)
-    public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
+    // [TO_BE_DELETED] 旧资料更新接口，请使用 updateUserInfo(UserInfoUpdateDTO)。
+    // @Override
+    // @Deprecated
+    // @OperationLog(type = LogType.USER, module = "用户", action = "更新用户信息", persist = true)
+    // public Boolean updateUserInfo(UserInfoDTO userInfoDTO) {
+    //     String userCode = CurrentUserContext.getUserCode();
+    //     LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
+    //     wrapper.eq(UserDO::getUserCode, userCode);
+    //     if (userInfoDTO.getUserName() != null) {
+    //         wrapper.set(UserDO::getUserName, userInfoDTO.getUserName());
+    //     }
+    //     if (userInfoDTO.getEmail() != null) {
+    //         wrapper.set(UserDO::getEmail, userInfoDTO.getEmail());
+    //     }
+    //     if (userInfoDTO.getPhone() != null) {
+    //         wrapper.set(UserDO::getPhone, userInfoDTO.getPhone());
+    //     }
+    //     if (userInfoDTO.getNickname() != null) {
+    //         wrapper.set(UserDO::getNickname, userInfoDTO.getNickname());
+    //     }
+    //     if (userInfoDTO.getRemark() != null) {
+    //         wrapper.set(UserDO::getRemark, userInfoDTO.getRemark());
+    //     }
+    //     int result = userMapper.update(null, wrapper);
+    //     return result > 0;
+    // }
 
-//        1. 获取用户信息，
-        String userCode = CurrentUserContext.getUserCode();
-
-//        2. 防止空值覆盖，
-        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(UserDO::getUserCode, userCode);
-
-        // 只更新非 null 字段，注意字段对应关系
-        if (userInfoDTO.getUserName() != null) {
-            wrapper.set(UserDO::getUserName, userInfoDTO.getUserName());
-        }
-        if (userInfoDTO.getEmail() != null) {
-            wrapper.set(UserDO::getEmail, userInfoDTO.getEmail());
-        }
-        if (userInfoDTO.getPhone() != null) {
-            wrapper.set(UserDO::getPhone, userInfoDTO.getPhone());
-        }
-        if (userInfoDTO.getNickname() != null) {
-            wrapper.set(UserDO::getNickname, userInfoDTO.getNickname());  // 对应数据库 nickname
-        }
-        if (userInfoDTO.getRemark() != null) {
-            wrapper.set(UserDO::getRemark, userInfoDTO.getRemark());
-        }
-
-        int result = userMapper.update(null, wrapper);
-        return result > 0;
-    }
-
-    @Override
-    @Deprecated
-    @OperationLog(type = LogType.USER, module = "用户", action = "更新用户密码", persist = true)
-    public Boolean updateUserPassword(String newPassword) {
-
-        String userCode = CurrentUserContext.getUserCode();
-        String encryptedPassword = passwordEncoder.encode(newPassword);
-
-        LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(UserDO::getUserCode, userCode)
-                .set(UserDO::getPassword, encryptedPassword);
-
-        int result = userMapper.update(null, wrapper);
-
-        return result == 1;
-    }
+    // [TO_BE_DELETED] 旧改密接口，请使用 updateUserPassword(PasswordUpdateDTO)。
+    // @Override
+    // @Deprecated
+    // @OperationLog(type = LogType.USER, module = "用户", action = "更新用户密码", persist = true)
+    // public Boolean updateUserPassword(String newPassword) {
+    //     String userCode = CurrentUserContext.getUserCode();
+    //     String encryptedPassword = passwordEncoder.encode(newPassword);
+    //     LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
+    //     wrapper.eq(UserDO::getUserCode, userCode)
+    //             .set(UserDO::getPassword, encryptedPassword);
+    //     int result = userMapper.update(null, wrapper);
+    //     return result == 1;
+    // }
 
     /**
      * [UPGRADE] 更新用户资料，仅允许 userName/nickname/phone/remark。
@@ -266,7 +257,7 @@ public class UserServiceImpl implements UserService {
         String roleName = roleMapper.selectById(role) == null ? null : roleMapper.selectById(role).getRoleName();
         UserInfoVO userInfoVO = userConvert.UserDOToUserVO(userDO);
         userInfoVO.setRole(roleName);
-        userInfoVO.setRawPhone(userDO.getPhone());
+        // [TO_BE_DELETED] rawPhone 字段废弃，不再回填
 
         String avatarUrl = userDO.getAvatarUrl();
         String avatarResultUrl = fileStorageService.getUrl(MinioConstant.BUCKET_AVATARS, avatarUrl, MinioConstant.EXPIRY_MAX_TIME);

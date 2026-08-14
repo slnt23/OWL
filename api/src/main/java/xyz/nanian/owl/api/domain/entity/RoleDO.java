@@ -1,7 +1,5 @@
-package xyz.nanian.owl.user.domain.entity;
+package xyz.nanian.owl.api.domain.entity;
 
-
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -12,14 +10,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
-/**
- * 角色DO
- * 目前：0=用户，1=商家，2=管理员 ;后续可以添加其他的角色：VIP等
- *
- * @author slnt23
- * @since 2025/11/12
- */
+import java.time.LocalDateTime;
 
+/**
+ * 共享角色实体，登录校验与后台角色管理共用。
+ */
 @Getter
 @Setter
 @ToString
@@ -32,33 +27,19 @@ public class RoleDO implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 角色名称
-     */
     @TableField("role_name")
     @Schema(name = "角色名称")
     private String roleName;
 
-    /**
-     * 描述
-     */
-    @Schema(name = "描述")
     @TableField("description")
+    @Schema(name = "描述")
     private String description;
 
-    /**
-     * 是否启用
-     */
     @TableField("enabled")
     @Schema(name = "是否启用")
     private Boolean enabled;
 
-    /**
-     * 创建时间
-     */
-    @Schema(name = "创建时间")
     @TableField("create_time")
+    @Schema(name = "创建时间")
     private LocalDateTime createTime;
 }
-
-

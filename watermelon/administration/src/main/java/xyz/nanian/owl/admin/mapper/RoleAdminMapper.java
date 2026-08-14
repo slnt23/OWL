@@ -2,7 +2,7 @@ package xyz.nanian.owl.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import xyz.nanian.owl.admin.domain.entity.RoleDO;
+import xyz.nanian.owl.api.domain.entity.RoleDO;
 
 /**
  * <p>

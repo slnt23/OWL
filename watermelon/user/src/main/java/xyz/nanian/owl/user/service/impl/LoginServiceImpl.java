@@ -14,10 +14,10 @@ import xyz.nanian.owl.common.security.LoginFailureException;
 import xyz.nanian.owl.common.security.TokenRevocationService;
 import xyz.nanian.owl.common.mail.MailService;
 import xyz.nanian.owl.common.utils.regex.RegexUtil;
-import xyz.nanian.owl.user.domain.entity.RoleDO;
-import xyz.nanian.owl.user.mapper.RoleMapper;
+import xyz.nanian.owl.api.domain.entity.RoleDO;
+import xyz.nanian.owl.api.mapper.RoleMapper;
 import xyz.nanian.owl.common.result.Result;
-import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
+// [TO_BE_DELETED] import xyz.nanian.owl.user.domain.dto.EmailLoginOrRegisterDTO;
 import xyz.nanian.owl.user.domain.dto.EmailLoginDTO;
 import xyz.nanian.owl.user.domain.dto.PasswordLoginDTO;
 import xyz.nanian.owl.user.domain.dto.ResetPasswordDTO;
@@ -115,29 +115,25 @@ public class LoginServiceImpl implements LoginService {
         return Result.success();
     }
 
-    /**
-     * [TO_BE_DELETED] 旧注册接口，已由邮箱登录自动注册取代。
-     */
-    @Override
-    @Deprecated
-    public String saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
-        EmailLoginDTO emailLoginDTO = new EmailLoginDTO();
-        emailLoginDTO.setEmail(emailLoginOrRegisterDTO.getEmail());
-        emailLoginDTO.setCode(emailLoginOrRegisterDTO.getCode());
-        return login(emailLoginDTO);
-    }
+    // [TO_BE_DELETED] 旧注册接口，已由邮箱登录自动注册取代。
+    // @Override
+    // @Deprecated
+    // public String saveUser(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
+    //     EmailLoginDTO emailLoginDTO = new EmailLoginDTO();
+    //     emailLoginDTO.setEmail(emailLoginOrRegisterDTO.getEmail());
+    //     emailLoginDTO.setCode(emailLoginOrRegisterDTO.getCode());
+    //     return login(emailLoginDTO);
+    // }
 
-    /**
-     * [TO_BE_DELETED] 旧邮箱验证码登录，已升级为 login(EmailLoginDTO)。
-     */
-    @Override
-    @Deprecated
-    public String login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
-        EmailLoginDTO emailLoginDTO = new EmailLoginDTO();
-        emailLoginDTO.setEmail(emailLoginOrRegisterDTO.getEmail());
-        emailLoginDTO.setCode(emailLoginOrRegisterDTO.getCode());
-        return login(emailLoginDTO);
-    }
+    // [TO_BE_DELETED] 旧邮箱验证码登录，已升级为 login(EmailLoginDTO)。
+    // @Override
+    // @Deprecated
+    // public String login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO) {
+    //     EmailLoginDTO emailLoginDTO = new EmailLoginDTO();
+    //     emailLoginDTO.setEmail(emailLoginOrRegisterDTO.getEmail());
+    //     emailLoginDTO.setCode(emailLoginOrRegisterDTO.getCode());
+    //     return login(emailLoginDTO);
+    // }
 
     /**
      * [UPGRADE] 密码登录，role 从数据库读取，补齐账号状态与角色启用校验。
@@ -223,23 +219,17 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
-    /**
-     * [TO_BE_DELETED] 旧 token 生成逻辑，仅保留给旧代码审查。
-     */
-    @Deprecated
-    private String getToken(String email) {
-
-        LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(UserDO::getEmail, email);
-
-        UserDO userDO = userMapper.selectOne(wrapper);
-
-        String userCode = userDO.getUserCode();
-        Long userId = userDO.getId();
-
-        RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
-        return jwtTokenProvider.generateToken(userId, userCode, email, roleDO.getRoleName());
-    }
+    // [TO_BE_DELETED] 旧 token 生成逻辑，仅保留给旧代码审查。
+    // @Deprecated
+    // private String getToken(String email) {
+    //     LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
+    //     wrapper.eq(UserDO::getEmail, email);
+    //     UserDO userDO = userMapper.selectOne(wrapper);
+    //     String userCode = userDO.getUserCode();
+    //     Long userId = userDO.getId();
+    //     RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
+    //     return jwtTokenProvider.generateToken(userId, userCode, email, roleDO.getRoleName());
+    // }
 
     /**
      * [UPGRADE] 使用 jti 和 tokenVersion 生成 token。
@@ -301,58 +291,34 @@ public class LoginServiceImpl implements LoginService {
         return String.valueOf(code);
     }
 
-    /**
-     * 检验验证码是否正确，
-     *
-     * @param email
-     * @param code
-     * @return
-     */
-    private Boolean verificationCode(String email, String code) {
-//        1.根据获取的邮箱地址，以及邮箱KEY 获取redis中的code，
-        String key = LoginConstant.VERIFICATION_CODE_PREFIX + email;
+    // [TO_BE_DELETED] 旧验证码校验逻辑，已迁移到 CodeCacheUtil。
+    // private Boolean verificationCode(String email, String code) {
+    //     String key = LoginConstant.VERIFICATION_CODE_PREFIX + email;
+    //     String verificationCode = stringRedisTemplate.opsForValue().get(key);
+    //     if (!Objects.equals(verificationCode, code)) {
+    //         return false;
+    //     }
+    //     stringRedisTemplate.delete(key);
+    //     return true;
+    // }
 
-        String verificationCode = stringRedisTemplate
-                .opsForValue()
-                .get(key);
-
-//        2. 比对code，
-        if (!Objects.equals(verificationCode, code)) {
-            return false;
-        }
-//        3. 删除验证码，防止成为短期密码，无限使用，
-        stringRedisTemplate.delete(key);
-        return true;
-    }
-
-    /**
-     * 生成默认用户信息，并保存
-     *
-     * @param email
-     * @return
-     */
-    private Boolean saveUserInfo(String email) {
-
-//        2. 生成用户信息并注入默认值，
-        UserDO userDO = new UserDO();
-        String uuid = UUID.randomUUID().toString();
-        LocalDateTime now = LocalDateTime.now();
-
-        userDO.setUserCode(uuid);
-        userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
-//        3. 这里默认密码为空，当登陆时检测密码为空则不可进行密码登录，只能够验证码登录，只有用户更改密码后，才可以用密码登陆，
-        userDO.setPassword(null);
-        userDO.setEmail(email);
-        userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
-//        默认分配 user 角色，角色变更由后端管理，不允许前端传 role
-        userDO.setRoleId(UserConstant.DEFAULT_ROLE);
-        userDO.setStatus(UserConstant.DEFAULT_STATUS);
-        userDO.setNickname(UserConstant.DEFAULT_NICK_NAME);
-        userDO.setRemark(UserConstant.DEFAULT_REMARK);
-        userDO.setCreateTime(now);
-
-        userMapper.insert(userDO);
-        return true;
-    }
+    // [TO_BE_DELETED] 旧建号逻辑，已由 createUser 取代。
+    // private Boolean saveUserInfo(String email) {
+    //     UserDO userDO = new UserDO();
+    //     String uuid = UUID.randomUUID().toString();
+    //     LocalDateTime now = LocalDateTime.now();
+    //     userDO.setUserCode(uuid);
+    //     userDO.setUserName(UserConstant.DEFAULT_USER_NAME + uuid);
+    //     userDO.setPassword(null);
+    //     userDO.setEmail(email);
+    //     userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
+    //     userDO.setRoleId(UserConstant.DEFAULT_ROLE);
+    //     userDO.setStatus(UserConstant.DEFAULT_STATUS);
+    //     userDO.setNickname(UserConstant.DEFAULT_NICK_NAME);
+    //     userDO.setRemark(UserConstant.DEFAULT_REMARK);
+    //     userDO.setCreateTime(now);
+    //     userMapper.insert(userDO);
+    //     return true;
+    // }
 
 }

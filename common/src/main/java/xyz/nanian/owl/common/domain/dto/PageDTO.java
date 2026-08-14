@@ -1,4 +1,4 @@
-package xyz.nanian.owl.common.dto;
+package xyz.nanian.owl.common.domain.dto;
 
 
 import lombok.Getter;
@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class PageDTO {
 
-    private Integer pageNum=1;
+    private Integer pageNum = 1;
 
-    private Integer pageSize=10;
+    private Integer pageSize = 10;
 }

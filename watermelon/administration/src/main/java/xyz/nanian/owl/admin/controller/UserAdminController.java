@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * [KEEP] 后台用户管理，保留用于用户分页/搜索/封禁/角色变更/重置密码，后续实现。
  * <p>
  * 用户表 前端控制器
  * </p>

@@ -29,12 +29,10 @@ public class UserInfoVO {
     @Schema(description = "昵称",example = "小明")
     private String nickname;
 
-    /**
-     * [TO_BE_DELETED] 旧字段，使用 nickname。
-     */
-    @Deprecated
-    @Schema(description = "昵称-旧字段", example = "小明")
-    private String nickName;
+    // [TO_BE_DELETED] 旧字段，使用 nickname。
+    // @Deprecated
+    // @Schema(description = "昵称-旧字段", example = "小明")
+    // private String nickName;
 
     @Schema(description= "邮箱",example = "qq.com")
     private String email;
@@ -45,12 +43,10 @@ public class UserInfoVO {
     @Schema(description= "备注",example = "备注")
     private String remark;
 
-    /**
-     * [TO_BE_DELETED] 冗余字段。
-     */
-    @Deprecated
-    @Schema(description = "原手机号-冗余字段", example = "119")
-    private String rawPhone;
+    // [TO_BE_DELETED] 冗余字段。
+    // @Deprecated
+    // @Schema(description = "原手机号-冗余字段", example = "119")
+    // private String rawPhone;
 
     @Schema(description = "角色",example = "user")
     private String role;

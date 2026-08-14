@@ -15,10 +15,8 @@ public class UserConstant {
      */
     public static final String DEFAULT_USER_NAME = "User";
 
-    /**
-     * 默认为空，当前字段废弃，只有用户更改密码后才可以用密码登陆
-     */
-    public static final String DEFAULT_PASSWORD = "123456";
+    // [TO_BE_DELETED] 默认密码已废弃，只有用户更改密码后才可以用密码登陆。
+    // public static final String DEFAULT_PASSWORD = "123456";
 
     /**
      * 新用户默认头像URL
