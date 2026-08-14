@@ -1,11 +1,8 @@
 package xyz.nanian.owl.common.config;
 
 
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -18,14 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
-    /**
-     * [UPGRADE] 所有 RestController 统一挂到 /api 前缀下，静态资源和文档路径不受影响。
-     */
-    @Override
-    public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix("/api", HandlerTypePredicate.forAnnotation(RestController.class));
-    }
 
     /**
      * 解决跨域问题，

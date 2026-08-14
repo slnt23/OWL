@@ -21,7 +21,7 @@ import xyz.nanian.owl.common.result.Result;
 
 @RestController
 @Tag(name = "消费者订单管理",description = "order")
-@RequestMapping("/pitaya/order/consumer")
+@RequestMapping("/api/pitaya/order/consumer")
 public class ConOrderController{
 
     private ConOrderService conOrderService;

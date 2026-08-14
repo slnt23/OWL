@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2026-04-24 17:13:37
  */
 @RestController
-@RequestMapping("/admin/feature")
+@RequestMapping("/api/admin/feature")
 @RequiredArgsConstructor
 @Tag(name = "前台特性管理")
 public class FeatureController {

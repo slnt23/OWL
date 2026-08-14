@@ -29,7 +29,7 @@ import java.util.List;
  * @since 2026-04-12 20:43:32
  */
 @RestController
-@RequestMapping("/price")
+@RequestMapping("/api/price")
 @Tag(name = "Record查询")
 @RequiredArgsConstructor
 public class RecordController {

@@ -27,7 +27,7 @@ import xyz.nanian.owl.common.security.CurrentUserContext;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @Tag(name = "用户管理", description = "有关用户个人的一系列controller")
 public class UserController {
 

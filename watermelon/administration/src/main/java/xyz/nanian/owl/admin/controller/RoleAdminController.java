@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2026-04-13 23:53:18
  */
 @RestController
-@RequestMapping("/admin/role-do")
+@RequestMapping("/api/admin/role-do")
 public class RoleAdminController {
     /**
      * 新增用户角色，

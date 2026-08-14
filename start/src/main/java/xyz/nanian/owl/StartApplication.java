@@ -1,4 +1,4 @@
-package xyz.nanian.owl.start;
+package xyz.nanian.owl;
 
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;

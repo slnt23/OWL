@@ -19,7 +19,7 @@ import xyz.nanian.owl.sugarcane.service.ItemService;
  * @since 2026-04-12 20:43:32
  */
 @RestController
-@RequestMapping("/item")
+@RequestMapping("/api/item")
 @Tag(name = "Item物品")
 @RequiredArgsConstructor
 public class ItemController {

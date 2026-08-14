@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2026-04-13 23:53:18
  */
 @RestController
-@RequestMapping("/admin/biz-log")
+@RequestMapping("/api/admin/biz-log")
 public class BizLogAdminController {
 
 }

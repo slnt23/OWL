@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2026-04-24 17:35:00
  */
 @RestController
-@RequestMapping("/price-item-media-do")
+@RequestMapping("/api/price-item-media-do")
 @Tag(name = "Item媒体资源")
 public class PriceItemMediaController {
 

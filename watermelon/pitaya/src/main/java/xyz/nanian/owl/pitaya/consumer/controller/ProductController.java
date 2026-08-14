@@ -25,7 +25,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/pitaya/product/consumer")
+@RequestMapping("/api/pitaya/product/consumer")
 @Tag(name = "消费者商品管理",description = "有关商品的的接口")
 public class ProductController{
 

@@ -18,7 +18,7 @@
 1. `init.sql`
 2. `user/user_db.sql`
 3. `log/log_db.sql`
-4. `admin/admin_db.sql`
+4. `admin/front_db.sql`
 5. `crow/crow_db.sql`
 6. `sugarcane/sugarcane_db.sql`
 

@@ -117,7 +117,7 @@ public class GlobalExceptionHandler {
     public Result<?> handleMethodNotSupported(HttpRequestMethodNotSupportedException e) {
 
         log.warn("请求不支持：{}",e.getMessage(),e);
-        return Result.fail(ResultStatus.API_UN_IMPL);
+        return Result.fail(ResultStatus.METHOD_NOT_ALLOWED);
     }
 
     /**

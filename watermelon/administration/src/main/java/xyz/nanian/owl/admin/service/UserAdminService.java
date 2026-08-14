@@ -1,7 +1,12 @@
 package xyz.nanian.owl.admin.service;
 
-import xyz.nanian.owl.admin.domain.entity.UserDO;
 import com.baomidou.mybatisplus.spring.service.IService;
+import xyz.nanian.owl.admin.domain.dto.UserCreateDTO;
+import xyz.nanian.owl.admin.domain.dto.UserPasswordResetDTO;
+import xyz.nanian.owl.admin.domain.dto.UserUpdateDTO;
+import xyz.nanian.owl.admin.domain.entity.UserDO;
+import xyz.nanian.owl.admin.domain.vo.AdminUserVO;
+import xyz.nanian.owl.common.result.ResultPage;
 
 /**
  * <p>
@@ -13,4 +18,19 @@ import com.baomidou.mybatisplus.spring.service.IService;
  */
 public interface UserAdminService extends IService<UserDO> {
 
+    ResultPage<AdminUserVO> page(long pageNum, long pageSize, String keyword, Byte status, Long roleId);
+
+    AdminUserVO getById(Long id);
+
+    Long create(UserCreateDTO createDTO);
+
+    Boolean update(Long id, UserUpdateDTO updateDTO);
+
+    Boolean deleteById(Long id);
+
+    Boolean updateStatus(Long id, Byte status);
+
+    Boolean updateRole(Long id, Long roleId);
+
+    Boolean resetPassword(Long id, UserPasswordResetDTO resetDTO);
 }

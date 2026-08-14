@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  * @since 2026-04-12 20:43:32
  */
 @RestController
-@RequestMapping("/source")
+@RequestMapping("/api/source")
 @Tag(name = "Source来源")
 public class SourceController {
 

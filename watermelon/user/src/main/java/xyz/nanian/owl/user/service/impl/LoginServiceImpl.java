@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,8 @@ import xyz.nanian.owl.user.utils.CodeCacheUtil;
 import xyz.nanian.owl.user.utils.PasswordPolicy;
 
 import java.time.LocalDateTime;
+import java.security.SecureRandom;
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -49,6 +50,8 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
+
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 
     final MailService mailService;
     final UserMapper userMapper;
@@ -167,7 +170,7 @@ public class LoginServiceImpl implements LoginService {
 
         UserDO userDO = findByEmail(emailLoginDTO.getEmail());
         if (Objects.isNull(userDO)) {
-            userDO = createUser(emailLoginDTO.getEmail());
+            userDO = createOrGetUser(emailLoginDTO.getEmail());
         }
         if (!Objects.equals(userDO.getStatus(), UserConstant.DEFAULT_STATUS)) {
             throw new LoginFailureException(ResultStatus.ACCOUNT_DISABLED);
@@ -278,6 +281,22 @@ public class LoginServiceImpl implements LoginService {
         return userDO;
     }
 
+    /**
+     * 并发首次注册时，数据库唯一索引只会允许一个请求插入成功，
+     * 另一个请求回查已有用户后继续登录。
+     */
+    private UserDO createOrGetUser(String email) {
+        try {
+            return createUser(email);
+        } catch (DuplicateKeyException e) {
+            UserDO existing = findByEmail(email);
+            if (existing == null) {
+                throw e;
+            }
+            return existing;
+        }
+    }
+
     private void verifyEmailCode(String email, String code) {
         codeCacheUtil.verifyOrThrow(email, code);
     }
@@ -286,8 +305,7 @@ public class LoginServiceImpl implements LoginService {
      * 生成6位数字验证码
      */
     private String generateVerificationCode() {
-        Random random = new Random();
-        int code = 100000 + random.nextInt(900000);
+        int code = 100000 + SECURE_RANDOM.nextInt(900000);
         return String.valueOf(code);
     }
 

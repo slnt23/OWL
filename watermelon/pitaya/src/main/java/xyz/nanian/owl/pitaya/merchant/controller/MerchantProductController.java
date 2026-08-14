@@ -18,7 +18,7 @@ import xyz.nanian.owl.common.result.ResultStatus;
  */
 
 @RestController
-@RequestMapping("/pitaya/product/merchant")
+@RequestMapping("/api/pitaya/product/merchant")
 @Tag(name = "商家商品管理",description = "商家商品")
 public class MerchantProductController {
 

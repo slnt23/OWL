@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2026-04-24 17:13:37
  */
 @RestController
-@RequestMapping("/admin/spotlight")
+@RequestMapping("/api/admin/spotlight")
 @RequiredArgsConstructor
 @Tag(name= "焦点项目管理")
 public class SpotlightController {

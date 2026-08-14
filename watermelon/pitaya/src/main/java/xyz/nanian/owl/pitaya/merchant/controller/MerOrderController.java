@@ -19,7 +19,7 @@ import xyz.nanian.owl.common.result.Result;
 
 @RestController
 @Tag(name ="商家订单管理",description = "商家订单")
-@RequestMapping("/pitaya/order/merchant")
+@RequestMapping("/api/pitaya/order/merchant")
 public class MerOrderController {
 
     private MerOrderService merOrderService;

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2026-04-12 20:43:32
  */
 @RestController
-@RequestMapping("/location")
+@RequestMapping("/api/location")
 @Tag(name = "地区管理")
 public class GeolocationController {
 }

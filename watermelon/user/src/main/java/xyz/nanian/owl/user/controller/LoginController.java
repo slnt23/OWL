@@ -24,8 +24,8 @@ import xyz.nanian.owl.user.service.LoginService;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth")
-@Tag(name = "登陆管理",description = "有关登陆，注册的")
+@RequestMapping("/api/auth")
+@Tag(name = "登陆管理",description = "有关登陆，注册")
 public class LoginController {
 
     LoginService loginService;
@@ -62,7 +62,7 @@ public class LoginController {
      * [UPGRADE] 邮箱验证码登录；未注册邮箱自动创建账号，role 入参已移除。
      */
     @PostMapping("/login-email")
-    @Operation(summary = "登陆-验证码-升级",description = "邮箱验证码登录自动注册")
+    @Operation(summary = "登陆注册-验证码",description = "邮箱验证码登录自动注册")
     public Result<String> loginVerifyEmail(@RequestBody @Validated EmailLoginDTO user) {
         return Result.success(loginService.login(user));
     }
@@ -80,7 +80,7 @@ public class LoginController {
      * [UPGRADE] 新验证码发送接口。
      */
     @PostMapping("/send-code")
-    @Operation(summary = "验证码发送-新",description = "新验证码发送接口")
+    @Operation(summary = "验证码发送",description = "验证码发送接口")
     public Result<String> sendCode(@RequestBody @Validated SendCodeDTO codeDTO) {
         return loginService.sendVerificationCode(codeDTO);
     }

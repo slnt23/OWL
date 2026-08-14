@@ -20,7 +20,7 @@ import xyz.nanian.owl.common.result.Result;
  */
 
 @RestController
-@RequestMapping("/pitaya/cart/consumer")
+@RequestMapping("/api/pitaya/cart/consumer")
 @Tag(name = "消费者购物车管理",description = "购物车相关")
 @RequiredArgsConstructor
 public class ConCartController {

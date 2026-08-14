@@ -4,6 +4,7 @@ package xyz.nanian.owl.user.domain.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -21,6 +22,7 @@ public class SendCodeDTO {
 
     @NotNull
     @Email
+    @Size(max = 50, message = "邮箱长度不能超过50")
     @Schema(description = "邮件地址",example = "1693676136@qq.com")
     public String email;
 }

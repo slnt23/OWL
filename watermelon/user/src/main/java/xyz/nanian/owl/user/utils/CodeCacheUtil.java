@@ -2,11 +2,13 @@ package xyz.nanian.owl.user.utils;
 
 
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Component;
 import xyz.nanian.owl.common.result.ResultStatus;
 import xyz.nanian.owl.common.security.LoginFailureException;
 import xyz.nanian.owl.user.constant.LoginConstant;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +23,12 @@ import java.util.concurrent.TimeUnit;
 public class CodeCacheUtil {
 
     private final StringRedisTemplate stringRedisTemplate;
+
+    private static final DefaultRedisScript<Long> VERIFY_AND_CONSUME_SCRIPT = new DefaultRedisScript<>(
+            "if redis.call('get', KEYS[1]) == ARGV[1] "
+                    + "then redis.call('del', KEYS[1]) return 1 "
+                    + "else return 0 end",
+            Long.class);
 
     public CodeCacheUtil(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
@@ -42,12 +50,11 @@ public class CodeCacheUtil {
      */
     public boolean verifyAndConsume(String email, String code) {
         String key = LoginConstant.VERIFICATION_CODE_PREFIX + email;
-        String saved = stringRedisTemplate.opsForValue().get(key);
-        if (!Objects.equals(saved, code)) {
-            return false;
-        }
-        stringRedisTemplate.delete(key);
-        return true;
+        Long result = stringRedisTemplate.execute(
+                VERIFY_AND_CONSUME_SCRIPT,
+                Collections.singletonList(key),
+                code);
+        return Long.valueOf(1L).equals(result);
     }
 
     /**

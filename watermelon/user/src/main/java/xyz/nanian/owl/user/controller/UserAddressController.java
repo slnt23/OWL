@@ -19,7 +19,7 @@ import java.util.List;
  * [TO_BE_DELETED] 旧映射 /user-address-do 已废弃。
  */
 @RestController
-@RequestMapping("/user/addresses")
+@RequestMapping("/api/user/addresses")
 @RequiredArgsConstructor
 @Tag(name = "用户地址管理", description = "收货地址 CRUD 与默认地址")
 public class UserAddressController {
