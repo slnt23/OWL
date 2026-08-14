@@ -86,11 +86,11 @@ public class UserDO implements Serializable {
     private String nickname;
 
     /**
-     * 角色：0=用户，1=商家，2=管理员
+     * 角色名称，对应 role 表的 role_name
      */
-    @TableField("role_id")
-    @Schema(name = "角色ID")
-    private Long roleId;
+    @TableField("role_name")
+    @Schema(name = "角色名称")
+    private String roleName;
 
     /**
      * 状态：0=正常，1=封禁

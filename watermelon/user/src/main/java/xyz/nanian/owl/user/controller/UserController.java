@@ -104,7 +104,7 @@ public class UserController {
      * [UPGRADE] 更新用户资料，仅允许 userName/nickname/phone/remark。
      */
     @PutMapping("/info")
-    @Operation(summary = "用户资料更新-升级")
+    @Operation(summary = "用户资料更新")
     public Result<ResultStatus> updateUserInfo(@RequestBody @Validated UserInfoUpdateDTO userInfoUpdateDTO) {
         if (userService.updateUserInfo(userInfoUpdateDTO)) {
             return Result.success();
@@ -116,7 +116,7 @@ public class UserController {
      * [UPGRADE] 换绑邮箱。
      */
     @PutMapping("/email")
-    @Operation(summary = "换绑邮箱-升级")
+    @Operation(summary = "换绑邮箱")
     public Result<ResultStatus> updateEmail(@RequestBody @Validated EmailBindDTO emailBindDTO) {
         if (userService.updateUserEmail(emailBindDTO)) {
             return Result.success();
@@ -128,7 +128,7 @@ public class UserController {
      * [UPGRADE] 登录后修改密码。
      */
     @PutMapping("/password")
-    @Operation(summary = "修改密码-升级")
+    @Operation(summary = "修改密码")
     public Result<ResultStatus> updatePassword(@RequestBody @Validated PasswordUpdateDTO passwordUpdateDTO) {
         if (userService.updateUserPassword(passwordUpdateDTO)) {
             return Result.success();

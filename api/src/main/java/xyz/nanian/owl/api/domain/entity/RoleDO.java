@@ -42,4 +42,8 @@ public class RoleDO implements Serializable {
     @TableField("create_time")
     @Schema(name = "创建时间")
     private LocalDateTime createTime;
+
+    @TableField("update_time")
+    @Schema(name = "更新时间")
+    private LocalDateTime updateTime;
 }

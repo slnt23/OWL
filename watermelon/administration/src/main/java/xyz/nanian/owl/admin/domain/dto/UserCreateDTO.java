@@ -4,7 +4,6 @@ package xyz.nanian.owl.admin.domain.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -36,8 +35,9 @@ public class UserCreateDTO {
     @Size(max = 50, message = "昵称长度不能超过50")
     private String nickname;
 
-    @NotNull(message = "角色不能为空")
-    private Long roleId;
+    @NotBlank(message = "角色名称不能为空")
+    @Size(max = 100, message = "角色名称长度不能超过100")
+    private String roleName;
 
     @Schema(description = "状态：0=正常，1=封禁")
     private Byte status;

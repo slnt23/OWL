@@ -26,7 +26,6 @@ import xyz.nanian.owl.user.domain.dto.PasswordUpdateDTO;
 import xyz.nanian.owl.user.domain.dto.UserInfoUpdateDTO;
 import xyz.nanian.owl.user.domain.entity.UserDO;
 import xyz.nanian.owl.user.domain.vo.UserInfoVO;
-import xyz.nanian.owl.api.mapper.RoleMapper;
 import xyz.nanian.owl.user.mapper.UserMapper;
 import xyz.nanian.owl.user.mapstruct.UserConvert;
 import xyz.nanian.owl.user.service.UserService;
@@ -54,7 +53,6 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserConvert userConvert;
     private final FileStorageService fileStorageService;
-    private final RoleMapper roleMapper;
     private final CodeCacheUtil codeCacheUtil;
     private final TokenRevocationService tokenRevocationService;
 
@@ -253,8 +251,7 @@ public class UserServiceImpl implements UserService {
         if (!Objects.equals(userDO.getStatus(), UserConstant.DEFAULT_STATUS)) {
             throw new LoginFailureException(ResultStatus.ACCOUNT_DISABLED);
         }
-        Long role = userDO.getRoleId();
-        String roleName = roleMapper.selectById(role) == null ? null : roleMapper.selectById(role).getRoleName();
+        String roleName = userDO.getRoleName();
         UserInfoVO userInfoVO = userConvert.UserDOToUserVO(userDO);
         userInfoVO.setRole(roleName);
         // [TO_BE_DELETED] rawPhone 字段废弃，不再回填

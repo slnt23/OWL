@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import xyz.nanian.owl.common.result.ResultStatus;
 import xyz.nanian.owl.common.security.LoginFailureException;
 import xyz.nanian.owl.common.security.TokenRevocationService;
+import xyz.nanian.owl.common.mail.MailMessage;
 import xyz.nanian.owl.common.mail.MailService;
 import xyz.nanian.owl.common.utils.regex.RegexUtil;
 import xyz.nanian.owl.api.domain.entity.RoleDO;
@@ -92,7 +93,7 @@ public class LoginServiceImpl implements LoginService {
                 
                 您好！
                 
-                您的验证码为：**%s**
+                您的验证码为：[ %s ]
                 
                 该验证码有效期为 %d 分钟，请在有效时间内使用。
                 为保障您的账户安全，请勿将验证码泄露给他人。
@@ -104,7 +105,12 @@ public class LoginServiceImpl implements LoginService {
                 [Energy] 团队
                 """, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES);
         // 4. 发送邮件
-        mailService.send(emailAddress, subject, body);
+        mailService.send(MailMessage.builder()
+                .to(emailAddress)
+                .subject(subject)
+                .body(body)
+                .senderName("OWL 团队")
+                .build());
 
         // 5. 保存验证码到Redis
         String redisKey = LoginConstant.VERIFICATION_CODE_PREFIX + emailAddress;
@@ -230,12 +236,16 @@ public class LoginServiceImpl implements LoginService {
     //     UserDO userDO = userMapper.selectOne(wrapper);
     //     String userCode = userDO.getUserCode();
     //     Long userId = userDO.getId();
-    //     RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
+    //     RoleDO roleDO = roleMapper.selectOne(Wrappers.<RoleDO>lambdaQuery().eq(RoleDO::getRoleName, userDO.getRoleName()));
     //     return jwtTokenProvider.generateToken(userId, userCode, email, roleDO.getRoleName());
     // }
 
     /**
-     * [UPGRADE] 使用 jti 和 tokenVersion 生成 token。
+     * 使用 jti 和当前 tokenVersion 生成 JWT。
+     *
+     * @param userDO 用户实体
+     * @param roleDO 已启用的角色
+     * @return JWT token
      */
     private String getToken(UserDO userDO, RoleDO roleDO) {
         long tokenVersion = tokenRevocationService.getTokenVersion(userDO.getId());
@@ -247,14 +257,44 @@ public class LoginServiceImpl implements LoginService {
                 tokenVersion);
     }
 
+    /**
+     * 按邮箱查询用户。
+     *
+     * @param email 邮箱
+     * @return 用户实体，不存在返回 null
+     */
     private UserDO findByEmail(String email) {
         LambdaQueryWrapper<UserDO> wrapper = Wrappers.lambdaQuery();
         wrapper.eq(UserDO::getEmail, email);
         return userMapper.selectOne(wrapper);
     }
 
+    /**
+     * 按用户角色名称加载已启用的角色。
+     *
+     * @param userDO 用户实体
+     * @return 启用的角色
+     */
     private RoleDO loadEnabledRole(UserDO userDO) {
-        RoleDO roleDO = roleMapper.selectById(userDO.getRoleId());
+        if (userDO.getRoleName() == null || userDO.getRoleName().isBlank()) {
+            throw new LoginFailureException(ResultStatus.ROLE_FAILED);
+        }
+        RoleDO roleDO = roleMapper.selectOne(
+                Wrappers.<RoleDO>lambdaQuery().eq(RoleDO::getRoleName, userDO.getRoleName()));
+        if (roleDO == null || !Boolean.TRUE.equals(roleDO.getEnabled())) {
+            throw new LoginFailureException(ResultStatus.ROLE_FAILED);
+        }
+        return roleDO;
+    }
+
+    /**
+     * 加载注册默认角色 USER，不存在或未启用时抛出登录异常。
+     *
+     * @return 默认角色
+     */
+    private RoleDO loadDefaultRole() {
+        RoleDO roleDO = roleMapper.selectOne(
+                Wrappers.<RoleDO>lambdaQuery().eq(RoleDO::getRoleName, UserConstant.DEFAULT_ROLE_NAME));
         if (roleDO == null || !Boolean.TRUE.equals(roleDO.getEnabled())) {
             throw new LoginFailureException(ResultStatus.ROLE_FAILED);
         }
@@ -271,7 +311,7 @@ public class LoginServiceImpl implements LoginService {
         userDO.setPassword(null);
         userDO.setEmail(email);
         userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
-        userDO.setRoleId(UserConstant.DEFAULT_ROLE);
+        userDO.setRoleName(loadDefaultRole().getRoleName());
         userDO.setStatus(UserConstant.DEFAULT_STATUS);
         userDO.setNickname(UserConstant.DEFAULT_NICK_NAME);
         userDO.setRemark(UserConstant.DEFAULT_REMARK);
@@ -284,6 +324,9 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 并发首次注册时，数据库唯一索引只会允许一个请求插入成功，
      * 另一个请求回查已有用户后继续登录。
+     *
+     * @param email 邮箱
+     * @return 新建或已存在的用户
      */
     private UserDO createOrGetUser(String email) {
         try {
@@ -297,12 +340,20 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
+    /**
+     * 校验并消费邮箱验证码。
+     *
+     * @param email 邮箱
+     * @param code  验证码
+     */
     private void verifyEmailCode(String email, String code) {
         codeCacheUtil.verifyOrThrow(email, code);
     }
 
     /**
-     * 生成6位数字验证码
+     * 使用 SecureRandom 生成 6 位数字验证码。
+     *
+     * @return 6 位数字字符串
      */
     private String generateVerificationCode() {
         int code = 100000 + SECURE_RANDOM.nextInt(900000);
@@ -330,7 +381,7 @@ public class LoginServiceImpl implements LoginService {
     //     userDO.setPassword(null);
     //     userDO.setEmail(email);
     //     userDO.setAvatarUrl(UserConstant.DEFAULT_AVATAR);
-    //     userDO.setRoleId(UserConstant.DEFAULT_ROLE);
+    //     userDO.setRoleName(UserConstant.DEFAULT_ROLE_NAME);
     //     userDO.setStatus(UserConstant.DEFAULT_STATUS);
     //     userDO.setNickname(UserConstant.DEFAULT_NICK_NAME);
     //     userDO.setRemark(UserConstant.DEFAULT_REMARK);

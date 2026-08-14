@@ -18,9 +18,10 @@ import xyz.nanian.owl.user.domain.dto.SendCodeDTO;
 public interface LoginService {
 
     /**
-     * 发送验证码
-     * @param sendCodeDTO
-     * @return
+     * 发送邮箱验证码，同一邮箱 5 分钟内只能发送一次。
+     *
+     * @param sendCodeDTO 邮箱信息
+     * @return 统一返回结果
      */
     Result<String> sendVerificationCode(SendCodeDTO sendCodeDTO);
 
@@ -33,22 +34,32 @@ public interface LoginService {
     // String login(EmailLoginOrRegisterDTO emailLoginOrRegisterDTO);
 
     /**
-     * [UPGRADE] 密码登录，role 入参已废弃，从数据库读取。
+     * 密码登录，角色从数据库读取。
+     *
+     * @param passwordLoginDTO 邮箱和密码
+     * @return JWT token
      */
     String login(PasswordLoginDTO passwordLoginDTO);
 
     /**
-     * [UPGRADE] 邮箱验证码登录，未注册邮箱自动创建默认 USER 账号。
+     * 邮箱验证码登录；未注册邮箱自动创建默认 USER 角色账号。
+     *
+     * @param emailLoginDTO 邮箱和验证码
+     * @return JWT token
      */
     String login(EmailLoginDTO emailLoginDTO);
 
     /**
-     * [UPGRADE] 忘记密码重置。
+     * 通过邮箱验证码重置密码，成功后使旧 token 失效。
+     *
+     * @param resetPasswordDTO 邮箱、验证码和新密码
      */
     void resetPassword(ResetPasswordDTO resetPasswordDTO);
 
     /**
-     * [UPGRADE] 登出，使当前 token 失效。
+     * 登出，将当前 token 的 jti 加入 Redis 黑名单。
+     *
+     * @param token Bearer token
      */
     void logout(String token);
 }

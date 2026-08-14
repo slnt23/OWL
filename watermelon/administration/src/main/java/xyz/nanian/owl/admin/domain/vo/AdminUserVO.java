@@ -28,8 +28,6 @@ public class AdminUserVO {
 
     private String email;
 
-    private Long roleId;
-
     @Schema(description = "角色名称")
     private String roleName;
 

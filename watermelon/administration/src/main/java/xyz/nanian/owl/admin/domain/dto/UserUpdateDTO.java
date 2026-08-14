@@ -29,7 +29,8 @@ public class UserUpdateDTO {
     @Size(max = 50, message = "昵称长度不能超过50")
     private String nickname;
 
-    private Long roleId;
+    @Size(max = 100, message = "角色名称长度不能超过100")
+    private String roleName;
 
     @Schema(description = "状态：0=正常，1=封禁")
     private Byte status;

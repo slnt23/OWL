@@ -25,10 +25,9 @@ public class UserConstant {
     public static final String DEFAULT_AVATAR = "/DEFAULT_AVATAR.png";
 
     /**
-     * 新用户默认角色 0 = 普通消费者用户（对应数据库角色定义：1=用户，）
-     * 具体role信息查表
+     * 新用户默认角色名称，对应 role 表中的普通用户角色。
      */
-    public static final Long DEFAULT_ROLE = 1L;
+    public static final String DEFAULT_ROLE_NAME = "USER";
 
     /**
      * 新用户默认账号状态

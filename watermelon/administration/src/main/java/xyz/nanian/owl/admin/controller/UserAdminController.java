@@ -38,8 +38,8 @@ public class UserAdminController {
             @RequestParam(defaultValue = "10") long pageSize,
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) Byte status,
-            @RequestParam(required = false) Long roleId) {
-        return Result.success(userAdminService.page(pageNum, pageSize, keyword, status, roleId));
+            @RequestParam(required = false) String roleName) {
+        return Result.success(userAdminService.page(pageNum, pageSize, keyword, status, roleName));
     }
 
     /**
@@ -104,8 +104,8 @@ public class UserAdminController {
     @PutMapping("/{id}/role")
     @Operation(summary = "修改用户角色")
     public Result<ResultStatus> updateRole(@PathVariable Long id,
-                                           @RequestParam Long roleId) {
-        if (userAdminService.updateRole(id, roleId)) {
+                                           @RequestParam String roleName) {
+        if (userAdminService.updateRole(id, roleName)) {
             return Result.success();
         }
         return Result.fail();

@@ -11,9 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Swagger信息配置 (统一配置到 common 模块),
- * 尽量使用指定包下，
- * 也可以使用指定路径下
+ * OpenAPI / Knife4j 文档配置。
+ * 统一放在 common 模块，按业务模块生成独立 API 分组。
  *
  * @author slnt23
  * @since 2025/11/21
@@ -21,25 +20,23 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringdocConfig {
 
-    final String securitySchemeName = "JwtAuth";   // 方案名称，可自定义
+    final String securitySchemeName = "JwtAuth";
 
     /**
-     * 配置全局信息
-     * 使用 OpenAPI Bean 定义全局的文档标题、描述、版本和联系人信息。
+     * 全局 OpenAPI 信息：标题、描述、版本、JWT 安全方案。
      */
     @Bean
     public OpenAPI openAllAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("OWL - 统一接口文档")
-                        .description("本API文档集成用户中心等所有模块的接口。")
-                        .version("开发版0.0.1")
+                        .title("OWL（猫头鹰）统一后端接口文档")
+                        .description("集成用户认证/个人中心、AI 对话、价格追踪、电商交易与后台管理模块的接口文档。")
+                        .version("v0.0.1-SNAPSHOT（开发版）")
                         .contact(new Contact()
-                                .name("sln23")
-                                .email("relax271828@petalmail.com")
+                                .name("OWL 开发团队")
                         )
                 )
-//                全局 SecurityScheme，所有 API 分组共用
+                // 全局 JWT 安全方案，所有 API 分组共用
                 .components(new Components()
                         .addSecuritySchemes(securitySchemeName,
                                 new SecurityScheme()
@@ -48,50 +45,49 @@ public class SpringdocConfig {
                                         .bearerFormat("JWT")
                                         .in(SecurityScheme.In.HEADER)
                                         .name("Authorization")
-                                        .description("请输入 Bearer Token,格式：(Bearer开头)Bearer xxx")
+                                        .description("登录接口返回 token 后，在请求头 Authorization 中携带：Bearer <token>")
                         )
                 )
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));
     }
 
     /**
-     * 配置用户中心 API 分组
-     * 启用 GroupedOpenApi 来创建不同的分组。
-     * 确保您的用户中心接口路径匹配这里的 `/user/**` 或其他实际路径。
+     * 用户中心 API 分组：认证、验证码、个人资料、收货地址。
      */
     @Bean
     public GroupedOpenApi userApi() {
         return GroupedOpenApi.builder()
-                .group("用户中心-user") // 分组名称
-                .packagesToScan("xyz.nanian.owl.user.controller")//搜索特定的分路径
+                .group("用户中心-user")
+                .packagesToScan("xyz.nanian.owl.user.controller")
                 .build();
     }
 
     /**
-     * 配置火龙果电商 API 分组
-     * 您可以为其他模块创建额外的 GroupedOpenApi Bean
+     * 电商中心 API 分组：消费者端与商家端商品、购物车、订单。
      */
     @Bean
     public GroupedOpenApi pitayaApi() {
         return GroupedOpenApi.builder()
                 .group("电商中心-pitaya")
-                .packagesToScan("xyz.nanian.owl.pitaya.consumer.controller")
+                .packagesToScan(
+                        "xyz.nanian.owl.pitaya.consumer.controller",
+                        "xyz.nanian.owl.pitaya.merchant.controller")
                 .build();
     }
 
     /**
-     * 管理员 api
+     * 后台管理中心 API 分组：用户、角色、内容配置。
      */
     @Bean
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
-                .group("管理员中心-admin")
+                .group("后台管理中心-admin")
                 .packagesToScan("xyz.nanian.owl.admin.controller")
                 .build();
     }
 
     /**
-     * 有关sugarcane 价多多模块
+     * 价格中心 API 分组：价格追踪、比价、来源与地区对比。
      */
     @Bean
     public GroupedOpenApi sugarcaneApi() {
@@ -101,7 +97,7 @@ public class SpringdocConfig {
                 .build();
     }
     /**
-     * 有关crow ai模块
+     * AI 中心 API 分组：对话、会话管理。
      */
     @Bean
     public GroupedOpenApi crowApi() {

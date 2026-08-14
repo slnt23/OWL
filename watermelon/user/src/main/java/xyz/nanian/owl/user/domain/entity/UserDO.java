@@ -71,10 +71,10 @@ public class UserDO {
     private String remark;
 
     /**
-     * 角色：0=用户，1=商家，2=管理员, 具体信息查看 role 表
+     * 角色名称，对应 role 表的 role_name
      */
-    @TableField("role_id")
-    private Long roleId;
+    @TableField("role_name")
+    private String roleName;
 
     /**
      * 状态：0=正常，1=封禁

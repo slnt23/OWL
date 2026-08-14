@@ -50,7 +50,7 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
     private final TokenRevocationService tokenRevocationService;
 
     @Override
-    public ResultPage<AdminUserVO> page(long pageNum, long pageSize, String keyword, Byte status, Long roleId) {
+    public ResultPage<AdminUserVO> page(long pageNum, long pageSize, String keyword, Byte status, String roleName) {
         if (pageNum <= 0) {
             pageNum = 1;
         }
@@ -73,14 +73,13 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
         if (status != null) {
             wrapper.eq(UserDO::getStatus, status);
         }
-        if (roleId != null) {
-            wrapper.eq(UserDO::getRoleId, roleId);
+        if (roleName != null && !roleName.isBlank()) {
+            wrapper.eq(UserDO::getRoleName, roleName.trim());
         }
         wrapper.orderByDesc(UserDO::getCreateTime);
 
         IPage<UserDO> result = userAdminMapper.selectPage(page, wrapper);
         List<AdminUserVO> records = userAdminConvert.toVO(result.getRecords());
-        records.forEach(this::fillRoleName);
 
         ResultPage<AdminUserVO> pageResult = new ResultPage<>();
         pageResult.setCurrentPage(result.getCurrent());
@@ -95,7 +94,6 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
     public AdminUserVO getById(Long id) {
         UserDO userDO = requireUser(id);
         AdminUserVO userVO = userAdminConvert.toVO(userDO);
-        fillRoleName(userVO);
         return userVO;
     }
 
@@ -118,7 +116,7 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
         if (phone != null && existsByPhone(phone, null)) {
             throw new BizException(ResultStatus.DATA_ALREADY_EXIST);
         }
-        requireEnabledRole(createDTO.getRoleId());
+        RoleDO roleDO = requireEnabledRole(createDTO.getRoleName());
         validateStatus(createDTO.getStatus());
 
         UserDO userDO = new UserDO();
@@ -130,7 +128,7 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
         userDO.setNickname(createDTO.getNickname() == null || createDTO.getNickname().isBlank()
                 ? username
                 : createDTO.getNickname().trim());
-        userDO.setRoleId(createDTO.getRoleId());
+        userDO.setRoleName(roleDO.getRoleName());
         userDO.setStatus(createDTO.getStatus() == null ? 0 : createDTO.getStatus());
         userDO.setRemark(createDTO.getRemark());
         userDO.setCreateTime(LocalDateTime.now());
@@ -182,9 +180,9 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
             wrapper.set(UserDO::getRemark, updateDTO.getRemark().trim());
             changed = true;
         }
-        if (updateDTO.getRoleId() != null) {
-            requireEnabledRole(updateDTO.getRoleId());
-            wrapper.set(UserDO::getRoleId, updateDTO.getRoleId());
+        if (updateDTO.getRoleName() != null && !updateDTO.getRoleName().isBlank()) {
+            RoleDO roleDO = requireEnabledRole(updateDTO.getRoleName());
+            wrapper.set(UserDO::getRoleName, roleDO.getRoleName());
             changed = true;
         }
         if (updateDTO.getStatus() != null) {
@@ -216,12 +214,12 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
 
     @Override
     @OperationLog(type = LogType.ADMIN, module = "用户管理", action = "修改用户角色", persist = true)
-    public Boolean updateRole(Long id, Long roleId) {
+    public Boolean updateRole(Long id, String roleName) {
         requireUser(id);
-        requireEnabledRole(roleId);
+        RoleDO roleDO = requireEnabledRole(roleName);
 
         LambdaUpdateWrapper<UserDO> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(UserDO::getId, id).set(UserDO::getRoleId, roleId);
+        wrapper.eq(UserDO::getId, id).set(UserDO::getRoleName, roleDO.getRoleName());
         return userAdminMapper.update(null, wrapper) > 0;
     }
 
@@ -249,16 +247,12 @@ public class UserAdminServiceImpl extends ServiceImpl<UserAdminMapper, UserDO> i
         return userDO;
     }
 
-    private void fillRoleName(AdminUserVO userVO) {
-        if (userVO.getRoleId() == null) {
-            return;
+    private RoleDO requireEnabledRole(String roleName) {
+        if (roleName == null || roleName.isBlank()) {
+            throw new BizException(ResultStatus.ROLE_FAILED);
         }
-        RoleDO roleDO = roleMapper.selectById(userVO.getRoleId());
-        userVO.setRoleName(roleDO == null ? null : roleDO.getRoleName());
-    }
-
-    private RoleDO requireEnabledRole(Long roleId) {
-        RoleDO roleDO = roleMapper.selectById(roleId);
+        RoleDO roleDO = roleMapper.selectOne(
+                Wrappers.<RoleDO>lambdaQuery().eq(RoleDO::getRoleName, roleName.trim()));
         if (roleDO == null || !Boolean.TRUE.equals(roleDO.getEnabled())) {
             throw new BizException(ResultStatus.ROLE_FAILED);
         }

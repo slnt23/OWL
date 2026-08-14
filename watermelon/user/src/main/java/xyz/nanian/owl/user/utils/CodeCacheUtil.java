@@ -35,9 +35,10 @@ public class CodeCacheUtil {
     }
 
     /**
-     * 检测验证码是否过期，
-     * @param email
-     * @return
+     * 判断邮箱当前是否处于验证码冷却期。
+     *
+     * @param email 邮箱
+     * @return true 表示验证码仍有效/冷却中
      */
     public Boolean isLocked(String email){
         String lockKey = LoginConstant.VERIFICATION_CODE_PREFIX + email;
@@ -46,7 +47,11 @@ public class CodeCacheUtil {
     }
 
     /**
-     * [UPGRADE] 校验并消费验证码。
+     * 原子校验并消费验证码，成功时立即删除 Redis 中的验证码。
+     *
+     * @param email 邮箱
+     * @param code  用户输入的验证码
+     * @return true 表示校验通过且已消费
      */
     public boolean verifyAndConsume(String email, String code) {
         String key = LoginConstant.VERIFICATION_CODE_PREFIX + email;
@@ -58,7 +63,10 @@ public class CodeCacheUtil {
     }
 
     /**
-     * [UPGRADE] 增加一次错误尝试，返回当前累计次数。
+     * 验证码错误次数 +1，首次错误时设置过期时间。
+     *
+     * @param email 邮箱
+     * @return 当前累计错误次数
      */
     public long increaseAttempt(String email) {
         String key = LoginConstant.CODE_ATTEMPT_PREFIX + email;
@@ -70,7 +78,10 @@ public class CodeCacheUtil {
     }
 
     /**
-     * [UPGRADE] 是否已超过验证码错误次数上限。
+     * 当前邮箱是否已达到验证码错误次数上限。
+     *
+     * @param email 邮箱
+     * @return true 表示已超限
      */
     public boolean isAttemptExceeded(String email) {
         String key = LoginConstant.CODE_ATTEMPT_PREFIX + email;
@@ -82,7 +93,9 @@ public class CodeCacheUtil {
     }
 
     /**
-     * [UPGRADE] 清理验证码及错误次数。
+     * 清理邮箱的验证码和错误次数记录。
+     *
+     * @param email 邮箱
      */
     public void clear(String email) {
         stringRedisTemplate.delete(LoginConstant.VERIFICATION_CODE_PREFIX + email);
@@ -90,7 +103,10 @@ public class CodeCacheUtil {
     }
 
     /**
-     * [UPGRADE] 校验验证码，失败或超限时抛出登录异常。
+     * 校验验证码，失败或超限时抛出登录异常，成功时清理错误次数。
+     *
+     * @param email 邮箱
+     * @param code  用户输入的验证码
      */
     public void verifyOrThrow(String email, String code) {
         if (isAttemptExceeded(email)) {

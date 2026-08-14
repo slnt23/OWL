@@ -39,7 +39,7 @@ CREATE TABLE user
     avatar_url  VARCHAR(2048) COMMENT '头像URL',
     nickname    VARCHAR(50) COMMENT '昵称',
     remark      VARCHAR(255) COMMENT '备注',
-    role_id     BIGINT UNSIGNED  NOT NULL COMMENT '角色ID',
+    role_name   VARCHAR(100)     NOT NULL COMMENT '角色名称',
     status      TINYINT(1)       NOT NULL DEFAULT 0 COMMENT '状态：0=正常，1=封禁',
     create_time DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -49,8 +49,8 @@ CREATE TABLE user
     UNIQUE KEY uk_username (username),
     UNIQUE KEY uk_phone (phone),
     UNIQUE KEY uk_email (email),
-    KEY idx_role_id (role_id),
-    CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE RESTRICT
+    KEY idx_role_name (role_name),
+    CONSTRAINT fk_user_role FOREIGN KEY (role_name) REFERENCES role (role_name) ON DELETE RESTRICT
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci

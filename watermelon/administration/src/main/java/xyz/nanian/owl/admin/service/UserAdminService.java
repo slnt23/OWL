@@ -18,7 +18,7 @@ import xyz.nanian.owl.common.result.ResultPage;
  */
 public interface UserAdminService extends IService<UserDO> {
 
-    ResultPage<AdminUserVO> page(long pageNum, long pageSize, String keyword, Byte status, Long roleId);
+    ResultPage<AdminUserVO> page(long pageNum, long pageSize, String keyword, Byte status, String roleName);
 
     AdminUserVO getById(Long id);
 
@@ -30,7 +30,7 @@ public interface UserAdminService extends IService<UserDO> {
 
     Boolean updateStatus(Long id, Byte status);
 
-    Boolean updateRole(Long id, Long roleId);
+    Boolean updateRole(Long id, String roleName);
 
     Boolean resetPassword(Long id, UserPasswordResetDTO resetDTO);
 }
