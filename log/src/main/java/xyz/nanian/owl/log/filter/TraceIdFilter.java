@@ -37,7 +37,7 @@ public class TraceIdFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } finally {
             long cost = System.currentTimeMillis() - startTime;
-            log.info("request method={} uri={} status={} cost={}ms traceId={}",
+            log.info("[human] request method={} uri={} status={} cost={}ms traceId={}",
                     request.getMethod(), request.getRequestURI(), response.getStatus(), cost, traceId);
             MDC.remove(TRACE_ID);
         }

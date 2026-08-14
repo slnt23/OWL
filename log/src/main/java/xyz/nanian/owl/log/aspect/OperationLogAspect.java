@@ -44,7 +44,7 @@ public class OperationLogAspect {
             throw e;
         } finally {
             long cost = System.currentTimeMillis() - startTime;
-            log.info("operation type={} module={} action={} method={} success={} cost={}ms persist={} traceId={}",
+            log.info("[human] operation type={} module={} action={} method={} success={} cost={}ms persist={} traceId={}",
                     operationLog.type(), operationLog.module(), operationLog.action(),
                     method, success, cost, operationLog.persist(), MDC.get(TraceIdFilter.TRACE_ID));
             if (operationLog.persist()) {
@@ -73,7 +73,7 @@ public class OperationLogAspect {
                     message
             );
         } catch (Exception e) {
-            log.error("send operation log failed, module={} action={}", operationLog.module(), operationLog.action(), e);
+            log.error("[human] send operation log failed, module={} action={}", operationLog.module(), operationLog.action(), e);
         }
     }
 }

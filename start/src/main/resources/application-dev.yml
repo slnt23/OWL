@@ -97,11 +97,12 @@
 #      map-underscore-to-camel-case: true
 #      cache-enabled: false
 #
-#logging:
-#  level:
-#    com.baomidou.mybatisplus: warn
-#    org.mybatis: warn
-#    org.springframework.ai: INFO
+logging:
+  level:
+    xyz.nanian.owl: debug
+    com.baomidou.mybatisplus: warn
+    org.mybatis: warn
+    org.springframework.ai: INFO
 #
 #
 ## 本项目启动端口

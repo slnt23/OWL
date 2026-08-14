@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  logback-spring.xml 作用说明
+
+  1. 本文件用于自定义 OWL 的日志输出，包括控制台格式、日志文件、滚动策略和日志级别。
+  2. 当前内容全部注释，项目运行时使用 Spring Boot 默认的 Logback 配置，控制台默认 INFO 级别。
+  3. 需要启用时，取消下方 <configuration> 块的注释，并按需修改 pattern、file、level。
+  4. pattern 中的 %X{traceId} 用于输出 TraceIdFilter 写入 MDC 的 traceId，方便按请求追踪日志。
+  5. 建议控制台保留彩色输出，文件日志使用 UTF-8 编码，生产环境按天滚动并限制历史保留天数。
+  6. 日志级别也可通过 application.yaml / application-dev.yml 的 logging.level 配置，二者会合并生效。
+-->
+<!--
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%X{traceId}] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/owl.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/owl.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%X{traceId}] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</configuration>
+-->
