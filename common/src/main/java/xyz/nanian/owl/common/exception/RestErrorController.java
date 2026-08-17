@@ -43,7 +43,8 @@ public class RestErrorController implements ErrorController {
      * @throws IOException 写响应失败
      */
     @RequestMapping("/error")
-    public void handleError(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void handleError(HttpServletRequest request,
+                            HttpServletResponse response) throws IOException {
         Object statusCodeAttribute = request.getAttribute(ERROR_STATUS_CODE_ATTRIBUTE);
         int statusCode = statusCodeAttribute instanceof Integer code ? code : HttpStatus.INTERNAL_SERVER_ERROR.value();
         HttpStatus status = HttpStatus.resolve(statusCode);

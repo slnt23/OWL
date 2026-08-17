@@ -5,17 +5,23 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_EXCHANGE;
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_QUEUE;
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_ROUTING_KEY;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_EXCHANGE;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_QUEUE;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_ROUTING_KEY;
 
 /**
- * RabbitMQ declarations for operation logs.
+ * RabbitMQ 操作日志消息声明配置。
+ *
+ * <p>声明持久化队列、交换机与绑定关系，并使用 Spring AMQP 4 的
+ * {@link JacksonJsonMessageConverter} 进行 JSON 消息转换。</p>
+ *
+ * @author slnt23
+ * @since 2026/1/27
  */
 @Configuration
 public class OperationLogMqConfig {
@@ -40,6 +46,6 @@ public class OperationLogMqConfig {
 
     @Bean
     public MessageConverter messageConverter() {
-        return new Jackson2JsonMessageConverter();
+        return new JacksonJsonMessageConverter();
     }
 }

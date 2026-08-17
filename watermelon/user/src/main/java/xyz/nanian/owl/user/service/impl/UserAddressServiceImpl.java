@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.nanian.owl.common.result.ResultStatus;
 import xyz.nanian.owl.common.security.CurrentUserContext;
-import xyz.nanian.owl.common.security.LoginFailureException;
+import xyz.nanian.owl.common.exception.LoginFailureException;
 import xyz.nanian.owl.user.domain.dto.AddressCreateDTO;
 import xyz.nanian.owl.user.domain.dto.AddressUpdateDTO;
 import xyz.nanian.owl.user.domain.entity.UserAddressDO;

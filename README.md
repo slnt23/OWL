@@ -1,6 +1,6 @@
 # OWL（猫头鹰）
 
-![一念神魔](.docs/一念神魔.jpg)
+![一念神魔](.docs/others/一念神魔.png)
 
 OWL 是一个多业务 Java 后端项目，基于 Spring Boot 4.1 与 Java 25 构建，覆盖用户认证、AI 对话、价格追踪、电商交易与后台管理。通用能力沉淀在 `common`、`infra`、`log` 等基础模块，业务模块独立演进。
 
@@ -25,4 +25,4 @@ java -jar start/target/start-0.0.1.jar
 ## 文档
 
 - [文档中心](.docs/README.md)
-- [前端联调接口文档](.docs/api/frontend-api.md)
+- [前端联调接口文档](.docs/others/前端联调接口文档.md)

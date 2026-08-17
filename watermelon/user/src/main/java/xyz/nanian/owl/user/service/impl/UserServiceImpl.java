@@ -16,7 +16,7 @@ import xyz.nanian.owl.infra.minio.service.FileStorageService;
 import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.log.constant.LogType;
 import xyz.nanian.owl.common.result.ResultStatus;
-import xyz.nanian.owl.common.security.LoginFailureException;
+import xyz.nanian.owl.common.exception.LoginFailureException;
 import xyz.nanian.owl.common.security.TokenRevocationService;
 import xyz.nanian.owl.common.utils.regex.RegexUtil;
 import xyz.nanian.owl.user.constant.UserConstant;

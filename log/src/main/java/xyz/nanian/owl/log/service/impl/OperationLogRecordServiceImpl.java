@@ -17,9 +17,9 @@ import xyz.nanian.owl.log.service.OperationLogRecordService;
 
 import java.time.LocalDateTime;
 
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_EXCHANGE;
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_QUEUE;
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_ROUTING_KEY;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_EXCHANGE;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_QUEUE;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_ROUTING_KEY;
 
 @Service
 @RequiredArgsConstructor

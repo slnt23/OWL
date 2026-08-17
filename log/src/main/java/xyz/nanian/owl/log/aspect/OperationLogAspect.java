@@ -14,8 +14,8 @@ import xyz.nanian.owl.log.annotation.OperationLog;
 import xyz.nanian.owl.log.domain.message.OperationLogMessage;
 import xyz.nanian.owl.log.filter.TraceIdFilter;
 
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_EXCHANGE;
-import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstant.OPERATION_LOG_ROUTING_KEY;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_EXCHANGE;
+import static xyz.nanian.owl.infra.rabbitmq.constant.RabbitMQConstants.OPERATION_LOG_ROUTING_KEY;
 
 @Aspect
 @Component

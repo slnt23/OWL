@@ -19,7 +19,13 @@ import static xyz.nanian.owl.common.security.JwtConstants.CLAIM_USER_ID;
 import static xyz.nanian.owl.common.security.JwtConstants.CLAIM_TOKEN_VERSION;
 
 /**
- * Creates and parses the application JWT.
+ * JWT 生成与解析组件。
+ *
+ * <p>使用 HMAC-SHA256 对 token 签名，生成时写入用户信息、jti 与 tokenVersion，
+ * 解析时校验签名并返回 Claims，供 JWT 认证过滤器使用。</p>
+ *
+ * @author slnt23
+ * @since 2026/8/17
  */
 @Component
 public class JwtTokenProvider {
@@ -27,6 +33,12 @@ public class JwtTokenProvider {
     private final Key key;
     private final long expireTime;
 
+    /**
+     * 根据配置创建 JWT 提供者。
+     *
+     * @param secret     签名密钥，默认使用本地测试密钥
+     * @param expireTime token 有效期，单位毫秒
+     */
     public JwtTokenProvider(
             @Value("${jwt.secret:nanian-owl-jwt-secret-key-32bytes-test}") String secret,
             @Value("${jwt.expire-time:2592000000}") long expireTime) {
@@ -50,7 +62,17 @@ public class JwtTokenProvider {
     // }
 
     /**
-     * [UPGRADE] token with jti and token version for revocation support.
+     * 生成带 jti 与 tokenVersion 的 JWT。
+     *
+     * <p>jti 用于支持登出时加入黑名单，tokenVersion 用于在修改密码、换绑邮箱等
+     * 场景下使该用户此前签发的旧 token 全部失效。</p>
+     *
+     * @param userId       用户主键 ID
+     * @param userCode     用户编码
+     * @param userEmail    用户邮箱
+     * @param roleName     角色名
+     * @param tokenVersion 当前用户的 token 版本号
+     * @return 签名后的 JWT 字符串
      */
     public String generateToken(Long userId, String userCode, String userEmail,
                                 String roleName, long tokenVersion) {
@@ -70,6 +92,13 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    /**
+     * 解析 JWT 并返回 Claims。
+     *
+     * @param token 待解析的 JWT 字符串
+     * @return 解析后的 Claims
+     * @throws io.jsonwebtoken.JwtException token 非法、过期或签名错误时抛出
+     */
     public Claims parseToken(String token) {
         return Jwts.parser()
                 .setSigningKey(key)

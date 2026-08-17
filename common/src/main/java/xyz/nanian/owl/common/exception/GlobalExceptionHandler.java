@@ -18,7 +18,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import xyz.nanian.owl.common.result.Result;
 import xyz.nanian.owl.common.result.ResultStatus;
-import xyz.nanian.owl.common.security.LoginFailureException;
 
 import java.util.stream.Collectors;
 
@@ -44,7 +43,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BizException.class)
     public Result<?> handleBiz(BizException e) {
         log.warn("业务异常{}",e.getMessage(), e);
-        return Result.fail(e.getCode(),e.getMessage());
+//        return Result.fail(e.getCode(),e.getMessage());
+        return Result.fail(ResultStatus.BIZ_ERROR);
     }
 
     /**
@@ -55,7 +55,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = LoginFailureException.class)
     public Result<?> handleLoginFailure(LoginFailureException e) {
         log.warn("登录异常：{}", e.getMessage());
-        return Result.fail(e.getCode(), e.getMessage());
+//        return Result.fail(e.getCode(), e.getMessage());
+        return Result.fail(ResultStatus.LOGIN_ERROR);
     }
 
     /**
@@ -142,7 +143,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result<?> exceptionHandler(Exception e) {
 
-        log.error("发生错误，但未捕获具体异常{}",e.getMessage(),e);
+        log.error("发生错误，未捕获具体异常，报错信息：{}",e.getMessage(),e);
         return Result.fail(ResultStatus.FAIL);
     }
 }

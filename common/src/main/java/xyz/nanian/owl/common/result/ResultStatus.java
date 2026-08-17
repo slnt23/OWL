@@ -35,7 +35,7 @@ public enum ResultStatus {
     STOCK_INSUFFICIENT("库存不足", 9101),
     ORDER_STATUS_INVALID("订单状态异常，无法执行当前操作", 9201),
     PAYMENT_FAILED("支付失败，请检查账户余额或支付方式", 9301),
-    ROLE_FAILED("登陆角色异常，",9401),
+    ROLE_FAILED("登陆角色异常",9401),
     VERIFY_CODE_ERROR("验证码错误",9501),
     CODE_ATTEMPT_EXCEEDED("验证码错误次数过多，请重新发送",9502),
     CODE_SEND_TOO_FREQUENT("验证码发送过于频繁，请稍后再试",9503),
@@ -55,7 +55,8 @@ public enum ResultStatus {
     API_UN_IMPL("功能尚未实现", 9997),
     SERVER_BUSY("服务器繁忙", 9998),
     FAIL("操作失败", 9999),
-    BIZ_ERROR("业务异常",9995);
+    BIZ_ERROR("业务异常",9995),
+    LOGIN_ERROR("登陆异常",9994);
 
 
 

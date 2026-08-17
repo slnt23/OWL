@@ -11,7 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.common.result.ResultStatus;
-import xyz.nanian.owl.common.security.LoginFailureException;
+import xyz.nanian.owl.common.exception.LoginFailureException;
 import xyz.nanian.owl.common.security.TokenRevocationService;
 import xyz.nanian.owl.common.mail.MailMessage;
 import xyz.nanian.owl.common.mail.MailService;

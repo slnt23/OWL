@@ -8,7 +8,7 @@ package xyz.nanian.owl.infra.rabbitmq.constant;
  * @since 2026/1/27
  */
 
-public class RabbitMQConstant {
+public class RabbitMQConstants {
 
     public static final String FANOUT_EXCHANGE = "fanout_exchange";
     public static final String FANOUT_QUEUE = "fanout_queue";

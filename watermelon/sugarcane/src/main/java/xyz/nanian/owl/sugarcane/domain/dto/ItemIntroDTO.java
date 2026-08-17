@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import xyz.nanian.owl.common.domain.dto.PageDTO;
+import xyz.nanian.owl.api.domain.dto.PageDTO;
 
 /**
  * 物品简介DTO

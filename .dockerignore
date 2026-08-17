@@ -18,7 +18,7 @@ README.md
 AGENTS.md
 CLAUDE.md
 HELP.md
-qodana.yaml
+.github/qodana.yaml
 
 # 保留 start/target 下的 fat jar，忽略其他 target 内容
 **/target/*

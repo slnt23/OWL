@@ -21,10 +21,23 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 
     private final ObjectMapper objectMapper;
 
+    /**
+     * 注入 JSON 序列化组件。
+     *
+     * @param objectMapper Jackson ObjectMapper
+     */
     public RestAccessDeniedHandler(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * 已认证但权限不足时统一返回 HTTP 403 与 Result&lt;T&gt;。
+     *
+     * @param request              当前 HTTP 请求
+     * @param response             当前 HTTP 响应
+     * @param accessDeniedException 权限不足异常
+     * @throws IOException 写入响应失败时抛出
+     */
     @Override
     public void handle(HttpServletRequest request,
                        HttpServletResponse response,

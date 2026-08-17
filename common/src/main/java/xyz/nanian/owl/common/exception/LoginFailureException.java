@@ -1,4 +1,4 @@
-package xyz.nanian.owl.common.security;
+package xyz.nanian.owl.common.exception;
 
 import lombok.Getter;
 import xyz.nanian.owl.common.result.ResultStatus;

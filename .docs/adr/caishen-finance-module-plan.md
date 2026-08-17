@@ -189,6 +189,6 @@ watermelon/caishen/
 
 ## 相关文档
 
-- [ADR-005 Caishen 理财模块设计（基金/股票）](../adr/adr-005-caishen-finance-module.md)
-- [新模块添加手册](../manual/new-module-guide.md)
+- [ADR-005 Caishen 理财模块设计（基金/股票）](ADR-005-财神理财模块设计.md)
+- [新模块添加手册](../others/新模块开发指南.md)
 - [文档中心](../README.md)

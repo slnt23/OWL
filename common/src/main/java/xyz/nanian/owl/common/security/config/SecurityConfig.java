@@ -37,6 +37,14 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final ObjectProvider<TokenRevocationService> tokenRevocationServiceProvider;
 
+    /**
+     * 注入安全配置所需的组件。
+     *
+     * @param restAuthenticationEntryPoint 未认证 / Token 无效时的 JSON 401 处理器
+     * @param restAccessDeniedHandler      已认证但权限不足时的 JSON 403 处理器
+     * @param jwtTokenProvider             JWT 生成与解析组件
+     * @param tokenRevocationServiceProvider 可选的 Token 撤销服务提供者
+     */
     public SecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint,
                           RestAccessDeniedHandler restAccessDeniedHandler,
                           JwtTokenProvider jwtTokenProvider,
@@ -47,6 +55,17 @@ public class SecurityConfig {
         this.tokenRevocationServiceProvider = tokenRevocationServiceProvider;
     }
 
+    /**
+     * 配置 Spring Security 过滤链。
+     *
+     * <p>关闭 CSRF、启用 CORS、使用无状态会话；
+     * 配置登录、文档和公共接口白名单，后台管理接口要求 ADMIN 角色，
+     * 其余接口默认要求登录，并在认证失败时统一返回 JSON。</p>
+     *
+     * @param http HttpSecurity 配置对象
+     * @return 配置完成的 SecurityFilterChain
+     * @throws Exception 构建过滤链失败时抛出
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
@@ -83,6 +102,11 @@ public class SecurityConfig {
                 .build();
     }
 
+    /**
+     * 密码编码器，统一使用 BCrypt 对密码进行加密和校验。
+     *
+     * @return BCryptPasswordEncoder 实例
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

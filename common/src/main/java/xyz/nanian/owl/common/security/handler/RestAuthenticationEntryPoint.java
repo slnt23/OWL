@@ -22,10 +22,26 @@ public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private final ObjectMapper objectMapper;
 
+    /**
+     * 注入 JSON 序列化组件。
+     *
+     * @param objectMapper Jackson ObjectMapper
+     */
     public RestAuthenticationEntryPoint(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
+    /**
+     * 未认证或 Token 无效时统一返回 HTTP 401 与 Result&lt;T&gt;。
+     *
+     * <p>优先读取 JwtAuthenticationFilter 写入的错误状态，
+     * 例如 TOKEN_EXPIRED、TOKEN_INVALID，未设置时默认返回 UNAUTHORIZED。</p>
+     *
+     * @param request        当前 HTTP 请求
+     * @param response       当前 HTTP 响应
+     * @param authException  认证异常
+     * @throws IOException 写入响应失败时抛出
+     */
     @Override
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,

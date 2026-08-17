@@ -1,4 +1,4 @@
-package xyz.nanian.owl.common.domain.dto;
+package xyz.nanian.owl.api.domain.dto;
 
 
 import lombok.Getter;
