@@ -86,8 +86,9 @@ erDiagram
         bigint created_by FK
     }
     blog_post_tag {
-        bigint post_id PK,FK
-        bigint tag_id PK,FK
+        bigint id PK
+        bigint post_id FK
+        bigint tag_id FK
     }
     blog_profile {
         bigint id PK
@@ -112,7 +113,7 @@ erDiagram
 | `blog_post` | 博客文章（含正文、发布状态、浏览量） | P0 |
 | `blog_category` | 文章分类 | P0 |
 | `blog_tag` | 标签 | P0 |
-| `blog_post_tag` | 文章-标签关联（复合主键） | P0 |
+| `blog_post_tag` | 文章-标签关联（自增 id 主键 + post_id/tag_id 唯一） | P0 |
 | `blog_profile` | 站长个人信息（单行配置表） | P1 |
 | `blog_education` | 教育经历 | P2 |
 | `blog_skill_category` | 技能分类 | P2 |
@@ -137,7 +138,7 @@ canonical DDL 见 [`database/OWL/mango/mango_db.sql`](../database/OWL/mango/mang
 | | `created_by` | 外键 `user.id`，作者 |
 | | `is_published` / `is_top` | `TINYINT(1)`，草稿与置顶 |
 | | `publish_time` | 发布展示时间，独立于 `create_time` |
-| `blog_post_tag` | `(post_id, tag_id)` | 复合主键，两端级联删除 |
+| `blog_post_tag` | `id` 自增主键，`(post_id, tag_id)` 唯一 | 唯一约束保证不重复，两端级联删除 |
 | `blog_profile` | `id` 固定 1 | 单行配置，初始化一条默认记录 |
 | `blog_skill_item` | `category_id` | 外键 `blog_skill_category.id`，删除分类级联删条目 |
 

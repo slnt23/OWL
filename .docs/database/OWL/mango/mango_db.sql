@@ -87,10 +87,12 @@ CREATE TABLE blog_post
 -- ------------------------------------------------------
 CREATE TABLE blog_post_tag
 (
+    id      BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
     post_id BIGINT UNSIGNED NOT NULL COMMENT '文章ID',
     tag_id  BIGINT UNSIGNED NOT NULL COMMENT '标签ID',
 
-    PRIMARY KEY (post_id, tag_id),
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_blog_post_tag_post_tag (post_id, tag_id),
     KEY idx_blog_post_tag_tag_id (tag_id),
     CONSTRAINT fk_blog_post_tag_post FOREIGN KEY (post_id) REFERENCES blog_post (id) ON DELETE CASCADE,
     CONSTRAINT fk_blog_post_tag_tag FOREIGN KEY (tag_id) REFERENCES blog_tag (id) ON DELETE CASCADE

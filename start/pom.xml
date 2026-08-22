@@ -25,10 +25,6 @@
         </dependency>
         <dependency>
             <groupId>xyz.nanian</groupId>
-            <artifactId>pitaya</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>xyz.nanian</groupId>
             <artifactId>sugarcane</artifactId>
         </dependency>
         <dependency>

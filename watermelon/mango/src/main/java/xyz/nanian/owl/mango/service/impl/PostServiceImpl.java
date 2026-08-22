@@ -325,7 +325,10 @@ public class PostServiceImpl implements PostService {
             }
         }
         for (Long tagId : distinctIds) {
-            blogPostTagMapper.insert(new BlogPostTagDO(postId, tagId));
+            BlogPostTagDO relation = new BlogPostTagDO();
+            relation.setPostId(postId);
+            relation.setTagId(tagId);
+            blogPostTagMapper.insert(relation);
         }
     }
 
