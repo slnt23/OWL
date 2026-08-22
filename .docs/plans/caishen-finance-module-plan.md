@@ -1,11 +1,11 @@
 # Caishen 理财模块开发计划
 
-| 属性 | 值 |
-| --- | --- |
-| 状态 | 草稿 |
-| 负责人 | Caishen Owner |
-| 创建时间 | 2026-08-09 |
-| 更新时间 | 2026-08-09 |
+| 属性     | 值            |
+| -------- | ------------- |
+| 状态     | 草稿          |
+| 负责人   | Caishen Owner |
+| 创建时间 | 2026-08-09    |
+| 更新时间 | 2026-08-09    |
 
 ## 背景与目标
 
@@ -14,12 +14,14 @@ OWL 需要新增理财模块，代号 caishen，核心能力是查看基金和�
 Java 侧需要提前定义外部服务边界，确保 Python/C++ 服务接入时不需要修改控制器和持久化层。
 
 目标：
+
 - 支持基金档案、基金净值、股票档案、股票日线、用户持仓与收益变化查询。
 - 支持区间变化统计与总结生成。
 - 预留 Python 数据源和 C++ 计算引擎的调用契约。
 - 沿用 OWL 现有模块规范：`api` 依赖链、`Result<T>`、JWT、MyBatis-Plus、Knife4j。
 
 非目标：
+
 - 不在本仓库编写 Python/C++ 源码。
 - 不做实盘交易、下单和风控。
 - 不提供投资建议，总结仅作为辅助分析。
@@ -33,6 +35,7 @@ Java 侧需要提前定义外部服务边界，确保 Python/C++ 服务接入时
 - API 分组：`理财中心-caishen`
 
 注册动作：
+
 1. 根 `pom.xml` 增加 `<module>watermelon/caishen</module>` 与 dependencyManagement。
 2. `start/pom.xml` 增加 caishen 依赖。
 3. `common/.../SpringdocConfig.java` 增加 `GroupedOpenApi`。
@@ -43,29 +46,36 @@ Java 侧需要提前定义外部服务边界，确保 Python/C++ 服务接入时
 ### 表结构
 
 `caishen_fund` 基金档案：
+
 - id、fund_code、fund_name、fund_type、company_name、manager_name、risk_level、status
 - `unique(fund_code)`
 
 `caishen_fund_nav` 净值历史：
+
 - id、fund_code、nav_date、unit_nav、accumulated_nav、daily_return_rate、source
 - `unique(fund_code, nav_date)`
 
 `caishen_stock` 股票档案：
+
 - id、stock_code、stock_name、exchange、industry、status
 - `unique(stock_code)`
 
 `caishen_stock_daily` 股票日线：
+
 - id、stock_code、trade_date、open_price、close_price、high_price、low_price、volume、amount、change_rate、source
 - `unique(stock_code, trade_date)`
 
 `caishen_holding` 用户持仓或关注：
+
 - id、user_code、asset_type、asset_code、shares、cost_price、purchase_date、remark
 - `unique(user_code, asset_type, asset_code)`
 
 `caishen_summary` 总结任务与结果：
+
 - id、user_code、asset_type、asset_code、period_type、start_date、end_date、metric_snapshot、summary_text、status、error_message
 
 `caishen_sync_log` 数据同步日志：
+
 - id、sync_type、provider、start_time、end_time、success_count、fail_count、status、error_message
 
 ### DDL
@@ -106,10 +116,12 @@ watermelon/caishen/
 ### 外部服务契约（预留）
 
 `MarketDataClient` 负责基金净值和股票日线获取或导入：
+
 - 现在：`MockMarketDataClient` 返回可配置的演示数据。
 - 后续：`PythonMarketDataClient` 调用 Python 服务获取数据，或接收 Python 推送的数据。
 
 `AssetAnalysisClient` 负责总结或复杂计算：
+
 - 现在：`SpringAiAssetAnalysisClient` 基于现有 Spring AI 生成总结，保证闭环可跑。
 - 后续：`PythonAssetAnalysisClient` 调用 Python AI 服务；C++ 指标服务通过同一接口扩展。
 - 配置项：`caishen.analysis.provider=spring-ai|python|mock`。
@@ -190,5 +202,5 @@ watermelon/caishen/
 ## 相关文档
 
 - [ADR-005 Caishen 理财模块设计（基金/股票）](ADR-005-财神理财模块设计.md)
-- [新模块添加手册](../others/新模块开发指南.md)
+- [新模块添加手册](../guides/新模块开发指南.md)
 - [文档中心](../README.md)
