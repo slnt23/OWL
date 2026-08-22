@@ -105,4 +105,15 @@ public class SpringdocConfig {
                 .build();
     }
 
+    /**
+     * 理财中心 API 分组：基金档案、净值、关注、提醒规则、总结。
+     */
+    @Bean
+    public GroupedOpenApi caishenApi() {
+        return GroupedOpenApi.builder()
+                .group("理财中心-caishen")
+                .packagesToScan("xyz.nanian.owl.caishen.controller")
+                .build();
+    }
+
 }

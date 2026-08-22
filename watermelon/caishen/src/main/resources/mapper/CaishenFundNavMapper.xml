@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.caishen.mapper.CaishenFundNavMapper">
+
+    <!--
+        幂等 upsert：按 (fund_code, nav_date) 唯一键，存在则更新。
+        MySQL 8.4 使用行别名语法（VALUES() 已废弃）。
+    -->
+    <insert id="upsertNav" parameterType="xyz.nanian.owl.caishen.domain.entity.CaishenFundNavDO">
+        INSERT INTO caishen_fund_nav
+            (fund_code, nav_date, unit_nav, accumulated_nav, daily_return_rate, source)
+        VALUES
+            (#{fundCode}, #{navDate}, #{unitNav}, #{accumulatedNav}, #{dailyReturnRate}, #{source})
+        AS new
+        ON DUPLICATE KEY UPDATE
+            unit_nav = new.unit_nav,
+            accumulated_nav = new.accumulated_nav,
+            daily_return_rate = new.daily_return_rate,
+            source = new.source
+    </insert>
+
+</mapper>

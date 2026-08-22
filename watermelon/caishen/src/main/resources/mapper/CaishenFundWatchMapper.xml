@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.caishen.mapper.CaishenFundWatchMapper">
+
+    <!-- 用户关注列表：一次查询拿基金名称 + 最新净值/日收益率 + 提醒规则数 -->
+    <select id="selectWatchVOs" resultType="xyz.nanian.owl.caishen.domain.vo.FundWatchVO">
+        SELECT w.id            AS id,
+               w.fund_code     AS fundCode,
+               f.fund_name     AS fundName,
+               w.remark        AS remark,
+               w.create_time   AS createTime,
+               nav.unit_nav    AS latestNav,
+               nav.nav_date    AS latestNavDate,
+               nav.daily_return_rate AS dailyReturnRate,
+               (SELECT COUNT(*) FROM caishen_fund_alert a WHERE a.watch_id = w.id) AS alertCount
+        FROM caishen_fund_watch w
+        LEFT JOIN caishen_fund f ON f.fund_code = w.fund_code
+        LEFT JOIN caishen_fund_nav nav ON nav.fund_code = w.fund_code
+            AND nav.nav_date = (SELECT MAX(n2.nav_date) FROM caishen_fund_nav n2 WHERE n2.fund_code = w.fund_code)
+        WHERE w.user_id = #{userId}
+        ORDER BY w.create_time DESC
+    </select>
+
+</mapper>

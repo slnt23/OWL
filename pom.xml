@@ -29,6 +29,7 @@
         <module>watermelon/sugarcane</module>
         <module>watermelon/crow</module>
         <module>watermelon/mango</module>
+        <module>watermelon/caishen</module>
     </modules>
 
 
@@ -103,6 +104,11 @@
             <dependency>
                 <groupId>xyz.nanian</groupId>
                 <artifactId>mango</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>xyz.nanian</groupId>
+                <artifactId>caishen</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
