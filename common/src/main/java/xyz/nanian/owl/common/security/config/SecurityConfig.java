@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.http.HttpMethod;
 import xyz.nanian.owl.common.security.filter.JwtAuthenticationFilter;
 import xyz.nanian.owl.common.security.JwtTokenProvider;
 import xyz.nanian.owl.common.security.RoleConstants;
@@ -93,6 +94,8 @@ public class SecurityConfig {
                                 "/api/admin/feature/**",
                                 "/api/admin/spotlight/**"
                         ).permitAll()
+                        // [mango] 博客公开读接口：GET 免登录，写接口保持默认要求登录
+                        .requestMatchers(HttpMethod.GET, "/api/blog/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole(RoleConstants.ADMIN)
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex

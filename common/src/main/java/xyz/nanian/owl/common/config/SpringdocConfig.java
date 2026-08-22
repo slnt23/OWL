@@ -107,4 +107,15 @@ public class SpringdocConfig {
                 .build();
     }
 
+    /**
+     * 博客中心 API 分组：文章、分类、标签、个人信息、教育、技能。
+     */
+    @Bean
+    public GroupedOpenApi mangoApi() {
+        return GroupedOpenApi.builder()
+                .group("博客中心-mango")
+                .packagesToScan("xyz.nanian.owl.mango.controller")
+                .build();
+    }
+
 }

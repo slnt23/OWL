@@ -21,6 +21,7 @@
 4. `admin/front_db.sql`
 5. `crow/crow_db.sql`
 6. `sugarcane/sugarcane_db.sql`
+7. `mango/mango_db.sql`
 
 ## 模块说明
 
@@ -29,5 +30,6 @@
 - `admin`：`spotlight`、`feature`。
 - `crow`：`conversation`、`message`。
 - `sugarcane`：`price_category`、`price_item`、`price_source`、`geo_location`、`price_record`、`price_item_media`。
+- `mango`：`blog_category`、`blog_tag`、`blog_post`、`blog_post_tag`、`blog_profile`、`blog_education`、`blog_skill_category`、`blog_skill_item`。`blog_post` 依赖 `user` 表，示例数据依赖 `user_init_data.sql` 中的 `admin` 用户。
 
 `pitaya` 模块已暂停开发，其数据库脚本和模块代码保持现状，本次不纳入规范。
