@@ -25,7 +25,7 @@ import java.util.List;
  * @author slnt23
  * @since 2026/8/22
  */
-@RestController
+@RestController("mangoCategoryController")
 @RequestMapping("/api/blog/categories")
 @RequiredArgsConstructor
 @Tag(name = "博客分类")

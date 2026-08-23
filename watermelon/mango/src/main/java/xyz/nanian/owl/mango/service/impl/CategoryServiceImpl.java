@@ -26,7 +26,7 @@ import java.util.List;
  * @author slnt23
  * @since 2026/8/22
  */
-@Service
+@Service("mangoCategoryServiceImpl")
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 

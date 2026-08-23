@@ -1,24 +1,43 @@
 
 
+#spring:
+#  application:
+#    name: OWL
+#  profiles:
+#    active: dev          # 默认开发环境，可通过启动参数切换
+#
+#  config:
+#    import:
+#      - optional:nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:database.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:cache.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:message.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:email.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:ai.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:sensitive.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#
+#  cloud:
+#    nacos:
+#      server-addr: 192.168.131.128:8848
+#      username: nacos
+#      password: nacos
+#      namespace: OWL
+
+
 spring:
   application:
     name: OWL
-  profiles:
-    active: dev          # 默认开发环境，可通过启动参数切换
 
   config:
     import:
-      - optional:nacos:common.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - optional:nacos:database.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - optional:nacos:cache.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - optional:nacos:message.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - optional:nacos:email.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:application.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:infrastructure.yaml?group=DEFAULT_GROUP&refreshEnabled=true
       - optional:nacos:ai.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-      - optional:nacos:sensitive.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+      - optional:nacos:secret.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 
   cloud:
     nacos:
       server-addr: 192.168.131.128:8848
       username: nacos
       password: nacos
-      namespace: OWL
+      namespace: dev

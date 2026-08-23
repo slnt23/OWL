@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author slnt23
  * @since 2026-04-12 20:43:32
  */
-@Service
+@Service("sugarcaneCategoryServiceImpl")
 public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, CategoryDO> implements CategoryService {
 
 }
