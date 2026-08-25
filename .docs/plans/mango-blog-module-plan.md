@@ -11,9 +11,8 @@
 
 OWL 需要新增个人博客模块，代号 mango（替代此前 [ADR-004](ADR-004-个人博客模块设计.md) 使用的 kiwi）。前端模块 `src/modules/blog` 当前全部数据为硬编码常量（`constants/posts.ts`、`constants/education.ts`、`constants/skills.ts`），未接入任何后端接口。
 
-本文档结合两份输入汇总为综合方案：
+本文档结合既有架构决策汇总为综合方案：
 
-- 前端侧接口与数据设计稿：[Blog 模块后端设计](../design-input/Blog模块后端设计.md)
 - 既有架构决策：[ADR-004 个人博客模块设计](ADR-004-个人博客模块设计.md)
 
 目标：
@@ -475,7 +474,6 @@ watermelon/mango/src/main/java/xyz/nanian/owl/mango/
 
 ## 相关文档
 
-- [Blog 模块后端设计（前端输入）](../design-input/Blog模块后端设计.md)
 - [ADR-006 个人博客模块（mango）设计](ADR-006-个人博客模块（mango）设计.md)
 - [ADR-004 个人博客模块设计（已废弃）](ADR-004-个人博客模块设计.md)
 - [mango canonical DDL](../database/OWL/mango/mango_db.sql)

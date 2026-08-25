@@ -12,6 +12,7 @@
 - 主键：`BIGINT UNSIGNED AUTO_INCREMENT`；UUID 场景使用 `CHAR(36)`。
 - 索引：`idx_<table>_<column>`，唯一索引 `uk_<table>_<column>`，外键 `fk_<table>_<column>`。
 - canonical DDL 只包含 `CREATE TABLE`，历史 `ALTER` 已合并进建表语句。
+- 详细命名规范见 [数据库表命名规范](../../spec/database-naming-convention.md)。
 
 ## 执行顺序
 

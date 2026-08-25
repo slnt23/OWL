@@ -1,12 +1,12 @@
 # OWL 公共模块架构说明
 
-| 属性 | 值 |
-| --- | --- |
-| 状态 | 已批准 |
-| 负责人 | 仓库 Owner |
+| 属性     | 值         |
+| -------- | ---------- |
+| 状态     | 已批准     |
+| 负责人   | 仓库 Owner |
 | 创建时间 | 2026-08-16 |
 | 更新时间 | 2026-08-16 |
-| 适用版本 | 0.0.1 |
+| 适用版本 | 0.0.1      |
 
 ## 背景与目标
 
@@ -22,13 +22,13 @@ OWL 是 Spring Boot 4.1 + Java 25 的多模块 Maven 项目。
 
 ## 模块总览
 
-| 模块 | artifactId | 定位 | 核心依赖 |
-| --- | --- | --- | --- |
-| `common` | `common` | 统一返回、异常、安全认证、邮件、公共配置、工具 | Spring Boot Web、Security、Mail、MyBatis-Plus、JWT、Knife4j |
-| `infra` | `infra` | Redis、RabbitMQ、Nacos、MinIO、布隆过滤器 | Spring Data Redis、AMQP、Nacos、MinIO |
-| `log` | `log` | 操作日志、traceId、日志异步落库 | `common`、`infra` |
-| `api` | `api` | 跨业务模块共享的领域模型与 Mapper | `common`、`infra`、`log`、Web MVC、Validation |
-| `start` | `start` | 可运行入口，聚合全部业务模块 | 各业务模块 |
+| 模块     | artifactId | 定位                                           | 核心依赖                                                    |
+| -------- | ---------- | ---------------------------------------------- | ----------------------------------------------------------- |
+| `common` | `common`   | 统一返回、异常、安全认证、邮件、公共配置、工具 | Spring Boot Web、Security、Mail、MyBatis-Plus、JWT、Knife4j |
+| `infra`  | `infra`    | Redis、RabbitMQ、Nacos、MinIO、布隆过滤器      | Spring Data Redis、AMQP、Nacos、MinIO                       |
+| `log`    | `log`      | 操作日志、traceId、日志异步落库                | `common`、`infra`                                           |
+| `api`    | `api`      | 跨业务模块共享的领域模型与 Mapper              | `common`、`infra`、`log`、Web MVC、Validation               |
+| `start`  | `start`    | 可运行入口，聚合全部业务模块                   | 各业务模块                                                  |
 
 依赖方向如下：
 
@@ -71,30 +71,30 @@ flowchart LR
 
 ### 2. 能力清单
 
-| 包 / 类 | 作用 |
-| --- | --- |
-| `common.result.Result<T>` | 统一响应包装：`code`、`message`、`data`，提供 `success`、`fail`、`create` 等静态工厂方法 |
-| `common.result.ResultPage<T>` | 分页响应包装：页码、每页条数、总数、总页数、记录列表 |
-| `common.result.ResultStatus` | 统一状态码枚举：HTTP 状态、9xxx 业务状态、401xxx Token 状态 |
-| `common.exception.BizException` | 携带业务状态码的运行时业务异常 |
-| `common.exception.GlobalExceptionHandler` | 全局异常处理：业务异常、参数校验、权限、唯一键冲突、404、405、上传超限、兜底异常 |
-| `common.exception.RestErrorController` | 接管 `/error`，未知路径和静态资源始终返回 JSON，不暴露 Whitelabel 页面 |
-| `common.security.JwtTokenProvider` | 生成和解析 JWT，包含 `jti`、`tokenVersion`、用户信息等 Claims |
-| `common.security.JwtAuthenticationFilter` | 解析 `Authorization: Bearer <token>`，校验 token 版本与撤销状态，写入 SecurityContext |
-| `common.security.SecurityConfig` | Spring Security 配置：无状态、CORS、白名单、角色鉴权、方法级安全 |
-| `common.security.CurrentUserContext` | 基于 ThreadLocal 的当前登录用户上下文，业务代码获取 `userId`、`userCode`、`roleName` |
-| `common.security.LoginUser` | 登录用户模型：用户 ID、用户编码、邮箱、角色名 |
-| `common.security.TokenRevocationService` | Token 撤销与版本控制接口，由业务模块提供 Redis 等实现 |
-| `common.security.RestAuthenticationEntryPoint` | 未认证或 Token 无效时返回 JSON 401 |
-| `common.security.RestAccessDeniedHandler` | 已认证但无权限时返回 JSON 403 |
-| `common.mail.MailService` / `MailMessage` | 通用邮件接口与消息模型，支持发件人名称、回复地址、HTML、抄送、密送 |
-| `common.mail.impl.MailServiceImpl` | 基于 Spring `JavaMailSender` 的邮件实现 |
-| `common.config.JacksonConfig` | 补充 Jackson 2 `ObjectMapper` Bean，兼容 Boot 4 默认 Jackson 3 |
-| `common.config.MybatisPlusConfig` | MyBatis-Plus 分页插件与乐观锁插件 |
-| `common.config.SpringdocConfig` | OpenAPI 全局信息、JWT 安全方案、按业务模块分组 |
-| `common.config.WebMvcConfig` | 全局 CORS 配置 |
-| `common.domain.dto.PageDTO` | 通用分页入参，默认页码 1、每页 10 条 |
-| `common.utils.regex.RegexUtil` | 手机号、邮箱、密码、验证码正则校验 |
+| 包 / 类                                        | 作用                                                                                     |
+| ---------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `common.result.Result<T>`                      | 统一响应包装：`code`、`message`、`data`，提供 `success`、`fail`、`create` 等静态工厂方法 |
+| `common.result.ResultPage<T>`                  | 分页响应包装：页码、每页条数、总数、总页数、记录列表                                     |
+| `common.result.ResultStatus`                   | 统一状态码枚举：HTTP 状态、9xxx 业务状态、401xxx Token 状态                              |
+| `common.exception.BizException`                | 携带业务状态码的运行时业务异常                                                           |
+| `common.exception.GlobalExceptionHandler`      | 全局异常处理：业务异常、参数校验、权限、唯一键冲突、404、405、上传超限、兜底异常         |
+| `common.exception.RestErrorController`         | 接管 `/error`，未知路径和静态资源始终返回 JSON，不暴露 Whitelabel 页面                   |
+| `common.security.JwtTokenProvider`             | 生成和解析 JWT，包含 `jti`、`tokenVersion`、用户信息等 Claims                            |
+| `common.security.JwtAuthenticationFilter`      | 解析 `Authorization: Bearer <token>`，校验 token 版本与撤销状态，写入 SecurityContext    |
+| `common.security.SecurityConfig`               | Spring Security 配置：无状态、CORS、白名单、角色鉴权、方法级安全                         |
+| `common.security.CurrentUserContext`           | 基于 ThreadLocal 的当前登录用户上下文，业务代码获取 `userId`、`userCode`、`roleName`     |
+| `common.security.LoginUser`                    | 登录用户模型：用户 ID、用户编码、邮箱、角色名                                            |
+| `common.security.TokenRevocationService`       | Token 撤销与版本控制接口，由业务模块提供 Redis 等实现                                    |
+| `common.security.RestAuthenticationEntryPoint` | 未认证或 Token 无效时返回 JSON 401                                                       |
+| `common.security.RestAccessDeniedHandler`      | 已认证但无权限时返回 JSON 403                                                            |
+| `common.mail.MailService` / `MailMessage`      | 通用邮件接口与消息模型，支持发件人名称、回复地址、HTML、抄送、密送                       |
+| `common.mail.impl.MailServiceImpl`             | 基于 Spring `JavaMailSender` 的邮件实现                                                  |
+| `common.config.JacksonConfig`                  | 补充 Jackson 2 `ObjectMapper` Bean，兼容 Boot 4 默认 Jackson 3                           |
+| `common.config.MybatisPlusConfig`              | MyBatis-Plus 分页插件与乐观锁插件                                                        |
+| `common.config.SpringdocConfig`                | OpenAPI 全局信息、JWT 安全方案、按业务模块分组                                           |
+| `common.config.WebMvcConfig`                   | 全局 CORS 配置                                                                           |
+| `common.domain.dto.PageDTO`                    | 通用分页入参，默认页码 1、每页 10 条                                                     |
+| `common.utils.regex.RegexUtil`                 | 手机号、邮箱、密码、验证码正则校验                                                       |
 
 ### 3. 统一返回与状态码
 
@@ -159,18 +159,18 @@ flowchart LR
 
 ### 2. 能力清单
 
-| 包 / 类 | 作用 |
-| --- | --- |
-| `infra.redis.config.RedisConfig` | RedisTemplate、StringRedisTemplate、Spring Cache、Redis 缓存序列化 |
-| `infra.rabbitmq.config.OperationLogMqConfig` | 操作日志队列、交换机、绑定关系、JSON 消息转换器 |
-| `infra.rabbitmq.constant.RabbitMQConstant` | RabbitMQ 队列、交换机、路由键常量 |
-| `infra.minio.config.MinioConfig` | 根据配置创建 `MinioClient` |
-| `infra.minio.properties.MinioProperties` | `storage.minio` 配置绑定，支持多 Bucket |
-| `infra.minio.constant.MinioConstant` | 头像、图片、视频、文档等 Bucket 常量 |
-| `infra.minio.service.FileStorageService` | 文件上传、预签名 URL、删除的统一接口 |
-| `infra.minio.service.impl.MinioFileServiceImpl` | MinIO 实现：启动自动建桶、日期目录 + UUID 存储、URL 有效期控制 |
-| `infra.bloom.service.BloomFilterService` | 布隆过滤器统一接口 |
-| `infra.bloom.service.Impl.GuavaBloomFilterServiceImpl` | 基于 Guava 的内存布隆过滤器，防缓存穿透 |
+| 包 / 类                                                | 作用                                                               |
+| ------------------------------------------------------ | ------------------------------------------------------------------ |
+| `infra.redis.config.RedisConfig`                       | RedisTemplate、StringRedisTemplate、Spring Cache、Redis 缓存序列化 |
+| `infra.rabbitmq.config.OperationLogMqConfig`           | 操作日志队列、交换机、绑定关系、JSON 消息转换器                    |
+| `infra.rabbitmq.constant.RabbitMQConstant`             | RabbitMQ 队列、交换机、路由键常量                                  |
+| `infra.minio.config.MinioConfig`                       | 根据配置创建 `MinioClient`                                         |
+| `infra.minio.properties.MinioProperties`               | `storage.minio` 配置绑定，支持多 Bucket                            |
+| `infra.minio.constant.MinioConstant`                   | 头像、图片、视频、文档等 Bucket 常量                               |
+| `infra.minio.service.FileStorageService`               | 文件上传、预签名 URL、删除的统一接口                               |
+| `infra.minio.service.impl.MinioFileServiceImpl`        | MinIO 实现：启动自动建桶、日期目录 + UUID 存储、URL 有效期控制     |
+| `infra.bloom.service.BloomFilterService`               | 布隆过滤器统一接口                                                 |
+| `infra.bloom.service.Impl.GuavaBloomFilterServiceImpl` | 基于 Guava 的内存布隆过滤器，防缓存穿透                            |
 
 ### 3. Redis 能力
 
@@ -246,20 +246,20 @@ flowchart LR
 
 ### 2. 能力清单
 
-| 包 / 类 | 作用 |
-| --- | --- |
-| `log.annotation.OperationLog` | 方法级操作日志注解，声明类型、模块、动作、是否落库 |
-| `log.aspect.OperationLogAspect` | AOP 拦截 `@OperationLog`，记录成功状态、耗时、操作人、traceId |
-| `log.filter.TraceIdFilter` | 每个请求生成或透传 traceId，写入 MDC 和响应头 |
-| `log.constant.LogType` | 日志类型：`BIZ`、`USER`、`ADMIN` |
-| `log.domain.message.OperationLogMessage` | 发送到 RabbitMQ 的日志消息 |
-| `log.domain.entity.BizLogDO` | `biz_log` 业务日志实体 |
-| `log.domain.entity.UserLogDO` | `user_log` 用户操作日志实体 |
-| `log.domain.entity.AdminLogDO` | `admin_log` 管理员操作日志实体 |
-| `log.mapper.*` | 三类日志表的 MyBatis-Plus Mapper |
-| `log.service.OperationLogRecordService` | 操作日志落库接口 |
-| `log.service.impl.OperationLogRecordServiceImpl` | RabbitMQ 消费者，按日志类型写入对应表 |
-| `log.config.LogAutoConfiguration` | 日志模块自动配置标记类 |
+| 包 / 类                                          | 作用                                                          |
+| ------------------------------------------------ | ------------------------------------------------------------- |
+| `log.annotation.OperationLog`                    | 方法级操作日志注解，声明类型、模块、动作、是否落库            |
+| `log.aspect.OperationLogAspect`                  | AOP 拦截 `@OperationLog`，记录成功状态、耗时、操作人、traceId |
+| `log.filter.TraceIdFilter`                       | 每个请求生成或透传 traceId，写入 MDC 和响应头                 |
+| `log.constant.LogType`                           | 日志类型：`BIZ`、`USER`、`ADMIN`                              |
+| `log.domain.message.OperationLogMessage`         | 发送到 RabbitMQ 的日志消息                                    |
+| `log.domain.entity.BizLogDO`                     | `biz_log` 业务日志实体                                        |
+| `log.domain.entity.UserLogDO`                    | `user_log` 用户操作日志实体                                   |
+| `log.domain.entity.AdminLogDO`                   | `admin_log` 管理员操作日志实体                                |
+| `log.mapper.*`                                   | 三类日志表的 MyBatis-Plus Mapper                              |
+| `log.service.OperationLogRecordService`          | 操作日志落库接口                                              |
+| `log.service.impl.OperationLogRecordServiceImpl` | RabbitMQ 消费者，按日志类型写入对应表                         |
+| `log.config.LogAutoConfiguration`                | 日志模块自动配置标记类                                        |
 
 ### 3. 工作流程
 
@@ -308,10 +308,10 @@ public void createRole(...) {
 
 ### 2. 能力清单
 
-| 包 / 类 | 作用 |
-| --- | --- |
+| 包 / 类                    | 作用                                                      |
+| -------------------------- | --------------------------------------------------------- |
 | `api.domain.entity.RoleDO` | `role` 表共享实体：角色名、描述、启用状态、创建与更新时间 |
-| `api.mapper.RoleMapper` | 角色表 MyBatis-Plus Mapper |
+| `api.mapper.RoleMapper`    | 角色表 MyBatis-Plus Mapper                                |
 
 ### 3. 为什么单独放 api
 
@@ -341,14 +341,14 @@ public void createRole(...) {
 
 ### 2. 能力清单
 
-| 文件 | 作用 |
-| --- | --- |
+| 文件                    | 作用                                                                  |
+| ----------------------- | --------------------------------------------------------------------- |
 | `StartApplication.java` | `@SpringBootApplication` + `@EnableRabbit`，扫描根包 `xyz.nanian.owl` |
-| `application.yaml` | 应用名、默认 dev profile、Nacos 地址与配置导入 |
-| `application-dev.yml` | 开发环境日志级别 |
-| `application-prod.yml` | 生产环境环境变量模板 |
-| `bootstrap.yml` | Nacos Config / Discovery 模板，当前已注释 |
-| `logback-spring.xml.1` | Logback 配置模板，启用后输出 traceId |
+| `application.yaml`      | 应用名、默认 dev profile、Nacos 地址与配置导入                        |
+| `application-dev.yml`   | 开发环境日志级别                                                      |
+| `application-prod.yml`  | 生产环境环境变量模板                                                  |
+| `bootstrap.yml`         | Nacos Config / Discovery 模板，当前已注释                             |
+| `logback-spring.xml.1`  | Logback 配置模板，启用后输出 traceId                                  |
 
 ### 3. 启动注意
 
@@ -388,13 +388,13 @@ public void createRole(...) {
 
 ## 七、新增公共能力时的放置建议
 
-| 能力类型 | 放置位置 |
-| --- | --- |
-| 统一返回、异常、认证、邮件、通用配置 | `common` |
-| Redis、MQ、Nacos、对象存储、缓存穿透 | `infra` |
-| 操作日志、traceId、日志落库 | `log` |
-| 多个业务模块共享的实体 / Mapper / 服务 | `api` |
-| 运行入口、环境配置、Nacos 导入 | `start` |
+| 能力类型                               | 放置位置 |
+| -------------------------------------- | -------- |
+| 统一返回、异常、认证、邮件、通用配置   | `common` |
+| Redis、MQ、Nacos、对象存储、缓存穿透   | `infra`  |
+| 操作日志、traceId、日志落库            | `log`    |
+| 多个业务模块共享的实体 / Mapper / 服务 | `api`    |
+| 运行入口、环境配置、Nacos 导入         | `start`  |
 
 新增模块时优先复用现有公共能力，不要在每个业务模块里重复实现。
 
@@ -405,5 +405,5 @@ public void createRole(...) {
 ## 相关文档
 
 - [OWL 文档中心](../README.md)
-- [OWL 文档编写规范](../design-standards/documentation-standard.md)
+- [OWL 文档编写规范](documentation-standard.md)
 - [新模块添加指南](新模块开发指南.md)

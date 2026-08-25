@@ -9,7 +9,7 @@
 
 ## 背景
 
-OWL 需要新增个人博客模块。前端模块 `src/modules/blog` 已按真实页面提出后端接口与数据设计稿（见 [Blog 模块后端设计](../design-input/Blog模块后端设计.md)），需要确定后端模块的代号、落点、数据模型与接口契约。此前 [ADR-004](ADR-004-个人博客模块设计.md) 以代号 kiwi 提出过一版设计，本文档基于前端设计稿对其进行合并与修订，并作为该决策的替代。
+OWL 需要新增个人博客模块。前端模块 `src/modules/blog` 已按真实页面提出后端接口与数据需求，需要确定后端模块的代号、落点、数据模型与接口契约。此前 [ADR-004](ADR-004-个人博客模块设计.md) 以代号 kiwi 提出过一版设计，本文档基于前端需求对其进行合并与修订，并作为该决策的替代。
 
 ## 决策
 
@@ -83,5 +83,4 @@ OWL 需要新增个人博客模块。前端模块 `src/modules/blog` 已按真�
 
 - [mango 博客模块开发计划](../plans/mango-blog-module-plan.md)（综合方案与实施步骤）
 - [ADR-004 个人博客模块设计（已废弃）](ADR-004-个人博客模块设计.md)
-- [Blog 模块后端设计（前端输入）](../design-input/Blog模块后端设计.md)
 - [mango canonical DDL](../database/OWL/mango/mango_db.sql)
