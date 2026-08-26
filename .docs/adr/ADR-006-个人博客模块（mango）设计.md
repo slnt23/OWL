@@ -68,7 +68,7 @@ OWL 需要新增个人博客模块。前端模块 `src/modules/blog` 已按真�
 
 ## 后果
 
-- 新增 8 张表，依赖 `user` 表（`blog_post.created_by`）。
+- 新增 8 张表，依赖 `user_account` 表（`blog_post.created_by`）。
 - 评论、RSS、全文检索、服务端 Markdown 渲染不在 v1 范围，后续单独迭代。
 - 前端需将 `constants/` 硬编码数据替换为接口调用，时间字段名对齐为 `publishTime` / `createTime`。
 

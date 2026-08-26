@@ -8,7 +8,7 @@
 -- ------------------------------------------------------
 -- 1. 首页焦点展示项目表
 -- ------------------------------------------------------
-CREATE TABLE spotlight
+CREATE TABLE admin_spotlight
 (
     id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
     eyebrow     VARCHAR(100) NOT NULL COMMENT '眉题/前置标题',
@@ -22,7 +22,7 @@ CREATE TABLE spotlight
     update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
     PRIMARY KEY (id),
-    KEY idx_spotlight_sort_order (sort_order)
+    KEY idx_admin_spotlight_sort_order (sort_order)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci
@@ -31,7 +31,7 @@ CREATE TABLE spotlight
 -- ------------------------------------------------------
 -- 2. 产品特性展示表
 -- ------------------------------------------------------
-CREATE TABLE feature
+CREATE TABLE admin_feature
 (
     id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
     icon        VARCHAR(500) NOT NULL COMMENT '图标标识',

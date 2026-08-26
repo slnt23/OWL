@@ -21,7 +21,7 @@ public class CaishenFundWatchDO {
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 用户 ID，关联 user.id */
+    /** 用户 ID，关联 user_account.id */
     @TableField("user_id")
     private Long userId;
 

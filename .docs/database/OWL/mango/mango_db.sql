@@ -4,7 +4,7 @@
 -- MySQL 版本：8.4
 -- 说明：博客文章/分类/标签/个人信息/教育/技能由 mango 模块维护。
 --       表名沿用 blog_ 前缀，与前端 src/modules/blog 语义对齐。
---       依赖 user 模块的 user 表（blog_post.created_by）。
+--       依赖 user 模块的 user_account 表（blog_post.created_by）。
 -- ======================================================
 
 -- ------------------------------------------------------
@@ -76,7 +76,7 @@ CREATE TABLE blog_post
     KEY idx_blog_post_is_published (is_published),
     KEY idx_blog_post_created_by (created_by),
     CONSTRAINT fk_blog_post_category FOREIGN KEY (category_id) REFERENCES blog_category (id) ON DELETE SET NULL,
-    CONSTRAINT fk_blog_post_user FOREIGN KEY (created_by) REFERENCES user (id) ON DELETE RESTRICT
+    CONSTRAINT fk_blog_post_created_by FOREIGN KEY (created_by) REFERENCES user_account (id) ON DELETE RESTRICT
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci

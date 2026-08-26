@@ -21,7 +21,7 @@
 
 ### 2. 消息"先存后聊"模式
 
-**选择**：用户消息先落库（`message` 表），再查历史消息组装 context，最后调 AI。AI 回复也落库。
+**选择**：用户消息先落库（`agent_message` 表），再查历史消息组装 context，最后调 AI。AI 回复也落库。
 
 **原因**：
 - 保证消息不丢失，即使 AI 调用失败，用户消息已存
@@ -50,7 +50,7 @@
 
 ### 5. Conversation 管理：UUID 主键 + 软删除 + Token 追踪
 
-**选择**：会话表 `conversation` 使用 UUID 字符串作为主键（`IdType.INPUT`），而非自增 ID。支持软删除（`@TableLogic`），记录累计 token 消耗（`total_tokens`）。
+**选择**：会话表 `agent_conversation` 使用 UUID 字符串作为主键（`IdType.INPUT`），而非自增 ID。支持软删除（`@TableLogic`），记录累计 token 消耗（`total_tokens`）。
 
 **原因**：
 - UUID 避免客户端可枚举会话 ID，安全性更好
@@ -59,7 +59,7 @@
 
 ## 后果
 
-- 需要维护 `message` 和 `conversation` 两张表
+- 需要维护 `agent_message` 和 `agent_conversation` 两张表
 - Skill 系统依赖 MinIO，本地开发需启动 MinIO 或 mock
 - 流式调用对前端有要求（需支持 SSE/EventSource）
 - Token 统计依赖 AI 返回的 Usage，部分模型可能不返回

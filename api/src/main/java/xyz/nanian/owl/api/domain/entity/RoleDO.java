@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@TableName("role")
+@TableName("user_role")
 @Schema(name = "RoleDO对象", description = "角色表")
 public class RoleDO implements Serializable {
 

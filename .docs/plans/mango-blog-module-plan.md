@@ -63,7 +63,7 @@ OWL 需要新增个人博客模块，代号 mango（替代此前 [ADR-004](ADR-0
 ```mermaid
 erDiagram
     blog_category ||--o{ blog_post : "分类"
-    user ||--o{ blog_post : "作者"
+user_account ||--o{ blog_post : "作者"
     blog_post ||--o{ blog_post_tag : "包含"
     blog_tag ||--o{ blog_post_tag : "被关联"
     blog_skill_category ||--o{ blog_skill_item : "包含"
@@ -128,7 +128,7 @@ canonical DDL 见 [`database/OWL/mango/mango_db.sql`](../database/OWL/mango/mang
 - 时间字段统一为 `create_time` / `update_time`，发布时间为 `publish_time`（VO 序列化为 `createTime` / `updateTime` / `publishTime`）。
 - 主键 `BIGINT UNSIGNED AUTO_INCREMENT`；`blog_profile` 为固定单行，主键固定为 1。
 - 索引 `idx_<table>_<column>`，唯一索引 `uk_<table>_<column>`，外键 `fk_<table>_<referenced>`。
-- 作者字段 `created_by` 外键关联 `user.id`，删除行为 `RESTRICT`。
+- 作者字段 `created_by` 外键关联 `user_account.id`，删除行为 `RESTRICT`。
 
 ### 表结构要点
 
@@ -136,7 +136,7 @@ canonical DDL 见 [`database/OWL/mango/mango_db.sql`](../database/OWL/mango/mang
 | ----------------- | --------------------------------------- | ------------------------------------------------- |
 | `blog_post`       | `slug`                                  | `UNIQUE NOT NULL`，服务端自动生成兜底             |
 |                   | `category_id`                           | 外键 `blog_category.id`，删除分类置空             |
-|                   | `created_by`                            | 外键 `user.id`，作者                              |
+|                   | `created_by`                            | 外键 `user_account.id`，作者                      |
 |                   | `is_published` / `is_top`               | `TINYINT(1)`，草稿与置顶                          |
 |                   | `publish_time`                          | 发布展示时间，独立于 `create_time`                |
 | `blog_post_tag`   | `id` 自增主键，`(post_id, tag_id)` 唯一 | 唯一约束保证不重复，两端级联删除                  |

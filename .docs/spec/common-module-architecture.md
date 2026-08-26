@@ -310,7 +310,7 @@ public void createRole(...) {
 
 | 包 / 类                    | 作用                                                      |
 | -------------------------- | --------------------------------------------------------- |
-| `api.domain.entity.RoleDO` | `role` 表共享实体：角色名、描述、启用状态、创建与更新时间 |
+| `api.domain.entity.RoleDO` | `user_role` 表共享实体：角色名、描述、启用状态、创建与更新时间 |
 | `api.mapper.RoleMapper`    | 角色表 MyBatis-Plus Mapper                                |
 
 ### 3. 为什么单独放 api
@@ -375,7 +375,7 @@ public void createRole(...) {
 
 ### 2. 后台角色管理
 
-1. `administration` 使用 `api.mapper.RoleMapper` 操作 `role` 表。
+1. `administration` 使用 `api.mapper.RoleMapper` 操作 `user_role` 表。
 2. 用户登录时也使用同一 `RoleDO`，保证角色名一致。
 3. 写操作添加 `@OperationLog`，日志通过 RabbitMQ 异步落库。
 

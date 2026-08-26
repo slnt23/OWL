@@ -2,14 +2,14 @@
 -- OWL 数据库：user 模块 canonical DDL
 -- 模块：user
 -- MySQL 版本：8.4
--- 说明：role / user / user_address 由 user 模块维护，
---       api 与 administration 复用 role 表。
+-- 说明：user_role / user_account / user_address 由 user 模块维护，
+--       api 与 administration 复用 user_role 表。
 -- ======================================================
 
 -- ------------------------------------------------------
 -- 1. 角色表
 -- ------------------------------------------------------
-CREATE TABLE role
+CREATE TABLE user_role
 (
     id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
     role_name   VARCHAR(100) NOT NULL COMMENT '角色名称',
@@ -19,7 +19,7 @@ CREATE TABLE role
     update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
     PRIMARY KEY (id),
-    UNIQUE KEY uk_role_name (role_name)
+    UNIQUE KEY uk_user_role_role_name (role_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci
@@ -28,7 +28,7 @@ CREATE TABLE role
 -- ------------------------------------------------------
 -- 2. 用户表
 -- ------------------------------------------------------
-CREATE TABLE user
+CREATE TABLE user_account
 (
     id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
     user_code   VARCHAR(64)      NOT NULL COMMENT '账号编号',
@@ -45,12 +45,12 @@ CREATE TABLE user
     update_time DATETIME         NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
     PRIMARY KEY (id),
-    UNIQUE KEY uk_user_code (user_code),
-    UNIQUE KEY uk_username (username),
-    UNIQUE KEY uk_phone (phone),
-    UNIQUE KEY uk_email (email),
-    KEY idx_role_name (role_name),
-    CONSTRAINT fk_user_role FOREIGN KEY (role_name) REFERENCES role (role_name) ON DELETE RESTRICT
+    UNIQUE KEY uk_user_account_user_code (user_code),
+    UNIQUE KEY uk_user_account_username (username),
+    UNIQUE KEY uk_user_account_phone (phone),
+    UNIQUE KEY uk_user_account_email (email),
+    KEY idx_user_account_role_name (role_name),
+    CONSTRAINT fk_user_account_role_name FOREIGN KEY (role_name) REFERENCES user_role (role_name) ON DELETE RESTRICT
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci
@@ -74,8 +74,8 @@ CREATE TABLE user_address
     update_time    DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
 
     PRIMARY KEY (id),
-    KEY idx_user_id (user_id),
-    CONSTRAINT fk_user_address_user FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+    KEY idx_user_address_user_id (user_id),
+    CONSTRAINT fk_user_address_user_id FOREIGN KEY (user_id) REFERENCES user_account (id) ON DELETE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci

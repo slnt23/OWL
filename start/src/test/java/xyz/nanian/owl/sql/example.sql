@@ -1,4 +1,4 @@
-INSERT INTO feature (icon, title, description, sort_order)
+INSERT INTO admin_feature (icon, title, description, sort_order)
 VALUES ('01', '高性能处理器', '搭载最新旗舰芯片，采用4nm先进制程，性能提升200%，功耗降低40%', 1),
        ('02', '超清影像系统', '后置5000万像素三摄，支持8K视频录制和100倍数字变焦', 2),
        ('03', '长续航电池', '内置5000mAh大容量电池，支持120W超级闪充，10分钟充至50%', 3),
@@ -7,7 +7,3 @@ VALUES ('01', '高性能处理器', '搭载最新旗舰芯片，采用4nm先进�
        ('06', '5G双模全网通', '支持SA/NSA双模5G，覆盖全球主流频段，随时随地高速上网', 6),
        ('07', '立体双扬声器', '杜比全景声认证，Hi-Res高解析音频，带来影院级听觉盛宴', 7),
        ('08', '安全隐私防护', '独立安全芯片，多重生物识别，全方位守护您的数据安全', 8);
-
-
--- 修改 role 字段类型为 varchar，长度建议根据你的业务调整，这里用 20 作为示例
-# ALTER TABLE `user` MODIFY COLUMN `role` VARCHAR(20) COMMENT '角色: 0=用户, 1=商家, 2=管理员';

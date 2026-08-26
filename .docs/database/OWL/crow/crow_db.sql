@@ -7,7 +7,7 @@
 -- ------------------------------------------------------
 -- 1. 对话会话表
 -- ------------------------------------------------------
-CREATE TABLE conversation
+CREATE TABLE agent_conversation
 (
     id           CHAR(36)     NOT NULL COMMENT '会话ID（UUID，主键）',
     user_code    VARCHAR(64)  NOT NULL COMMENT '用户账号编号',
@@ -18,9 +18,9 @@ CREATE TABLE conversation
     update_time  DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
 
     PRIMARY KEY (id),
-    KEY idx_conversation_user_code (user_code),
-    KEY idx_conversation_create_time (create_time),
-    KEY idx_conversation_deleted (deleted)
+    KEY idx_agent_conversation_user_code (user_code),
+    KEY idx_agent_conversation_create_time (create_time),
+    KEY idx_agent_conversation_deleted (deleted)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci
@@ -29,7 +29,7 @@ CREATE TABLE conversation
 -- ------------------------------------------------------
 -- 2. 对话消息表
 -- ------------------------------------------------------
-CREATE TABLE message
+CREATE TABLE agent_message
 (
     id                BIGINT UNSIGNED AUTO_INCREMENT COMMENT '消息主键',
     conversation_id   CHAR(36)     NOT NULL COMMENT '所属会话ID',
@@ -43,12 +43,12 @@ CREATE TABLE message
     create_time       DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
 
     PRIMARY KEY (id),
-    KEY idx_message_conversation_id (conversation_id),
-    KEY idx_message_create_time (create_time),
-    KEY idx_message_model (model),
-    KEY idx_message_finish_reason (finish_reason),
-    CONSTRAINT fk_message_conversation FOREIGN KEY (conversation_id)
-        REFERENCES conversation (id) ON DELETE CASCADE ON UPDATE CASCADE
+    KEY idx_agent_message_conversation_id (conversation_id),
+    KEY idx_agent_message_create_time (create_time),
+    KEY idx_agent_message_model (model),
+    KEY idx_agent_message_finish_reason (finish_reason),
+    CONSTRAINT fk_agent_message_conversation_id FOREIGN KEY (conversation_id)
+        REFERENCES agent_conversation (id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci

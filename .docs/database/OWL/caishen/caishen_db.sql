@@ -55,7 +55,7 @@ CREATE TABLE caishen_fund_nav
 CREATE TABLE caishen_fund_watch
 (
     id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
-    user_id     BIGINT      NOT NULL COMMENT '用户ID，关联 user.id',
+    user_id     BIGINT      NOT NULL COMMENT '用户ID，关联 user_account.id',
     fund_code   VARCHAR(20) NOT NULL COMMENT '基金代码',
     remark      VARCHAR(200) COMMENT '用户备注，如"定投基金"',
     create_time DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -100,7 +100,7 @@ CREATE TABLE caishen_fund_alert
 CREATE TABLE caishen_summary
 (
     id              BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
-    user_id         BIGINT      NOT NULL COMMENT '用户ID，关联 user.id',
+    user_id         BIGINT      NOT NULL COMMENT '用户ID，关联 user_account.id',
     period_type     VARCHAR(10) NOT NULL COMMENT '周期类型：DAILY/WEEKLY/MONTHLY',
     start_date      DATE        NOT NULL COMMENT '统计开始日期',
     end_date        DATE        NOT NULL COMMENT '统计结束日期',

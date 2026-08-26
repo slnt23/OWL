@@ -65,7 +65,7 @@ sequenceDiagram
     participant DB as caishen_fund_nav
     participant Alert as AlertService
     participant Mail as MailService
-    participant User as user 表
+    participant User as user_account 表
 
     Scheduler->>Market: 定时拉取所有被关注基金的最新净值
     Market-->>Scheduler: 净值数据列表
@@ -88,7 +88,7 @@ sequenceDiagram
     participant AI as AssetAnalysisClient
     participant DB as caishen_summary
     participant Mail as MailService
-    participant User as user 表
+    participant User as user_account 表
 
     Scheduler->>Summary: 定时为用户生成关注基金区间总结
     Summary->>DB: 查询用户关注基金的净值区间数据
@@ -107,11 +107,11 @@ V1 只需 5 张表，相比旧方案去掉 `caishen_stock`、`caishen_stock_dail
 
 ```mermaid
 erDiagram
-    user ||--o{ caishen_fund_watch : "关注"
+user_account ||--o{ caishen_fund_watch : "关注"
     caishen_fund ||--o{ caishen_fund_nav : "净值历史"
     caishen_fund ||--o{ caishen_fund_watch : "被关注"
     caishen_fund_watch ||--o{ caishen_fund_alert : "提醒规则"
-    user ||--o{ caishen_summary : "总结"
+user_account ||--o{ caishen_summary : "总结"
 
     caishen_fund {
         bigint id PK
@@ -190,7 +190,7 @@ erDiagram
 | 字段        | 类型            | 约束               | 说明                    |
 | ----------- | --------------- | ------------------ | ----------------------- |
 | id          | BIGINT UNSIGNED | PK, AUTO_INCREMENT | 主键                    |
-| user_id     | BIGINT          | NOT NULL           | 用户 ID，关联 `user.id` |
+| user_id     | BIGINT          | NOT NULL           | 用户 ID，关联 `user_account.id` |
 | fund_code   | VARCHAR(20)     | NOT NULL           | 基金代码                |
 | remark      | VARCHAR(200)    | NULL               | 用户备注，如"定投基金"  |
 | create_time | DATETIME        | NOT NULL           | 创建时间                |
@@ -360,12 +360,12 @@ public interface AssetAnalysisClient {
 
 ### 邮件发送
 
-复用 `common` 模块的 `MailService`，收件人邮箱从 `user` 表的 `email` 字段获取（用户注册时初始化）。
+复用 `common` 模块的 `MailService`，收件人邮箱从 `user_account` 表的 `email` 字段获取（用户注册时初始化）。
 
 提醒邮件示例：
 
 ```
-收件人：user.email
+收件人：user_account.email
 主题：【OWL 理财提醒】基金 000001（华夏成长）净值触及阈值
 正文（HTML）：
   您关注的基金「华夏成长（000001）」已触及您设置的提醒阈值：
@@ -379,7 +379,7 @@ public interface AssetAnalysisClient {
 总结邮件示例：
 
 ```
-收件人：user.email
+收件人：user_account.email
 主题：【OWL 理财周报】您关注的基金本周变化总结
 正文（HTML）：
   您关注的 3 只基金本周（2026-08-16 ~ 2026-08-22）变化如下：
@@ -550,7 +550,7 @@ caishen:
 - `AlertController`：提醒规则 CRUD + 重置。
 - `AlertService`：阈值检查逻辑、邮件发送。
 - 阈值检查：遍历 ACTIVE 规则，比较最新净值，触发后更新状态和 `last_triggered_at`。
-- 邮件发送：通过 `MailService.send(MailMessage)` 发送 HTML 邮件到 `user.email`。
+- 邮件发送：通过 `MailService.send(MailMessage)` 发送 HTML 邮件到 `user_account.email`。
 
 ### 阶段 6：定时调度
 

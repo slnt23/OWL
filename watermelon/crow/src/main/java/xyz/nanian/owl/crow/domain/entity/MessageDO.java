@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("message")
+@TableName("agent_message")
 public class MessageDO {
 
     /**

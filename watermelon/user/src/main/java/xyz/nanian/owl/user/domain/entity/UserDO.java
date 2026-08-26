@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 
 /**
  * 用户实体类
- * 对应数据库表：user
+ * 对应数据库表：user_account
  */
 @Data
-@TableName("user") // 指定对应的数据库表名
+@TableName("user_account")
 public class UserDO {
 
     /**
@@ -71,7 +71,7 @@ public class UserDO {
     private String remark;
 
     /**
-     * 角色名称，对应 role 表的 role_name
+     * 角色名称，对应 user_role 表的 role_name
      */
     @TableField("role_name")
     private String roleName;

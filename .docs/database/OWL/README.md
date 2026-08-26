@@ -27,12 +27,12 @@
 
 ## 模块说明
 
-- `user`：`role`、`user`、`user_address`。
+- `user`：`user_role`、`user_account`、`user_address`。
 - `log`：`user_log`、`biz_log`、`admin_log`。
-- `admin`：`spotlight`、`feature`。
-- `crow`：`conversation`、`message`。
+- `admin`：`admin_spotlight`、`admin_feature`。
+- `crow`：`agent_conversation`、`agent_message`。
 - `sugarcane`：`price_category`、`price_item`、`price_source`、`geo_location`、`price_record`、`price_item_media`。
-- `mango`：`blog_category`、`blog_tag`、`blog_post`、`blog_post_tag`、`blog_profile`、`blog_education`、`blog_skill_category`、`blog_skill_item`。`blog_post` 依赖 `user` 表，示例数据依赖 `user_init_data.sql` 中的 `admin` 用户。
-- `caishen`：`caishen_fund`、`caishen_fund_nav`、`caishen_fund_watch`、`caishen_fund_alert`、`caishen_summary`。`caishen_fund_watch.user_id` 依赖 `user` 表，`caishen_fund_alert.watch_id` 级联删除；演示种子数据见 `caishen/caishen_seed.sql`。
+- `mango`：`blog_category`、`blog_tag`、`blog_post`、`blog_post_tag`、`blog_profile`、`blog_education`、`blog_skill_category`、`blog_skill_item`。`blog_post` 依赖 `user_account` 表，示例数据依赖 `user_init_data.sql` 中的 `admin` 用户。
+- `caishen`：`caishen_fund`、`caishen_fund_nav`、`caishen_fund_watch`、`caishen_fund_alert`、`caishen_summary`。`caishen_fund_watch.user_id` 关联 `user_account` 表，`caishen_fund_alert.watch_id` 级联删除；演示种子数据见 `caishen/caishen_seed.sql`。
 
 `pitaya` 模块已废弃（暂停开发与使用），已从 Maven 构建移除；其数据库脚本和模块代码保留在 `watermelon/pitaya/` 目录，不参与构建，本次不纳入规范。

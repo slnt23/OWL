@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@TableName("spotlight")
+@TableName("admin_spotlight")
 @Schema(name = "SpotlightDO对象", description = "首页焦点展示项目表")
 public class SpotlightDO implements Serializable {
 

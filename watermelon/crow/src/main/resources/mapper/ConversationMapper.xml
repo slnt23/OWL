@@ -7,7 +7,7 @@
     </select>
 
     <update id="updateTotalTokens">
-        update conversation
+        update agent_conversation
         set total_tokens = total_tokens + #{addTokens},
             update_time  = NOW()
         where id = #{conversationId}

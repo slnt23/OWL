@@ -13,7 +13,7 @@
 -- ------------------------------------------------------
 -- 1. 角色表初始化
 -- ------------------------------------------------------
-INSERT IGNORE INTO role (role_name, description, enabled, create_time, update_time)
+INSERT IGNORE INTO user_role (role_name, description, enabled, create_time, update_time)
 VALUES ('USER', '平台普通注册用户，拥有基础浏览和购买权限', 1, NOW(), NOW()),
        ('MERCHANT', '入驻平台的商家用户，可发布商品、管理订单', 1, NOW(), NOW()),
        ('ADMIN', '系统管理员，拥有最高权限', 1, NOW(), NOW()),
@@ -22,7 +22,7 @@ VALUES ('USER', '平台普通注册用户，拥有基础浏览和购买权限', 
 -- ------------------------------------------------------
 -- 2. 用户表初始化
 -- ------------------------------------------------------
-INSERT IGNORE INTO user
+INSERT IGNORE INTO user_account
 (user_code, username, password, phone, email, avatar_url, nickname, remark, role_name, status, create_time, update_time)
 VALUES
 ('U10001', 'admin', '$2a$10$tLCILQIBySPOoDkway5MXeeMrZL4YVJKDopPjqntSFuYkGeGO5I0y',

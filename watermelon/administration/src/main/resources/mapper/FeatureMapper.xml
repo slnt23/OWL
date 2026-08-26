@@ -4,7 +4,7 @@
 
     <select id="selectLists" resultType="xyz.nanian.owl.admin.domain.entity.FeatureDO">
         select id, icon, title, description, sort_order, create_time, update_time
-        from feature
+        from admin_feature
         order by create_time desc
         limit 4
     </select>

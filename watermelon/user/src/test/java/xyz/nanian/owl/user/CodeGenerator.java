@@ -53,7 +53,7 @@ public class CodeGenerator {
 
                 .strategyConfig(builder -> {
                     builder
-                            .addInclude("role", "user_address", "user_role")
+                .addInclude("user_role", "user_account", "user_address")
 
                             .entityBuilder()
                                 .enableLombok()

@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("conversation")
+@TableName("agent_conversation")
 public class ConversationDO {
 
     /**

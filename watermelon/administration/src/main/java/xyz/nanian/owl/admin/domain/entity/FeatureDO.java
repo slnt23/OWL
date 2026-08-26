@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@TableName("feature")
+@TableName("admin_feature")
 @Schema(name = "FeatureDO对象", description = "产品特性展示表")
 public class FeatureDO implements Serializable {
 

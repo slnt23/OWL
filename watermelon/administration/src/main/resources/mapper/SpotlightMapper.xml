@@ -13,7 +13,7 @@
                target,
                create_time,
                update_time
-        from spotlight
+        from admin_spotlight
         order by create_time desc
         limit 6
     </select>

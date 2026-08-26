@@ -20,7 +20,7 @@
             role,
             content,
             create_time AS createTime
-        FROM message
+        FROM agent_message
         WHERE conversation_id = #{conversationId}
         ORDER BY create_time ASC
     </select>
@@ -37,7 +37,7 @@
             model,
             finish_reason AS finishReason,
             create_time AS createTime
-        FROM message
+        FROM agent_message
         WHERE conversation_id = #{conversationId}
         ORDER BY create_time desc
         LIMIT #{limit}

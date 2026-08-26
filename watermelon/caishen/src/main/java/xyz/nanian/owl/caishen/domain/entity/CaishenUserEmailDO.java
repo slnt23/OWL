@@ -14,7 +14,7 @@ import lombok.Data;
  * @since 2026/8/23
  */
 @Data
-@TableName("user")
+@TableName("user_account")
 public class CaishenUserEmailDO {
 
     @TableId(type = IdType.AUTO)

@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-@TableName("user")
+@TableName("user_account")
 @Schema(name= "UserDO对象", description = "用户表")
 public class UserDO implements Serializable {
 
