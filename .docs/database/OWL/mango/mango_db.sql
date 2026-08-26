@@ -133,7 +133,7 @@ CREATE TABLE blog_education
     id          BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
     school      VARCHAR(100) NOT NULL COMMENT '学校名称',
     degree      VARCHAR(200) NOT NULL COMMENT '学位/专业',
-    period      VARCHAR(100) NOT NULL COMMENT '时间段',
+    `period`    VARCHAR(100) NOT NULL COMMENT '时间段',
     sort_order  INT          NOT NULL DEFAULT 0 COMMENT '排序序号，数值越小越靠前',
     create_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
