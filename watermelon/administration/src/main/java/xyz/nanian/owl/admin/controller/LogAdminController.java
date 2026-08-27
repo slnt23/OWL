@@ -1,5 +1,6 @@
 package xyz.nanian.owl.admin.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author slnt23
  * @since 2026-04-13 23:53:18
  */
+@Tag(name = "管理员日志")
 @RestController
 @RequestMapping("/api/admin/log-do")
 public class LogAdminController {

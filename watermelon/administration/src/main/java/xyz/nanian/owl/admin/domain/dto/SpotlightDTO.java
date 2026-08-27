@@ -17,11 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 2026/4/24
  */
 @Data
-@Schema(description = "焦点展示DTO")
+@Schema(name = "焦点展示DTO")
 public class SpotlightDTO {
 
     /** 新增时不传，修改时必传 */
-    @Schema(description = "ID，新增时不传，修改时必传")
+    @Schema(description = "ID，新增时不传，修改时必传", example = "1")
     private Long id;
 
     @NotBlank(message = "眉题不能为空")

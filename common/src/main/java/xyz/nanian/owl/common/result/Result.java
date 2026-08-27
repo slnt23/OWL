@@ -2,7 +2,6 @@ package xyz.nanian.owl.common.result;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,16 +16,16 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Tag(name = "统一返回包装类")
+@Schema(name = "统一返回包装")
 public class Result<T> {
 
-    @Schema(description = "状态码" ,example = "10000")
+    @Schema(description = "状态码", example = "10000")
     private Integer code;
 
-    @Schema(description = "提示信息",example = "发送信息成功")
+    @Schema(description = "提示信息", example = "操作成功")
     private String message;
 
-    @Schema(description = "data",example = "数据")
+    @Schema(description = "返回数据")
     private T data;
 
 

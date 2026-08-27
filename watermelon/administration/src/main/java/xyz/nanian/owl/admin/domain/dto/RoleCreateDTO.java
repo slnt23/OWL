@@ -16,15 +16,15 @@ import lombok.Data;
 @Schema(name = "后台新增角色DTO")
 public class RoleCreateDTO {
 
-    @Schema(description = "角色名称")
+    @Schema(description = "角色名称", example = "管理员")
     @NotBlank(message = "角色名称不能为空")
     @Size(max = 100, message = "角色名称长度不能超过100")
     private String roleName;
 
-    @Schema(description = "角色描述")
+    @Schema(description = "角色描述", example = "系统管理员角色")
     @Size(max = 255, message = "角色描述长度不能超过255")
     private String description;
 
-    @Schema(description = "是否启用：true=启用，false=禁用")
+    @Schema(description = "是否启用", example = "true")
     private Boolean enabled;
 }

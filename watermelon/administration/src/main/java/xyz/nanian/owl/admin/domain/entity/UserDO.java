@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("user_account")
-@Schema(name = "用户表", description = "用户表")
+@Schema(name = "UserDO对象", description = "用户表")
 public class UserDO implements Serializable {
 
     private static final long serialVersionUID = 1L;

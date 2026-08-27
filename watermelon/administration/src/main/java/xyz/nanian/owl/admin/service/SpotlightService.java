@@ -4,6 +4,7 @@ import xyz.nanian.owl.admin.domain.dto.SpotlightDTO;
 import xyz.nanian.owl.admin.domain.entity.SpotlightDO;
 import com.baomidou.mybatisplus.spring.service.IService;
 import xyz.nanian.owl.admin.domain.vo.SpotlightVO;
+import xyz.nanian.owl.common.result.ResultPage;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
  */
 public interface SpotlightService extends IService<SpotlightDO> {
     List<SpotlightVO> listByOrder();
+    ResultPage<SpotlightVO> page(long pageNum, long pageSize);
     SpotlightVO getById(Long id);
     int create(SpotlightDTO dto);
     Boolean update(SpotlightDTO dto);

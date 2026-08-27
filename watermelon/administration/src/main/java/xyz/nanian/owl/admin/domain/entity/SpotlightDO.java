@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("admin_spotlight")
-@Schema(name = "首页焦点表", description = "首页焦点展示项目表")
+@Schema(name = "SpotlightDO对象", description = "首页焦点展示项目表")
 public class SpotlightDO implements Serializable {
 
     private static final long serialVersionUID = 1L;

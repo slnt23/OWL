@@ -20,8 +20,9 @@ import java.util.List;
 public interface FeatureConvert {
 
     /**
-     * createTime/updateTime 由数据库维护，忽略映射。
+     * id 由数据库自增维护；createTime/updateTime 由数据库维护，均忽略映射。
      */
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "createTime", ignore = true)
     @Mapping(target = "updateTime", ignore = true)
     FeatureDO DTOtoEntity(FeatureDTO dto);

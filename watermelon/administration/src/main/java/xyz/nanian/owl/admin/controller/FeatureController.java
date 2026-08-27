@@ -9,6 +9,7 @@ import xyz.nanian.owl.admin.domain.dto.FeatureDTO;
 import xyz.nanian.owl.admin.domain.vo.FeatureVO;
 import xyz.nanian.owl.admin.service.FeatureService;
 import xyz.nanian.owl.common.result.Result;
+import xyz.nanian.owl.common.result.ResultPage;
 import xyz.nanian.owl.common.result.ResultStatus;
 
 import java.util.List;
@@ -30,20 +31,31 @@ public class FeatureController {
     private final FeatureService featureService;
 
     /**
-     * 获取全部产品特性，按 sort_order 升序排列
+     * 获取前台产品特性，按 sort_order 升序排列，这个是为前端展示使用的，只要4个，
      */
     @GetMapping
-    @Operation(summary = "获取特性列表",description = "这里只获取四个")
+    @Operation(summary = "获取前台特性列表",description = "这里只获取四个")
     public Result<List<FeatureVO>> list() {
         List<FeatureVO> list = featureService.listByOrder();
         return Result.success(list);
     }
 
     /**
+     * 分页获取全部特性，按 sort_order 升序排列
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页获取全部特性")
+    public Result<ResultPage<FeatureVO>> page(
+            @RequestParam(defaultValue = "1") long pageNum,
+            @RequestParam(defaultValue = "10") long pageSize) {
+        return Result.success(featureService.page(pageNum, pageSize));
+    }
+
+    /**
      * 根据 id 获取单条特性
      */
     @GetMapping("/{id}")
-    @Operation(summary = "获取单挑特性")
+    @Operation(summary = "获取单条特性")
     public Result<FeatureVO> getById(@PathVariable Long id) {
         FeatureVO feature = featureService.getById(id);
         return Result.success(feature);

@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("admin_feature")
-@Schema(name = "产品特性表", description = "产品特性展示表")
+@Schema(name = "FeatureDO对象", description = "产品特性展示表")
 public class FeatureDO implements Serializable {
 
     private static final long serialVersionUID = 1L;

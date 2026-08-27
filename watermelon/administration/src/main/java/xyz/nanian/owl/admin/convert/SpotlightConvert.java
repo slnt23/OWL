@@ -22,8 +22,9 @@ public interface SpotlightConvert {
     List<SpotlightVO> DOConvertVO(List<SpotlightDO> spotlightDOS);
 
     /**
-     * imageUrl 由 service 上传图片后填充；createTime/updateTime 由数据库维护，均忽略映射。
+     * id 由数据库自增维护；imageUrl 由 service 上传图片后填充；createTime/updateTime 由数据库维护，均忽略映射。
      */
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "imageUrl", ignore = true)
     @Mapping(target = "createTime", ignore = true)
     @Mapping(target = "updateTime", ignore = true)

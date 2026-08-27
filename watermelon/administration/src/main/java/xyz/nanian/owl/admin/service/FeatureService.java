@@ -4,6 +4,7 @@ import xyz.nanian.owl.admin.domain.dto.FeatureDTO;
 import xyz.nanian.owl.admin.domain.entity.FeatureDO;
 import com.baomidou.mybatisplus.spring.service.IService;
 import xyz.nanian.owl.admin.domain.vo.FeatureVO;
+import xyz.nanian.owl.common.result.ResultPage;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public interface FeatureService extends IService<FeatureDO> {
 
     List<FeatureVO> listByOrder();
+    ResultPage<FeatureVO> page(long pageNum, long pageSize);
     FeatureVO getById(Long id);
     Integer create(FeatureDTO dto);
     Boolean update(FeatureDTO vo);
