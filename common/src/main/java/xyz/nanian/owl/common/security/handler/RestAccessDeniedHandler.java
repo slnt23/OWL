@@ -14,7 +14,20 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 无权限访问时统一返回 403 与 Result&lt;T&gt;
+ * 权限不足时的 JSON 403 处理器。
+ *
+ * <p>当用户已通过认证但角色权限不足（例如普通用户访问后台管理接口）时，
+ * Spring Security 调用本处理器，统一返回 {@link ResultStatus#FORBIDDEN}（403）
+ * 格式的 JSON 响应。</p>
+ *
+ * <p>与 {@link RestAuthenticationEntryPoint} 的区别：</p>
+ * <ul>
+ *   <li>{@code RestAuthenticationEntryPoint} — 未认证（401），Token 缺失或无效</li>
+ *   <li>{@code RestAccessDeniedHandler} — 已认证但权限不足（403），角色不匹配</li>
+ * </ul>
+ *
+ * @author slnt23
+ * @since 2026/8/3
  */
 @Component
 public class RestAccessDeniedHandler implements AccessDeniedHandler {

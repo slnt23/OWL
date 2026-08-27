@@ -21,8 +21,29 @@ import static xyz.nanian.owl.common.security.JwtConstants.CLAIM_TOKEN_VERSION;
 /**
  * JWT 生成与解析组件。
  *
- * <p>使用 HMAC-SHA256 对 token 签名，生成时写入用户信息、jti 与 tokenVersion，
- * 解析时校验签名并返回 Claims，供 JWT 认证过滤器使用。</p>
+ * <p>使用 HMAC-SHA256（HS256）对 token 进行签名，生成时写入用户基本信息、jti 和 tokenVersion，
+ * 解析时校验签名合法性并返回 Claims，供 {@link filter.JwtAuthenticationFilter} 使用。</p>
+ *
+ * <h3>配置项</h3>
+ * <ul>
+ *   <li>{@code jwt.secret} — 签名密钥，默认使用本地测试密钥（生产环境务必覆盖）</li>
+ *   <li>{@code jwt.expire-time} — token 有效期（毫秒），默认 30 天（2592000000）</li>
+ * </ul>
+ *
+ * <h3>Token 结构</h3>
+ * <pre>{@code
+ * {
+ *   "sub": "login",
+ *   "jti": "uuid",           // 唯一标识，用于撤销
+ *   "userId": 1,
+ *   "userCode": "xxx",
+ *   "userEmail": "xxx@xx.com",
+ *   "role": "ADMIN",
+ *   "tv": 1,                  // token 版本号，用于批量失效
+ *   "iat": 1234567890,
+ *   "exp": 1234567890
+ * }
+ * }</pre>
  *
  * @author slnt23
  * @since 2026/8/17

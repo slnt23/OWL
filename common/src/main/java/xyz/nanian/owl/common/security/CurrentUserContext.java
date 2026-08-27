@@ -8,6 +8,9 @@ package xyz.nanian.owl.common.security;
  *
  * <p>业务代码应通过 {@link #getUserId()}、{@link #getUserCode()}、
  * {@link #getRoleName()} 获取当前登录用户，避免自行解析 Token。</p>
+ *
+ * @author slnt23
+ * @since 2026/8/3
  */
 public final class CurrentUserContext {
 

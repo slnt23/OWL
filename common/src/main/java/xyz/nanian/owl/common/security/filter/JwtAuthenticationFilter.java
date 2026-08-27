@@ -23,15 +23,43 @@ import xyz.nanian.owl.common.security.LoginUser;
 import xyz.nanian.owl.common.security.RoleConstants;
 import xyz.nanian.owl.common.security.TokenRevocationService;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
 /**
- * JWT 认证过滤器
- * 解析 {@code Authorization: Bearer <token>}，校验签名、过期时间、撤销状态与 tokenVersion，
- * 校验通过后写入 SecurityContext 与 CurrentUserContext，请求结束后统一清理上下文。
+ * JWT 认证过滤器。
+ *
+ * <p>在每次 HTTP 请求进入时，从 {@code Authorization: Bearer <token>} 头中提取 JWT，
+ * 依次校验签名有效性、过期时间、撤销状态（jti 黑名单）与 token 版本号（tokenVersion），
+ * 校验通过后将 {@link LoginUser} 写入 {@link CurrentUserContext} 和 {@link SecurityContextHolder}，
+ * 请求结束后统一清理 ThreadLocal 与 SecurityContext。</p>
+ *
+ * <h3>认证流程</h3>
+ * <ol>
+ *   <li>从请求头提取 Bearer Token</li>
+ *   <li>调用 {@link JwtTokenProvider#parseToken(String)} 解析 Claims</li>
+ *   <li>构建 {@link LoginUser} 对象</li>
+ *   <li>校验 token 是否可用（未被撤销、版本号匹配）</li>
+ *   <li>写入 SecurityContext 与 CurrentUserContext</li>
+ * </ol>
+ *
+ * <h3>异常处理</h3>
+ * <ul>
+ *   <li>{@link ExpiredJwtException} → 设置 {@link ResultStatus#TOKEN_EXPIRED}</li>
+ *   <li>{@link JwtException} / 格式错误 → 设置 {@link ResultStatus#TOKEN_INVALID}</li>
+ *   <li>撤销/版本不匹配 → 设置 {@link ResultStatus#TOKEN_INVALID}</li>
+ * </ul>
+ *
+ * <p>所有异常不会直接抛出，而是将错误状态写入 request 属性，
+ * 由 {@link xyz.nanian.owl.common.security.handler.RestAuthenticationEntryPoint} 统一返回 JSON 401。</p>
+ *
+ * @author slnt23
+ * @since 2026/8/3
  */
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     /** 请求属性名，用于向认证入口点传递 TOKEN_EXPIRED / TOKEN_INVALID 状态 */
@@ -80,11 +108,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
+        // ==================== 1. 获取请求信息 ====================
         String header = request.getHeader("Authorization");
+        String uri = request.getRequestURI();
+
+        // -------------------- 日志：请求进入过滤器 --------------------
+        log.debug("JWT 过滤器: {} {}, Authorization={}",
+                request.getMethod(), uri,
+                header == null ? "无" : header.substring(0, Math.min(header.length(), 60)) + "...");
+
+        // ==================== 2. 解析并校验 Token ====================
         if (header != null && header.startsWith("Bearer ")) {
             try {
                 Claims claims = jwtTokenProvider.parseToken(header.substring(7));
 
+                // 构建登录用户对象
                 LoginUser loginUser = new LoginUser();
                 loginUser.setUserId(claims.get(JwtConstants.CLAIM_USER_ID, Long.class));
                 loginUser.setUserCode(claims.get(JwtConstants.CLAIM_USER_CODE, String.class));
@@ -92,15 +130,35 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 loginUser.setRoleName(claims.get(JwtConstants.CLAIM_ROLE, String.class));
 
                 if (!isTokenUsable(claims, loginUser)) {
+                    // -------------------- 日志：token 被撤销或版本不匹配 --------------------
+                    log.warn("JWT token 不可用(撤销/版本不匹配): userId={}, uri={}",
+                            loginUser.getUserId(), uri);
+
                     request.setAttribute(JWT_ERROR_STATUS_ATTRIBUTE, ResultStatus.TOKEN_INVALID);
                 } else {
+                    // -------------------- 日志：认证成功 --------------------
+                    log.debug("JWT 认证成功: userId={}, role={}, uri={}",
+                            loginUser.getUserId(), loginUser.getRoleName(), uri);
+
                     buildAuthentication(request, loginUser);
                 }
             } catch (ExpiredJwtException e) {
+                // -------------------- 日志：token 已过期 --------------------
+                log.warn("JWT token 已过期: uri={}, 过期时间={}",
+                        uri, e.getClaims().getExpiration());
+
                 request.setAttribute(JWT_ERROR_STATUS_ATTRIBUTE, ResultStatus.TOKEN_EXPIRED);
             } catch (JwtException | IllegalArgumentException e) {
+                // -------------------- 日志：token 无效(签名错误/格式错误) --------------------
+                log.warn("JWT token 无效: uri={}, 原因={}",
+                        uri, e.getMessage());
+
                 request.setAttribute(JWT_ERROR_STATUS_ATTRIBUTE, ResultStatus.TOKEN_INVALID);
             }
+        } else if (header != null) {
+            // -------------------- 日志：Authorization 头格式错误 --------------------
+            log.warn("Authorization 头格式不正确: uri={}, header={}",
+                    uri, header);
         }
 
         try {

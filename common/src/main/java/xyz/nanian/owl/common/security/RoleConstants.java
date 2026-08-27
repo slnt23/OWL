@@ -5,6 +5,9 @@ package xyz.nanian.owl.common.security;
  *
  * <p>定义 Spring Security 权限中的角色名与权限前缀，
  * 统一用于 SecurityConfig 的角色鉴权和 JWT 认证过滤器中的权限字符串拼接。</p>
+ *
+ * @author slnt23
+ * @since 2026/8/3
  */
 public final class RoleConstants {
 

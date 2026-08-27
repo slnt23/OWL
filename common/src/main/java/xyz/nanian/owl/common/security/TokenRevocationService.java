@@ -3,9 +3,18 @@ package xyz.nanian.owl.common.security;
 /**
  * Token 撤销与版本控制接口。
  *
- * <p>JWT 认证过滤器通过该接口校验 token 是否被撤销、tokenVersion 是否仍然有效。
- * 具体实现由持有 Redis 或其他存储的模块提供，例如 user 模块的
- * {@code RedisTokenRevocationServiceImpl}。</p>
+ * <p>JWT 认证过滤器通过该接口校验 token 是否被撤销（jti 黑名单）、
+ * tokenVersion 是否仍然有效。具体实现由持有 Redis 或其他存储的模块提供，
+ * 例如 user 模块的 {@code RedisTokenRevocationServiceImpl}。</p>
+ *
+ * <h3>两个维度</h3>
+ * <ul>
+ *   <li><b>jti 黑名单</b> — 用户登出时将当前 token 的 jti 加入黑名单，精确撤销单个 token</li>
+ *   <li><b>tokenVersion</b> — 修改密码、换绑邮箱等场景下将版本号 +1，使该用户的所有旧 token 批量失效</li>
+ * </ul>
+ *
+ * @author slnt23
+ * @since 2026/8/17
  */
 public interface TokenRevocationService {
 

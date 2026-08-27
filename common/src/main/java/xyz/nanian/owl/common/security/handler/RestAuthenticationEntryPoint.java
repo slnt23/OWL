@@ -15,7 +15,21 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 未认证 / Token 无效时统一返回 401 与 Result&lt;T&gt;
+ * 未认证 / Token 无效时的 JSON 401 处理器。
+ *
+ * <p>当请求未携带有效 Token 或 Token 校验失败时，Spring Security 将调用本处理器，
+ * 统一返回 {@link ResultStatus#UNAUTHORIZED}（401）格式的 JSON 响应。</p>
+ *
+ * <p>优先读取 {@link JwtAuthenticationFilter} 写入的 request 属性
+ * {@code JWT_ERROR_STATUS}，以区分"Token 过期"和"Token 无效"两种场景：</p>
+ * <ul>
+ *   <li>{@link ResultStatus#TOKEN_EXPIRED} — Token 已过期</li>
+ *   <li>{@link ResultStatus#TOKEN_INVALID} — Token 非法、被撤销或版本不匹配</li>
+ *   <li>未设置 → 默认 {@link ResultStatus#UNAUTHORIZED}</li>
+ * </ul>
+ *
+ * @author slnt23
+ * @since 2026/8/3
  */
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {

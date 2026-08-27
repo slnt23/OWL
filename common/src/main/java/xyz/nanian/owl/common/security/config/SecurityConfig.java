@@ -22,8 +22,22 @@ import xyz.nanian.owl.common.security.handler.RestAccessDeniedHandler;
 import xyz.nanian.owl.common.security.handler.RestAuthenticationEntryPoint;
 
 /**
- * Spring Security 安全配置
- * 后续如需拆分为独立 security 模块，可整体迁移本包
+ * Spring Security 安全配置。
+ *
+ * <p>本配置类定义整个应用的安全策略，包括：</p>
+ * <ul>
+ *   <li>关闭 CSRF（API 服务无需 CSRF 防护）</li>
+ *   <li>启用 CORS 默认配置</li>
+ *   <li>使用无状态会话（STATELESS），不创建 HttpSession</li>
+ *   <li>配置接口白名单（登录、公开接口、文档、静态资源）</li>
+ *   <li>博客公开读接口 GET 免登录，写接口需认证</li>
+ *   <li>后台管理接口（/api/admin/**）要求 ADMIN 角色</li>
+ *   <li>其余接口默认要求登录</li>
+ *   <li>注册 {@link JwtAuthenticationFilter} 在 UsernamePasswordAuthenticationFilter 之前执行</li>
+ *   <li>认证失败 → 返回 JSON 401，权限不足 → 返回 JSON 403</li>
+ * </ul>
+ *
+ * <p>后续如需拆分为独立 security 模块，可整体迁移本包。</p>
  *
  * @author slnt23
  * @since 2026/8/3

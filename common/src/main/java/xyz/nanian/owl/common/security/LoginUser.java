@@ -7,6 +7,9 @@ import lombok.Data;
  *
  * <p>由 JWT 认证过滤器从 token Claims 中还原，写入 {@link CurrentUserContext}，
  * 供业务代码获取当前操作用户。</p>
+ *
+ * @author slnt23
+ * @since 2026/8/3
  */
 @Data
 public class LoginUser {
