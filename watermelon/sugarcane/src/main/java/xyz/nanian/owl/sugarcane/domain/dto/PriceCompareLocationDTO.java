@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Schema(name = "地区价格对比DTO")
 public class PriceCompareLocationDTO extends BasePriceQueryDTO {
 
     @Schema(description = "对比目标时间（不填默认最新）", example = "2026-06-05T10:30:00")
@@ -28,4 +29,3 @@ public class PriceCompareLocationDTO extends BasePriceQueryDTO {
         return super.cacheKey() + "|tt:" + targetTime;
     }
 }
-

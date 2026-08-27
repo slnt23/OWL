@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/ai/conversation")
 @RequiredArgsConstructor
-@Tag(name = "会话管理",description = "会话管理")
+@Tag(name = "会话管理", description = "会话创建与历史消息查询")
 public class ConversationController {
 
     private final ConversationService conversationService;
@@ -71,4 +71,3 @@ public class ConversationController {
         return Result.success();
     }
 }
-

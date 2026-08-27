@@ -13,10 +13,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @RestController
 @RequestMapping("/api/source")
-@Tag(name = "Source来源")
+@Tag(name = "价格来源")
 public class SourceController {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){}
 }
-

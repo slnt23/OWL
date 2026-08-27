@@ -15,27 +15,15 @@ import java.util.List;
 @Schema(name = "技能分类 VO")
 public class SkillCategoryVO {
 
-    /**
-     * 分类 ID
-     */
     @Schema(description = "分类 ID")
     private Long id;
 
-    /**
-     * 分类名称
-     */
     @Schema(description = "分类名称")
     private String category;
 
-    /**
-     * 技能条目列表
-     */
     @Schema(description = "技能条目列表")
     private List<SkillItemVO> items;
 
-    /**
-     * 排序权重
-     */
     @Schema(description = "排序权重")
     private Integer sortOrder;
 }

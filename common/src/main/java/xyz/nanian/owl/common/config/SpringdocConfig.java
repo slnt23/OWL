@@ -29,7 +29,7 @@ public class SpringdocConfig {
     public OpenAPI openAllAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("OWL（猫头鹰）统一后端接口文档")
+                        .title("OWL 个人兴趣平台后端")
                         .description("集成用户认证/个人中心、AI 对话、价格追踪、博客与后台管理模块的接口文档。")
                         .version("v0.0.1（开发版）")
                         .contact(new Contact()

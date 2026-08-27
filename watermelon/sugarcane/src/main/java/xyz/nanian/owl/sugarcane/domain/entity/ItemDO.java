@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("price_item")
-@Schema(description = "被定价物品表")
+@Schema(name = "被定价物品表", description = "被定价物品表")
 public class ItemDO implements Serializable {
 
     private static final long serialVersionUID = 1L;

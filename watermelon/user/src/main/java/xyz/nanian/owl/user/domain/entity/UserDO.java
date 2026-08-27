@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,83 +15,58 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("user_account")
+@Schema(name = "用户表", description = "用户表")
 public class UserDO {
 
-    /**
-     * 主键ID
-     */
+    @Schema(description = "主键ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 用户名（唯一），非空
-     */
+    @Schema(description = "用户名（唯一）")
     @TableField("username")
     private String userName;
 
-    /**
-     * 用户账号编号,唯一，非空
-     */
+    @Schema(description = "用户账号编号（唯一）")
     @TableField("user_code")
     private String userCode;
 
-    /**
-     * 密码（加密存储）非空
-     */
+    @Schema(description = "密码（加密存储）")
     @TableField("password")
     private String password;
 
-    /**
-     * 手机号（唯一），非空
-     */
+    @Schema(description = "手机号（唯一）")
     @TableField("phone")
     private String phone;
 
-    /**
-     * 邮箱
-     */
+    @Schema(description = "邮箱")
     @TableField("email")
     private String email;
 
-    /**
-     * 头像URL
-     */
+    @Schema(description = "头像URL")
     @TableField("avatar_url")
     private String avatarUrl;
 
-    /**
-     * 昵称
-     */
+    @Schema(description = "昵称")
     @TableField("nickname")
     private String nickname;
 
-    /**
-     * 备注
-     */
+    @Schema(description = "备注")
     @TableField("remark")
     private String remark;
 
-    /**
-     * 角色名称，对应 user_role 表的 role_name
-     */
+    @Schema(description = "角色名称")
     @TableField("role_name")
     private String roleName;
 
-    /**
-     * 状态：0=正常，1=封禁
-     */
+    @Schema(description = "状态：0=正常，1=封禁")
     @TableField("status")
     private Integer status;
 
-    /**
-     * 创建时间
-     */
+    @Schema(description = "创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
+    @Schema(description = "更新时间")
     @TableField("update_time")
     private LocalDateTime updateTime;
 }

@@ -2,6 +2,7 @@ package xyz.nanian.owl.pitaya.domain.entity;
 
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -16,68 +17,45 @@ import java.time.LocalDateTime;
 
 @Data
 @TableName("order_mast")
+@Schema(name = "订单表", description = "订单主表")
 public class OrderDO {
 
-    /**
-     * 订单ID
-     */
+    @Schema(description = "订单ID")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 订单编号（唯一）
-     */
+    @Schema(description = "订单编号（唯一）")
     private String orderNo;
 
-    /**
-     * 用户ID
-     */
+    @Schema(description = "用户ID")
     private Long userId;
 
-    /**
-     * 订单总金额
-     */
+    @Schema(description = "订单总金额")
     private BigDecimal totalAmount;
 
-    /**
-     * 支付状态：0=未支付，1=已支付
-     */
+    @Schema(description = "支付状态：0=未支付，1=已支付")
     private Integer payStatus;
 
-    /**
-     * 订单状态：0=待支付，1=待发货，2=待收货，3=已完成，4=取消
-     */
+    @Schema(description = "订单状态：0=待支付，1=待发货，2=待收货，3=已完成，4=取消")
     private Integer orderStatus;
 
-    /**
-     * 支付时间
-     */
+    @Schema(description = "支付时间")
     private LocalDateTime payTime;
 
-    /**
-     * 发货时间
-     */
+    @Schema(description = "发货时间")
     private LocalDateTime deliveryTime;
 
-    /**
-     * 完成时间
-     */
+    @Schema(description = "完成时间")
     private LocalDateTime finishTime;
 
-    /**
-     * 收货地址快照（JSON格式）
-     */
+    @Schema(description = "收货地址快照（JSON格式）")
     private String addressSnapshot;
 
-    /**
-     * 下单时间
-     */
+    @Schema(description = "下单时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
+    @Schema(description = "更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 }

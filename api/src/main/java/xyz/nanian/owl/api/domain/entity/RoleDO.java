@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("user_role")
-@Schema(name = "RoleDO对象", description = "角色表")
+@Schema(name = "角色表", description = "角色表")
 public class RoleDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -28,22 +28,22 @@ public class RoleDO implements Serializable {
     private Long id;
 
     @TableField("role_name")
-    @Schema(name = "角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
     @TableField("description")
-    @Schema(name = "描述")
+    @Schema(description = "角色描述")
     private String description;
 
     @TableField("enabled")
-    @Schema(name = "是否启用")
+    @Schema(description = "是否启用")
     private Boolean enabled;
 
     @TableField("create_time")
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
     @TableField("update_time")
-    @Schema(name = "更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
 }

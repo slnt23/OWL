@@ -16,6 +16,7 @@ import xyz.nanian.owl.api.domain.dto.PageDTO;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Schema(name = "物品简介DTO")
 public class ItemIntroDTO extends PageDTO {
 
     @Schema(description = "所查物品名", example = "白砂糖")

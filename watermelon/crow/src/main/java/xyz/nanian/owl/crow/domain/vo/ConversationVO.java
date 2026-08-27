@@ -19,24 +19,15 @@ import java.time.LocalDateTime;
 @Schema(name = "返回会话列表VO")
 public class ConversationVO {
 
-    /**
-     * 会话id
-     */
+    @Schema(description = "会话ID")
     private String id;
 
-    /**
-     * 会话title
-     */
+    @Schema(description = "会话标题")
     private String title;
 
-    /**
-     * 创建时间
-     */
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
 }
-

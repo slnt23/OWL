@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Schema(name = "来源价格对比DTO")
 public class PriceCompareSourceDTO extends BasePriceQueryDTO {
 
     @Schema(description = "对比目标时间", example = "2026-06-05T10:30:00")

@@ -2,6 +2,7 @@ package xyz.nanian.owl.pitaya.domain.entity;
 
 
 import com.baomidou.mybatisplus.annotation.*;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -16,56 +17,38 @@ import java.time.LocalDateTime;
 
 @Data
 @TableName("order_detail")
+@Schema(name = "订单明细表", description = "订单明细表")
 public class OrderDetailDO {
 
-    /**
-     * 订单明细ID
-     */
+    @Schema(description = "订单明细ID")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 订单ID
-     */
+    @Schema(description = "订单ID")
     private Long orderId;
 
-    /**
-     * 商品ID
-     */
+    @Schema(description = "商品ID")
     private Long productId;
 
-    /**
-     * 商品名称（下单时的快照）
-     */
+    @Schema(description = "商品名称（下单时的快照）")
     private String productName;
 
-    /**
-     * 商品图片（下单时的快照）
-     */
+    @Schema(description = "商品图片（下单时的快照）")
     private String productImage;
 
-    /**
-     * 单价（下单时的价格）
-     */
+    @Schema(description = "单价（下单时的价格）")
     private BigDecimal unitPrice;
 
-    /**
-     * 购买数量
-     */
+    @Schema(description = "购买数量")
     private Integer quantity;
 
-    /**
-     * 小计金额 = 单价 × 数量
-     */
+    @Schema(description = "小计金额 = 单价 × 数量")
     private BigDecimal totalPrice;
 
-    /**
-     * 备注
-     */
+    @Schema(description = "备注")
     private String remark;
-    /**
-     * 创建时间
-     */
+
+    @Schema(description = "创建时间")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 }

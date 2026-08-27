@@ -24,15 +24,15 @@ public class MailServiceImpl implements MailService {
     final JavaMailSender mailSender;
 
     /**
-     * 发件人邮箱，可通过 spring.mail.username 配置。
+     * 发件人邮箱，通过 owl.mail.username 配置。
      */
-    @Value("${spring.mail.username:3436134614@qq.com}")
+    @Value("${owl.mail.username}")
     private String from;
 
     /**
-     * 默认发件人显示名称，可通过 spring.mail.sender-name 配置。
+     * 默认发件人显示名称，通过 owl.mail.sender-name 配置。
      */
-    @Value("${spring.mail.sender-name:OWL 团队}")
+    @Value("${owl.mail.sender-name}")
     private String defaultSenderName;
 
     /**

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
  */
 
 @Data
+@Schema(name = "价格记录创建DTO")
 public class PriceRecordCreateDTO {
 
     @Schema(description = "物品ID", example = "1")

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,44 +22,31 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("blog_education")
+@Schema(name = "教育经历表", description = "教育经历表")
 public class BlogEducationDO {
 
-    /**
-     * 主键ID
-     */
+    @Schema(description = "主键ID")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 学校名称
-     */
+    @Schema(description = "学校名称")
     private String school;
 
-    /**
-     * 学位/专业
-     */
+    @Schema(description = "学位/专业")
     private String degree;
 
-    /**
-     * 时间段
-     */
+    @Schema(description = "时间段")
     private String period;
 
-    /**
-     * 排序序号
-     */
+    @Schema(description = "排序序号")
     @TableField("sort_order")
     private Integer sortOrder;
 
-    /**
-     * 创建时间
-     */
+    @Schema(description = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
+    @Schema(description = "更新时间")
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 }

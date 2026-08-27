@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/price-item-media-do")
-@Tag(name = "Item媒体资源")
+@Tag(name = "物品媒体资源")
 public class PriceItemMediaController {
 
 }

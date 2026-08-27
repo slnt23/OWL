@@ -24,99 +24,60 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("user_account")
-@Schema(name= "UserDO对象", description = "用户表")
+@Schema(name = "用户表", description = "用户表")
 public class UserDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键ID
-     */
-    @Schema(name = "主键ID")
+    @Schema(description = "主键ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 账号编号
-     */
+    @Schema(description = "账号编号")
     @TableField("user_code")
-    @Schema(name = "账号编号")
     private String userCode;
 
-    /**
-     * 用户名
-     */
+    @Schema(description = "用户名")
     @TableField("username")
-    @Schema(name = "用户名")
     private String username;
 
-    /**
-     * 密码（加密存储）
-     */
+    @Schema(description = "密码（加密存储）")
     @TableField("password")
-    @Schema(name = "密码（加密存储）")
     private String password;
 
-    /**
-     * 手机号
-     */
+    @Schema(description = "手机号")
     @TableField("phone")
-    @Schema(name = "手机号")
     private String phone;
 
-    /**
-     * 邮箱
-     */
+    @Schema(description = "邮箱")
     @TableField("email")
-    @Schema(name = "邮箱")
     private String email;
 
-    /**
-     * 头像URL
-     */
+    @Schema(description = "头像URL")
     @TableField("avatar_url")
-    @Schema(name = "头像URL")
     private String avatarUrl;
 
-    /**
-     * 昵称
-     */
-    @Schema(name = "昵称")
+    @Schema(description = "昵称")
     @TableField("nickname")
     private String nickname;
 
-    /**
-     * 角色名称，对应 role 表的 role_name
-     */
+    @Schema(description = "角色名称")
     @TableField("role_name")
-    @Schema(name = "角色名称")
     private String roleName;
 
-    /**
-     * 状态：0=正常，1=封禁
-     */
+    @Schema(description = "状态：0=正常，1=封禁")
     @TableField("status")
-    @Schema(name = "状态：0=正常，1=封禁")
     private Byte status;
 
-    /**
-     * 创建时间
-     */
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
-    @Schema(name = "更新时间")
+    @Schema(description = "更新时间")
     @TableField("update_time")
     private LocalDateTime updateTime;
 
-    /**
-     * 备注
-     */
+    @Schema(description = "备注")
     @TableField("remark")
-    @Schema(name = "备注")
     private String remark;
 }

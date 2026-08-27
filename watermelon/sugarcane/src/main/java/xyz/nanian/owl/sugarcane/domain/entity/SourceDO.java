@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("price_source")
-@Schema(description = "价格来源表")
+@Schema(name = "价格来源表", description = "价格来源表")
 public class SourceDO implements Serializable {
 
     private static final long serialVersionUID = 1L;

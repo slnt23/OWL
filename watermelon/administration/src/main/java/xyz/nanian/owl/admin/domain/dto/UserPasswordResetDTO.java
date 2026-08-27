@@ -15,6 +15,7 @@ import lombok.Data;
 @Schema(name = "后台重置密码DTO")
 public class UserPasswordResetDTO {
 
+    @Schema(description = "新密码")
     @NotBlank(message = "新密码不能为空")
     private String newPassword;
 }

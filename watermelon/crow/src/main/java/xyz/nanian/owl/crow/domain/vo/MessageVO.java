@@ -19,24 +19,15 @@ import java.time.LocalDateTime;
 @Schema(name = "返回历史消息VO")
 public class MessageVO {
 
-    /**
-     * 消息id
-     */
+    @Schema(description = "消息ID")
     private Long id;
 
-    /**
-     * 消息角色，user/assistant/system
-     */
+    @Schema(description = "消息角色，user/assistant/system")
     private String role;
 
-    /**
-     * 消息内容
-     */
+    @Schema(description = "消息内容")
     private String content;
 
-    /**
-     * 消息创建时间
-     */
+    @Schema(description = "消息创建时间")
     private LocalDateTime createTime;
 }
-

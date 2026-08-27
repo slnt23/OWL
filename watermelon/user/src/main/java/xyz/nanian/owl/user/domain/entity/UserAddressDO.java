@@ -24,85 +24,52 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("user_address")
-@Schema(name= "UserAddressDO对象", description = "用户收货地址表")
+@Schema(name = "用户收货地址表", description = "用户收货地址表")
 public class UserAddressDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键ID
-     */
-    @Schema(name = "主键ID")
+    @Schema(description = "主键ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 用户ID
-     */
     @TableField("user_id")
-    @Schema(name = "用户ID")
+    @Schema(description = "用户ID")
     private Long userId;
 
-    /**
-     * 收件人姓名
-     */
-    @Schema(name = "收件人姓名")
+    @Schema(description = "收件人姓名")
     @TableField("receiver_name")
     private String receiverName;
 
-    /**
-     * 收件人电话
-     */
-    @Schema(name = "收件人电话")
+    @Schema(description = "收件人电话")
     @TableField("receiver_phone")
     private String receiverPhone;
 
-    /**
-     * 省
-     */
-    @Schema(name = "省")
+    @Schema(description = "省")
     @TableField("province")
     private String province;
 
-    /**
-     * 城
-     */
     @TableField("city")
-    @Schema(name = "城")
+    @Schema(description = "城市")
     private String city;
 
-    /**
-     * 县
-     */
-    @Schema(name = "县")
+    @Schema(description = "区/县")
     @TableField("district")
     private String district;
 
-    /**
-     * 详细地址
-     */
     @TableField("detail")
-    @Schema(name = "详细地址")
+    @Schema(description = "详细地址")
     private String detail;
 
-    /**
-     * 是否默认地址
-     */
     @TableField("is_default")
-    @Schema(name = "是否默认地址")
+    @Schema(description = "是否默认地址")
     private Integer isDefault;
 
-    /**
-     * 创建时间
-     */
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;
 
-    /**
-     * 更新时间
-     */
     @TableField("update_time")
-    @Schema(name = "更新时间")
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
 }

@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.vo;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -13,15 +14,12 @@ import java.math.BigDecimal;
  */
 
 @Data
+@Schema(name = "地区价格VO")
 public class LocationPriceVO {
-    /**
-     * 地区名称，如"北京"、"上海"、"广州"等
-     */
+    @Schema(description = "地区名称，如\"北京\"、\"上海\"、\"广州\"等")
     private String locationName;
 
-    /**
-     * 该地区的价格金额
-     */
+    @Schema(description = "该地区的价格金额")
     private BigDecimal price;
 
 }

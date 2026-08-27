@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -63,6 +64,15 @@ public class LoginServiceImpl implements LoginService {
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRevocationService tokenRevocationService;
 
+    @Value("${owl.mail.verification-code.subject}")
+    private String codeSubject;
+
+    @Value("${owl.mail.verification-code.body}")
+    private String codeBodyTemplate;
+
+    @Value("${owl.mail.sender-name}")
+    private String senderName;
+
     /**
      * 发送验证码
      *
@@ -86,30 +96,35 @@ public class LoginServiceImpl implements LoginService {
         // 2. 生成6位随机验证码
         String verificationCode = generateVerificationCode();
 
-        // 3. 构建邮件内容
-        String subject = "「OWL 账号验证」";
-        String body = String.format("""
-                尊敬的用户：
-                
-                您好！
-                
-                您的验证码为：[ %s ]
-                
-                该验证码有效期为 %d 分钟，请在有效时间内使用。
-                为保障您的账户安全，请勿将验证码泄露给他人。
-                
-                如果这不是您本人的操作，请忽略此邮件。
-                
-                此致
-                敬礼
-                [OWL] 团队
-                """, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES);
+        // 3. 构建邮件内容（从 yaml 注入模板）
+        // String subject = "「OWL 账号验证」";
+        // String body = String.format("""
+        //         尊敬的用户：
+        //
+        //         您好！
+        //
+        //         您的验证码为：[ %s ]
+        //
+        //         该验证码有效期为 %d 分钟，请在有效时间内使用。
+        //         为保障您的账户安全，请勿将验证码泄露给他人。
+        //
+        //         如果这不是您本人的操作，请忽略此邮件。
+        //
+        //         此致
+        //         敬礼
+        //         [OWL] 团队
+        //         """, verificationCode, LoginConstant.CODE_EXPIRE_MINUTES);
+        String subject = codeSubject;
+        String body = codeBodyTemplate
+                .replace("{code}", verificationCode)
+                .replace("{minutes}", String.valueOf(LoginConstant.CODE_EXPIRE_MINUTES));
         // 4. 发送邮件
         mailService.send(MailMessage.builder()
                 .to(emailAddress)
                 .subject(subject)
                 .body(body)
-                .senderName("OWL 团队")
+                // .senderName("OWL 团队")
+                .senderName(senderName)
                 .build());
 
         // 5. 保存验证码到Redis

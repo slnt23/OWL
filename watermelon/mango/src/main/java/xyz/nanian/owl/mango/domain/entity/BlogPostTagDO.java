@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,23 +21,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("blog_post_tag")
+@Schema(name = "文章标签关联表", description = "文章标签关联表")
 public class BlogPostTagDO {
 
-    /**
-     * 主键ID
-     */
+    @Schema(description = "主键ID")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 文章ID
-     */
+    @Schema(description = "文章ID")
     @TableField("post_id")
     private Long postId;
 
-    /**
-     * 标签ID
-     */
+    @Schema(description = "标签ID")
     @TableField("tag_id")
     private Long tagId;
 }

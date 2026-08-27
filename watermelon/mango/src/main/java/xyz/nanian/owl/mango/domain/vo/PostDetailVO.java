@@ -15,9 +15,6 @@ import lombok.EqualsAndHashCode;
 @Schema(name = "文章详情 VO")
 public class PostDetailVO extends PostVO {
 
-    /**
-     * Markdown 正文
-     */
     @Schema(description = "Markdown 正文")
     private String content;
 }

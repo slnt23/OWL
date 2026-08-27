@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.vo;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,20 +16,15 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Schema(name = "价格趋势VO")
 public class PriceTrendVO extends PriceItemVO {
 
-    /**
-     * 地点ID
-     */
+    @Schema(description = "地点ID")
     private Long locationId;
 
-    /**
-     * 地点名称，如"北京"、"上海"等
-     */
+    @Schema(description = "地点名称，如\"北京\"、\"上海\"等")
     private String locationName;
 
-    /**
-     * 价格趋势数据点列表，按时间升序排列
-     */
+    @Schema(description = "价格趋势数据点列表，按时间升序排列")
     private List<PriceTrendPointVO> trend;
 }

@@ -172,4 +172,4 @@
 - [OWL 文档编写规范](documentation-standard.md)
 - [OWL 代码注释规范](code-comment-standard.md)
 - [OWL 公共模块架构说明](common-module-architecture.md)
-- [OWL 数据库表命名规范](database-naming-convention.md)
+- [OWL 数据库命名规范](naming/database-naming-convention.md)

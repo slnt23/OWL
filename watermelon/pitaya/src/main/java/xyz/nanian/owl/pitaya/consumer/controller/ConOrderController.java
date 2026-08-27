@@ -20,7 +20,7 @@ import xyz.nanian.owl.common.result.Result;
  */
 
 @RestController
-@Tag(name = "消费者订单管理",description = "order")
+@Tag(name = "消费者订单管理", description = "消费者订单的增删改查")
 @RequestMapping("/api/pitaya/order/consumer")
 public class ConOrderController{
 

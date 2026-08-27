@@ -16,7 +16,7 @@ import java.util.List;
  */
 @RestController("sugarcaneCategoryController")
 @RequestMapping("/api/category")
-@Tag(name = "Category分类")
+@Tag(name = "商品分类")
 public class CategoryController {
 
     // 获取分类树（最重要）
@@ -29,4 +29,3 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id){};
 }
-

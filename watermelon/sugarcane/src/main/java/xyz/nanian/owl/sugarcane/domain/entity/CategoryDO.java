@@ -21,44 +21,44 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("price_category")
-@Schema(name = "CategoryDO对象", description = "价格系统分类表")
+@Schema(name = "分类表", description = "价格系统分类表")
 public class CategoryDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "主键ID")
+    @Schema(description = "主键ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(name = "父分类ID（顶级为NULL）")
+    @Schema(description = "父分类ID（顶级为NULL）")
     @TableField("parent_id")
     private Long parentId;
 
-    @Schema(name = "分类名称")
+    @Schema(description = "分类名称")
     @TableField("category_name")
     private String categoryName;
 
-    @Schema(name = "分类唯一编码")
+    @Schema(description = "分类唯一编码")
     @TableField("category_code")
     private String categoryCode;
 
-    @Schema(name = "层级（1=一级分类，2=二级分类...）")
+    @Schema(description = "层级（1=一级分类，2=二级分类...）")
     @TableField("level")
     private Integer level;
 
-    @Schema(name = "排序值（越小越靠前）")
+    @Schema(description = "排序值（越小越靠前）")
     @TableField("sort_order")
     private Integer sortOrder;
 
-    @Schema(name = "状态：1-启用，0-禁用")
+    @Schema(description = "状态：1-启用，0-禁用")
     @TableField("status")
     private Byte status;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;
 
-    @Schema(name = "更新时间")
+    @Schema(description = "更新时间")
     @TableField("update_time")
     private LocalDateTime updateTime;
 }

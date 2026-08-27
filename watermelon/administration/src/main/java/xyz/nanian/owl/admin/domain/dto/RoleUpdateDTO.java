@@ -15,9 +15,11 @@ import lombok.Data;
 @Schema(name = "后台更新角色DTO")
 public class RoleUpdateDTO {
 
+    @Schema(description = "角色名称")
     @Size(max = 100, message = "角色名称长度不能超过100")
     private String roleName;
 
+    @Schema(description = "角色描述")
     @Size(max = 255, message = "角色描述长度不能超过255")
     private String description;
 

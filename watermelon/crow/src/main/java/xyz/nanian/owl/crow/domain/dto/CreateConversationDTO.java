@@ -15,9 +15,6 @@ import lombok.Data;
 @Schema(name = "创建初始化标题")
 public class CreateConversationDTO {
 
-    /**
-     * 会话title
-     */
+    @Schema(description = "会话标题")
     private String title;
 }
-

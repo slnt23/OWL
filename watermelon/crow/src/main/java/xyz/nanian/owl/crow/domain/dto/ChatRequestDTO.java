@@ -17,16 +17,11 @@ import lombok.Data;
 @Schema(name = "发送消息DTO")
 public class ChatRequestDTO {
     
-    /**
-     * 会话ID
-     */
+    @Schema(description = "会话ID")
     @NotBlank
     private String conversationId;
 
-    /**
-     * 消息对话
-     */
+    @Schema(description = "消息内容")
     @NotBlank
     private String message;
 }
-

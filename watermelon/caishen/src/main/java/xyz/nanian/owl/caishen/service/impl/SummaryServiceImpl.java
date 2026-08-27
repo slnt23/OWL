@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.nanian.owl.caishen.client.AssetAnalysisClient;
 import xyz.nanian.owl.caishen.constant.PeriodType;
@@ -72,6 +73,18 @@ public class SummaryServiceImpl implements SummaryService {
     private final AssetAnalysisClient assetAnalysisClient;
     private final MailService mailService;
     private final ObjectMapper objectMapper;
+
+    @Value("${owl.mail.summary.subject}")
+    private String summarySubjectTemplate;
+
+    @Value("${owl.mail.summary.body-header}")
+    private String summaryBodyHeader;
+
+    @Value("${owl.mail.summary.body-item}")
+    private String summaryBodyItem;
+
+    @Value("${owl.mail.summary.body-footer}")
+    private String summaryBodyFooter;
 
     @Override
     public ResultPage<SummaryVO> pageMy(SummaryQueryDTO query) {
@@ -229,7 +242,8 @@ public class SummaryServiceImpl implements SummaryService {
             return;
         }
         String periodLabel = periodLabel(periodType);
-        String subject = "【OWL 理财" + periodLabel + "报】您关注的基金本" + periodLabel + "变化总结";
+        // String subject = "【OWL 理财" + periodLabel + "报】您关注的基金本" + periodLabel + "变化总结";
+        String subject = summarySubjectTemplate.replace("{periodLabel}", periodLabel);
         String body = buildSummaryBody(summary, fundMetrics, summaryText);
         try {
             mailService.send(MailMessage.builder()
@@ -245,18 +259,32 @@ public class SummaryServiceImpl implements SummaryService {
 
     private String buildSummaryBody(CaishenSummaryDO summary,
                                     List<Map<String, Object>> fundMetrics, String summaryText) {
+        // StringBuilder sb = new StringBuilder();
+        // sb.append("<p>您关注的 ").append(fundMetrics.size()).append(" 只基金本周期（")
+        //         .append(summary.getStartDate()).append(" ~ ").append(summary.getEndDate())
+        //         .append("）变化如下：</p><ul>");
+        // for (Map<String, Object> item : fundMetrics) {
+        //     Object change = item.get("periodChange");
+        //     sb.append("<li>").append(item.get("name")).append("（").append(item.get("code"))
+        //             .append("）：周期涨跌幅 ")
+        //             .append(change == null ? "-" : change + "%")
+        //             .append("</li>");
+        // }
+        // sb.append("</ul><p>AI 总结：").append(summaryText == null ? "" : summaryText).append("</p>");
+        // return sb.toString();
         StringBuilder sb = new StringBuilder();
-        sb.append("<p>您关注的 ").append(fundMetrics.size()).append(" 只基金本周期（")
-                .append(summary.getStartDate()).append(" ~ ").append(summary.getEndDate())
-                .append("）变化如下：</p><ul>");
+        sb.append(summaryBodyHeader
+                .replace("{count}", String.valueOf(fundMetrics.size()))
+                .replace("{startDate}", summary.getStartDate() != null ? summary.getStartDate().toString() : "-")
+                .replace("{endDate}", summary.getEndDate() != null ? summary.getEndDate().toString() : "-"));
         for (Map<String, Object> item : fundMetrics) {
             Object change = item.get("periodChange");
-            sb.append("<li>").append(item.get("name")).append("（").append(item.get("code"))
-                    .append("）：周期涨跌幅 ")
-                    .append(change == null ? "-" : change + "%")
-                    .append("</li>");
+            sb.append(summaryBodyItem
+                    .replace("{fundName}", String.valueOf(item.get("name")))
+                    .replace("{fundCode}", String.valueOf(item.get("code")))
+                    .replace("{periodChange}", change == null ? "-" : change + "%"));
         }
-        sb.append("</ul><p>AI 总结：").append(summaryText == null ? "" : summaryText).append("</p>");
+        sb.append(summaryBodyFooter.replace("{summaryText}", summaryText == null ? "" : summaryText));
         return sb.toString();
     }
 

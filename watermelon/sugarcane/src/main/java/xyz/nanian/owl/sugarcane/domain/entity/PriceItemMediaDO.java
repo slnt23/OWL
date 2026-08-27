@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @TableName("price_item_media")
-@Schema(name = "PriceItemMediaDO对象", description = "价格文件扩展表")
+@Schema(name = "价格文件扩展表", description = "价格文件扩展表")
 public class PriceItemMediaDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,7 +32,7 @@ public class PriceItemMediaDO implements Serializable {
     /**
      * 主键ID
      */
-    @Schema(name = "主键ID")
+    @Schema(description = "主键ID")
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
@@ -40,13 +40,13 @@ public class PriceItemMediaDO implements Serializable {
      * 物品ID(关联price_item)
      */
     @TableField("item_id")
-    @Schema(name = "物品ID(关联price_item)")
+    @Schema(description = "物品ID(关联price_item)")
     private Long itemId;
 
     /**
      * 媒体类型
      */
-    @Schema(name = "媒体类型")
+    @Schema(description = "媒体类型")
     @TableField("media_type")
     private String mediaType;
 
@@ -54,20 +54,20 @@ public class PriceItemMediaDO implements Serializable {
      * URL
      */
     @TableField("url")
-    @Schema(name = "URL")
+    @Schema(description = "URL")
     private String url;
 
     /**
      * 排序
      */
-    @Schema(name = "排序")
+    @Schema(description = "排序")
     @TableField("sort_order")
     private Integer sortOrder;
 
     /**
      * 创建时间
      */
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     @TableField("create_time")
     private LocalDateTime createTime;
 }

@@ -2,6 +2,7 @@ package xyz.nanian.owl.crow.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -19,64 +20,43 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("agent_message")
+@Schema(name = "消息表", description = "AI对话消息表")
 public class MessageDO {
 
-    /**
-     * 主键自增
-     */
+    @Schema(description = "主键ID")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 会话ID
-     */
+    @Schema(description = "会话ID")
     @TableField("conversation_id")
     private String conversationId;
 
-    /**
-     * 角色
-     */
+    @Schema(description = "角色")
     private String role;
 
-    /**
-     * 内容
-     */
+    @Schema(description = "消息内容")
     private String content;
 
-    /**
-     * 输入token
-     */
+    @Schema(description = "输入token数")
     @TableField("prompt_tokens")
     private Integer promptTokens;
 
-    /**
-     * 输出token
-     */
+    @Schema(description = "输出token数")
     @TableField("completion_tokens")
     private Integer completionTokens;
 
-    /**
-     * 总token
-     */
+    @Schema(description = "总token数")
     @TableField("total_token_count")
     private Integer totalTokenCount;
 
-    /**
-     * 模型
-     */
+    @Schema(description = "模型")
     private String model;
 
-    /**
-     * 结束原因
-     */
+    @Schema(description = "结束原因")
     @TableField("finish_reason")
     private String finishReason;
 
-    /**
-     * 创建时间
-     */
+    @Schema(description = "创建时间")
     @TableField(value = "create_time", fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 }
-
-

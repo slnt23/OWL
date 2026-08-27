@@ -22,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("price_record")
-@Schema(description = "价格记录表（时间序列数据）")
+@Schema(name = "价格记录表", description = "价格记录表（时间序列数据）")
 public class RecordDO implements Serializable {
 
     private static final long serialVersionUID = 1L;

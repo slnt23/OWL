@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 
 @Data
 @ToString
+@Schema(name = "购物车VO", description = "购物车视图对象")
 public class ShoppingCartVO {
 
     @Schema(description = "购物车ID",example = "1")

@@ -16,16 +16,21 @@ import java.time.LocalDateTime;
 @Schema(name = "后台角色管理VO")
 public class RoleVO {
 
+    @Schema(description = "角色ID")
     private Long id;
 
+    @Schema(description = "角色名称")
     private String roleName;
 
+    @Schema(description = "角色描述")
     private String description;
 
     @Schema(description = "是否启用：true=启用，false=禁用")
     private Boolean enabled;
 
+    @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
+    @Schema(description = "更新时间")
     private LocalDateTime updateTime;
 }

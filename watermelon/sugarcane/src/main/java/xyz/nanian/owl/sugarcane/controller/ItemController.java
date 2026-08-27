@@ -20,7 +20,7 @@ import xyz.nanian.owl.sugarcane.service.ItemService;
  */
 @RestController
 @RequestMapping("/api/item")
-@Tag(name = "Item物品")
+@Tag(name = "价格物品")
 @RequiredArgsConstructor
 public class ItemController {
 
@@ -38,4 +38,3 @@ public class ItemController {
     public void delete(@PathVariable Long id){
     }
 }
-

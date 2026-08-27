@@ -30,7 +30,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/price")
-@Tag(name = "Record查询")
+@Tag(name = "价格查询")
 @RequiredArgsConstructor
 public class RecordController {
 
@@ -72,4 +72,3 @@ public class RecordController {
         return Result.success(recordService.compareSource(dto));
     }
 }
-

@@ -1,6 +1,8 @@
 package xyz.nanian.owl.sugarcane.domain.vo;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import java.util.List;
 
 /**
@@ -10,19 +12,14 @@ import java.util.List;
  * @since 2026/4/24
  */
 
+@Schema(name = "分类树VO")
 public class CategoryTreeVO {
-    /**
-     * 分类节点ID
-     */
+    @Schema(description = "分类节点ID")
     private Long id;
 
-    /**
-     * 分类节点名称
-     */
+    @Schema(description = "分类节点名称")
     private String name;
 
-    /**
-     * 子分类列表，为空表示该节点为叶子节点
-     */
+    @Schema(description = "子分类列表，为空表示该节点为叶子节点")
     private List<CategoryTreeVO> children;
 }

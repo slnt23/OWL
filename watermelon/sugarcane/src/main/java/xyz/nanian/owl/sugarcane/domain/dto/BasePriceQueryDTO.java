@@ -16,6 +16,7 @@ import java.util.List;
  */
 
 @Data
+@Schema(name = "价格查询基础DTO")
 public abstract class BasePriceQueryDTO {
 
     // ==================== 物品相关 ====================

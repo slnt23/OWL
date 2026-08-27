@@ -25,7 +25,7 @@ import reactor.core.publisher.Flux;
 @RestController
 @RequestMapping("/api/ai")
 @RequiredArgsConstructor
-@Tag(name = "AI聊天管理", description = "chat")
+@Tag(name = "AI聊天管理", description = "AI对话与流式聊天")
 public class AiChatController {
 
     private final AiChatService aiChatService;
@@ -51,4 +51,3 @@ public class AiChatController {
 
 
 }
-

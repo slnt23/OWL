@@ -25,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("geo_location")
-@Schema(description = "地理位置表")
+@Schema(name = "地理位置表", description = "地理位置表")
 public class GeoLocationDO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,4 +67,3 @@ public class GeoLocationDO implements Serializable {
     @TableField("create_time")
     private LocalDateTime createTime;
 }
-

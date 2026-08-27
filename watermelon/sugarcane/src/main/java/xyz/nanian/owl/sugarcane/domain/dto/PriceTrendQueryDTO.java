@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Schema(name = "价格趋势查询DTO")
 public class PriceTrendQueryDTO extends BasePriceQueryDTO {
 
     @Schema(description = "趋势查询开始时间", example = "2026-01-01T00:00:00")

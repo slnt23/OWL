@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.dto;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,5 +14,6 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@Schema(name = "最新价格查询DTO")
 public class PriceLatestQueryDTO extends BasePriceQueryDTO {
 }

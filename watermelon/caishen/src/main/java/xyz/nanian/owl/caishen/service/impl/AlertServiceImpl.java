@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import xyz.nanian.owl.caishen.constant.AlertStatus;
@@ -55,6 +56,12 @@ public class AlertServiceImpl implements AlertService {
     private final CaishenFundAlertConvert caishenFundAlertConvert;
     private final AlertThresholdEvaluator alertThresholdEvaluator;
     private final MailService mailService;
+
+    @Value("${owl.mail.alert.subject}")
+    private String alertSubjectTemplate;
+
+    @Value("${owl.mail.alert.body}")
+    private String alertBodyTemplate;
 
     @Override
     public List<FundAlertVO> listByWatch(Long watchId) {
@@ -221,7 +228,10 @@ public class AlertServiceImpl implements AlertService {
             return;
         }
 
-        String subject = "【OWL 理财提醒】基金 " + watch.getFundCode() + "（" + safe(fundName) + "）净值触及阈值";
+        // String subject = "【OWL 理财提醒】基金 " + watch.getFundCode() + "（" + safe(fundName) + "）净值触及阈值";
+        String subject = alertSubjectTemplate
+                .replace("{fundCode}", watch.getFundCode())
+                .replace("{fundName}", safe(fundName));
         String body = buildAlertBody(watch, latestNav, alert, fundName);
         mailService.send(MailMessage.builder()
                 .to(userEmail.getEmail())
@@ -247,14 +257,22 @@ public class AlertServiceImpl implements AlertService {
         String thresholdText = alert.getThresholdValue() != null
                 ? alert.getThresholdValue().toPlainString()
                 : alert.getThresholdPercent().toPlainString() + "%";
-        return "<p>您关注的基金「" + safe(fundName) + "（" + watch.getFundCode() + "）」已触及您设置的提醒阈值：</p>"
-                + "<ul>"
-                + "<li>提醒类型：" + typeLabel + "</li>"
-                + "<li>阈值：" + thresholdText + "</li>"
-                + "<li>当前净值：" + nav.getUnitNav() + "（" + nav.getNavDate() + "）</li>"
-                + "<li>日收益率：" + nav.getDailyReturnRate() + "%</li>"
-                + "</ul>"
-                + "<p>请登录查看详情。</p>";
+        // return "<p>您关注的基金「" + safe(fundName) + "（" + watch.getFundCode() + "）」已触及您设置的提醒阈值：</p>"
+        //         + "<ul>"
+        //         + "<li>提醒类型：" + typeLabel + "</li>"
+        //         + "<li>阈值：" + thresholdText + "</li>"
+        //         + "<li>当前净值：" + nav.getUnitNav() + "（" + nav.getNavDate() + "）</li>"
+        //         + "<li>日收益率：" + nav.getDailyReturnRate() + "%</li>"
+        //         + "</ul>"
+        //         + "<p>请登录查看详情。</p>";
+        return alertBodyTemplate
+                .replace("{fundName}", safe(fundName))
+                .replace("{fundCode}", watch.getFundCode())
+                .replace("{typeLabel}", typeLabel)
+                .replace("{thresholdText}", thresholdText)
+                .replace("{unitNav}", nav.getUnitNav() != null ? nav.getUnitNav().toPlainString() : "-")
+                .replace("{navDate}", nav.getNavDate() != null ? nav.getNavDate().toString() : "-")
+                .replace("{dailyReturnRate}", nav.getDailyReturnRate() != null ? nav.getDailyReturnRate().toPlainString() : "-");
     }
 
     private String fundName(String fundCode) {

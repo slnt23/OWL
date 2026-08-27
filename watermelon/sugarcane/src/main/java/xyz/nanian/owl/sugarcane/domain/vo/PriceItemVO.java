@@ -1,6 +1,7 @@
 package xyz.nanian.owl.sugarcane.domain.vo;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -11,30 +12,20 @@ import lombok.Data;
  */
 
 @Data
+@Schema(name = "物品基础信息VO")
 public class PriceItemVO {
-    /**
-     * 物品ID
-     */
+    @Schema(description = "物品ID")
     private Long itemId;
 
-    /**
-     * 物品名称
-     */
+    @Schema(description = "物品名称")
     private String itemName;
 
-    /**
-     * 计量单位，如"个"、"件"、"千克"等
-     */
+    @Schema(description = "计量单位，如\"个\"、\"件\"、\"千克\"等")
     private String unit;
 
-    /**
-     * 物品规格描述，如"256GB"、"500ml"等
-     */
+    @Schema(description = "物品规格描述，如\"256GB\"、\"500ml\"等")
     private String specification;
 
-    /**
-     * 所属分类名称，如"电子产品"、"食品饮料"等
-     */
+    @Schema(description = "所属分类名称，如\"电子产品\"、\"食品饮料\"等")
     private String categoryName;
 }
-
