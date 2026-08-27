@@ -1,6 +1,77 @@
-## 生产环境要设置的，
-#springdoc:
-#  api-docs:
-#    enabled: false
-#  swagger-ui:
-#    enabled: false
+spring:
+  config:
+    import:
+      - optional:classpath:tools.yaml
+  # mysql
+  datasource:
+    url: jdbc:mysql://192.168.0.43:53306/OWL?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456qin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      name: DruidDataSource
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+      async-init: true
+      max-wait: 6000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 900000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      connection-init-sqls: SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+      filters: stat
+  # rabbitmq
+  rabbitmq:
+    host: 192.168.0.43
+    port: 5672
+    username: admin
+    password: 123456qin
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: auto
+  # redis
+  data:
+    redis:
+      database: 0
+      timeout: 2000ms
+      password: 01star
+      host: 192.168.0.43
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 20
+          max-idle: 10
+          min-idle: 5
+          max-wait: 2000ms
+
+# mybatis-plus
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+# minio
+storage:
+  minio:
+    endpoint: http://192.168.0.43:59000
+    access-key: minioadmin
+    secret-key: 123456qin
+    secure: false
+    connect-timeout: 10000
+    write-timeout: 60000
+    read-timeout: 60000
+    buckets:
+      - name: images
+      - name: videos
+      - name: temp
+      - name: documents
+      - name: avatars

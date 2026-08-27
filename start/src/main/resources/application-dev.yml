@@ -1,112 +1,77 @@
-#spring:
-#  application:
-#    name: OWL
-#  profiles:
-#    active: dev   # 默认开发环境
-## mysql
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    type: com.alibaba.druid.pool.DruidDataSource
-#    url: jdbc:mysql://localhost:3306/pitaya?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-#    username: root
-#    password: 123456qin
-#    druid:
-#      name: DruidDataSource
-#      initial-size: 1
-#      min-idle: 1
-#      max-active: 20
-#      async-init: true
-#      max-wait: 6000
-#      time-between-eviction-runs-millis: 60000
-#      min-evictable-idle-time-millis: 300000
-#      max-evictable-idle-time-millis: 900000
-#      validation-query: SELECT 1
-#      test-while-idle: true
-#      test-on-borrow: false
-#      test-on-return: false
-#      pool-prepared-statements: true
-#      max-pool-prepared-statement-per-connection-size: 20
-#      connection-init-sqls: SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-#      filters: stat
-## redis
-#  data:
-#    redis:
-#      database: 0  # 数据库索引
-#      timeout: 2000ms
-#      password: 01star
-#      sentinel:
-#        master: mymaster
-#        nodes:
-#          - 192.168.131.128:27001
-#          - 192.168.131.128:27002
-#          - 192.168.131.128:27003
-#      lettuce:
-#        pool:
-#          max-active: 20
-#          max-idle: 10
-#          min-idle: 5
-#          max-wait: 2000ms
-## rabbitmq
-#  rabbitmq:
-#    host: 192.168.131.128
-#    port: 5672
-#    username: admin
-#    password: 123456qin
-#    virtual-host: /
-#    listener:
-#      simple:
-#        acknowledge-mode: auto
-## 邮箱服务
-#  mail:
-#    host: smtp.qq.com
-#    port: 587
-#    username: 3436134614@qq.com
-#    password: ${OWL_MAIL_PASSWORD}
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
-#            required: true
-#    protocol: smtp
-##    ai
-#  ai:
-#    openai:
-#      base-url: https://api.deepseek.com
-#      api-key: ${OWL_DEEPSEEK_API_KEY}
-#      chat:
-#        options:
-#          model: deepseek-chat
-#          temperature: 0.7
-#          top-p: 0.9
-#          max-tokens: 1500
-#      request:
-#        timeout: 30s
-#        connect-timeout: 5s
-#      retry:
-#        max-attempts: 3
-#        backoff: 500ms
-#      context:
-#        max-history-messages: 20
-#        max-context-tokens: 4000
-# 后续添加数据库配置，目前先放在本地配置文件中，后续可以迁移到 Nacos 中
-#  mybatis-plus:
-#    configuration:
-#      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#      map-underscore-to-camel-case: true
-#      cache-enabled: false
-#
-logging:
-  level:
-    xyz.nanian.owl: debug
-    com.baomidou.mybatisplus: warn
-    org.mybatis: warn
-    org.springframework.ai: INFO
-#
-#
-## 本项目启动端口
-#server:
-#  port: 8080
-#  tomcat:
-#    connection-timeout: 10s
+# spring:
+#   # mysql
+#   datasource:
+#     # 生产环境后续迁移其他命名空间
+#     url: jdbc:mysql://192.168.0.43:53306/OWL?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#     # 本地开发
+#     # url: jdbc:mysql://localhost:3306/pitaya?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+#     username: root
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#     type: com.alibaba.druid.pool.DruidDataSource
+#     druid:
+#       name: DruidDataSource
+#       initial-size: 1
+#       min-idle: 1
+#       max-active: 20
+#       async-init: true
+#       max-wait: 6000
+#       time-between-eviction-runs-millis: 60000
+#       min-evictable-idle-time-millis: 300000
+#       max-evictable-idle-time-millis: 900000
+#       validation-query: SELECT 1
+#       test-while-idle: true
+#       test-on-borrow: false
+#       test-on-return: false
+#       pool-prepared-statements: true
+#       max-pool-prepared-statement-per-connection-size: 20
+#       connection-init-sqls: SET NAMES utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+#       filters: stat
+#   #
+#   mybatis-plus:
+#     configuration:
+#       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#       map-underscore-to-camel-case: true
+#       cache-enabled: false
+
+# # minio
+# storage:
+#   minio:
+#     endpoint: http://192.168.0.43:59000
+#     access-key: minioadmin
+#     secret-key: 123456qin
+#     secure: false
+#     connect-timeout: 10000
+#     write-timeout: 60000
+#     read-timeout: 60000
+#     buckets:
+#       - name: images
+#       - name: videos
+#       - name: temp
+#       - name: documents
+#       - name: avatars
+
+#   rabbitmq:
+#     host: 192.168.0.43
+#     port: 5672
+#     username: admin
+#     password: 123456qin
+#     virtual-host: /
+#     listener:
+#       simple:
+#         acknowledge-mode: auto
+
+#   data:
+#     redis:
+#       database: 0
+#       timeout: 2000ms
+#       password: 01star
+
+#       host: 192.168.0.43
+#       port: 6379
+
+#       lettuce:
+#         pool:
+#           max-active: 20
+#           max-idle: 10
+#           min-idle: 5
+#           max-wait: 2000ms
