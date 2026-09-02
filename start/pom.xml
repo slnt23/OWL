@@ -35,10 +35,10 @@
             <groupId>xyz.nanian</groupId>
             <artifactId>administration</artifactId>
         </dependency>
-        <dependency>
-            <groupId>xyz.nanian</groupId>
-            <artifactId>mango</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>xyz.nanian</groupId>-->
+<!--            <artifactId>mango</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>xyz.nanian</groupId>
             <artifactId>caishen</artifactId>

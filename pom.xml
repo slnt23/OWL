@@ -28,7 +28,8 @@
         <module>watermelon/user</module>
         <module>watermelon/sugarcane</module>
         <module>watermelon/crow</module>
-        <module>watermelon/mango</module>
+        <!-- [MOVED_TO_USER_MODULE] 博客功能已迁移至 user 模块，mango 模块已从构建中移除 -->
+        <!-- <module>watermelon/mango</module> -->
         <module>watermelon/caishen</module>
     </modules>
 
