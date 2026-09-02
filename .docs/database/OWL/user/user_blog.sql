@@ -68,7 +68,7 @@ CREATE TABLE blog_education
     user_id     BIGINT UNSIGNED NOT NULL COMMENT '所属用户ID',
     school      VARCHAR(255)    NOT NULL COMMENT '学校名称',
     degree      VARCHAR(255) COMMENT '学位/专业',
-    period      VARCHAR(100) COMMENT '时间段',
+    `period`      VARCHAR(100) COMMENT '时间段',
     sort_order  INT             NOT NULL DEFAULT 0 COMMENT '排序权重',
     create_time DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 

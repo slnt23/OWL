@@ -24,7 +24,7 @@ import xyz.nanian.owl.user.service.BlogPostService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/blog")
+@RequestMapping("/api/blog")
 @RequiredArgsConstructor
 @Tag(name = "博客文章")
 public class BlogPostController {

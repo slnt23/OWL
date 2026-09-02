@@ -15,7 +15,7 @@ import xyz.nanian.owl.user.domain.vo.BlogSettingsVO;
 import xyz.nanian.owl.user.service.BlogSettingsService;
 
 @RestController
-@RequestMapping("/blog/settings")
+@RequestMapping("/api/blog/settings")
 @RequiredArgsConstructor
 @Tag(name = "博客设置")
 public class BlogSettingsController {
