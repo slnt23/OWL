@@ -1,6 +1,6 @@
 package xyz.nanian.owl.user.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.spring.service.IService;
 import xyz.nanian.owl.user.domain.dto.GalleryDTO;
 import xyz.nanian.owl.user.domain.entity.GalleryDO;
 import xyz.nanian.owl.user.domain.vo.GalleryVO;
