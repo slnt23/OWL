@@ -1,7 +1,7 @@
 spring:
-  config:
-    import:
-      - optional:classpath:tools.yaml
+  # config:
+  #   import:
+  #     - optional:classpath:tools.yaml
   # mysql
   datasource:
     url: jdbc:mysql://192.168.0.43:53306/OWL?useUnicode=true&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true

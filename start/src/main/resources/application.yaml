@@ -21,65 +21,14 @@ spring:
       password: nacos
       namespace: OWL
 
-# # ==================== OWL 自定义配置 ====================
-# owl:
-#   mail:
-#     # 默认发件人名称
-#     sender-name: 'OWL 团队'
-#     # 发件人邮箱
-#     username: '3436134614@qq.com'
-#     # 验证码邮件模板
-#     verification-code:
-#       subject: '「OWL 账号验证」'
-#       body: |
-#         尊敬的用户：
-
-#         您好！
-
-#         您的验证码为：[ {code} ]
-
-#         该验证码有效期为 {minutes} 分钟，请在有效时间内使用。
-#         为保障您的账户安全，请勿将验证码泄露给他人。
-
-#         如果这不是您本人的操作，请忽略此邮件。
-
-#         此致
-#         敬礼
-#         [OWL] 团队
-#     # 理财提醒邮件模板
-#     alert:
-#       subject: '【OWL 理财提醒】基金 {fundCode}（{fundName}）净值触及阈值'
-#       body: |
-#         <p>您关注的基金「{fundName}（{fundCode}）」已触及您设置的提醒阈值：</p>
-#         <ul>
-#         <li>提醒类型：{typeLabel}</li>
-#         <li>阈值：{thresholdText}</li>
-#         <li>当前净值：{unitNav}（{navDate}）</li>
-#         <li>日收益率：{dailyReturnRate}%</li>
-#         </ul>
-#         <p>请登录查看详情。</p>
-#     # 理财总结邮件模板
-#     summary:
-#       subject: '【OWL 理财{periodLabel}报】您关注的基金本{periodLabel}变化总结'
-#       body-header: |
-#         <p>您关注的 {count} 只基金本周期（{startDate} ~ {endDate}）变化如下：</p>
-#         <ul>
-#       body-item: |
-#         <li>{fundName}（{fundCode}）：周期涨跌幅 {periodChange}</li>
-#       body-footer: |
-#         </ul>
-#         <p>AI 总结：{summaryText}</p>
-
 #spring:
 #  application:
 #    name: OWL
 #
 #  config:
 #    import:
-#      - optional:nacos:application.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-#      - optional:nacos:infrastructure.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-#      - optional:nacos:ai.yaml?group=DEFAULT_GROUP&refreshEnabled=true
-#      - optional:nacos:secret.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:infra.yaml?group=DEFAULT_GROUP&refreshEnabled=true
+#      - optional:nacos:tools.yaml?group=DEFAULT_GROUP&refreshEnabled=true
 #
 #  cloud:
 #    nacos:
@@ -87,4 +36,4 @@ spring:
 #      server-addr: 192.168.0.43:8848
 #      username: nacos
 #      password: nacos
-#      namespace: dev
+#      namespace: dev2

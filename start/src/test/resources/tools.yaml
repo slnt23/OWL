@@ -4,6 +4,16 @@ logging:
     com.baomidou.mybatisplus: warn
     org.mybatis: warn
 
+# logging:
+#   level:
+#     xyz.nanian.owl: debug
+#     com.baomidou.mybatisplus: warn
+#     org.mybatis: warn
+#     org.springframework.ai: INFO
+
+# 上线生产环境时，记得把 xyz.nanian.owl 从 debug 改成 info 或 warn，
+# 否则会生成海量日志，拖慢性能并撑爆磁盘。如果当前是本地开发环境，保持 debug 完全没问题。
+
 # ==================== JWT ====================
 jwt:
   expire-time: 86400000 # 1 天 = 86400000 毫秒
