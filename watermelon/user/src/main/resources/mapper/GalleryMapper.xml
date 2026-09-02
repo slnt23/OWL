@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xyz.nanian.owl.user.mapper.GalleryMapper">
+
+    <select id="selectListByUserId" resultType="xyz.nanian.owl.user.domain.entity.GalleryDO">
+        select id,
+               user_id,
+               title,
+               description,
+               image_url,
+               thumbnail_url,
+               sort_order,
+               create_time,
+               update_time
+        from user_gallery
+        where user_id = #{userId}
+        order by sort_order asc
+    </select>
+</mapper>
