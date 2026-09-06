@@ -75,7 +75,7 @@ CREATE TABLE caishen_fund_watch
 CREATE TABLE caishen_fund_alert
 (
     id                 BIGINT UNSIGNED AUTO_INCREMENT COMMENT '主键ID',
-    watch_id           BIGINT       NOT NULL COMMENT '关联 caishen_fund_watch.id，级联删除',
+    watch_id           BIGINT UNSIGNED       NOT NULL COMMENT '关联 caishen_fund_watch.id，级联删除',
     alert_type         VARCHAR(20)  NOT NULL COMMENT '提醒类型：RISE_ABOVE（涨到）/ FALL_BELOW（跌到）',
     threshold_value    DECIMAL(10,4) COMMENT '绝对净值阈值',
     threshold_percent  DECIMAL(8,4) COMMENT '涨跌幅阈值（%），如 2.0000 表示 2%',
